@@ -44,7 +44,7 @@
 
     <mat-form-field fxFlex="48%">
       <mat-label>Application Date</mat-label>
-      <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="applicationDatePicker" 
+      <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="applicationDatePicker"
         formControlName="applicationDate" required>
       <mat-datepicker-toggle matSuffix [for]="applicationDatePicker"></mat-datepicker-toggle>
       <mat-datepicker #applicationDatePicker></mat-datepicker>

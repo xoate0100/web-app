@@ -30,4 +30,3 @@ export class DataTableResolver implements Resolve<Object> {
   }
 
 }
-

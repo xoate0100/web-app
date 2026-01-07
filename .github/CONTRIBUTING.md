@@ -1,6 +1,6 @@
 # Getting Started
 
-- View the [README](../README.md) or [watch this video](https://youtu.be/OnxxC3K2oro) to get your development environment up and running. 
+- View the [README](../README.md) or [watch this video](https://youtu.be/OnxxC3K2oro) to get your development environment up and running.
 - Learn how to [format pull requests](#submitting-a-pull-request).
 - Read how to [rebase/merge upstream branches](#configuring-remotes).
 - Understand our [commit message conventions](https://github.com/openMF/web-app/blob/master/.github/COMMIT_MESSAGE.md).
@@ -16,7 +16,7 @@ When contributing to this repository, please first discuss the change you wish t
 
 Make sure you read the [Wiki](https://github.com/openMF/web-app/wiki).
 
-Do not open issues for general support questions as we want to keep GitHub issues for bug reports and feature requests. If you have got any questions, please email to our [mailing list](https://sourceforge.net/projects/mifos/lists/mifos-developer). You can also join our [gitter channel](https://gitter.im/openMF/web-app) to chat about your queries in real-time. 
+Do not open issues for general support questions as we want to keep GitHub issues for bug reports and feature requests. If you have got any questions, please email to our [mailing list](https://sourceforge.net/projects/mifos/lists/mifos-developer). You can also join our [gitter channel](https://gitter.im/openMF/web-app) to chat about your queries in real-time.
 
 Each active repository has its own channel to direct questions to. Also join the [official gitter channel](https://gitter.im/openMF/mifos) of Mifos.
 
@@ -68,7 +68,7 @@ git commit --amend
 ```
   - Squash multiple commits to a single commit. (example: squash last two commits done on this branch into one)
 ```
-git rebase --interactive HEAD~2 
+git rebase --interactive HEAD~2
 ```
   - Push this branch to your remote repository on GitHub.
 ```

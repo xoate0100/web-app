@@ -27,4 +27,3 @@ export class ClientIdentifierTemplateResolver implements Resolve<Object> {
         return this.clientsService.getClientIdentifierTemplate(clientId);
     }
 }
-

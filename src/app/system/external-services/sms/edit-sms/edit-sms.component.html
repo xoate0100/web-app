@@ -1,13 +1,13 @@
 <div class="container">
 
     <mat-card>
-  
+
       <form [formGroup]="smsConfigurationForm" (ngSubmit)="submit()">
-  
+
         <mat-card-content>
-  
+
           <div fxLayout="column">
-  
+
             <mat-form-field>
               <mat-label>Host Name</mat-label>
               <input matInput required formControlName="host_name">
@@ -15,7 +15,7 @@
                 Host Name is <strong>required</strong>
               </mat-error>
             </mat-form-field>
-  
+
             <mat-form-field>
               <mat-label>Port Number</mat-label>
               <input matInput required formControlName="port_number">
@@ -23,7 +23,7 @@
                 Port Number is <strong>required</strong>
               </mat-error>
             </mat-form-field>
-  
+
             <mat-form-field>
               <mat-label>End Point</mat-label>
               <input matInput required formControlName="end_point">
@@ -39,18 +39,18 @@
                   Tenant App Key is <strong>required</strong>
                 </mat-error>
               </mat-form-field>
-  
+
           </div>
-  
+
         </mat-card-content>
-  
+
         <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
           <button type="button" mat-raised-button [routerLink]="['../']">Cancel</button>
           <button mat-raised-button color="primary" [disabled]="!smsConfigurationForm.valid || smsConfigurationForm.pristine">Submit</button>
         </mat-card-actions>
-  
+
       </form>
-  
+
     </mat-card>
-  
+
   </div>

@@ -41,7 +41,7 @@ ng serve
 ```
 
 The application is using the development server with basic authentication by default. The credentials for the same are:
- 
+
     Username - mifos
     Password - password
 

@@ -1,6 +1,6 @@
 name: build-run
 
-# Controls when the action will run. 
+# Controls when the action will run.
 on:
   # Triggers the workflow on push or pull request events but only for the main branch
   push:
@@ -13,7 +13,7 @@ jobs:
   # This workflow contains a single job called "build"
   build:
     # The type of runner that the job will run on
-    name: Run Lint and Deploy 
+    name: Run Lint and Deploy
     runs-on: ubuntu-latest
 
     # Steps represent a sequence of tasks that will be executed as part of the job
@@ -48,6 +48,6 @@ jobs:
           FOLDER: dist/web-app
           #without preserve it only builds if you have untracked files
           PRESERVE: true
-          # github user name and email shows up in the logs, 
-          # so it would be better to make it silent. 
-          SILENT: true 
+          # github user name and email shows up in the logs,
+          # so it would be better to make it silent.
+          SILENT: true

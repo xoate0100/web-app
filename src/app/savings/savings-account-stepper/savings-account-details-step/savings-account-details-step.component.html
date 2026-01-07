@@ -16,7 +16,7 @@
 
     <mat-form-field fxFlex="48%">
       <mat-label>Submitted On</mat-label>
-      <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="submittedOnDatePicker" 
+      <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="submittedOnDatePicker"
         formControlName="submittedOnDate" required>
       <mat-datepicker-toggle matSuffix [for]="submittedOnDatePicker"></mat-datepicker-toggle>
       <mat-datepicker #submittedOnDatePicker></mat-datepicker>

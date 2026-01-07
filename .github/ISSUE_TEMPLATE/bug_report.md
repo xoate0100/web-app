@@ -16,7 +16,7 @@ Don't assume the reader knows anything about the Mifos X Web App.
 ## Actual Behaviour
 
 ## Settings
-- Mifos X version: 
-- Browser used: 
+- Mifos X version:
+- Browser used:
 
 ## Screenshots, if any

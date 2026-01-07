@@ -9,8 +9,8 @@
 
       <ng-container matColumnDef="feepenalty">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> Fee/Penalty </th>
-        <td mat-cell *matCellDef="let charge"> 
-          <span *ngIf="charge.penalty">Penalty</span>  
+        <td mat-cell *matCellDef="let charge">
+          <span *ngIf="charge.penalty">Penalty</span>
           <span *ngIf="!charge.penalty">Fee</span>
         </td>
       </ng-container>

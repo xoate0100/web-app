@@ -2,9 +2,9 @@
 
 @mixin dashboard-component-theme($theme) {
   $primary: map-get($theme, primary);
-  
+
   mifosx-dashboard {
-    
+
     .recent-activities, .frequent-activities {
       .header {
         background-color: mat-color($primary, 500);

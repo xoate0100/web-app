@@ -54,5 +54,3 @@ export class UploadDocumentDialogComponent implements OnInit {
   }
 
 }
-
-

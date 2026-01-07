@@ -27,7 +27,7 @@
       <ng-template matStepLabel>DETAILS</ng-template>
 
       <mifosx-shares-account-details-step
-        [sharesAccountTemplate]="sharesAccountTemplate" 
+        [sharesAccountTemplate]="sharesAccountTemplate"
         (sharesAccountProductTemplate)="setTemplate($event)"
       >
       </mifosx-shares-account-details-step>
@@ -48,7 +48,7 @@
 
       <mifosx-shares-account-charges-step
         [sharesAccountProductTemplate]="sharesAccountProductTemplate"
-        [sharesAccountTemplate]="sharesAccountTemplate" 
+        [sharesAccountTemplate]="sharesAccountTemplate"
         [currencyCode]="sharesAccountTermsForm.get('currencyCode')"
       >
       </mifosx-shares-account-charges-step>

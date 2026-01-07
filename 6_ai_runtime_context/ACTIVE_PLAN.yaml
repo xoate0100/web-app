@@ -1,0 +1,358 @@
+plan_id: angular-modernization-upgrade
+component: frontend
+goal: Systematically upgrade Angular application from v9 to v18+ with modern conventions
+tasks:
+- id: 1
+  name: Pre-upgrade assessment and preparation
+  outputs:
+  - docs/UPGRADE_ASSESSMENT.md
+  - docs/DEPENDENCY_AUDIT.md
+  - .nvmrc (Node version)
+  status: pending
+  notes: |
+    - Audit current codebase patterns
+    - Identify deprecated APIs
+    - Document breaking changes needed
+    - Set Node.js version requirements
+    - Create backup branch
+
+- id: 2
+  name: Upgrade TypeScript and build tools
+  outputs:
+  - package.json (TypeScript 5.x)
+  - tsconfig.json (modern config)
+  - angular.json (updated)
+  status: pending
+  notes: |
+    - Upgrade TypeScript 3.8.3 -> 5.x
+    - Update tsconfig for modern ES features
+    - Update Angular CLI and build tools
+    - Test build process
+
+- id: 3
+  name: Migrate from TSLint to ESLint
+  outputs:
+  - .eslintrc.json
+  - package.json (ESLint deps)
+  - Remove tslint.json
+  status: pending
+  notes: |
+    - Install ESLint and Angular ESLint plugin
+    - Convert TSLint rules to ESLint
+    - Update CI/CD scripts
+    - Fix linting issues
+
+- id: 4
+  name: Upgrade Angular 9 -> 10
+  outputs:
+  - package.json (Angular 10)
+  - Updated imports and APIs
+  status: pending
+  notes: |
+    - Use ng update @angular/core@10 @angular/cli@10
+    - Fix breaking changes
+    - Update deprecated APIs
+    - Test all features
+
+- id: 5
+  name: Upgrade Angular 10 -> 11
+  outputs:
+  - package.json (Angular 11)
+  - Updated imports and APIs
+  status: pending
+  notes: |
+    - Use ng update @angular/core@11 @angular/cli@11
+    - Migrate to strict mode (optional)
+    - Update to Ivy compiler (if not already)
+    - Test all features
+
+- id: 6
+  name: Upgrade Angular 11 -> 12
+  outputs:
+  - package.json (Angular 12)
+  - Updated imports and APIs
+  - Remove ViewEngine references
+  status: pending
+  notes: |
+    - Use ng update @angular/core@12 @angular/cli@12
+    - Remove ViewEngine (Ivy only)
+    - Update to Webpack 5
+    - Test all features
+
+- id: 7
+  name: Upgrade Angular 12 -> 13
+  outputs:
+  - package.json (Angular 13)
+  - Updated imports and APIs
+  status: pending
+  notes: |
+    - Use ng update @angular/core@13 @angular/cli@13
+    - Update to RxJS 7
+    - Remove IE11 support
+    - Test all features
+
+- id: 8
+  name: Upgrade RxJS 6 -> 7
+  outputs:
+  - package.json (RxJS 7)
+  - Updated RxJS operators
+  status: pending
+  notes: |
+    - Install rxjs-compat for gradual migration
+    - Update operators to new syntax
+    - Remove rxjs-compat
+    - Test all RxJS usage
+
+- id: 9
+  name: Upgrade Angular 13 -> 14
+  outputs:
+  - package.json (Angular 14)
+  - Updated imports and APIs
+  status: pending
+  notes: |
+    - Use ng update @angular/core@14 @angular/cli@14
+    - Standalone components available (prepare)
+    - Update Angular Material
+    - Test all features
+
+- id: 10
+  name: Upgrade Angular 14 -> 15
+  outputs:
+  - package.json (Angular 15)
+  - Updated imports and APIs
+  status: pending
+  notes: |
+    - Use ng update @angular/core@15 @angular/cli@15
+    - Standalone components stable
+    - MDC-based Angular Material
+    - Test all features
+
+- id: 11
+  name: Upgrade Angular 15 -> 16
+  outputs:
+  - package.json (Angular 16)
+  - Updated imports and APIs
+  status: pending
+  notes: |
+    - Use ng update @angular/core@16 @angular/cli@16
+    - Signals introduced
+    - Required inputs
+    - Test all features
+
+- id: 12
+  name: Upgrade Angular 16 -> 17
+  outputs:
+  - package.json (Angular 17)
+  - Updated imports and APIs
+  - Control flow syntax
+  status: pending
+  notes: |
+    - Use ng update @angular/core@17 @angular/cli@17
+    - New control flow (@if, @for, @switch)
+    - Signals stable
+    - Test all features
+
+- id: 13
+  name: Upgrade Angular 17 -> 18
+  outputs:
+  - package.json (Angular 18)
+  - Updated imports and APIs
+  status: pending
+  notes: |
+    - Use ng update @angular/core@18 @angular/cli@18
+    - Latest features and performance
+    - Material 3 support
+    - Test all features
+
+- id: 14
+  name: Update Angular Material and CDK
+  outputs:
+  - package.json (Material 18)
+  - Updated Material components
+  status: pending
+  notes: |
+    - Upgrade @angular/material and @angular/cdk
+    - Update to MDC components
+    - Fix breaking changes
+    - Update theming
+
+- id: 15
+  name: Update other dependencies
+  outputs:
+  - package.json (updated deps)
+  status: pending
+  notes: |
+    - Update @ngx-translate/core
+    - Update @fortawesome packages
+    - Update chart.js
+    - Update lodash
+    - Remove core-js (use native)
+    - Update all dev dependencies
+
+- id: 16
+  name: Migrate to standalone components (Phase 1 - New components)
+  outputs:
+  - Standalone component examples
+  - Migration guide
+  status: pending
+  notes: |
+    - Create standalone component examples
+    - Document migration pattern
+    - Start with new components only
+    - Keep NgModules for existing code
+
+- id: 17
+  name: Modernize routing to standalone
+  outputs:
+  - Updated routing configuration
+  - Standalone route components
+  status: pending
+  notes: |
+    - Migrate routes to standalone
+    - Use provideRouter
+    - Remove NgModule routing
+    - Lazy load standalone components
+
+- id: 18
+  name: Migrate to standalone components (Phase 2 - Core modules)
+  outputs:
+  - Core modules migrated
+  - Shared modules migrated
+  status: pending
+  notes: |
+    - Migrate core module to standalone
+    - Migrate shared module to standalone
+    - Update imports across app
+    - Test thoroughly
+
+- id: 19
+  name: Migrate to standalone components (Phase 3 - Feature modules)
+  outputs:
+  - Feature modules migrated
+  status: pending
+  notes: |
+    - Migrate feature modules incrementally
+    - Start with smaller modules
+    - Update imports
+    - Test each module
+
+- id: 20
+  name: Implement Angular Signals for state management
+  outputs:
+  - Signal-based services
+  - Signal-based components
+  status: pending
+  notes: |
+    - Identify state management opportunities
+    - Convert services to use signals
+    - Update components to use signals
+    - Replace RxJS where appropriate
+
+- id: 21
+  name: Modernize control flow syntax
+  outputs:
+  - Updated templates (@if, @for, @switch)
+  status: pending
+  notes: |
+    - Replace *ngIf with @if
+    - Replace *ngFor with @for
+    - Replace [ngSwitch] with @switch
+    - Update all templates
+
+- id: 22
+  name: Update to functional guards and interceptors
+  outputs:
+  - Functional guards
+  - Functional interceptors
+  - Functional resolvers
+  status: pending
+  notes: |
+    - Convert class-based guards to functions
+    - Convert class-based interceptors to functions
+    - Convert class-based resolvers to functions
+    - Update route configurations
+
+- id: 23
+  name: Modernize testing setup
+  outputs:
+  - Jest or Angular test runner
+  - Updated test files
+  - Remove Karma/Jasmine
+  status: pending
+  notes: |
+    - Migrate from Karma/Jasmine
+    - Choose Jest or Angular test runner
+    - Update all test files
+    - Update CI/CD
+
+- id: 24
+  name: Replace Protractor with modern E2E framework
+  outputs:
+  - Cypress or Playwright setup
+  - E2E test migration
+  status: pending
+  notes: |
+    - Choose Cypress or Playwright
+    - Migrate E2E tests
+    - Update CI/CD
+    - Remove Protractor
+
+- id: 25
+  name: Update build configuration
+  outputs:
+  - Modern build config
+  - ESBuild or Vite
+  status: pending
+  notes: |
+    - Consider ESBuild or Vite
+    - Optimize build performance
+    - Update build scripts
+    - Test production builds
+
+- id: 26
+  name: Performance optimizations
+  outputs:
+  - Optimized change detection
+  - Lazy loading improvements
+  - Bundle size optimizations
+  status: pending
+  notes: |
+    - Implement OnPush change detection
+    - Optimize lazy loading
+    - Code splitting improvements
+    - Bundle analysis and optimization
+
+- id: 27
+  name: Update documentation and style guide
+  outputs:
+  - Updated README.md
+  - Updated coding guides
+  - Migration documentation
+  status: pending
+  notes: |
+    - Update project documentation
+    - Update coding standards
+    - Document new patterns
+    - Create migration guide for team
+
+- id: 28
+  name: Final testing and validation
+  outputs:
+  - Test results
+  - Performance benchmarks
+  - Upgrade completion report
+  status: pending
+  notes: |
+    - Comprehensive testing
+    - Performance testing
+    - Security audit
+    - Final validation
+
+status: active
+auto_commit: true
+commit_frequency: checkpoint_based
+commit_checkpoints:
+  after_phases: true
+  after_task_count: 3
+  after_file_threshold: 20
+  force_commit_on_checkpoint: true

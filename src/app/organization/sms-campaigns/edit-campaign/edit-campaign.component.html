@@ -26,7 +26,7 @@
 
       <ng-template matStepLabel>CAMPAIGN</ng-template>
 
-      <mifosx-edit-sms-campaign-step 
+      <mifosx-edit-sms-campaign-step
         [smsCampaign]="smsCampaign"
         [smsCampaignTemplate]="smsCampaignTemplate"
         (templateParameters)="setParameters($event)"
@@ -39,7 +39,7 @@
 
       <ng-template matStepLabel>MESSAGE</ng-template>
 
-      <mifosx-campaign-message-step 
+      <mifosx-campaign-message-step
         [templateParameters]="templateParameters"
         [editCampaignMessage]="smsCampaign.campaignMessage"
       >

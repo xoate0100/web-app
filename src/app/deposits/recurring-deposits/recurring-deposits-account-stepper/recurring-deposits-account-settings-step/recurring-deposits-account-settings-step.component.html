@@ -172,7 +172,7 @@
           {{ preClosurePenalInterestOnType.value }}
         </mat-option>
       </mat-select>
-    </mat-form-field> 
+    </mat-form-field>
 
     <!-- <mat-divider fxFlex="98%"></mat-divider> -->
 
@@ -187,7 +187,7 @@
       <mat-checkbox fxFlex="48%" labelPosition="before" formControlName="withHoldTax" class="margin-v">
         Is Withhold Tax Applicable?
       </mat-checkbox>
-    
+
       <mat-form-field fxFlex="48%" *ngIf="recurringDepositAccountSettingsForm.controls.taxGroupId">
         <mat-label>Tax Group</mat-label>
         <input type="text" matInput formControlName="taxGroupId">

@@ -1,7 +1,7 @@
 <div [formGroup]="form" fxFlexFill>
 
   <div *ngIf="formfield.controlType==='input' || formfield.controlType==='select'" fxFlexFill>
-    
+
     <mat-form-field fxFlexFill>
 
       <mat-label>{{ formfield.label }}</mat-label>
@@ -26,7 +26,7 @@
 
   <mat-form-field fxFlexFill *ngIf="formfield.controlType==='datepicker'">
     <mat-label>{{ formfield.label }}</mat-label>
-    <input matInput [matDatepicker]="datePicker" [min]="formfield.minDate" [max]="formfield.maxDate"  
+    <input matInput [matDatepicker]="datePicker" [min]="formfield.minDate" [max]="formfield.maxDate"
       [formControlName]="formfield.controlName" [required]="formfield.required">
     <mat-datepicker-toggle matSuffix [for]="datePicker"></mat-datepicker-toggle>
     <mat-datepicker #datePicker></mat-datepicker>
