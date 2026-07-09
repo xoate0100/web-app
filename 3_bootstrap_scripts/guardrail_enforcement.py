@@ -169,14 +169,25 @@ def enforce_task_scope(guardrails: dict, staged_files: List[str]) -> bool:
         print(f"[guardrail] enforce_task_scope: Task {current_task_id} has no outputs, allowing")
         return True
 
+    context_files = {
+        "6_ai_runtime_context/ACTIVE_PLAN.yaml",
+        "6_ai_runtime_context/ACTIVE_TASK_POINTER.yaml",
+        "6_ai_runtime_context/AI_CONTEXT.md",
+        "6_ai_runtime_context/MEMORY_STATE.yaml",
+        "6_ai_runtime_context/EXECUTION_LOG.md",
+    }
+
     # Check if staged files match expected outputs
     violations = []
     for file_path in staged_files:
+        if file_path in context_files or file_path.startswith("6_ai_runtime_context/proposals/"):
+            continue
+
         path = pathlib.Path(file_path)
 
         # Allow meta-framework files if they already exist in repo
         first_part = str(path).split("/")[0] if "/" in str(path) else str(path).split("\\")[0]
-        if first_part in meta_framework_dirs:
+        if first_part in meta_framework_dirs or first_part == "tests":
             try:
                 result = subprocess.run(
                     ["git", "ls-files", "--error-unmatch", file_path],
@@ -262,9 +273,34 @@ def forbid_folder_creation_outside_scope(guardrails: dict, staged_files: List[st
     flags = load_feature_flags()
     allowed_paths = set(flags.get("permissions", {}).get("write_to", []))
 
+    context_files = {
+        "6_ai_runtime_context/ACTIVE_PLAN.yaml",
+        "6_ai_runtime_context/ACTIVE_TASK_POINTER.yaml",
+        "6_ai_runtime_context/AI_CONTEXT.md",
+        "6_ai_runtime_context/MEMORY_STATE.yaml",
+        "6_ai_runtime_context/EXECUTION_LOG.md",
+    }
+
     violations = []
     for file_path in staged_files:
         path = pathlib.Path(file_path)
+
+        if file_path in context_files or file_path.startswith("6_ai_runtime_context/proposals/"):
+            continue
+
+        first_part = str(path).split("/")[0] if "/" in str(path) else str(path).split("\\")[0]
+        if first_part in meta_framework_dirs or first_part == "tests":
+            try:
+                result = subprocess.run(
+                    ["git", "ls-files", "--error-unmatch", file_path],
+                    capture_output=True,
+                    text=True,
+                    check=False,
+                )
+                if result.returncode == 0:
+                    continue
+            except Exception:
+                pass
 
         # Check if file is in allowed write paths
         in_allowed = any(str(path).startswith(allowed) for allowed in allowed_paths)
