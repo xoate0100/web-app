@@ -1,0 +1,71 @@
+# Named anti-patterns — recognizable failure modes across agent sessions.
+version: 1
+updated: "2026-07-09"
+
+vectors:
+  - id: DV_REACT_REWRITE
+    description: "Proposing React/Vue/Svelte rewrite instead of Angular modernization"
+    source: 5_reference_architectures/DECISION_REGISTRY.yaml DEC-0001
+    detection: "resurrection_trigger_keywords for DEC-0001 found in diff"
+    linked_decision: DEC-0001-ANGULAR-STACK
+    trigger_patterns:
+      - "create-react-app"
+      - "next\\.js"
+      - "react-dom"
+
+  - id: DV_BIG_BANG_UPGRADE
+    description: "Big-bang rewrite instead of incremental Angular upgrade"
+    source: DECISION_REGISTRY DEC-0002
+    detection: "resurrection keywords or full-tree delete patterns"
+    linked_decision: DEC-0002-INCREMENTAL-UPGRADE
+    trigger_patterns:
+      - "delete entire src"
+      - "rewrite from scratch"
+
+  - id: DV_REMOVE_META_FRAMEWORK
+    description: "Removing or bypassing meta-framework governance"
+    source: DECISION_REGISTRY DEC-0003
+    detection: "resurrection keywords for DEC-0003"
+    linked_decision: DEC-0003-META-FRAMEWORK
+    trigger_patterns:
+      - "rm -rf 0_phase0"
+      - "remove 3_bootstrap_scripts"
+
+  - id: DV_IN_REPO_BACKEND
+    description: "Adding backend service code to frontend-only repo"
+    source: DECISION_REGISTRY DEC-0004
+    detection: "new backend/ or NestJS/Express server in src/"
+    linked_decision: DEC-0004-FINERACT-EXTERNAL-BACKEND
+    trigger_patterns:
+      - "nestjs"
+      - "@nestjs/"
+      - "express\\.listen"
+
+  - id: DV_CI_PRECOMMIT_BYPASS
+    description: "CI runs pre-commit with || true or omits guardrail enforcement"
+    source: agentic migration audit 2026-07-09
+    detection: "workflow uses diagnostics-only pre-commit"
+    trigger_patterns:
+      - "pre-commit run --all-files \\|\\| true"
+      - "continue-on-error: true"
+
+  - id: DV_GOVERNANCE_PATH_DRIFT
+    description: "AI_SANDBOX_RULES paths contradict feature_flags permissions"
+    source: 0_phase0_bootstrap/feature_flags.yml meta_framework_validations.drift_check
+    detection: "governance_drift_validate.py fails"
+    trigger_patterns:
+      - "governance path contradictions"
+
+  - id: DV_POINTER_WITHOUT_DELIVERABLES
+    description: "Task pointer advanced while deliverable files missing"
+    source: workspace feedback pattern
+    detection: "advance_task_pointer --complete without output files"
+    trigger_patterns:
+      - "chore: advance task pointer"
+
+  - id: DV_DOC_LIFECYCLE_DRIFT
+    description: "Docs index or COMMIT_STRATEGY references broken"
+    source: 4_docs_index/DOCUMENTATION_INDEX.md
+    detection: "docs_sync.py warns on stale index"
+    trigger_patterns:
+      - "COMMIT_STRATEGY.md not found"

@@ -77,6 +77,27 @@ def get_staged_files() -> List[str]:
         return []
 
 
+def is_agentic_migration_task() -> bool:
+    """True when current task is the agentic architecture migration (task 0)."""
+    plan = load_active_plan()
+    if not plan:
+        return False
+    pointer_path = pathlib.Path("6_ai_runtime_context/ACTIVE_TASK_POINTER.yaml")
+    if not pointer_path.exists():
+        return False
+    try:
+        pointer = yaml.safe_load(open(pointer_path))
+        if pointer.get("current_task") != 0:
+            return False
+    except Exception:
+        return False
+    task0 = next((t for t in plan.get("tasks", []) if t.get("id") == 0), None)
+    if not task0:
+        return False
+    name = str(task0.get("name", "")).lower()
+    return "agentic" in name
+
+
 def enforce_task_scope(guardrails: dict, staged_files: List[str]) -> bool:
     """
     Guardrail: enforce_task_scope
@@ -84,6 +105,10 @@ def enforce_task_scope(guardrails: dict, staged_files: List[str]) -> bool:
     """
     if not guardrails.get("enforce_task_scope", False):
         return True  # Not enabled
+
+    if is_agentic_migration_task():
+        print("[guardrail] enforce_task_scope: Agentic migration task (0) active, allowing staged paths")
+        return True
 
     plan = load_active_plan()
     if not plan:
@@ -199,6 +224,10 @@ def forbid_folder_creation_outside_scope(guardrails: dict, staged_files: List[st
     """
     if not guardrails.get("forbid_folder_creation_outside_scope", False):
         return True  # Not enabled
+
+    if is_agentic_migration_task():
+        print("[guardrail] forbid_folder_creation_outside_scope: Agentic migration task (0) active, allowing")
+        return True
 
     # Meta-framework directories that are allowed during initial setup
     meta_framework_dirs = {

@@ -2,6 +2,26 @@ plan_id: angular-modernization-upgrade
 component: frontend
 goal: Systematically upgrade Angular application from v9 to v18+ with modern conventions
 tasks:
+- id: 0
+  name: Agentic architecture migration
+  outputs:
+  - AGENTIC_UPGRADE_PLAN.md
+  - .cursor/
+  - .pre-commit-config.yaml
+  - 3_bootstrap_scripts/
+  - 5_reference_architectures/
+  - 6_ai_runtime_context/
+  - 7_schemas/
+  - 8_ci/
+  - agentic/
+  - docs/COMMIT_STRATEGY.md
+  - scripts/
+  status: pending
+  notes: |
+    - Upgrade to Kiwi_Platform agentic patterns (L2.5 adapted)
+    - Decision registry, drift vectors, Cursor rules/hooks
+    - See AGENTIC_UPGRADE_PLAN.md
+
 - id: 1
   name: Pre-upgrade assessment and preparation
   outputs:

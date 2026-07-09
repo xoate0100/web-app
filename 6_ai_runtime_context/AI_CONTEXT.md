@@ -1,5 +1,5 @@
 # AI Execution Context - Auto-Generated
-**Generated:** 2026-01-07 01:28:06
+**Generated:** 2026-07-09 12:47:07
 **Authority:** `0_phase0_bootstrap/AI_SANDBOX_RULES.md`
 **Purpose:** Consolidated constraint context for AI chat sessions
 
@@ -7,9 +7,8 @@
 ## Current State Context
 **Plan:** angular-modernization-upgrade
 **Component:** frontend
-**Current Task:** 3 - Migrate from TSLint to ESLint
 **Status:** active
-**Next Task:** 4 - Upgrade Angular 9 -> 10
+**Next Task:** 1 - Pre-upgrade assessment and preparation
 
 **Blocking Issues:** None
 
@@ -48,16 +47,15 @@
 
 ---
 ## Current Task Context
-**Task 3:** Migrate from TSLint to ESLint
-**Outputs:**
-- .eslintrc.json
-- package.json (ESLint deps)
-- Remove tslint.json
+**No active task**
 
 **Full Plan:** See `6_ai_runtime_context/ACTIVE_PLAN.yaml`
 
 ---
 ## Enforcement Tools Available
+- **advance_task_pointer.py**: Enforcement tool: advance_task_pointer.py
+- **agentic_coordinate_validate.py**: Enforcement tool: agentic_coordinate_validate.py
+- **agentic_session.py**: Enforcement tool: agentic_session.py
 - **ai_behavior_validation.py**: Enforcement tool: ai_behavior_validation.py
 - **ai_reasoning_tuner.py**: Enforcement tool: ai_reasoning_tuner.py
 - **ai_review.py**: Enforcement tool: ai_review.py
@@ -68,18 +66,23 @@
 - **cli.py**: Enforcement tool: cli.py
 - **commit_validator.py**: Main commit validation function"""
 - **complexity_check.py**: Enforcement tool: complexity_check.py
+- **decision_registry_validate.py**: Enforcement tool: decision_registry_validate.py
 - **docs_sync.py**: Enforcement tool: docs_sync.py
 - **drift_analyzer.py**: Enforcement tool: drift_analyzer.py
+- **drift_vector_check.py**: Enforcement tool: drift_vector_check.py
+- **drift_vectors_validate.py**: Enforcement tool: drift_vectors_validate.py
 - **enforce_format.py**: Enforcement tool: enforce_format.py
 - **feedback_collector.py**: Enforcement tool: feedback_collector.py
 - **feedback_logger.py**: Enforcement tool: feedback_logger.py
 - **gate_enforcement.py**: Enforcement tool: gate_enforcement.py
+- **governance_drift_validate.py**: Enforcement tool: governance_drift_validate.py
 - **guardrail_enforcement.py**: Enforcement tool: guardrail_enforcement.py
 - **init_project.py**: Enforcement tool: init_project.py
 - **init_versioning.py**: Enforcement tool: init_versioning.py
 - **init_wizard.py**: Enforcement tool: init_wizard.py
 - **layout_adaptor.py**: Enforcement tool: layout_adaptor.py
 - **performance_scan.py**: Main performance scan function"""
+- **resurrection_scan.py**: Enforcement tool: resurrection_scan.py
 - **schema_enforcement.py**: Enforcement tool: schema_enforcement.py
 - **security_scan.py**: Enforcement tool: security_scan.py
 - **standardized_feedback.py**: Enforcement tool: standardized_feedback.py
@@ -90,6 +93,7 @@
 - **traceability_graph.py**: Enforcement tool: traceability_graph.py
 - **upgrade_legacy_project.py**: Enforcement tool: upgrade_legacy_project.py
 - **validate_syntax.py**: Enforcement tool: validate_syntax.py
+- **workspace_spine_validate.py**: Enforcement tool: workspace_spine_validate.py
 
 **Location:** `3_bootstrap_scripts/`
 
@@ -113,6 +117,18 @@
 **Reference:** `5_reference_architectures/LAYER_RULES.yaml`
 
 ---
+## Settled Decisions (summary)
+Do not resurrect these without following `reopen_requires` in the registry.
+
+- **DEC-0001-ANGULAR-STACK** (accepted): Remain on Angular for the MifosX web application. Incremental modernization (Angular 9→18+) rather than a framework rewr
+- **DEC-0002-INCREMENTAL-UPGRADE** (accepted): Upgrade Angular incrementally (version-by-version) following ACTIVE_PLAN.yaml tasks. Avoid big-bang rewrites that risk b
+- **DEC-0003-META-FRAMEWORK** (accepted): Keep project_initializer meta-framework integrated (numbered dirs 0_–8_, pre-commit guardrails, AI runtime context). Age
+- **DEC-0004-FINERACT-EXTERNAL-BACKEND** (accepted): Backend is external Apache Fineract accessed via REST API (proxy.conf.js). No in-repo backend service layer. Frontend-on
+- **DEC-0005-AGENTIC-MIGRATION** (accepted): Agentic architecture follows L2.5 single-agent sandbox with decision registry, drift vectors, and Cursor rules/hooks ada
+
+**Reference:** `5_reference_architectures/DECISION_REGISTRY.yaml`
+
+---
 ## Reference Documents
 For complete details, see:
 
@@ -121,7 +137,8 @@ For complete details, see:
 3. **`6_ai_runtime_context/ACTIVE_PLAN.yaml`** - Current plan and tasks
 4. **`6_ai_runtime_context/ACTIVE_TASK_POINTER.yaml`** - Current task pointer
 5. **`5_reference_architectures/LAYER_RULES.yaml`** - Architecture boundaries
-6. **`1_global_standards/`** - Code standards (TDD, SOLID, etc.)
+6. **`5_reference_architectures/DECISION_REGISTRY.yaml`** - Settled decisions
+7. **`1_global_standards/`** - Code standards (TDD, SOLID, etc.)
 
 ---
 ## Usage Instructions
@@ -138,5 +155,5 @@ For complete details, see:
 
 ---
 
-**Last Generated:** 2026-01-07 01:28:06
+**Last Generated:** 2026-07-09 12:47:07
 **Generator:** `3_bootstrap_scripts/generate_ai_context.py`
