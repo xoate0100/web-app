@@ -3,9 +3,6 @@ import { NgModule, Optional, SkipSelf } from '@angular/core';
 import { HTTP_INTERCEPTORS, HttpClient, HttpClientModule } from '@angular/common/http';
 import { RouteReuseStrategy, RouterModule } from '@angular/router';
 
-/** Translation Imports */
-import { TranslateModule } from '@ngx-translate/core';
-
 /** Custom Services */
 import { AuthenticationService } from './authentication/authentication.service';
 import { HttpService } from './http/http.service';
@@ -47,7 +44,6 @@ import { ContentComponent } from './shell/content/content.component';
   imports: [
     SharedModule,
     HttpClientModule,
-    TranslateModule,
     RouterModule
   ],
   declarations: [

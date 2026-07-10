@@ -288,6 +288,7 @@ export class FixedDepositProductInterestRateChartStepComponent implements OnInit
     switch (formType) {
       case 'Slab': return  { title: 'Slab', formfields: this.getSlabFormfields(values) };
       case 'Incentive': return { values, chartTemplate: this.fixedDepositProductsTemplate.chartTemplate };
+      default: return undefined;
     }
   }
 

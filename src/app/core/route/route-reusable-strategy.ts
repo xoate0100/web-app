@@ -25,7 +25,7 @@ export class RouteReusableStrategy extends RouteReuseStrategy {
   }
 
   public shouldReuseRoute(future: ActivatedRouteSnapshot, curr: ActivatedRouteSnapshot): boolean {
-    return (future.routeConfig === curr.routeConfig) || future.data.reuse;
+    return future.routeConfig === curr.routeConfig;
   }
 
 }

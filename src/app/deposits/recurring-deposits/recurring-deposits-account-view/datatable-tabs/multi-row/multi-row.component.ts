@@ -140,6 +140,7 @@ export class MultiRowComponent implements OnInit, OnChanges {
             required: (column.isColumnNullable) ? false : true
           });
         }
+        default: return undefined;
       }
     });
     const data = {

@@ -192,6 +192,7 @@ export class LoanProductTermsStepComponent implements OnInit {
       case 'Principal': return { title: 'Principal by loan cycle', formfields: this.getFormfields(values) };
       case 'NumberOfRepayments': return { title: 'Number of repayments by loan cycle', formfields: this.getFormfields(values) };
       case 'NominalInterestRate': return { title: 'Nominal interest rate by loan cycle', formfields: this.getFormfields(values) };
+      default: return undefined;
     }
   }
 

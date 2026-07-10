@@ -69,6 +69,7 @@ export class ClientApprovalComponent {
       const numSelected = this.selection.selected;
       return _.difference(dataSource2, numSelected).length === 0;
     }
+    return false;
   }
 
   /** Selects all rows if they are not all selected; otherwise clear selection. */

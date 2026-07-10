@@ -26,6 +26,12 @@ jobs:
       - name: Run validation
         run: npm run validate
 
+      - name: Install Playwright browsers
+        run: npm run e2e:install
+
+      - name: Run e2e tests
+        run: npm run e2e:ci
+
       - name: Deploy to github pages
         if: ${{ github.event_name == 'push' }}
         uses: JamesIves/github-pages-deploy-action@v4

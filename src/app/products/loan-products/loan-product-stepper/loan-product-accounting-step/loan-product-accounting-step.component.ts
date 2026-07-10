@@ -55,38 +55,39 @@ export class LoanProductAccountingStepComponent implements OnInit {
       'accountingRule': this.loanProductsTemplate.accountingRule.id
     });
 
-    switch (this.loanProductsTemplate.accountingRule.id) {
-      case 3:
-      case 4:
-        this.loanProductAccountingForm.patchValue({
-          'receivableInterestAccountId': this.loanProductsTemplate.accountingMappings.receivableInterestAccount.id,
-          'receivableFeeAccountId': this.loanProductsTemplate.accountingMappings.receivableFeeAccount.id,
-          'receivablePenaltyAccountId': this.loanProductsTemplate.accountingMappings.receivablePenaltyAccount.id,
-        });
-        /* falls through */
-      case 2:
-        this.loanProductAccountingForm.patchValue({
-          'fundSourceAccountId': this.loanProductsTemplate.accountingMappings.fundSourceAccount.id,
-          'loanPortfolioAccountId': this.loanProductsTemplate.accountingMappings.loanPortfolioAccount.id,
-          'transfersInSuspenseAccountId': this.loanProductsTemplate.accountingMappings.transfersInSuspenseAccount.id,
-          'interestOnLoanAccountId': this.loanProductsTemplate.accountingMappings.interestOnLoanAccount.id,
-          'incomeFromFeeAccountId': this.loanProductsTemplate.accountingMappings.incomeFromFeeAccount.id,
-          'incomeFromPenaltyAccountId': this.loanProductsTemplate.accountingMappings.incomeFromPenaltyAccount.id,
-          'incomeFromRecoveryAccountId': this.loanProductsTemplate.accountingMappings.incomeFromRecoveryAccount.id,
-          'writeOffAccountId': this.loanProductsTemplate.accountingMappings.writeOffAccount.id,
-          'overpaymentLiabilityAccountId': this.loanProductsTemplate.accountingMappings.overpaymentLiabilityAccount.id,
-          'advancedAccountingRules': (this.loanProductsTemplate.paymentChannelToFundSourceMappings || this.loanProductsTemplate.feeToIncomeAccountMappings || this.loanProductsTemplate.penaltyToIncomeAccountMappings) ? true : false
-        });
+    const accountingRuleId = this.loanProductsTemplate.accountingRule.id;
 
-        this.loanProductAccountingForm.setControl('paymentChannelToFundSourceMappings',
-          this.formBuilder.array((this.loanProductsTemplate.paymentChannelToFundSourceMappings || []).map((paymentFundSource: any) =>
-          ({ paymentTypeId: paymentFundSource.paymentType.id, fundSourceAccountId: paymentFundSource.fundSourceAccount.id }))));
-        this.loanProductAccountingForm.setControl('feeToIncomeAccountMappings',
-          this.formBuilder.array((this.loanProductsTemplate.feeToIncomeAccountMappings || []).map((feesIncome: any) =>
-          ({ chargeId: feesIncome.charge.id, incomeAccountId: feesIncome.incomeAccount.id }))));
-        this.loanProductAccountingForm.setControl('penaltyToIncomeAccountMappings',
-          this.formBuilder.array((this.loanProductsTemplate.penaltyToIncomeAccountMappings || []).map((penaltyIncome: any) =>
-          ({ chargeId: penaltyIncome.charge.id, incomeAccountId: penaltyIncome.incomeAccount.id }))));
+    if (accountingRuleId === 3 || accountingRuleId === 4) {
+      this.loanProductAccountingForm.patchValue({
+        'receivableInterestAccountId': this.loanProductsTemplate.accountingMappings.receivableInterestAccount.id,
+        'receivableFeeAccountId': this.loanProductsTemplate.accountingMappings.receivableFeeAccount.id,
+        'receivablePenaltyAccountId': this.loanProductsTemplate.accountingMappings.receivablePenaltyAccount.id,
+      });
+    }
+
+    if (accountingRuleId === 2 || accountingRuleId === 3 || accountingRuleId === 4) {
+      this.loanProductAccountingForm.patchValue({
+        'fundSourceAccountId': this.loanProductsTemplate.accountingMappings.fundSourceAccount.id,
+        'loanPortfolioAccountId': this.loanProductsTemplate.accountingMappings.loanPortfolioAccount.id,
+        'transfersInSuspenseAccountId': this.loanProductsTemplate.accountingMappings.transfersInSuspenseAccount.id,
+        'interestOnLoanAccountId': this.loanProductsTemplate.accountingMappings.interestOnLoanAccount.id,
+        'incomeFromFeeAccountId': this.loanProductsTemplate.accountingMappings.incomeFromFeeAccount.id,
+        'incomeFromPenaltyAccountId': this.loanProductsTemplate.accountingMappings.incomeFromPenaltyAccount.id,
+        'incomeFromRecoveryAccountId': this.loanProductsTemplate.accountingMappings.incomeFromRecoveryAccount.id,
+        'writeOffAccountId': this.loanProductsTemplate.accountingMappings.writeOffAccount.id,
+        'overpaymentLiabilityAccountId': this.loanProductsTemplate.accountingMappings.overpaymentLiabilityAccount.id,
+        'advancedAccountingRules': (this.loanProductsTemplate.paymentChannelToFundSourceMappings || this.loanProductsTemplate.feeToIncomeAccountMappings || this.loanProductsTemplate.penaltyToIncomeAccountMappings) ? true : false
+      });
+
+      this.loanProductAccountingForm.setControl('paymentChannelToFundSourceMappings',
+        this.formBuilder.array((this.loanProductsTemplate.paymentChannelToFundSourceMappings || []).map((paymentFundSource: any) =>
+        ({ paymentTypeId: paymentFundSource.paymentType.id, fundSourceAccountId: paymentFundSource.fundSourceAccount.id }))));
+      this.loanProductAccountingForm.setControl('feeToIncomeAccountMappings',
+        this.formBuilder.array((this.loanProductsTemplate.feeToIncomeAccountMappings || []).map((feesIncome: any) =>
+        ({ chargeId: feesIncome.charge.id, incomeAccountId: feesIncome.incomeAccount.id }))));
+      this.loanProductAccountingForm.setControl('penaltyToIncomeAccountMappings',
+        this.formBuilder.array((this.loanProductsTemplate.penaltyToIncomeAccountMappings || []).map((penaltyIncome: any) =>
+        ({ chargeId: penaltyIncome.charge.id, incomeAccountId: penaltyIncome.incomeAccount.id }))));
     }
   }
 
@@ -205,6 +206,7 @@ export class LoanProductAccountingStepComponent implements OnInit {
       case 'PaymentFundSource': return { title: 'Configure Fund Sources for Payment Channels', formfields: this.getPaymentFundSourceFormfields(values) };
       case 'FeesIncome': return { title: 'Map Fees to Income Accounts', formfields: this.getFeesIncomeFormfields(values) };
       case 'PenaltyIncome': return { title: 'Map Penalties to Specific Income Accounts', formfields: this.getPenaltyIncomeFormfields(values) };
+      default: return undefined;
     }
   }
 

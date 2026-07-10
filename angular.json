@@ -68,7 +68,6 @@
             "scripts": [],
             "browser": "src/main.ts",
             "allowedCommonJsDependencies": [
-              "@ckeditor/ckeditor5-build-classic",
               "lodash"
             ]
           },
@@ -115,6 +114,9 @@
             "buildTarget": "mifosx-web-app:build"
           },
           "configurations": {
+            "development": {
+              "buildTarget": "mifosx-web-app:build:development"
+            },
             "production": {
               "buildTarget": "mifosx-web-app:build:production"
             }
@@ -138,7 +140,6 @@
             "exclude": [
               "src/app/core/authentication/authentication.service.spec.ts",
               "src/app/core/authentication/authentication.guard.spec.ts",
-              "src/app/core/i18n/i18n.service.spec.ts",
               "src/app/core/http/http.service.spec.ts",
               "src/app/core/http/cache.interceptor.spec.ts",
               "src/app/core/http/api-prefix.interceptor.spec.ts",

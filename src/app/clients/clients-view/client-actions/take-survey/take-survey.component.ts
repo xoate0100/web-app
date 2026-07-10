@@ -89,14 +89,10 @@ export class TakeSurveyComponent {
    * Checks if there is any response or not from the user and enables the submit button accordingly
    */
   isAnyResponse(): boolean {
-    if (this.surveyData) {
-      this.surveyData.questionDatas.forEach((element: any) => {
-        if (element.answer) {
-          return false;
-        }
-      });
+    if (!this.surveyData) {
+      return true;
     }
-    return true;
+    return !this.surveyData.questionDatas.some((element: any) => Boolean(element.answer));
   }
 
   /**

@@ -289,6 +289,7 @@ export class RecurringDepositProductInterestRateChartStepComponent implements On
     switch (formType) {
       case 'Slab': return { title: 'Slab', formfields: this.getSlabFormfields(values) };
       case 'Incentive': return { values, chartTemplate: this.recurringDepositProductsTemplate.chartTemplate };
+      default: return undefined;
     }
   }
 

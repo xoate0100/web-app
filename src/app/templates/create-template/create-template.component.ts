@@ -4,7 +4,8 @@ import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms'
 import { Router, ActivatedRoute } from '@angular/router';
 
 /** CKEditor5 Imports */
-import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+import { CKEditorComponent } from '@ckeditor/ckeditor5-angular';
+import MifosClassicEditor from '../../shared/ckeditor/mifos-classic-editor';
 
 /** Custom Imports */
 import { clientParameterLabels, loanParameterLabels, repaymentParameterLabels } from '../template-parameter-labels';
@@ -25,9 +26,9 @@ import { TemplatesService } from '../templates.service';
 export class CreateTemplateComponent implements OnInit {
 
   /** CKEditor5 */
-  public Editor = ClassicEditor;
+  public Editor = MifosClassicEditor;
   /** CKEditor5 Template Reference */
-  @ViewChild('ckEditor', { static: true }) ckEditor: any;
+  @ViewChild('ckEditor', { static: true }) ckEditor!: CKEditorComponent;
 
   /** Template form. */
   templateForm: FormGroup;

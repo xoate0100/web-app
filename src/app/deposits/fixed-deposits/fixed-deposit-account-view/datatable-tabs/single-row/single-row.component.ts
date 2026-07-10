@@ -202,6 +202,8 @@ export class SingleRowComponent implements OnInit {
             required: (column.isColumnNullable) ? false : true
           });
         }
+
+                default: return undefined;
       }
     });
   }
