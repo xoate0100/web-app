@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit, ChangeDetectionStrategy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { DatePipe } from '@angular/common';
@@ -14,8 +14,10 @@ import { ClientsService } from 'app/clients/clients.service';
  * Create account transfers
  */
 @Component({
+  standalone: false,
   selector: 'mifosx-make-account-transfers',
   templateUrl: './make-account-transfers.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./make-account-transfers.component.scss']
 })
 export class MakeAccountTransfersComponent implements OnInit, AfterViewInit {

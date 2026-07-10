@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 
@@ -14,8 +14,10 @@ import { GroupsService } from '../groups.service';
  * Groups View Component.
  */
 @Component({
+  standalone: false,
   selector: 'mifosx-groups-view',
   templateUrl: './groups-view.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./groups-view.component.scss']
 })
 export class GroupsViewComponent {

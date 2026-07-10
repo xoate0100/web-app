@@ -1,13 +1,15 @@
 /** Angular Imports */
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, ChangeDetectionStrategy } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute } from '@angular/router';
 
 @Component({
+  standalone: false,
   selector: 'mifosx-share-products',
   templateUrl: './share-products.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./share-products.component.scss']
 })
 export class ShareProductsComponent implements OnInit {

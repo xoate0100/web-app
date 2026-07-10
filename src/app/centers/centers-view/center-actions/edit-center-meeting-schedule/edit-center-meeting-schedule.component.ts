@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { DatePipe } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -12,8 +12,10 @@ import { SettingsService } from 'app/settings/settings.service';
  * Edit Center Meetings Schedule Component
  */
 @Component({
+  standalone: false,
   selector: 'mifosx-edit-center-meeting-schedule',
   templateUrl: './edit-center-meeting-schedule.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./edit-center-meeting-schedule.component.scss']
 })
 export class EditCenterMeetingScheduleComponent implements OnInit {

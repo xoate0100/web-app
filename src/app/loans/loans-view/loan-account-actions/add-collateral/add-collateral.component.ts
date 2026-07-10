@@ -1,5 +1,5 @@
 /** Angular Imports. */
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, ChangeDetectionStrategy } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 
@@ -10,8 +10,10 @@ import { LoansService } from 'app/loans/loans.service';
  * Add Collateral component.
  */
 @Component({
+  standalone: false,
   selector: 'mifosx-add-collateral',
   templateUrl: './add-collateral.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./add-collateral.component.scss']
 })
 export class AddCollateralComponent implements OnInit {

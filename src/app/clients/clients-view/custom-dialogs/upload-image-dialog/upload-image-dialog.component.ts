@@ -1,13 +1,15 @@
 /** Angular Imports */
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
 
 /**
  * Upload image dialog component.
  */
 @Component({
+  standalone: false,
   selector: 'mifosx-upload-image-dialog',
   templateUrl: './upload-image-dialog.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./upload-image-dialog.component.scss']
 })
 export class UploadImageDialogComponent {

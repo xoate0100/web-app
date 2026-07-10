@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 
@@ -14,8 +14,10 @@ import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.co
  * Create Center View
  */
 @Component({
+  standalone: false,
   selector: 'mifosx-centers-view',
   templateUrl: './centers-view.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./centers-view.component.scss']
 })
 export class CentersViewComponent implements OnInit {

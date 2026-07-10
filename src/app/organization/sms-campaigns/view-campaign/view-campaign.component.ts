@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, ChangeDetectionStrategy } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { MatTableDataSource, MatTable } from '@angular/material/table';
@@ -22,8 +22,10 @@ import { SettingsService } from 'app/settings/settings.service';
  * View SMS Campaign Component
  */
 @Component({
+  standalone: false,
   selector: 'mifosx-view-campaign',
   templateUrl: './view-campaign.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./view-campaign.component.scss']
 })
 export class ViewCampaignComponent implements OnInit {

@@ -1,5 +1,5 @@
 /** Angular Imports. */
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 
@@ -13,8 +13,10 @@ import { DeleteDialogComponent } from '../../../shared/delete-dialog/delete-dial
  * View Holidays component.
  */
 @Component({
+  standalone: false,
   selector: 'mifosx-view-holidays',
   templateUrl: './view-holidays.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./view-holidays.component.scss']
 })
 export class ViewHolidaysComponent {

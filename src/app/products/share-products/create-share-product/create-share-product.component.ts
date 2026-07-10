@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, ChangeDetectionStrategy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { ShareProductDetailsStepComponent } from '../share-product-stepper/share-product-details-step/share-product-details-step.component';
@@ -12,8 +12,10 @@ import { ShareProductAccountingStepComponent } from '../share-product-stepper/sh
 import { ProductsService } from 'app/products/products.service';
 
 @Component({
+  standalone: false,
   selector: 'mifosx-create-share-product',
   templateUrl: './create-share-product.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./create-share-product.component.scss']
 })
 export class CreateShareProductComponent implements OnInit {

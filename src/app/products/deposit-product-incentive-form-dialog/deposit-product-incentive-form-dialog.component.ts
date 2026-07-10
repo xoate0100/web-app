@@ -1,10 +1,12 @@
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, OnInit, Inject, ChangeDetectionStrategy } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
+  standalone: false,
   selector: 'mifosx-deposit-product-incentive-form-dialog',
   templateUrl: './deposit-product-incentive-form-dialog.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./deposit-product-incentive-form-dialog.component.scss']
 })
 export class DepositProductIncentiveFormDialogComponent implements OnInit {

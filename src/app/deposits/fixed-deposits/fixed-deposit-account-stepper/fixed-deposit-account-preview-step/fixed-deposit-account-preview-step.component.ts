@@ -1,14 +1,16 @@
 /** Angular Imports */
-import { Component, OnInit, Input, Output, EventEmitter, OnChanges } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, OnChanges, ChangeDetectionStrategy } from '@angular/core';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 
 /**
  * Fixed Deposit Preview Step
  */
 @Component({
+  standalone: false,
   selector: 'mifosx-fixed-deposit-account-preview-step',
   templateUrl: './fixed-deposit-account-preview-step.component.html',
   styleUrls: ['./fixed-deposit-account-preview-step.component.scss'],
+  changeDetection: ChangeDetectionStrategy.Eager,
   animations: [
     trigger('expandChartSlab', [
       state('collapsed', style({ height: '0px', minHeight: '0' })),

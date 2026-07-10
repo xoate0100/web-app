@@ -1,13 +1,15 @@
 /** Angular Imports */
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, OnInit, Inject, ChangeDetectionStrategy } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 /**
  * Enable dialog component.
  */
 @Component({
+  standalone: false,
   selector: 'mifosx-enable-dialog',
   templateUrl: './enable-dialog.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./enable-dialog.component.scss']
 })
 export class EnableDialogComponent implements OnInit {

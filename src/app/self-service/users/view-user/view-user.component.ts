@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ChangePasswordDialogComponent } from 'app/shared/change-password-dialog/change-password-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
@@ -13,8 +13,10 @@ import { UserService } from '../user.service';
  * TODO: Complete functionality once API is available.
  */
 @Component({
+  standalone: false,
   selector: 'mifosx-view-user',
   templateUrl: './view-user.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./view-user.component.scss']
 })
 export class ViewUserComponent implements OnInit {

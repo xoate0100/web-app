@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, ChangeDetectionStrategy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
@@ -20,8 +20,10 @@ import { InputBase } from 'app/shared/form-dialog/formfield/model/input-base';
  * Groups Notes Tab Component.
  */
 @Component({
+  standalone: false,
   selector: 'mifosx-notes-tab',
   templateUrl: './notes-tab.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./notes-tab.component.scss']
 })
 export class NotesTabComponent implements OnInit {

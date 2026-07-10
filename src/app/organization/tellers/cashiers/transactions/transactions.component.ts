@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, ChangeDetectionStrategy } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
@@ -13,8 +13,10 @@ import { OrganizationService } from 'app/organization/organization.service';
  * Cashier Transactions Component.
  */
 @Component({
+  standalone: false,
   selector: 'mifosx-transactions',
   templateUrl: './transactions.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./transactions.component.scss']
 })
 export class TransactionsComponent implements OnInit {

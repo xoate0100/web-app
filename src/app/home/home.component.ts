@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { startWith, map } from 'rxjs/operators';
@@ -14,8 +14,10 @@ import { AuthenticationService } from '../core/authentication/authentication.ser
  * Home component.
  */
 @Component({
+  standalone: false,
   selector: 'mifosx-home',
   templateUrl: './home.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit {

@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 
@@ -10,8 +10,10 @@ import { OrganizationService } from 'app/organization/organization.service';
  * Edit Payment Type component.
  */
 @Component({
+  standalone: false,
   selector: 'mifosx-edit-payment-type',
   templateUrl: './edit-payment-type.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./edit-payment-type.component.scss']
 })
 export class EditPaymentTypeComponent implements OnInit {

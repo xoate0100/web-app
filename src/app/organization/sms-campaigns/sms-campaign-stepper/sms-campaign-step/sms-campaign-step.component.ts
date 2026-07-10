@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit, Input, ViewChild, EventEmitter, Output} from '@angular/core';
+import { Component, OnInit, Input, ViewChild, EventEmitter, Output, ChangeDetectionStrategy } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 
 /** Custom Services */
@@ -15,8 +15,10 @@ import { BusinessRuleParametersComponent } from './business-rule-parameters/busi
  * SMS Campaign Step Component
  */
 @Component({
+  standalone: false,
   selector: 'mifosx-sms-campaign-step',
   templateUrl: './sms-campaign-step.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./sms-campaign-step.component.scss']
 })
 export class SmsCampaignStepComponent implements OnInit {

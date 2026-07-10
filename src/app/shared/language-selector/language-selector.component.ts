@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { FormControl } from '@angular/forms';
 
 /** Custom Services */
@@ -12,8 +12,10 @@ import { I18nService } from '../../core/i18n/i18n.service';
  *       to provide language support in the application.
  */
 @Component({
+  standalone: false,
   selector: 'mifosx-language-selector',
   templateUrl: './language-selector.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./language-selector.component.scss']
 })
 export class LanguageSelectorComponent implements OnInit {

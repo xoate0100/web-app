@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, ChangeDetectionStrategy } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
@@ -23,8 +23,10 @@ import { SelectBase } from 'app/shared/form-dialog/formfield/model/select-base';
  * Individual Collection Sheet
  */
 @Component({
+  standalone: false,
   selector: 'mifosx-individual-collection-sheet',
   templateUrl: './individual-collection-sheet.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./individual-collection-sheet.component.scss']
 })
 export class IndividualCollectionSheetComponent implements OnInit {

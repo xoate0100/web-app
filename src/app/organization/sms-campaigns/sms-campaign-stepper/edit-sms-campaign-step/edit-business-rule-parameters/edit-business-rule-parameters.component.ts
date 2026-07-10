@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnChanges, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnChanges, Input, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
 import { Validators, FormGroup, FormControl } from '@angular/forms';
 import { DatePipe } from '@angular/common';
 
@@ -18,8 +18,10 @@ import { SelectOption } from 'app/reports/common-models/select-option.model';
  * Edit Business Rule Parameters.
  */
 @Component({
+  standalone: false,
   selector: 'mifosx-edit-business-rule-parameters',
   templateUrl: './edit-business-rule-parameters.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./edit-business-rule-parameters.component.scss']
 })
 export class EditBusinessRuleParametersComponent implements OnChanges {

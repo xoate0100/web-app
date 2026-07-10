@@ -1,14 +1,16 @@
 /** Angular Imports */
-import { Component, Input, Output, EventEmitter, OnChanges } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnChanges, ChangeDetectionStrategy } from '@angular/core';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 
 /**
  * Recurring Deposit Preview Step
  */
 @Component({
+  standalone: false,
   selector: 'mifosx-recurring-deposits-account-preview-step',
   templateUrl: './recurring-deposits-account-preview-step.component.html',
   styleUrls: ['./recurring-deposits-account-preview-step.component.scss'],
+  changeDetection: ChangeDetectionStrategy.Eager,
   animations: [
     trigger('expandChartSlab', [
       state('collapsed', style({ height: '0px', minHeight: '0' })),

@@ -1,13 +1,15 @@
 /** Angular Imports */
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 /**
  * Offices Datatable Tabs Component
  */
 @Component({
+  standalone: false,
   selector: 'mifosx-datatable-tabs',
   templateUrl: './datatable-tabs.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./datatable-tabs.component.scss']
 })
 export class DatatableTabsComponent {

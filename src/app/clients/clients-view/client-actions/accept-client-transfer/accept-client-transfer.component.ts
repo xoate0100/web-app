@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 
@@ -10,8 +10,10 @@ import { ClientsService } from 'app/clients/clients.service';
  * Accept Client Transfer Component
  */
 @Component({
+  standalone: false,
   selector: 'mifosx-accept-client-transfer',
   templateUrl: './accept-client-transfer.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./accept-client-transfer.component.scss']
 })
 export class AcceptClientTransferComponent implements OnInit {

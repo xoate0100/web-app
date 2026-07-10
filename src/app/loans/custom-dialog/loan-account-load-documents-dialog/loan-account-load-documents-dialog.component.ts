@@ -1,10 +1,12 @@
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, OnInit, Inject, ChangeDetectionStrategy } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 
 @Component({
+  standalone: false,
   selector: 'mifosx-loan-account-load-documents-dialog',
   templateUrl: './loan-account-load-documents-dialog.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./loan-account-load-documents-dialog.component.scss']
 })
 export class LoanAccountLoadDocumentsDialogComponent implements OnInit {

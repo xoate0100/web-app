@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 
@@ -10,8 +10,10 @@ import { OrganizationService } from '../../organization.service';
  * Edit Adhoc Query component.
  */
 @Component({
+  standalone: false,
   selector: 'mifosx-edit-adhoc-query',
   templateUrl: './edit-adhoc-query.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./edit-adhoc-query.component.scss']
 })
 export class EditAdhocQueryComponent implements OnInit {

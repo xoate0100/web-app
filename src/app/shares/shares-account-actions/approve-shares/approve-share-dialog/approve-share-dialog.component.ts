@@ -1,13 +1,15 @@
 /** Angular Imports */
-import { Component, Inject } from '@angular/core';
+import { Component, Inject, ChangeDetectionStrategy } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 /**
  * Approve share dialog component.
  */
 @Component({
+  standalone: false,
   selector: 'mifosx-approve-share-dialog',
   templateUrl: './approve-share-dialog.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./approve-share-dialog.component.scss']
 })
 export class ApproveShareDialogComponent {

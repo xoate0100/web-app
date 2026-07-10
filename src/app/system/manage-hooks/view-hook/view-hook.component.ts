@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 
@@ -13,8 +13,10 @@ import { SystemService } from '../../system.service';
  * View Hook Component.
  */
 @Component({
+  standalone: false,
   selector: 'mifosx-view-hook',
   templateUrl: './view-hook.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./view-hook.component.scss']
 })
 export class ViewHookComponent implements OnInit {

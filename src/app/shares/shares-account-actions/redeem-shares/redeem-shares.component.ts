@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, ChangeDetectionStrategy } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { DatePipe } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -11,8 +11,10 @@ import { SharesService } from 'app/shares/shares.service';
  * Redeem Shares Component
  */
 @Component({
+  standalone: false,
   selector: 'mifosx-redeem-shares',
   templateUrl: './redeem-shares.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./redeem-shares.component.scss']
 })
 export class RedeemSharesComponent implements OnInit {

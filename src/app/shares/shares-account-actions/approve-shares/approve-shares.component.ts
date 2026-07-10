@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit, ViewChild, Input } from '@angular/core';
+import { Component, OnInit, ViewChild, Input, ChangeDetectionStrategy } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
@@ -17,8 +17,10 @@ import { SharesService } from 'app/shares/shares.service';
  * Approve shares component.
  */
 @Component({
+  standalone: false,
   selector: 'mifosx-approve-shares',
   templateUrl: './approve-shares.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./approve-shares.component.scss']
 })
 export class ApproveSharesComponent implements OnInit {

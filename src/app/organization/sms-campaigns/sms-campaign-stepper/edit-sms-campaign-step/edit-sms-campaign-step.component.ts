@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit, Output, Input, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, Input, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
 import { FormGroup, Validators, FormBuilder, FormControl } from '@angular/forms';
 
 /** Custom Services */
@@ -12,8 +12,10 @@ import { ReportParameter } from 'app/reports/common-models/report-parameter.mode
  * Edit SMS Campaign step.
  */
 @Component({
+  standalone: false,
   selector: 'mifosx-edit-sms-campaign-step',
   templateUrl: './edit-sms-campaign-step.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./edit-sms-campaign-step.component.scss']
 })
 export class EditSmsCampaignStepComponent implements OnInit {

@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
+import { Component, OnInit, ViewChild, AfterViewInit, ChangeDetectionStrategy } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { FormControl } from '@angular/forms';
@@ -19,8 +19,10 @@ import { JournalEntriesDataSource } from './journal-entry.datasource';
  * Search journal entry component.
  */
 @Component({
+  standalone: false,
   selector: 'mifosx-search-journal-entry',
   templateUrl: './search-journal-entry.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./search-journal-entry.component.scss']
 })
 export class SearchJournalEntryComponent implements OnInit, AfterViewInit {

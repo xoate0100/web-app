@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, ChangeDetectionStrategy } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
@@ -18,8 +18,10 @@ import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.co
  * Edit Report Component.
  */
 @Component({
+  standalone: false,
   selector: 'mifosx-edit-report',
   templateUrl: './edit-report.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./edit-report.component.scss']
 })
 export class EditReportComponent implements OnInit {

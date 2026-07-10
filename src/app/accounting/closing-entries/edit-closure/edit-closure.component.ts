@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 
@@ -10,8 +10,10 @@ import { AccountingService } from '../../accounting.service';
  * Edit closure component.
  */
 @Component({
+  standalone: false,
   selector: 'mifosx-edit-closure',
   templateUrl: './edit-closure.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./edit-closure.component.scss']
 })
 export class EditClosureComponent implements OnInit {

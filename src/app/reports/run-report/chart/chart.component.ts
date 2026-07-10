@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnChanges, Input } from '@angular/core';
+import { Component, OnChanges, Input, ChangeDetectionStrategy } from '@angular/core';
 
 /** Custom Services */
 import { ReportsService } from '../../reports.service';
@@ -8,14 +8,16 @@ import { ReportsService } from '../../reports.service';
 import { ChartData } from '../../common-models/chart-data.model';
 
 /** Charting Imports */
-import Chart from 'chart.js';
+import { createChart } from 'app/shared/chart-setup';
 
 /**
  * Chart Component
  */
 @Component({
+  standalone: false,
   selector: 'mifosx-chart',
   templateUrl: './chart.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./chart.component.scss' ]
 })
 export class ChartComponent implements OnChanges {
@@ -59,7 +61,7 @@ export class ChartComponent implements OnChanges {
     if (this.chart) {
       this.chart.destroy();
     }
-    this.chart = new Chart('output', {
+    this.chart = createChart('output', {
       type: 'pie',
       data: {
           labels: inputData.keys,
@@ -70,9 +72,11 @@ export class ChartComponent implements OnChanges {
           }]
       },
       options: {
-        title: {
-          display: true,
-          text: inputData.keysLabel
+        plugins: {
+          title: {
+            display: true,
+            text: inputData.keysLabel
+          }
         }
       }
     });
@@ -86,7 +90,7 @@ export class ChartComponent implements OnChanges {
     if (this.chart) {
       this.chart.destroy();
     }
-    this.chart = new Chart('output', {
+    this.chart = createChart('output', {
       type: 'bar',
       data: {
         labels: inputData.keys,
@@ -97,17 +101,19 @@ export class ChartComponent implements OnChanges {
         }]
       },
       options: {
-        legend: { display: false },
+        plugins: {
+          legend: { display: false }
+        },
         scales: {
-          xAxes: [{
-            scaleLabel: {
+          x: {
+            title: {
               display: true,
-              labelString: inputData.keysLabel
+              text: inputData.keysLabel
             },
             ticks: {
               beginAtZero: true
             }
-          }]
+          }
         }
       }
     });

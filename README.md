@@ -18,9 +18,12 @@ The latest code is continuously deployed at https://openmf.github.io/web-app/ wh
 
     [`npm`](https://nodejs.org/en/download/)
 
-2. Install [angular-cli](https://github.com/angular/angular-cli) globally.
+2. Install [Angular CLI](https://github.com/angular/angular-cli) globally (optional — the project-local CLI is used via `npx`/`npm run`).
+
+    Requires **Node.js >= 20.19** (Node 22 LTS recommended).
+
 ```
-npm install -g @angular/cli@9.1.12
+npm install -g @angular/cli@22
 ```
 
 3. Clone the project locally into your system.
@@ -32,7 +35,7 @@ git clone https://github.com/openMF/web-app.git
 
 5. Install the dependencies.
 ```
-npm install
+npm ci
 ```
 
 6. To preview the app, run the following command and navigate to `http://localhost:4200/`.
@@ -58,7 +61,7 @@ Run `ng generate component component-name` to generate a new component. You can 
 
 ### Build
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
+Run `ng build --configuration=production` to build the project. The build artifacts will be stored in the `dist/` directory.
 
 ### Further help
 

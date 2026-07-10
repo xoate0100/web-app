@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, ChangeDetectionStrategy } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
@@ -13,8 +13,10 @@ import { of } from 'rxjs';
  * Manage scheduler jobs component.
  */
 @Component({
+  standalone: false,
   selector: 'mifosx-manage-scheduler-jobs',
   templateUrl: './manage-scheduler-jobs.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./manage-scheduler-jobs.component.scss']
 })
 export class ManageSchedulerJobsComponent implements OnInit {

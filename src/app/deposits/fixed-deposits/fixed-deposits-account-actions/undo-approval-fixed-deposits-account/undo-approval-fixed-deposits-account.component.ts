@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 
@@ -10,8 +10,10 @@ import { SavingsService } from 'app/savings/savings.service';
  * Undo Approval Fixed Deposits Account Component
  */
 @Component({
+  standalone: false,
   selector: 'mifosx-undo-approval-fixed-deposits-account',
   templateUrl: './undo-approval-fixed-deposits-account.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./undo-approval-fixed-deposits-account.component.scss']
 })
 export class UndoApprovalFixedDepositsAccountComponent implements OnInit {

@@ -1,12 +1,14 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, ChangeDetectionStrategy } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { FormControl } from '@angular/forms';
 
 import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.component';
 
 @Component({
+  standalone: false,
   selector: 'mifosx-loan-product-charges-step',
   templateUrl: './loan-product-charges-step.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./loan-product-charges-step.component.scss']
 })
 export class LoanProductChargesStepComponent implements OnInit {

@@ -1,5 +1,5 @@
 /** Angular Imports. */
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { FormBuilder, FormGroup, FormControl, Validators, AbstractControl, ValidationErrors, ValidatorFn } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
@@ -8,8 +8,10 @@ import { Subscription } from 'rxjs';
 import { ClientsService } from 'app/clients/clients.service';
 
 @Component({
+  standalone: false,
   selector: 'mifosx-create-self-service-user',
   templateUrl: './create-self-service-user.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./create-self-service-user.component.scss']
 })
 export class CreateSelfServiceUserComponent implements OnInit {

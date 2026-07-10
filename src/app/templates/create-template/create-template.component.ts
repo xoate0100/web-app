@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, ChangeDetectionStrategy } from '@angular/core';
 import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 
@@ -16,8 +16,10 @@ import { TemplatesService } from '../templates.service';
  * Create Template Component.
  */
 @Component({
+  standalone: false,
   selector: 'mifosx-create-template',
   templateUrl: './create-template.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./create-template.component.scss']
 })
 export class CreateTemplateComponent implements OnInit {

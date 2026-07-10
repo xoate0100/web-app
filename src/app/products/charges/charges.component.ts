@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, ViewChild, OnInit } from '@angular/core';
+import { Component, ViewChild, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
@@ -12,8 +12,10 @@ import { of } from 'rxjs';
  * Charges component.
  */
 @Component({
+  standalone: false,
   selector: 'mifosx-charges',
   templateUrl: './charges.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./charges.component.scss']
 })
 export class ChargesComponent implements OnInit {

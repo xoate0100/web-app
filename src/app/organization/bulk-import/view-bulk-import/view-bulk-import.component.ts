@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, ChangeDetectionStrategy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
@@ -14,8 +14,10 @@ import { BulkImports } from './bulk-imports';
  * View Bulk Imports Component
  */
 @Component({
+  standalone: false,
   selector: 'mifosx-view-bulk-import',
   templateUrl: './view-bulk-import.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./view-bulk-import.component.scss']
 })
 export class ViewBulkImportComponent implements OnInit {

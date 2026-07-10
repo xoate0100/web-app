@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit, ChangeDetectionStrategy } from '@angular/core';
 import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 
@@ -15,8 +15,10 @@ import { MatDialog } from '@angular/material/dialog';
  * Manage Group Members Component
  */
 @Component({
+  standalone: false,
   selector: 'mifosx-manage-group-members',
   templateUrl: './manage-group-members.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./manage-group-members.component.scss']
 })
 export class ManageGroupMembersComponent implements AfterViewInit {
@@ -28,7 +30,7 @@ export class ManageGroupMembersComponent implements AfterViewInit {
   /** Client Members. */
   clientMembers: any[] = [];
   /** Client Choice. */
-  clientChoice = new FormControl('');
+  clientChoice = new FormControl<any>('');
 
   /**
    * Fetches group action data from `resolve`

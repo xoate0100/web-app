@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 
@@ -7,9 +7,11 @@ import { animate, state, style, transition, trigger } from '@angular/animations'
  * Interest Rate Chart Tab Component.
  */
 @Component({
+  standalone: false,
   selector: 'mifosx-interest-rate-chart-tab',
   templateUrl: './interest-rate-chart-tab.component.html',
   styleUrls: ['./interest-rate-chart-tab.component.scss'],
+  changeDetection: ChangeDetectionStrategy.Eager,
   animations: [
     trigger('expandChartSlab', [
       state('collapsed', style({ height: '0px', minHeight: '0' })),

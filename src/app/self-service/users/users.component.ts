@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, ChangeDetectionStrategy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { SelectionModel } from '@angular/cdk/collections';
 import { MatPaginator } from '@angular/material/paginator';
@@ -18,8 +18,10 @@ import { User } from './user.model';
  * TODO: Complete functionality once API is available.
  */
 @Component({
+  standalone: false,
   selector: 'mifosx-users',
   templateUrl: './users.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./users.component.scss']
 })
 export class UsersComponent implements OnInit {

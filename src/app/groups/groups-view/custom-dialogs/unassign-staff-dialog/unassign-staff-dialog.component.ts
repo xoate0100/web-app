@@ -1,13 +1,15 @@
 /** Angular Imports */
-import { Component, Inject } from '@angular/core';
+import { Component, Inject, ChangeDetectionStrategy } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 /**
  * Unassign staff dialog component.
  */
 @Component({
+  standalone: false,
   selector: 'mifosx-unassign-staff-dialog',
   templateUrl: './unassign-staff-dialog.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./unassign-staff-dialog.component.scss']
 })
 export class UnassignStaffDialogComponent {

@@ -1,9 +1,11 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, ChangeDetectionStrategy } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 @Component({
+  standalone: false,
   selector: 'mifosx-saving-product-details-step',
   templateUrl: './saving-product-details-step.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./saving-product-details-step.component.scss']
 })
 export class SavingProductDetailsStepComponent implements OnInit {

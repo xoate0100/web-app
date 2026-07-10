@@ -1,13 +1,15 @@
 /** Angular Imports */
-import { Component, Input, OnChanges } from '@angular/core';
+import { Component, Input, OnChanges, ChangeDetectionStrategy } from '@angular/core';
 import { FormControl } from '@angular/forms';
 
 /**
  * Campaign Message Step
  */
 @Component({
+  standalone: false,
   selector: 'mifosx-campaign-message-step',
   templateUrl: './campaign-message-step.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./campaign-message-step.component.scss']
 })
 export class CampaignMessageStepComponent implements OnChanges {

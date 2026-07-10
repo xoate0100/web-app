@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { DatePipe } from '@angular/common';
@@ -12,8 +12,10 @@ import { SettingsService } from 'app/settings/settings.service';
  * Create Add Loan Charge component.
  */
 @Component({
+  standalone: false,
   selector: 'mifosx-add-loan-charge',
   templateUrl: './add-loan-charge.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./add-loan-charge.component.scss']
 })
 export class AddLoanChargeComponent implements OnInit {

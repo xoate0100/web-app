@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 /** rxjs Imports */
@@ -12,8 +12,10 @@ import { AuthenticationService } from '../../core/authentication/authentication.
  * Login form component.
  */
 @Component({
+  standalone: false,
   selector: 'mifosx-login-form',
   templateUrl: './login-form.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./login-form.component.scss']
 })
 export class LoginFormComponent implements OnInit {

@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit, OnChanges, Input } from '@angular/core';
+import { Component, OnInit, OnChanges, Input, ChangeDetectionStrategy } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { FormControl } from '@angular/forms';
 import { DatePipe } from '@angular/common';
@@ -16,8 +16,10 @@ import { DatepickerBase } from 'app/shared/form-dialog/formfield/model/datepicke
  * Savings Account Charges Step
  */
 @Component({
+  standalone: false,
   selector: 'mifosx-savings-account-charges-step',
   templateUrl: './savings-account-charges-step.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./savings-account-charges-step.component.scss']
 })
 export class SavingsAccountChargesStepComponent implements OnInit, OnChanges {

@@ -1,10 +1,12 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, ChangeDetectionStrategy } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { DatePipe } from '@angular/common';
 
 @Component({
+  standalone: false,
   selector: 'mifosx-loan-product-details-step',
   templateUrl: './loan-product-details-step.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./loan-product-details-step.component.scss']
 })
 export class LoanProductDetailsStepComponent implements OnInit {

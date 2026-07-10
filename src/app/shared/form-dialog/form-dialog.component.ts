@@ -1,4 +1,4 @@
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, OnInit, Inject, ChangeDetectionStrategy } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { FormGroup } from '@angular/forms';
 
@@ -9,8 +9,10 @@ import { FormGroupService } from './form-group.service';
 const layoutGap = 2;
 
 @Component({
+  standalone: false,
   selector: 'mifosx-form-dialog',
   templateUrl: './form-dialog.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./form-dialog.component.scss']
 })
 export class FormDialogComponent implements OnInit {

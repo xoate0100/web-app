@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, ViewChild } from '@angular/core';
+import { Component, ViewChild, ChangeDetectionStrategy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DatePipe } from '@angular/common';
 
@@ -15,8 +15,10 @@ import { SettingsService } from 'app/settings/settings.service';
  * Create SMS Campaign Component
  */
 @Component({
+  standalone: false,
   selector: 'mifosx-create-campaign',
   templateUrl: './create-campaign.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./create-campaign.component.scss']
 })
 export class CreateCampaignComponent {

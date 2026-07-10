@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit, OnChanges, Input } from '@angular/core';
+import { Component, OnInit, OnChanges, Input, ChangeDetectionStrategy } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { FormControl } from '@angular/forms';
 
@@ -15,8 +15,10 @@ import { InputBase } from 'app/shared/form-dialog/formfield/model/input-base';
  * Shares Account Charges Step
  */
 @Component({
+  standalone: false,
   selector: 'mifosx-shares-account-charges-step',
   templateUrl: './shares-account-charges-step.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./shares-account-charges-step.component.scss']
 })
 export class SharesAccountChargesStepComponent implements OnInit, OnChanges {

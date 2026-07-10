@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnChanges, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnChanges, Input, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
 import { Validators, FormGroup, FormControl } from '@angular/forms';
 import { DatePipe } from '@angular/common';
 
@@ -15,8 +15,10 @@ import { SelectOption } from 'app/reports/common-models/select-option.model';
  * Business Rule Parameters Component.
  */
 @Component({
+  standalone: false,
   selector: 'mifosx-business-rule-parameters',
   templateUrl: './business-rule-parameters.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./business-rule-parameters.component.scss']
 })
 export class BusinessRuleParametersComponent implements OnChanges {
@@ -156,7 +158,7 @@ export class BusinessRuleParametersComponent implements OnChanges {
           break;
         case 'date':
           const dateFormat = this.settingsService.dateFormat;
-          formattedResponse[newKey] = this.datePipe.transform(value, dateFormat);
+          formattedResponse[newKey] = this.datePipe.transform(value as string | number | Date, dateFormat);
           break;
         case 'none':
           formattedResponse[newKey] = value;

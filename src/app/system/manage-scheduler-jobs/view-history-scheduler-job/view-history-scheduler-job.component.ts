@@ -1,5 +1,5 @@
 /** Angular Imports. */
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, ChangeDetectionStrategy } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
@@ -8,8 +8,10 @@ import { ErrorDialogComponent } from 'app/shared/error-dialog/error-dialog.compo
 import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
+  standalone: false,
   selector: 'mifosx-view-history-scheduler-job',
   templateUrl: './view-history-scheduler-job.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./view-history-scheduler-job.component.scss']
 })
 export class ViewHistorySchedulerJobComponent implements OnInit {

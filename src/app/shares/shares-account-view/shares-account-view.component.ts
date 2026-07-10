@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 
@@ -16,8 +16,10 @@ import { SharesButtonsConfiguration } from './shares-buttons.config';
  * Shares Account View
  */
 @Component({
+  standalone: false,
   selector: 'mifosx-shares-account-view',
   templateUrl: './shares-account-view.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./shares-account-view.component.scss']
 })
 export class SharesAccountViewComponent implements OnInit {

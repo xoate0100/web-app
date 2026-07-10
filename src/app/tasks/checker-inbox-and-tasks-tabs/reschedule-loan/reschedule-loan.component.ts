@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SelectionModel } from '@angular/cdk/collections';
 import { DatePipe } from '@angular/common';
@@ -15,8 +15,10 @@ import { TasksService } from '../../tasks.service';
 import { SettingsService } from 'app/settings/settings.service';
 
 @Component({
+  standalone: false,
   selector: 'mifosx-reschedule-loan',
   templateUrl: './reschedule-loan.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./reschedule-loan.component.scss']
 })
 export class RescheduleLoanComponent implements OnInit {

@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, ChangeDetectionStrategy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
@@ -18,8 +18,10 @@ import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.co
  * Edit Hook Component.
  */
 @Component({
+  standalone: false,
   selector: 'mifosx-edit-hook',
   templateUrl: './edit-hook.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./edit-hook.component.scss']
 })
 export class EditHookComponent implements OnInit {

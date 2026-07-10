@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit, Input, OnChanges } from '@angular/core';
+import { Component, OnInit, Input, OnChanges, ChangeDetectionStrategy } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 
@@ -7,8 +7,10 @@ import { ActivatedRoute, Router } from '@angular/router';
  * Create Loans Account Terms Step
  */
 @Component({
+  standalone: false,
   selector: 'mifosx-loans-account-terms-step',
   templateUrl: './loans-account-terms-step.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./loans-account-terms-step.component.scss']
 })
 export class LoansAccountTermsStepComponent implements OnInit, OnChanges {

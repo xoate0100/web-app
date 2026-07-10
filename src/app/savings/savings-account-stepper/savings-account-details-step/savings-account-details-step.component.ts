@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 /** Custom Services */
@@ -9,8 +9,10 @@ import { SavingsService } from 'app/savings/savings.service';
  * Savings Account Details Step
  */
 @Component({
+  standalone: false,
   selector: 'mifosx-savings-account-details-step',
   templateUrl: './savings-account-details-step.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./savings-account-details-step.component.scss']
 })
 export class SavingsAccountDetailsStepComponent implements OnInit {

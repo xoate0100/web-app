@@ -2,25 +2,35 @@
   "compileOnSave": false,
   "compilerOptions": {
     "baseUrl": "src",
-    "downlevelIteration": true,
     "importHelpers": true,
     "module": "esnext",
+    "esModuleInterop": true,
     "outDir": "./dist/out-tsc",
     "sourceMap": true,
     "declaration": false,
-    "moduleResolution": "node",
+    "moduleResolution": "bundler",
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
-    "noImplicitAny": true,
-    "suppressImplicitAnyIndexErrors": true,
-    "target": "es5",
+    "noImplicitAny": false,
+    "target": "ES2022",
+    "skipLibCheck": true,
+    "allowArbitraryExtensions": true,
+    "ignoreDeprecations": "6.0",
+    "strict": false,
+    "strictNullChecks": false,
+    "strictPropertyInitialization": false,
+    "lib": [
+      "ES2022",
+      "dom"
+    ],
     "typeRoots": [
       "node_modules/@types",
       "src/typings.d.ts"
-    ],
-    "lib": [
-      "es2017",
-      "dom"
     ]
+  },
+  "angularCompilerOptions": {
+    "strictTemplates": false,
+    "strictInjectionParameters": false,
+    "strictInputAccessModifiers": false
   }
 }

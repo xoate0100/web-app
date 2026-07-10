@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
@@ -10,8 +10,10 @@ import { AccountingService } from '../../accounting.service';
  * Edit gl account component.
  */
 @Component({
+  standalone: false,
   selector: 'mifosx-edit-gl-account',
   templateUrl: './edit-gl-account.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./edit-gl-account.component.scss']
 })
 export class EditGlAccountComponent implements OnInit {

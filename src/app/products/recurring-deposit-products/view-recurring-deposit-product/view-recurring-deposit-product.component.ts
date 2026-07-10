@@ -1,11 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { trigger, state, transition, animate, style } from '@angular/animations';
 
 @Component({
+  standalone: false,
   selector: 'mifosx-view-recurring-deposit-product',
   templateUrl: './view-recurring-deposit-product.component.html',
   styleUrls: ['./view-recurring-deposit-product.component.scss'],
+  changeDetection: ChangeDetectionStrategy.Eager,
   animations: [
     trigger('expandChartSlab', [
       state('collapsed', style({height: '0px', minHeight: '0'})),

@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { DatePipe } from '@angular/common';
@@ -12,8 +12,10 @@ import { SettingsService } from 'app/settings/settings.service';
  * Edit Family Member Component
  */
 @Component({
+  standalone: false,
   selector: 'mifosx-edit-family-member',
   templateUrl: './edit-family-member.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./edit-family-member.component.scss']
 })
 export class EditFamilyMemberComponent implements OnInit {

@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 
@@ -10,8 +10,10 @@ import { AccountingService } from '../accounting.service';
  * Create Journal Entry component.
  */
 @Component({
+  standalone: false,
   selector: 'mifosx-create-journal-entry',
   templateUrl: './create-journal-entry.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./create-journal-entry.component.scss']
 })
 export class CreateJournalEntryComponent implements OnInit {

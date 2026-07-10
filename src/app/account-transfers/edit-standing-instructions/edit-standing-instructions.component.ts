@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { DatePipe } from '@angular/common';
@@ -12,8 +12,10 @@ import { SettingsService } from 'app/settings/settings.service';
  * Edit Standing Instructions
  */
 @Component({
+  standalone: false,
   selector: 'mifosx-edit-standing-instructions',
   templateUrl: './edit-standing-instructions.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./edit-standing-instructions.component.scss']
 })
 export class EditStandingInstructionsComponent implements OnInit {

@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, ViewChild } from '@angular/core';
+import { Component, ViewChild, ChangeDetectionStrategy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DatePipe } from '@angular/common';
 
@@ -17,8 +17,10 @@ import { FixedDepositAccountChargesStepComponent } from '../fixed-deposit-accoun
  * Edit Fixed Deposit Account Component
  */
 @Component({
+  standalone: false,
   selector: 'mifosx-edit-fixed-deposit-account',
   templateUrl: './edit-fixed-deposit-account.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./edit-fixed-deposit-account.component.scss']
 })
 export class EditFixedDepositAccountComponent {
@@ -134,7 +136,7 @@ export class EditFixedDepositAccountComponent {
         chargeId: charge.id,
         amount: charge.amount,
         dueDate: charge.dueDate && this.datePipe.transform(charge.dueDate, dateFormat),
-        feeOnMonthDay: charge.feeOnMonthDay && this.datePipe.transform([2000].concat(charge.feeOnMonthDay), monthDayFormat),
+        feeOnMonthDay: charge.feeOnMonthDay && this.datePipe.transform(new Date(2000, charge.feeOnMonthDay[0] - 1, charge.feeOnMonthDay[1]), monthDayFormat),
         feeInterval: charge.feeInterval
       })),
       submittedOnDate: this.datePipe.transform(this.fixedDepositAccount.submittedOnDate, dateFormat),

@@ -1,5 +1,5 @@
 /** Angular Imports. */
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DatePipe } from '@angular/common';
@@ -12,8 +12,10 @@ import { SettingsService } from 'app/settings/settings.service';
  * Edit Holiday component.
  */
 @Component({
+  standalone: false,
   selector: 'mifosx-edit-holiday',
   templateUrl: './edit-holiday.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./edit-holiday.component.scss']
 })
 export class EditHolidayComponent implements OnInit {

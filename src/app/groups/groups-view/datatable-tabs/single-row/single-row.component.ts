@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { DatePipe } from '@angular/common';
@@ -23,8 +23,10 @@ import { SettingsService } from 'app/settings/settings.service';
  * Groups Single Row Data Tables
  */
 @Component({
+  standalone: false,
   selector: 'mifosx-single-row',
   templateUrl: './single-row.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./single-row.component.scss']
 })
 export class SingleRowComponent implements OnInit {

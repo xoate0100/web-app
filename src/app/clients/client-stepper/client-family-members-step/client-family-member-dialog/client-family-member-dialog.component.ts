@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, OnInit, Inject, ChangeDetectionStrategy } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { DatePipe } from '@angular/common';
@@ -11,8 +11,10 @@ import { SettingsService } from 'app/settings/settings.service';
  * Client Family Members Dialog
  */
 @Component({
+  standalone: false,
   selector: 'mifosx-client-family-member-dialog',
   templateUrl: './client-family-member-dialog.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./client-family-member-dialog.component.scss']
 })
 export class ClientFamilyMemberDialogComponent implements OnInit {

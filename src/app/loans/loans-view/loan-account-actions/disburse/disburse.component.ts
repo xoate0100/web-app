@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, ChangeDetectionStrategy } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 
@@ -12,8 +12,10 @@ import { SettingsService } from 'app/settings/settings.service';
  * Disburse Loan Option
  */
 @Component({
+  standalone: false,
   selector: 'mifosx-disburse',
   templateUrl: './disburse.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./disburse.component.scss']
 })
 export class DisburseComponent implements OnInit {

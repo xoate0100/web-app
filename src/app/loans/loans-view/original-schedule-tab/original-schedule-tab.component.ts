@@ -1,9 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 @Component({
+  standalone: false,
   selector: 'mifosx-original-schedule-tab',
   templateUrl: './original-schedule-tab.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./original-schedule-tab.component.scss']
 })
 export class OriginalScheduleTabComponent implements OnInit {

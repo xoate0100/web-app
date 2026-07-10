@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DatePipe } from '@angular/common';
@@ -12,8 +12,10 @@ import { SettingsService } from 'app/settings/settings.service';
  * Client Pay Charge component.
  */
 @Component({
+  standalone: false,
   selector: 'mifosx-client-pay-charges',
   templateUrl: './client-pay-charges.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./client-pay-charges.component.scss']
 })
 export class ClientPayChargesComponent implements OnInit {

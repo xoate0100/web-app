@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 
@@ -10,8 +10,10 @@ import { AccountingService } from '../../accounting.service';
  * Create gl account component.
  */
 @Component({
+  standalone: false,
   selector: 'mifosx-create-gl-account',
   templateUrl: './create-gl-account.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./create-gl-account.component.scss']
 })
 export class CreateGlAccountComponent implements OnInit {

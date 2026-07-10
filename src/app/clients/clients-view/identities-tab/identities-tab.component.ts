@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, ViewChild } from '@angular/core';
+import { Component, ViewChild, ChangeDetectionStrategy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { MatTable } from '@angular/material/table';
 import { MatDialog } from '@angular/material/dialog';
@@ -21,8 +21,10 @@ import { ClientsService } from '../../clients.service';
  * Identities Tab Component
  */
 @Component({
+  standalone: false,
   selector: 'mifosx-identities-tab',
   templateUrl: './identities-tab.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./identities-tab.component.scss']
 })
 export class IdentitiesTabComponent {

@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 
 /**
  * Self service app configuration component.
@@ -7,8 +7,10 @@ import { Component, OnInit } from '@angular/core';
  * TODO: Complete functionality once API is available.
  */
 @Component({
+  standalone: false,
   selector: 'mifosx-app-configuration',
   templateUrl: './app-configuration.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./app-configuration.component.scss']
 })
 export class AppConfigurationComponent implements OnInit {

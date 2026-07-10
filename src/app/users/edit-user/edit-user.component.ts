@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
@@ -10,8 +10,10 @@ import { UsersService } from '../users.service';
  * Edit User Component.
  */
 @Component({
+  standalone: false,
     selector: 'mifosx-edit-user',
     templateUrl: './edit-user.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
     styleUrls: ['./edit-user.component.scss']
 })
 export class EditUserComponent implements OnInit {

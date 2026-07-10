@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 /** Custom Services */
@@ -9,8 +9,10 @@ import { FixedDepositsService } from '../../fixed-deposits.service';
  * Fixed Deposits Account Details Step
  */
 @Component({
+  standalone: false,
   selector: 'mifosx-fixed-deposit-account-details-step',
   templateUrl: './fixed-deposit-account-details-step.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./fixed-deposit-account-details-step.component.scss']
 })
 export class FixedDepositAccountDetailsStepComponent implements OnInit {

@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { DatePipe } from '@angular/common';
@@ -12,8 +12,10 @@ import { SavingsService } from 'app/savings/savings.service';
  * Fixed deposits endpoint is not supported so using Savings endpoint.
  */
 @Component({
+  standalone: false,
   selector: 'mifosx-add-charge-fixed-deposits-account',
   templateUrl: './add-charge-fixed-deposits-account.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./add-charge-fixed-deposits-account.component.scss']
 })
 export class AddChargeFixedDepositsAccountComponent implements OnInit {

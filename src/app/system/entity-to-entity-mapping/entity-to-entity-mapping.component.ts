@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, ChangeDetectionStrategy } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
@@ -22,8 +22,10 @@ import { FormDialogComponent } from 'app/shared/form-dialog/form-dialog.componen
  * Entity to Entity Mapping Component
  */
 @Component({
+  standalone: false,
   selector: 'mifosx-entity-to-entity-mapping',
   templateUrl: './entity-to-entity-mapping.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./entity-to-entity-mapping.component.scss']
 })
 export class EntityToEntityMappingComponent implements OnInit {

@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
+import { Component, OnInit, Input, EventEmitter, Output, ChangeDetectionStrategy } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSidenav } from '@angular/material/sidenav';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
@@ -16,17 +16,16 @@ import { AuthenticationService } from '../../authentication/authentication.servi
  * Toolbar component.
  */
 @Component({
+  standalone: false,
   selector: 'mifosx-toolbar',
   templateUrl: './toolbar.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./toolbar.component.scss']
 })
 export class ToolbarComponent implements OnInit {
 
   /** Subscription to breakpoint observer for handset. */
-  isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
-    .pipe(
-      map(result => result.matches)
-    );
+  isHandset$: Observable<boolean>;
 
   /** Sets the initial state of sidenav as collapsed. Not collapsed if false. */
   sidenavCollapsed = true;
@@ -44,7 +43,12 @@ export class ToolbarComponent implements OnInit {
   constructor(private breakpointObserver: BreakpointObserver,
               private router: Router,
               private authenticationService: AuthenticationService,
-              private dialog: MatDialog) { }
+              private dialog: MatDialog) {
+    this.isHandset$ = this.breakpointObserver.observe(Breakpoints.Handset)
+      .pipe(
+        map(result => result.matches)
+      );
+  }
 
   /**
    * Subscribes to breakpoint for handset.

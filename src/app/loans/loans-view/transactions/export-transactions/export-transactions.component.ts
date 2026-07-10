@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { FormBuilder, Validators } from '@angular/forms';
 import { DatePipe } from '@angular/common';
@@ -12,8 +12,10 @@ import { ReportsService } from 'app/reports/reports.service';
  * Export Client Loans Transactions Component
  */
 @Component({
+  standalone: false,
   selector: 'mifosx-export-transactions',
   templateUrl: './export-transactions.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./export-transactions.component.scss']
 })
 export class ExportTransactionsComponent implements OnInit {

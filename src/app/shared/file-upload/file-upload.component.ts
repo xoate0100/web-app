@@ -1,12 +1,14 @@
 /** Angular Imports */
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
 
 /**
  * Custom file upload component based on angular material.
  */
 @Component({
+  standalone: false,
   selector: 'mifosx-file-upload',
   templateUrl: './file-upload.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./file-upload.component.scss']
 })
 export class FileUploadComponent {

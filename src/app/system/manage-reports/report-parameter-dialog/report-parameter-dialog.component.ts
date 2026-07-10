@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, OnInit, Inject, ChangeDetectionStrategy } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
@@ -7,8 +7,10 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
  * Report Parameter Dialog Component.
  */
 @Component({
+  standalone: false,
   selector: 'mifosx-add-report-parameter-dialog',
   templateUrl: './report-parameter-dialog.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./report-parameter-dialog.component.scss']
 })
 export class ReportParameterDialogComponent implements OnInit {

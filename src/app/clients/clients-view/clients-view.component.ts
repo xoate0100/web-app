@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DomSanitizer } from '@angular/platform-browser';
 import { MatDialog } from '@angular/material/dialog';
@@ -17,8 +17,10 @@ import { CaptureImageDialogComponent } from './custom-dialogs/capture-image-dial
 import { ClientsService } from '../clients.service';
 
 @Component({
+  standalone: false,
   selector: 'mifosx-clients-view',
   templateUrl: './clients-view.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./clients-view.component.scss']
 })
 export class ClientsViewComponent implements OnInit {

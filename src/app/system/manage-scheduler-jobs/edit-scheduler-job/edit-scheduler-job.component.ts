@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, Validators } from '@angular/forms';
 
@@ -10,8 +10,10 @@ import { SystemService } from 'app/system/system.service';
  * Edit scheduler job component.
  */
 @Component({
+  standalone: false,
   selector: 'mifosx-edit-scheduler-job',
   templateUrl: './edit-scheduler-job.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./edit-scheduler-job.component.scss']
 })
 export class EditSchedulerJobComponent implements OnInit {

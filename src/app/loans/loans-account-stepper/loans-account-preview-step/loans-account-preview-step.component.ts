@@ -1,12 +1,14 @@
 /** Angular Imports */
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
 
 /**
  * Create Loans Account Preview Step
  */
 @Component({
+  standalone: false,
   selector: 'mifosx-loans-account-preview-step',
   templateUrl: './loans-account-preview-step.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./loans-account-preview-step.component.scss']
 })
 export class LoansAccountPreviewStepComponent implements OnInit {

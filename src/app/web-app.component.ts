@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit, HostListener } from '@angular/core';
+import { Component, OnInit, HostListener, ChangeDetectionStrategy } from '@angular/core';
 import { Router, NavigationEnd, ActivatedRoute } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -33,8 +33,10 @@ const log = new Logger('MifosX');
  * Main web app component.
  */
 @Component({
+  standalone: false,
   selector: 'mifosx-web-app',
   templateUrl: './web-app.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./web-app.component.scss']
 })
 export class WebAppComponent implements OnInit {

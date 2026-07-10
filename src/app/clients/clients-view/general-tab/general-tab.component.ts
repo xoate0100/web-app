@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 
 /** Custom Services. */
@@ -9,8 +9,10 @@ import { ClientsService } from 'app/clients/clients.service';
  * General Tab component.
  */
 @Component({
+  standalone: false,
   selector: 'mifosx-general-tab',
   templateUrl: './general-tab.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./general-tab.component.scss']
 })
 export class GeneralTabComponent {

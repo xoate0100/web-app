@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { DatePipe } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -11,8 +11,10 @@ import { SharesService } from 'app/shares/shares.service';
  * Activate Shares Account Component
  */
 @Component({
+  standalone: false,
   selector: 'mifosx-activate-shares-account',
   templateUrl: './activate-shares-account.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./activate-shares-account.component.scss']
 })
 export class ActivateSharesAccountComponent implements OnInit {

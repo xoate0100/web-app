@@ -1,5 +1,5 @@
 /** Angular Imports. */
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, ChangeDetectionStrategy } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DatePipe } from '@angular/common';
@@ -12,8 +12,10 @@ import { SettingsService } from 'app/settings/settings.service';
  * Write Off component.
  */
 @Component({
+  standalone: false,
   selector: 'mifosx-write-off-page',
   templateUrl: './write-off-page.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./write-off-page.component.scss']
 })
 export class WriteOffPageComponent implements OnInit {

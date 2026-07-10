@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
@@ -10,8 +10,10 @@ import { SystemService } from 'app/system/system.service';
  * Edit Notification Configuration Component.
  */
 @Component({
+  standalone: false,
   selector: 'mifosx-edit-notification',
   templateUrl: './edit-notification.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./edit-notification.component.scss']
 })
 export class EditNotificationComponent implements OnInit {

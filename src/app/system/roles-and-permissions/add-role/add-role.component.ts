@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 
@@ -10,8 +10,10 @@ import { SystemService } from '../../system.service';
  * Add Role Component.
  */
 @Component({
+  standalone: false,
   selector: 'mifosx-add-role',
   templateUrl: './add-role.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./add-role.component.scss']
 })
 export class AddRoleComponent implements OnInit {

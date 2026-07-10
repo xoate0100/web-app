@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, ChangeDetectionStrategy } from '@angular/core';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute } from '@angular/router';
@@ -8,8 +8,10 @@ import { ActivatedRoute } from '@angular/router';
  * Amazon S3 Component.
  */
 @Component({
+  standalone: false,
   selector: 'mifosx-amazon-s3',
   templateUrl: './amazon-s3.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./amazon-s3.component.scss']
 })
 export class AmazonS3Component implements OnInit {

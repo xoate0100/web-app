@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 
@@ -10,8 +10,10 @@ import { AccountingService } from '../../accounting.service';
  * Create provisioning entry component.
  */
 @Component({
+  standalone: false,
   selector: 'mifosx-create-provisioning-entry',
   templateUrl: './create-provisioning-entry.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./create-provisioning-entry.component.scss']
 })
 export class CreateProvisioningEntryComponent implements OnInit {

@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit, ChangeDetectorRef, OnDestroy } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef, OnDestroy, ChangeDetectionStrategy } from '@angular/core';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 
 /** rxjs Imports */
@@ -13,17 +13,16 @@ import { ProgressBarService } from '../progress-bar/progress-bar.service';
  * Shell component.
  */
 @Component({
+  standalone: false,
   selector: 'mifosx-shell',
   templateUrl: './shell.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./shell.component.scss']
 })
 export class ShellComponent implements OnInit, OnDestroy {
 
   /** Subscription to breakpoint observer for handset. */
-  isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
-    .pipe(
-      map(result => result.matches)
-    );
+  isHandset$: Observable<boolean>;
   /** Sets the initial state of sidenav as collapsed. Not collapsed if false. */
   sidenavCollapsed = true;
   /** Progress bar mode. */
@@ -38,7 +37,12 @@ export class ShellComponent implements OnInit, OnDestroy {
    */
   constructor(private breakpointObserver: BreakpointObserver,
               private progressBarService: ProgressBarService,
-              private cdr: ChangeDetectorRef) { }
+              private cdr: ChangeDetectorRef) {
+    this.isHandset$ = this.breakpointObserver.observe(Breakpoints.Handset)
+      .pipe(
+        map(result => result.matches)
+      );
+  }
 
   /**
    * Subscribes to progress bar to update its mode.

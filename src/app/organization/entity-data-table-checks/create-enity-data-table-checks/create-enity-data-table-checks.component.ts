@@ -1,5 +1,5 @@
 /** Angular Imports. */
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 
@@ -10,8 +10,10 @@ import { OrganizationService } from 'app/organization/organization.service';
  * Create Entity Data Table Checks component.
  */
 @Component({
+  standalone: false,
   selector: 'mifosx-create-enity-data-table-checks',
   templateUrl: './create-enity-data-table-checks.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./create-enity-data-table-checks.component.scss']
 })
 export class CreateEnityDataTableChecksComponent implements OnInit {

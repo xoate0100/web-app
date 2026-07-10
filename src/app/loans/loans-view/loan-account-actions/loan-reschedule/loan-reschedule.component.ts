@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, ChangeDetectionStrategy } from '@angular/core';
 import { LoansService } from 'app/loans/loans.service';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -9,8 +9,10 @@ import { subscribeOn } from 'rxjs/operators';
 import { SettingsService } from 'app/settings/settings.service';
 
 @Component({
+  standalone: false,
   selector: 'mifosx-loan-reschedule',
   templateUrl: './loan-reschedule.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./loan-reschedule.component.scss']
 })
 export class LoanRescheduleComponent implements OnInit {

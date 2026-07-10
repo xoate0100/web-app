@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
+import { Component, OnInit, ViewChild, AfterViewInit, ChangeDetectionStrategy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormControl } from '@angular/forms';
 import { MatPaginator } from '@angular/material/paginator';
@@ -16,8 +16,10 @@ import { AccountingService } from '../../accounting.service';
  * View provisioning entry component.
  */
 @Component({
+  standalone: false,
   selector: 'mifosx-view-provisioning-entry',
   templateUrl: './view-provisioning-entry.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./view-provisioning-entry.component.scss']
 })
 export class ViewProvisioningEntryComponent implements OnInit, AfterViewInit {

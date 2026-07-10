@@ -1,12 +1,14 @@
 /** Angular Imports */
-import { Component, Output, EventEmitter, Input } from '@angular/core';
+import { Component, Output, EventEmitter, Input, ChangeDetectionStrategy } from '@angular/core';
 
 /**
  * Client Preview Step Component
  */
 @Component({
+  standalone: false,
   selector: 'mifosx-client-preview-step',
   templateUrl: './client-preview-step.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./client-preview-step.component.scss']
 })
 export class ClientPreviewStepComponent {

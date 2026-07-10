@@ -1,5 +1,5 @@
 /** Angular Imports. */
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DatePipe } from '@angular/common';
@@ -12,8 +12,10 @@ import { SettingsService } from 'app/settings/settings.service';
  * Bulk Loan Reassignment component.
  */
 @Component({
+  standalone: false,
   selector: 'mifosx-bulk-loan-reassignmnet',
   templateUrl: './bulk-loan-reassignmnet.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./bulk-loan-reassignmnet.component.scss']
 })
 export class BulkLoanReassignmnetComponent implements OnInit {

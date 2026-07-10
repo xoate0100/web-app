@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation, ChangeDetectionStrategy } from '@angular/core';
 
 /** Custom Model */
 import { Theme } from './theme.model';
@@ -13,9 +13,11 @@ import { ThemeStorageService } from './theme-storage.service';
  * TODO: Customization of theme for every component and custom background with darker contrast.
  */
 @Component({
+  standalone: false,
   selector: 'mifosx-theme-picker',
   templateUrl: './theme-picker.component.html',
   styleUrls: ['./theme-picker.component.scss'],
+  changeDetection: ChangeDetectionStrategy.Eager,
   encapsulation: ViewEncapsulation.None
 })
 export class ThemePickerComponent implements OnInit {

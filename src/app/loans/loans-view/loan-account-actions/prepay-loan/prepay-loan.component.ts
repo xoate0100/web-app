@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, ChangeDetectionStrategy } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 
@@ -13,8 +13,10 @@ import { SettingsService } from 'app/settings/settings.service';
  * Loan Prepay Loan Option
  */
 @Component({
+  standalone: false,
   selector: 'mifosx-prepay-loan',
   templateUrl: './prepay-loan.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./prepay-loan.component.scss']
 })
 export class PrepayLoanComponent implements OnInit {

@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, OnInit, Inject, ChangeDetectionStrategy } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
@@ -7,8 +7,10 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
  * Add Event Dialog Component.
  */
 @Component({
+  standalone: false,
   selector: 'mifosx-add-event-dialog',
   templateUrl: './add-event-dialog.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./add-event-dialog.component.scss']
 })
 export class AddEventDialogComponent implements OnInit {

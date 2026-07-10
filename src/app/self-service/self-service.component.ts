@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 
 /**
  * Self service component.
@@ -7,8 +7,10 @@ import { Component, OnInit } from '@angular/core';
  * All components related to self service admin portal are routed here.
  */
 @Component({
+  standalone: false,
   selector: 'mifosx-self-service',
   templateUrl: './self-service.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./self-service.component.scss']
 })
 export class SelfServiceComponent implements OnInit {

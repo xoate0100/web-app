@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, AfterViewInit } from '@angular/core';
+import { Component, AfterViewInit, ChangeDetectionStrategy } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 
@@ -13,8 +13,10 @@ import { MatDialog } from '@angular/material/dialog';
 
 
 @Component({
+  standalone: false,
   selector: 'mifosx-manage-groups',
   templateUrl: './manage-groups.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./manage-groups.component.scss']
 })
 export class ManageGroupsComponent implements AfterViewInit {
@@ -26,7 +28,7 @@ export class ManageGroupsComponent implements AfterViewInit {
   /** Group Members. */
   groupMembers: any[] = [];
   /** GroupChoice. */
-  groupChoice = new FormControl('');
+  groupChoice = new FormControl<any>('');
 
   /**
    * Fetches center action data from `resolve`

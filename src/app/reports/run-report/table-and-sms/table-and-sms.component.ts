@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, Input, ViewChild, OnChanges } from '@angular/core';
+import { Component, Input, ViewChild, OnChanges, ChangeDetectionStrategy } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { DecimalPipe } from '@angular/common';
@@ -11,8 +11,10 @@ import { ReportsService } from '../../reports.service';
  * Table and SMS Component
  */
 @Component({
+  standalone: false,
   selector: 'mifosx-table-and-sms',
   templateUrl: './table-and-sms.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./table-and-sms.component.scss']
 })
 export class TableAndSmsComponent implements OnChanges {

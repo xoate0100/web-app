@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 
@@ -7,14 +7,16 @@ import { ActivatedRoute } from '@angular/router';
 import { HomeService } from '../../home.service';
 
 /** Charting Imports */
-import Chart from 'chart.js';
+import { createChart } from 'app/shared/chart-setup';
 
 /**
  * Amount Collected Pie Chart Component
  */
 @Component({
+  standalone: false,
   selector: 'mifosx-amount-collected-pie',
   templateUrl: './amount-collected-pie.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./amount-collected-pie.component.scss']
 })
 export class AmountCollectedPieComponent implements OnInit {
@@ -77,7 +79,7 @@ export class AmountCollectedPieComponent implements OnInit {
    */
   setChart(data: any) {
     if (!this.chart) {
-      this.chart = new Chart('collection-pie', {
+      this.chart = createChart('collection-pie', {
         type: 'pie',
         data: {
           labels: ['Pending', 'Collected'],

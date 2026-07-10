@@ -1,13 +1,15 @@
 /** Angular Imports */
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 /**
  * View Office Component
  */
 @Component({
+  standalone: false,
   selector: 'mifosx-view-office',
   templateUrl: './view-office.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./view-office.component.scss']
 })
 export class ViewOfficeComponent {

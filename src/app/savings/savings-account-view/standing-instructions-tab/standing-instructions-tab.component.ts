@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, ChangeDetectionStrategy } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatTableDataSource, MatTable } from '@angular/material/table';
 import { ActivatedRoute } from '@angular/router';
@@ -16,8 +16,10 @@ import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.co
  * Savings Standing Instructions Tab
  */
 @Component({
+  standalone: false,
   selector: 'mifosx-standing-instructions-tab',
   templateUrl: './standing-instructions-tab.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./standing-instructions-tab.component.scss']
 })
 export class StandingInstructionsTabComponent implements OnInit {

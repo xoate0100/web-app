@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, OnInit, Inject, ChangeDetectionStrategy } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
@@ -7,8 +7,10 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
  * Floating Rate Period Dialog Component.
  */
 @Component({
+  standalone: false,
   selector: 'mifosx-floating-rate-period-dialog',
   templateUrl: './floating-rate-period-dialog.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./floating-rate-period-dialog.component.scss']
 })
 export class FloatingRatePeriodDialogComponent implements OnInit {

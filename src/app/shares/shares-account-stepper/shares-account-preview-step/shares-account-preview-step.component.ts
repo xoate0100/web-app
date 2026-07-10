@@ -1,12 +1,14 @@
 /** Angular Imports */
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
 
 /**
  * Shares account preview step
  */
 @Component({
+  standalone: false,
   selector: 'mifosx-shares-account-preview-step',
   templateUrl: './shares-account-preview-step.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./shares-account-preview-step.component.scss']
 })
 export class SharesAccountPreviewStepComponent {

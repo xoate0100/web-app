@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { DatePipe } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -12,8 +12,10 @@ import { SettingsService } from 'app/settings/settings.service';
  * Activate Center Component
  */
 @Component({
+  standalone: false,
   selector: 'mifosx-activate-center',
   templateUrl: './activate-center.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./activate-center.component.scss']
 })
 export class ActivateCenterComponent implements OnInit {

@@ -1,5 +1,5 @@
 /** Angular Imports. */
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DatePipe } from '@angular/common';
@@ -12,8 +12,10 @@ import { SettingsService } from 'app/settings/settings.service';
  * Create Cashier component.
  */
 @Component({
+  standalone: false,
   selector: 'mifosx-create-cashier',
   templateUrl: './create-cashier.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./create-cashier.component.scss']
 })
 export class CreateCashierComponent implements OnInit {

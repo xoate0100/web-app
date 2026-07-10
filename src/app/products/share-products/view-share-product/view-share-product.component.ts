@@ -1,9 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 @Component({
+  standalone: false,
   selector: 'mifosx-view-share-product',
   templateUrl: './view-share-product.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./view-share-product.component.scss']
 })
 export class ViewShareProductComponent implements OnInit {

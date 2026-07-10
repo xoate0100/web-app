@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 
@@ -10,8 +10,10 @@ import { SystemService } from 'app/system/system.service';
  * View Survey Component.
  */
 @Component({
+  standalone: false,
   selector: 'mifosx-view-survey',
   templateUrl: './view-survey.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./view-survey.component.scss']
 })
 export class ViewSurveyComponent implements OnInit {

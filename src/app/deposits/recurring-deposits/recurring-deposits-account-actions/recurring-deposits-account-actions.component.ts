@@ -1,9 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 @Component({
+  standalone: false,
   selector: 'mifosx-recurring-deposits-account-actions',
   templateUrl: './recurring-deposits-account-actions.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./recurring-deposits-account-actions.component.scss']
 })
 export class RecurringDepositsAccountActionsComponent {

@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 
@@ -10,8 +10,10 @@ import { OrganizationService } from '../organization.service';
  * Password preferences component.
  */
 @Component({
+  standalone: false,
   selector: 'mifosx-password-preferences',
   templateUrl: './password-preferences.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./password-preferences.component.scss']
 })
 export class PasswordPreferencesComponent implements OnInit {

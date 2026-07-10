@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
 /** Custom Services */
@@ -10,8 +10,10 @@ import { AuthenticationService } from '../../../../core/authentication/authentic
  * Take Survey Component
  */
 @Component({
+  standalone: false,
   selector: 'mifosx-take-survey',
   templateUrl: './take-survey.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./take-survey.component.scss']
 })
 export class TakeSurveyComponent {

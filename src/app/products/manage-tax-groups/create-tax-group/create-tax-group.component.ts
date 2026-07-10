@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormControl, FormArray } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { DatePipe } from '@angular/common';
@@ -19,8 +19,10 @@ import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.co
  * Create Tax Group component.
  */
 @Component({
+  standalone: false,
   selector: 'mifosx-create-tax-group',
   templateUrl: './create-tax-group.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./create-tax-group.component.scss']
 })
 export class CreateTaxGroupComponent implements OnInit {

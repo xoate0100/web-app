@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 
@@ -13,8 +13,10 @@ import { ClientsService } from '../../clients.service';
  * Client Family Members Tab
  */
 @Component({
+  standalone: false,
   selector: 'mifosx-family-members-tab',
   templateUrl: './family-members-tab.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./family-members-tab.component.scss']
 })
 export class FamilyMembersTabComponent {

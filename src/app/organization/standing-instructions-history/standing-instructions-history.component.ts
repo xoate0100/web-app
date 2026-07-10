@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, ChangeDetectionStrategy } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource, MatTable } from '@angular/material/table';
@@ -15,8 +15,10 @@ import { SettingsService } from 'app/settings/settings.service';
  * View Standing Instructions History Component.
  */
 @Component({
+  standalone: false,
   selector: 'mifosx-standing-instructions-history',
   templateUrl: './standing-instructions-history.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./standing-instructions-history.component.scss']
 })
 export class StandingInstructionsHistoryComponent implements OnInit {

@@ -1,14 +1,19 @@
-@import '~@angular/material/theming';
+@use 'sass:map';
+@use '@angular/material' as mat;
+
 // Plus imports for other components in your app.
-@import '../../app/clients/clients-view/clients-view.component-theme.scss';
-@import '../../app/groups/groups-view/groups-view.component-theme.scss';
-@import '../../app/centers/centers-view/centers-view.component-theme.scss';
-@import '../../app/home/dashboard/dashboard.component-theme.scss';
-@import '../../app/loans/loans-view/loans-view.component-theme.scss';
-@import '../../app/savings/savings-account-view/savings-account-view.component-theme.scss';
-@import '../../app/shares/shares-account-view/shares-account-view.component-theme.scss';
-@import '../../app/deposits/fixed-deposits/fixed-deposit-account-view/fixed-deposit-account-view.component-theme.scss';
-@import '../../app/deposits/recurring-deposits/recurring-deposits-account-view/recurring-deposits-account-view.component-theme.scss';
+@use '../../app/clients/clients-view/clients-view.component-theme' as clients-view;
+@use '../../app/groups/groups-view/groups-view.component-theme' as groups-view;
+@use '../../app/centers/centers-view/centers-view.component-theme' as centers-view;
+@use '../../app/home/dashboard/dashboard.component-theme' as dashboard;
+@use '../../app/loans/loans-view/loans-view.component-theme' as loans-view;
+@use '../../app/savings/savings-account-view/savings-account-view.component-theme' as savings-account-view;
+@use '../../app/shares/shares-account-view/shares-account-view.component-theme' as shares-account-view;
+@use '../../app/deposits/fixed-deposits/fixed-deposit-account-view/fixed-deposit-account-view.component-theme' as fixed-deposits-account-view;
+@use '../../app/deposits/recurring-deposits/recurring-deposits-account-view/recurring-deposits-account-view.component-theme' as recurring-deposits-account-view;
+
+$dark-primary-text: rgba(black, 0.87);
+$light-primary-text: white;
 
 // Custom material palette
 $mat-denim: (
@@ -33,33 +38,27 @@ $mat-yellow-green: (
   )
 );
 
-// Include the common styles for Angular Material. We include this here so that you only
-// have to load a single css file for Angular Material in your app.
-// Be sure that you only ever include this mixin once!
-@include mat-core();
+@include mat.core();
 
-// Define the palettes for your theme using the Material Design palettes available in palette.scss
-// (imported above). For each palette, you can optionally specify a default, lighter, and darker
-// hue. Available color palettes: https://material.io/design/color/
-$mifosx-app-primary: mat-palette($mat-denim);
-$mifosx-app-accent:  mat-palette($mat-yellow-green);
+$mifosx-app-primary: mat.m2-define-palette($mat-denim);
+$mifosx-app-accent: mat.m2-define-palette($mat-yellow-green);
+$mifosx-app-warn: mat.m2-define-palette(mat.$m2-red-palette);
 
-// The warn palette is optional (defaults to red).
-$mifosx-app-warn:    mat-palette($mat-red);
+$mifosx-app-theme: mat.m2-define-light-theme((
+  color: (
+    primary: $mifosx-app-primary,
+    accent: $mifosx-app-accent,
+    warn: $mifosx-app-warn,
+  )
+));
 
-// Create the theme object (a Sass map containing all of the palettes).
-$mifosx-app-theme: mat-light-theme($mifosx-app-primary, $mifosx-app-accent, $mifosx-app-warn);
-
-// Include theme styles for core and each component used in your app.
-// Alternatively, you can import and @include the theme mixins for each component
-// that you are using.
-@include angular-material-theme($mifosx-app-theme);
-@include clients-view-component-theme($mifosx-app-theme);
-@include groups-view-component-theme($mifosx-app-theme);
-@include centers-view-component-theme($mifosx-app-theme);
-@include dashboard-component-theme($mifosx-app-theme);
-@include loans-view-component-theme($mifosx-app-theme);
-@include savings-account-view-component-theme($mifosx-app-theme);
-@include shares-account-view-component-theme($mifosx-app-theme);
-@include fixed-deposits-account-view-component-theme($mifosx-app-theme);
-@include recurring-deposits-account-view-component-theme($mifosx-app-theme);
+@include mat.all-component-themes($mifosx-app-theme);
+@include clients-view.clients-view-component-theme($mifosx-app-theme);
+@include groups-view.groups-view-component-theme($mifosx-app-theme);
+@include centers-view.centers-view-component-theme($mifosx-app-theme);
+@include dashboard.dashboard-component-theme($mifosx-app-theme);
+@include loans-view.loans-view-component-theme($mifosx-app-theme);
+@include savings-account-view.savings-account-view-component-theme($mifosx-app-theme);
+@include shares-account-view.shares-account-view-component-theme($mifosx-app-theme);
+@include fixed-deposits-account-view.fixed-deposits-account-view-component-theme($mifosx-app-theme);
+@include recurring-deposits-account-view.recurring-deposits-account-view-component-theme($mifosx-app-theme);

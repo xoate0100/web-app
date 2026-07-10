@@ -1,5 +1,5 @@
 /** Angular Imports. */
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, ChangeDetectionStrategy } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DatePipe } from '@angular/common';
@@ -13,8 +13,10 @@ import { SettingsService } from 'app/settings/settings.service';
  * TODO: Develop a custom angular checkbox tree and replace offices select.
  */
 @Component({
+  standalone: false,
   selector: 'mifosx-create-holiday',
   templateUrl: './create-holiday.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./create-holiday.component.scss']
 })
 export class CreateHolidayComponent implements OnInit {

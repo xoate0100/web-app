@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 
@@ -7,8 +7,10 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { SystemService } from '../../system.service';
 
 @Component({
+  standalone: false,
   selector: 'mifosx-create-code',
   templateUrl: './create-code.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./create-code.component.scss']
 })
 export class CreateCodeComponent implements OnInit {

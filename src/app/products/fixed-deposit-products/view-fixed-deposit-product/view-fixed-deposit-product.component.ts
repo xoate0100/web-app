@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { MatTable } from '@angular/material/table';
 import { MatDialog } from '@angular/material/dialog';
@@ -9,9 +9,11 @@ import { trigger, state, transition, animate, style } from '@angular/animations'
  * Fixed Deposit Product component.
  */
 @Component({
+  standalone: false,
   selector: 'mifosx-view-fixed-deposit-product',
   templateUrl: './view-fixed-deposit-product.component.html',
   styleUrls: ['./view-fixed-deposit-product.component.scss'],
+  changeDetection: ChangeDetectionStrategy.Eager,
   animations: [
     trigger('expandChartSlab', [
       state('collapsed', style({height: '0px', minHeight: '0'})),

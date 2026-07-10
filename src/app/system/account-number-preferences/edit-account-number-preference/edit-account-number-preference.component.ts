@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 
@@ -10,8 +10,10 @@ import { SystemService } from 'app/system/system.service';
  * Edit Account Number Preference Component.
  */
 @Component({
+  standalone: false,
   selector: 'mifosx-edit-account-number-preference',
   templateUrl: './edit-account-number-preference.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./edit-account-number-preference.component.scss']
 })
 export class EditAccountNumberPreferenceComponent implements OnInit {

@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit, Renderer2, ViewChild, ElementRef, SecurityContext } from '@angular/core';
+import { Component, OnInit, Renderer2, ViewChild, ElementRef, SecurityContext, ChangeDetectionStrategy } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 
@@ -11,8 +11,10 @@ import { DomSanitizer } from '@angular/platform-browser';
  * Client Screen Reports Component.
  */
 @Component({
+  standalone: false,
   selector: 'mifosx-client-screen-reports',
   templateUrl: './client-screen-reports.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./client-screen-reports.component.scss']
 })
 export class ClientScreenReportsComponent implements OnInit {

@@ -1,12 +1,14 @@
 /** Angular Imports */
-import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnInit, ChangeDetectionStrategy } from '@angular/core';
 
 /**
  * Campaign Preview Step.
  */
 @Component({
+  standalone: false,
   selector: 'mifosx-campaign-preview-step',
   templateUrl: './campaign-preview-step.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./campaign-preview-step.component.scss']
 })
 export class CampaignPreviewStepComponent implements OnInit {

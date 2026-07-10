@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, ChangeDetectionStrategy } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 
@@ -12,8 +12,10 @@ import { SettingsService } from 'app/settings/settings.service';
  * Loan Make Repayment Component
  */
 @Component({
+  standalone: false,
   selector: 'mifosx-make-repayment',
   templateUrl: './make-repayment.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./make-repayment.component.scss']
 })
 export class MakeRepaymentComponent implements OnInit {

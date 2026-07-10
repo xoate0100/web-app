@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, ViewChild } from '@angular/core';
+import { Component, ViewChild, ChangeDetectionStrategy } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { DatePipe } from '@angular/common';
 
@@ -16,8 +16,10 @@ import { SettingsService } from 'app/settings/settings.service';
  * Create Savings Account Component
  */
 @Component({
+  standalone: false,
   selector: 'mifosx-create-savings-account',
   templateUrl: './create-savings-account.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./create-savings-account.component.scss']
 })
 export class CreateSavingsAccountComponent {

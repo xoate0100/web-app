@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
@@ -10,8 +10,10 @@ import { SystemService } from 'app/system/system.service';
  * Edit Amazon S3 Component.
  */
 @Component({
+  standalone: false,
   selector: 'mifosx-edit-amazon-s3',
   templateUrl: './edit-amazon-s3.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./edit-amazon-s3.component.scss']
 })
 export class EditAmazonS3Component implements OnInit {

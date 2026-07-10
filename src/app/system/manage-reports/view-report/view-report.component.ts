@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 
@@ -13,8 +13,10 @@ import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.co
  * View Report Component.
  */
 @Component({
+  standalone: false,
   selector: 'mifosx-view-report',
   templateUrl: './view-report.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./view-report.component.scss']
 })
 export class ViewReportComponent implements OnInit {

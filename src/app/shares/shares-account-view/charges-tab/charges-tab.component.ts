@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute } from '@angular/router';
 
@@ -7,8 +7,10 @@ import { ActivatedRoute } from '@angular/router';
  * Charges Tab Component
  */
 @Component({
+  standalone: false,
   selector: 'mifosx-charges-tab',
   templateUrl: './charges-tab.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./charges-tab.component.scss']
 })
 export class ChargesTabComponent implements OnInit {

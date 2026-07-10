@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 
@@ -17,8 +17,10 @@ import { SavingsService } from '../savings.service';
  * Savings Account View Component
  */
 @Component({
+  standalone: false,
   selector: 'mifosx-savings-account-view',
   templateUrl: './savings-account-view.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./savings-account-view.component.scss']
 })
 export class SavingsAccountViewComponent implements OnInit {

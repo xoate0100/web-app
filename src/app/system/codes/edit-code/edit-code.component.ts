@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 
@@ -10,8 +10,10 @@ import { SystemService } from '../../system.service';
  * Edit Code Component.
  */
 @Component({
+  standalone: false,
   selector: 'mifosx-edit-code',
   templateUrl: './edit-code.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./edit-code.component.scss']
 })
 export class EditCodeComponent implements OnInit {

@@ -1,5 +1,5 @@
 /** Angular Imports. */
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DatePipe } from '@angular/common';
@@ -12,8 +12,10 @@ import { SettingsService } from 'app/settings/settings.service';
  * Allocate Cash component.
  */
 @Component({
+  standalone: false,
   selector: 'mifosx-allocate-cash',
   templateUrl: './allocate-cash.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./allocate-cash.component.scss']
 })
 export class AllocateCashComponent implements OnInit {

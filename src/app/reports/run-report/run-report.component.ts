@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { DatePipe } from '@angular/common';
@@ -16,8 +16,10 @@ import { SelectOption } from '../common-models/select-option.model';
  * Run report component.
  */
 @Component({
+  standalone: false,
   selector: 'mifosx-run-report',
   templateUrl: './run-report.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./run-report.component.scss']
 })
 export class RunReportComponent implements OnInit {
@@ -193,7 +195,7 @@ export class RunReportComponent implements OnInit {
           break;
         case 'date':
           const dateFormat = this.settingsService.dateFormat;
-          formattedResponse[newKey] = this.datePipe.transform(value, dateFormat);
+          formattedResponse[newKey] = this.datePipe.transform(value as string | number | Date, dateFormat);
           break;
         case 'none':
           formattedResponse[newKey] = value;

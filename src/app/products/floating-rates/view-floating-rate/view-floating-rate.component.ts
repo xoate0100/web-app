@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, ChangeDetectionStrategy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
@@ -9,8 +9,10 @@ import { MatTableDataSource } from '@angular/material/table';
  * View Floating Rate Component.
  */
 @Component({
+  standalone: false,
   selector: 'mifosx-view-floating-rate',
   templateUrl: './view-floating-rate.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./view-floating-rate.component.scss']
 })
 export class ViewFloatingRateComponent implements OnInit {

@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { DatePipe } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -20,8 +20,10 @@ import { SelectBase } from 'app/shared/form-dialog/formfield/model/select-base';
  * Group Attendance component.
  */
 @Component({
+  standalone: false,
   selector: 'mifosx-group-attendance',
   templateUrl: './group-attendance.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./group-attendance.component.scss']
 })
 export class GroupAttendanceComponent implements OnInit {

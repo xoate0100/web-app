@@ -1,13 +1,14 @@
-import { Component, OnInit } from '@angular/core';
-import { constructor } from 'lodash';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import * as _ from 'lodash';
 import { SystemService } from '../system.service';
 
 @Component({
+  standalone: false,
   selector: 'mifosx-configure-maker-checker-tasks',
   templateUrl: './configure-maker-checker-tasks.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./configure-maker-checker-tasks.component.scss']
 })
 export class ConfigureMakerCheckerTasksComponent implements OnInit {

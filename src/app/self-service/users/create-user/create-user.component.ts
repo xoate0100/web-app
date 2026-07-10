@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { FormControl } from '@angular/forms';
 
 /**
@@ -8,8 +8,10 @@ import { FormControl } from '@angular/forms';
  * TODO: Complete functionality once API is available.
  */
 @Component({
+  standalone: false,
   selector: 'mifosx-create-user',
   templateUrl: './create-user.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./create-user.component.scss']
 })
 export class CreateUserComponent implements OnInit {

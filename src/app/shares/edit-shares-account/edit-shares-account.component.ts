@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, ViewChild } from '@angular/core';
+import { Component, ViewChild, ChangeDetectionStrategy } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { DatePipe } from '@angular/common';
 
@@ -15,8 +15,10 @@ import { SharesService } from '../shares.service';
  * Edit Shares Account Component
  */
 @Component({
+  standalone: false,
   selector: 'mifosx-edit-shares-account',
   templateUrl: './edit-shares-account.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./edit-shares-account.component.scss']
 })
 export class EditSharesAccountComponent {

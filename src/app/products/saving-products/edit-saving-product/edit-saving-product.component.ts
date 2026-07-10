@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, ChangeDetectionStrategy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { SavingProductDetailsStepComponent } from '../saving-product-stepper/saving-product-details-step/saving-product-details-step.component';
@@ -11,8 +11,10 @@ import { SavingProductAccountingStepComponent } from '../saving-product-stepper/
 import { ProductsService } from 'app/products/products.service';
 
 @Component({
+  standalone: false,
   selector: 'mifosx-edit-saving-product',
   templateUrl: './edit-saving-product.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./edit-saving-product.component.scss']
 })
 export class EditSavingProductComponent implements OnInit {

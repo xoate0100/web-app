@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { DatePipe } from '@angular/common';
@@ -13,8 +13,10 @@ import { SettingsService } from 'app/settings/settings.service';
  */
 
 @Component({
+  standalone: false,
   selector: 'mifosx-edit-teller',
   templateUrl: './edit-teller.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./edit-teller.component.scss']
 })
 export class EditTellerComponent implements OnInit {

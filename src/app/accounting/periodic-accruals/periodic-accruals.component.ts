@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 
@@ -10,8 +10,10 @@ import { AccountingService } from '../accounting.service';
  * Periodic accruals component.
  */
 @Component({
+  standalone: false,
   selector: 'mifosx-periodic-accruals',
   templateUrl: './periodic-accruals.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./periodic-accruals.component.scss']
 })
 export class PeriodicAccrualsComponent implements OnInit {

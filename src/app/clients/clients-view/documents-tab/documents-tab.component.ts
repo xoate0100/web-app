@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, ChangeDetectionStrategy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { MatTable } from '@angular/material/table';
 import { MatDialog } from '@angular/material/dialog';
@@ -12,8 +12,10 @@ import { DeleteDialogComponent } from '../../../shared/delete-dialog/delete-dial
 
 
 @Component({
+  standalone: false,
   selector: 'mifosx-documents-tab',
   templateUrl: './documents-tab.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./documents-tab.component.scss']
 })
 export class DocumentsTabComponent implements OnInit {

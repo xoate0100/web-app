@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, ChangeDetectionStrategy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
@@ -18,8 +18,10 @@ import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.co
  * Create Hook Component.
  */
 @Component({
+  standalone: false,
   selector: 'mifosx-create-hook',
   templateUrl: './create-hook.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./create-hook.component.scss']
 })
 export class CreateHookComponent implements OnInit {

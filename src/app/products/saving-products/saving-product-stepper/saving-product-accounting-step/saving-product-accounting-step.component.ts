@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, ChangeDetectionStrategy } from '@angular/core';
 import { FormGroup, FormBuilder, FormArray, Validators, FormControl } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 
@@ -9,8 +9,10 @@ import { FormfieldBase } from 'app/shared/form-dialog/formfield/model/formfield-
 import { SelectBase } from 'app/shared/form-dialog/formfield/model/select-base';
 
 @Component({
+  standalone: false,
   selector: 'mifosx-saving-product-accounting-step',
   templateUrl: './saving-product-accounting-step.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./saving-product-accounting-step.component.scss']
 })
 export class SavingProductAccountingStepComponent implements OnInit {

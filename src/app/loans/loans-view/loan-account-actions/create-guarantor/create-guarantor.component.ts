@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit, Input, AfterViewInit } from '@angular/core';
+import { Component, OnInit, Input, AfterViewInit, ChangeDetectionStrategy } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 
@@ -13,8 +13,10 @@ import { SettingsService } from 'app/settings/settings.service';
  * Create Guarantor Action
  */
 @Component({
+  standalone: false,
   selector: 'mifosx-create-guarantor',
   templateUrl: './create-guarantor.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./create-guarantor.component.scss']
 })
 export class CreateGuarantorComponent implements OnInit, AfterViewInit {

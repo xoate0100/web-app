@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
 
@@ -7,8 +7,10 @@ import { ActivatedRoute } from '@angular/router';
  * View Transaction Reciept Component
  */
 @Component({
+  standalone: false,
   selector: 'mifosx-view-reciept',
   templateUrl: './view-reciept.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./view-reciept.component.scss']
 })
 export class ViewRecieptComponent implements OnInit {

@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SelectionModel } from '@angular/cdk/collections';
 import { DatePipe } from '@angular/common';
@@ -14,8 +14,10 @@ import { TasksService } from '../../tasks.service';
 import { SettingsService } from 'app/settings/settings.service';
 
 @Component({
+  standalone: false,
   selector: 'mifosx-loan-disbursal',
   templateUrl: './loan-disbursal.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./loan-disbursal.component.scss']
 })
 export class LoanDisbursalComponent {
