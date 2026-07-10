@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, ViewChild } from '@angular/core';
+import { Component, ViewChild, ChangeDetectionStrategy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { MatTable } from '@angular/material/table';
@@ -14,8 +14,10 @@ import { GroupsService } from 'app/groups/groups.service';
  * Groups Committee Tab Component
  */
 @Component({
+  standalone: false,
   selector: 'mifosx-committee-tab',
   templateUrl: './committee-tab.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./committee-tab.component.scss']
 })
 export class CommitteeTabComponent {

@@ -1,9 +1,11 @@
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, OnInit, Inject, ChangeDetectionStrategy } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 @Component({
+  standalone: false,
   selector: 'mifosx-loans-account-view-guarantor-details-dialog',
   templateUrl: './loans-account-view-guarantor-details-dialog.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./loans-account-view-guarantor-details-dialog.component.scss']
 })
 export class LoansAccountViewGuarantorDetailsDialogComponent implements OnInit {

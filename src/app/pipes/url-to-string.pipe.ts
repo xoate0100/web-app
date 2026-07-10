@@ -6,6 +6,7 @@ import { Pipe, PipeTransform } from '@angular/core';
  * Transform eg: `self-service/users` :: `Self Service | Users`
  */
 @Pipe({
+  standalone: false,
   name: 'urlToString'
 })
 export class UrlToStringPipe implements PipeTransform {

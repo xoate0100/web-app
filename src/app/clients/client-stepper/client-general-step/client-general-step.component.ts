@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, ChangeDetectionStrategy } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { DatePipe } from '@angular/common';
 
@@ -10,8 +10,10 @@ import { SettingsService } from 'app/settings/settings.service';
  * Create Client Component
  */
 @Component({
+  standalone: false,
   selector: 'mifosx-client-general-step',
   templateUrl: './client-general-step.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./client-general-step.component.scss']
 })
 export class ClientGeneralStepComponent implements OnInit {

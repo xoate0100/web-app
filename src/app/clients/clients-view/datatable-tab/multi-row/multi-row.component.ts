@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, OnChanges, ViewChild } from '@angular/core';
+import { Component, OnInit, Input, OnChanges, ViewChild, ChangeDetectionStrategy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { MatTable } from '@angular/material/table';
 import { MatDialog } from '@angular/material/dialog';
@@ -17,8 +17,10 @@ import { ClientsService } from '../../../clients.service';
 import { SettingsService } from 'app/settings/settings.service';
 
 @Component({
+  standalone: false,
   selector: 'mifosx-multi-row',
   templateUrl: './multi-row.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./multi-row.component.scss']
 })
 export class MultiRowComponent implements OnInit, OnChanges {

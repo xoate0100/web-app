@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 
@@ -13,8 +13,10 @@ import { onlyOneOfTheFieldsIsRequiredValidator } from './only-one-of-the-fields-
  * Migrate opening balances component.
  */
 @Component({
+  standalone: false,
   selector: 'mifosx-migrate-opening-balances',
   templateUrl: './migrate-opening-balances.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./migrate-opening-balances.component.scss']
 })
 export class MigrateOpeningBalancesComponent implements OnInit {

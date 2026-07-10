@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, ChangeDetectionStrategy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { FixedDepositProductDetailsStepComponent } from '../fixed-deposit-product-stepper/fixed-deposit-product-details-step/fixed-deposit-product-details-step.component';
@@ -12,8 +12,10 @@ import { FixedDepositProductAccountingStepComponent } from '../fixed-deposit-pro
 import { ProductsService } from 'app/products/products.service';
 
 @Component({
+  standalone: false,
   selector: 'mifosx-create-fixed-deposit-product',
   templateUrl: './create-fixed-deposit-product.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./create-fixed-deposit-product.component.scss']
 })
 export class CreateFixedDepositProductComponent implements OnInit {

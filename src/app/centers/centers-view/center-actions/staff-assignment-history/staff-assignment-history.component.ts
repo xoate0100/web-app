@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, ChangeDetectionStrategy } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
 
@@ -10,8 +10,10 @@ import { CentersService } from '../../../centers.service';
  * Staff Assignment History Component
  */
 @Component({
+  standalone: false,
   selector: 'mifosx-staff-assignment-history',
   templateUrl: './staff-assignment-history.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./staff-assignment-history.component.scss']
 })
 export class StaffAssignmentHistoryComponent implements OnInit {

@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { DatePipe } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -12,8 +12,10 @@ import { SettingsService } from 'app/settings/settings.service';
  * Reject Client Component
  */
 @Component({
+  standalone: false,
   selector: 'mifosx-reject-client',
   templateUrl: './reject-client.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./reject-client.component.scss']
 })
 export class RejectClientComponent implements OnInit {

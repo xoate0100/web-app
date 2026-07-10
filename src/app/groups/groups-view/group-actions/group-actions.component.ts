@@ -1,13 +1,15 @@
 /** Angular Imports */
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
 /**
  * Group actions component.
  */
 @Component({
+  standalone: false,
   selector: 'mifosx-group-actions',
   templateUrl: './group-actions.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./group-actions.component.scss']
 })
 export class GroupActionsComponent {

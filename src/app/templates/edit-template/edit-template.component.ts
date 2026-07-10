@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, ChangeDetectionStrategy } from '@angular/core';
 import { FormGroup, FormBuilder, FormControl } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 
@@ -16,8 +16,10 @@ import { TemplatesService } from '../templates.service';
  * Edit Template Component.
  */
 @Component({
+  standalone: false,
   selector: 'mifosx-edit-template',
   templateUrl: './edit-template.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./edit-template.component.scss']
 })
 export class EditTemplateComponent implements OnInit {

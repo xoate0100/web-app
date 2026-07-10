@@ -1,12 +1,14 @@
 /** Angular Imports */
-import { Component, OnInit, Input, ViewChild } from '@angular/core';
+import { Component, OnInit, Input, ViewChild, ChangeDetectionStrategy } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 
 @Component({
+  standalone: false,
   selector: 'mifosx-member-groups',
   templateUrl: './member-groups.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./member-groups.component.scss']
 })
 export class MemberGroupsComponent implements OnInit {

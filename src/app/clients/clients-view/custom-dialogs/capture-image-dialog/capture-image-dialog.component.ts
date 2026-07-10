@@ -1,13 +1,15 @@
 /** Angular Imports */
-import { Component, ViewChild, ElementRef, AfterViewInit, Renderer2, OnDestroy } from '@angular/core';
+import { Component, ViewChild, ElementRef, AfterViewInit, Renderer2, OnDestroy, ChangeDetectionStrategy } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
 
 /**
  * Capture image dialog component
  */
 @Component({
+  standalone: false,
   selector: 'mifosx-capture-image-dialog',
   templateUrl: './capture-image-dialog.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./capture-image-dialog.component.scss']
 })
 export class CaptureImageDialogComponent implements AfterViewInit, OnDestroy {

@@ -1,13 +1,15 @@
 /** Angular Imports */
-import { Component, OnInit, Input, OnChanges } from '@angular/core';
+import { Component, OnInit, Input, OnChanges, ChangeDetectionStrategy } from '@angular/core';
 import { FormGroup, FormBuilder, Validators} from '@angular/forms';
 
 /**
  * Fixed Deposits Terms Step
  */
 @Component({
+  standalone: false,
   selector: 'mifosx-fixed-deposit-account-terms-step',
   templateUrl: './fixed-deposit-account-terms-step.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./fixed-deposit-account-terms-step.component.scss']
 })
 export class FixedDepositAccountTermsStepComponent implements OnInit, OnChanges {

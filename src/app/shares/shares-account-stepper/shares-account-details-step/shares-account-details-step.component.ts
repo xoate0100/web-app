@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 /** Custom Services */
@@ -9,8 +9,10 @@ import { SharesService } from 'app/shares/shares.service';
  * Shares Account Details Step
  */
 @Component({
+  standalone: false,
   selector: 'mifosx-shares-account-details-step',
   templateUrl: './shares-account-details-step.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./shares-account-details-step.component.scss']
 })
 export class SharesAccountDetailsStepComponent implements OnInit {

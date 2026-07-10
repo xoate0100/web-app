@@ -1,10 +1,12 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, ChangeDetectionStrategy } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { combineLatest } from 'rxjs';
 
 @Component({
+  standalone: false,
   selector: 'mifosx-share-product-terms-step',
   templateUrl: './share-product-terms-step.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./share-product-terms-step.component.scss']
 })
 export class ShareProductTermsStepComponent implements OnInit {

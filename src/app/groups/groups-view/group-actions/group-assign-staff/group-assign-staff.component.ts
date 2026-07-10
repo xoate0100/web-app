@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 
@@ -10,8 +10,10 @@ import { GroupsService } from 'app/groups/groups.service';
  * Groups Assign Staff Component
  */
 @Component({
+  standalone: false,
   selector: 'mifosx-group-assign-staff',
   templateUrl: './group-assign-staff.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./group-assign-staff.component.scss']
 })
 export class GroupAssignStaffComponent implements OnInit {

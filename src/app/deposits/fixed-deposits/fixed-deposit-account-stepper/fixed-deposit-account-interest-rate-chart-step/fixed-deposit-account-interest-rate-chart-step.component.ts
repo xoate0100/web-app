@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, Input, OnChanges, ViewChild } from '@angular/core';
+import { Component, Input, OnChanges, ViewChild, ChangeDetectionStrategy } from '@angular/core';
 import { MatTableDataSource, MatTable } from '@angular/material/table';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 
@@ -7,9 +7,11 @@ import { animate, state, style, transition, trigger } from '@angular/animations'
  * Fixed Deposits Account Interest Rate Chart Step
  */
 @Component({
+  standalone: false,
   selector: 'mifosx-fixed-deposit-account-interest-rate-chart-step',
   templateUrl: './fixed-deposit-account-interest-rate-chart-step.component.html',
   styleUrls: ['./fixed-deposit-account-interest-rate-chart-step.component.scss'],
+  changeDetection: ChangeDetectionStrategy.Eager,
   animations: [
     trigger('expandChartSlab', [
       state('collapsed', style({ height: '0px', minHeight: '0' })),

@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, ChangeDetectionStrategy } from '@angular/core';
 import { DatePipe } from '@angular/common';
 import { FormGroup, FormBuilder, FormArray } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
@@ -11,8 +11,10 @@ import { DatepickerBase } from 'app/shared/form-dialog/formfield/model/datepicke
 import { InputBase } from 'app/shared/form-dialog/formfield/model/input-base';
 
 @Component({
+  standalone: false,
   selector: 'mifosx-share-product-market-price-step',
   templateUrl: './share-product-market-price-step.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./share-product-market-price-step.component.scss']
 })
 export class ShareProductMarketPriceStepComponent implements OnInit {

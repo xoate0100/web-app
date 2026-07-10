@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { DatePipe } from '@angular/common';
@@ -11,8 +11,10 @@ import { SavingsService } from '../../savings.service';
  * Create savings account transactions component.
  */
 @Component({
+  standalone: false,
   selector: 'mifosx-savings-transactions',
   templateUrl: './savings-account-transactions.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./savings-account-transactions.component.scss']
 })
 export class SavingsAccountTransactionsComponent implements OnInit {

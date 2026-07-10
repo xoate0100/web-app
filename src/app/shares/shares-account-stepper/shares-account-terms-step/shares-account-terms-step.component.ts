@@ -1,13 +1,15 @@
 /** Angular Imports */
-import { Component, OnChanges, OnInit, Input } from '@angular/core';
+import { Component, OnChanges, OnInit, Input, ChangeDetectionStrategy } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 /**
  * Shares Account Terms Step
  */
 @Component({
+  standalone: false,
   selector: 'mifosx-shares-account-terms-step',
   templateUrl: './shares-account-terms-step.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./shares-account-terms-step.component.scss']
 })
 export class SharesAccountTermsStepComponent implements OnChanges, OnInit {

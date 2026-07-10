@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SelectionModel } from '@angular/cdk/collections';
 import { FormBuilder, FormGroup } from '@angular/forms';
@@ -15,8 +15,10 @@ import { SettingsService } from 'app/settings/settings.service';
 import { ConfirmationDialogComponent } from 'app/shared/confirmation-dialog/confirmation-dialog.component';
 
 @Component({
+  standalone: false,
   selector: 'mifosx-checker-inbox',
   templateUrl: './checker-inbox.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./checker-inbox.component.scss']
 })
 export class CheckerInboxComponent implements OnInit {

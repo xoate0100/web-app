@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, ChangeDetectionStrategy } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
@@ -13,8 +13,10 @@ import { startWith, map } from 'rxjs/operators';
  * Closing entries component.
  */
 @Component({
+  standalone: false,
   selector: 'mifosx-closing-entries',
   templateUrl: './closing-entries.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./closing-entries.component.scss']
 })
 export class ClosingEntriesComponent implements OnInit {

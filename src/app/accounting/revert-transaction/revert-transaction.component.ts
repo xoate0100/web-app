@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, OnInit, Inject, ChangeDetectionStrategy } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { FormControl } from '@angular/forms';
 
@@ -7,8 +7,10 @@ import { FormControl } from '@angular/forms';
  * Revert transaction dialog component.
  */
 @Component({
+  standalone: false,
   selector: 'mifosx-revert-transaction',
   templateUrl: './revert-transaction.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./revert-transaction.component.scss']
 })
 export class RevertTransactionComponent implements OnInit {

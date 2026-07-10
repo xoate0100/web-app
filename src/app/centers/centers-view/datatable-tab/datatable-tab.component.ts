@@ -1,9 +1,11 @@
-import { Component} from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 @Component({
+  standalone: false,
   selector: 'mifosx-datatable-tab',
   templateUrl: './datatable-tab.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./datatable-tab.component.scss']
 })
 export class DatatableTabComponent {

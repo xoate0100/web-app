@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 
@@ -10,8 +10,10 @@ import { AccountingService } from '../../accounting.service';
  * Create financial activity mapping component.
  */
 @Component({
+  standalone: false,
   selector: 'mifosx-create-financial-activity-mapping',
   templateUrl: './create-financial-activity-mapping.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./create-financial-activity-mapping.component.scss']
 })
 export class CreateFinancialActivityMappingComponent implements OnInit {

@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
@@ -14,8 +14,10 @@ import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.co
  * View Code Component.
  */
 @Component({
+  standalone: false,
   selector: 'mifosx-view-code',
   templateUrl: './view-code.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./view-code.component.scss']
 })
 export class ViewCodeComponent implements OnInit {

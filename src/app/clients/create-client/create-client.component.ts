@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, ViewChild } from '@angular/core';
+import { Component, ViewChild, ChangeDetectionStrategy } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 
 /** Custom Services */
@@ -18,8 +18,10 @@ import { SettingsService } from 'app/settings/settings.service';
  * Create Client Component.
  */
 @Component({
+  standalone: false,
   selector: 'mifosx-create-client',
   templateUrl: './create-client.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./create-client.component.scss']
 })
 export class CreateClientComponent {

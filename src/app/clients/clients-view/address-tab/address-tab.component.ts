@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { FormfieldBase } from 'app/shared/form-dialog/formfield/model/formfield-base';
@@ -16,8 +16,10 @@ import { ClientsService } from '../../clients.service';
  * Clients Address Tab Component
  */
 @Component({
+  standalone: false,
   selector: 'mifosx-address-tab',
   templateUrl: './address-tab.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./address-tab.component.scss']
 })
 export class AddressTabComponent {

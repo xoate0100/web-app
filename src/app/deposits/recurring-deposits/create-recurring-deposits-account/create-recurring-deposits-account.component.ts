@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, ChangeDetectionStrategy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DatePipe } from '@angular/common';
 
@@ -18,8 +18,10 @@ import { RecurringDepositsAccountChargesStepComponent } from '../recurring-depos
  * Create new recurring deposit account
  */
 @Component({
+  standalone: false,
   selector: 'mifosx-create-recurring-deposits-account',
   templateUrl: './create-recurring-deposits-account.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./create-recurring-deposits-account.component.scss']
 })
 export class CreateRecurringDepositsAccountComponent implements OnInit {

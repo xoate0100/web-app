@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, ChangeDetectionStrategy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DatePipe } from '@angular/common';
 import { MatDialog } from '@angular/material/dialog';
@@ -9,8 +9,10 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { SettingsService } from 'app/settings/settings.service';
 
 @Component({
+  standalone: false,
   selector: 'mifosx-assign-loan-officer',
   templateUrl: './assign-loan-officer.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./assign-loan-officer.component.scss']
 })
 export class AssignLoanOfficerComponent implements OnInit {

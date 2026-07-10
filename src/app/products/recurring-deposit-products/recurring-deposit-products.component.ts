@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, ChangeDetectionStrategy } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
@@ -12,8 +12,10 @@ import { of } from 'rxjs';
  * Recurring Deposit Products component.
  */
 @Component({
+  standalone: false,
   selector: 'mifosx-recurring-deposit-products',
   templateUrl: './recurring-deposit-products.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./recurring-deposit-products.component.scss']
 })
 export class RecurringDepositProductsComponent implements OnInit {

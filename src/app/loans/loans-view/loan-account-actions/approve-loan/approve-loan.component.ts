@@ -1,5 +1,5 @@
 /** Angular Imports. */
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, ChangeDetectionStrategy } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { distinctUntilChanged } from 'rxjs/operators';
@@ -13,8 +13,10 @@ import { SettingsService } from 'app/settings/settings.service';
  * Approve Loan component.
  */
 @Component({
+  standalone: false,
   selector: 'mifosx-approve-loan',
   templateUrl: './approve-loan.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./approve-loan.component.scss']
 })
 export class ApproveLoanComponent implements OnInit {

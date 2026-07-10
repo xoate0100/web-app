@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { DatePipe } from '@angular/common';
@@ -20,8 +20,10 @@ import { RecurringDepositConfirmationDialogComponent } from './custom-dialogs/re
  * RecurringDeposits Account View Component
  */
 @Component({
+  standalone: false,
   selector: 'mifosx-recurring-deposits-account-view',
   templateUrl: './recurring-deposits-account-view.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./recurring-deposits-account-view.component.scss']
 })
 export class RecurringDepositsAccountViewComponent implements OnInit {

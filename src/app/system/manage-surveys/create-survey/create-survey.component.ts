@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { FormGroup, FormBuilder, FormArray, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
@@ -15,8 +15,10 @@ import { CancelDialogComponent } from '../../../shared/cancel-dialog/cancel-dial
  * Create survey component.
  */
 @Component({
+  standalone: false,
   selector: 'mifosx-create-survey',
   templateUrl: './create-survey.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./create-survey.component.scss']
 })
 export class CreateSurveyComponent implements OnInit {

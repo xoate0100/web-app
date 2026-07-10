@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, ChangeDetectionStrategy } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { LoansService } from 'app/loans/loans.service';
@@ -9,8 +9,10 @@ import { DatePipe } from '@angular/common';
 import { SettingsService } from 'app/settings/settings.service';
 
 @Component({
+  standalone: false,
   selector: 'mifosx-loans-account-close',
   templateUrl: './loans-account-close.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./loans-account-close.component.scss']
 })
 export class LoansAccountCloseComponent implements OnInit {

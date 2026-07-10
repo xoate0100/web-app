@@ -1,5 +1,5 @@
 /** Angular Imports. */
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, ChangeDetectionStrategy } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { DatePipe } from '@angular/common';
@@ -11,8 +11,10 @@ import { LoansService } from 'app/loans/loans.service';
  * Waive Interest component.
  */
 @Component({
+  standalone: false,
   selector: 'mifosx-waive-interest',
   templateUrl: './waive-interest.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./waive-interest.component.scss']
 })
 export class WaiveInterestComponent implements OnInit {

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { LoansService } from 'app/loans/loans.service';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -8,8 +8,10 @@ import { DatePipe } from '@angular/common';
 import { SettingsService } from 'app/settings/settings.service';
 
 @Component({
+  standalone: false,
   selector: 'mifosx-foreclosure',
   templateUrl: './foreclosure.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./foreclosure.component.scss']
 })
 export class ForeclosureComponent implements OnInit {

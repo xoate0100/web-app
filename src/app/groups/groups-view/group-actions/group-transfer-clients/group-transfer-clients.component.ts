@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit, ChangeDetectionStrategy } from '@angular/core';
 import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 
@@ -11,8 +11,10 @@ import { SettingsService } from 'app/settings/settings.service';
  * Group Transfer Clients component.
  */
 @Component({
+  standalone: false,
   selector: 'mifosx-group-transfer-clients',
   templateUrl: './group-transfer-clients.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./group-transfer-clients.component.scss']
 })
 export class GroupTransferClientsComponent implements OnInit, AfterViewInit {

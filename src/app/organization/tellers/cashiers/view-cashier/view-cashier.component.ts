@@ -1,5 +1,5 @@
 /** Angular Imports. */
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
 /** Custom Dialogs */
@@ -13,8 +13,10 @@ import { OrganizationService } from 'app/organization/organization.service';
  * View Cashier component.
  */
 @Component({
+  standalone: false,
   selector: 'mifosx-view-cashier',
   templateUrl: './view-cashier.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./view-cashier.component.scss']
 })
 export class ViewCashierComponent {

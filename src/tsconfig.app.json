@@ -6,9 +6,9 @@
     "types": []
   },
   "angularCompilerOptions": {
-    "enableIvy": true,
     "fullTemplateTypeCheck": false,
-    "preserveWhitespaces": true
+    "preserveWhitespaces": true,
+    "strictTemplates": false
   },
   "files": [
     "main.ts",

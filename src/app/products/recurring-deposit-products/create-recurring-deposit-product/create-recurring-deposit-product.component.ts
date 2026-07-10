@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, ChangeDetectionStrategy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { RecurringDepositProductDetailsStepComponent } from '../recurring-deposit-product-stepper/recurring-deposit-product-details-step/recurring-deposit-product-details-step.component';
@@ -12,8 +12,10 @@ import { RecurringDepositProductAccountingStepComponent } from '../recurring-dep
 import { ProductsService } from 'app/products/products.service';
 
 @Component({
+  standalone: false,
   selector: 'mifosx-create-recurring-deposit-product',
   templateUrl: './create-recurring-deposit-product.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./create-recurring-deposit-product.component.scss']
 })
 export class CreateRecurringDepositProductComponent implements OnInit {

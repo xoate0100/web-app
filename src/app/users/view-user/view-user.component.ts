@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 
@@ -14,8 +14,10 @@ import { ChangePasswordDialogComponent } from 'app/shared/change-password-dialog
  * View user component.
  */
 @Component({
+  standalone: false,
   selector: 'mifosx-view-user',
   templateUrl: './view-user.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./view-user.component.scss']
 })
 export class ViewUserComponent implements OnInit {

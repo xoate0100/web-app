@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit, Renderer2, ViewChild, ElementRef, SecurityContext, Input } from '@angular/core';
+import { Component, OnInit, Renderer2, ViewChild, ElementRef, SecurityContext, Input, ChangeDetectionStrategy } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 
@@ -11,8 +11,10 @@ import { DomSanitizer } from '@angular/platform-browser';
  * Loans Screen Reports Component.
  */
 @Component({
+  standalone: false,
   selector: 'mifosx-loan-screen-reports',
   templateUrl: './loan-screen-reports.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./loan-screen-reports.component.scss']
 })
 export class LoanScreenReportsComponent implements OnInit {

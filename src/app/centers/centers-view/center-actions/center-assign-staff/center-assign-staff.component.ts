@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 
@@ -10,8 +10,10 @@ import { CentersService } from 'app/centers/centers.service';
  * Centers Assign Staff Component
  */
 @Component({
+  standalone: false,
   selector: 'mifosx-center-assign-staff',
   templateUrl: './center-assign-staff.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./center-assign-staff.component.scss']
 })
 export class CenterAssignStaffComponent implements OnInit {

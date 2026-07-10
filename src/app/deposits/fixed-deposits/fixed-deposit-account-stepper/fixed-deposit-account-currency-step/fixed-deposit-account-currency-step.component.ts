@@ -1,13 +1,15 @@
 /** Angular Imports */
-import { Component, OnChanges, Input } from '@angular/core';
+import { Component, OnChanges, Input, ChangeDetectionStrategy } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
 
 /**
  * Fixed Deposit Account Currency Step
  */
 @Component({
+  standalone: false,
   selector: 'mifosx-fixed-deposit-account-currency-step',
   templateUrl: './fixed-deposit-account-currency-step.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./fixed-deposit-account-currency-step.component.scss']
 })
 export class FixedDepositAccountCurrencyStepComponent implements OnChanges {

@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { DatePipe } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -11,8 +11,10 @@ import { FixedDepositsService } from '../../fixed-deposits.service';
  * Premature Close Fixed Deposits Account Component
  */
 @Component({
+  standalone: false,
   selector: 'mifosx-premature-close-fixed-deposits-account',
   templateUrl: './premature-close-fixed-deposits-account.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./premature-close-fixed-deposits-account.component.scss']
 })
 export class PrematureCloseFixedDepositsAccountComponent implements OnInit {

@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { DatePipe } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -11,8 +11,10 @@ import { FixedDepositsService } from 'app/deposits/fixed-deposits/fixed-deposits
  * Reject Fixed Deposits Account Component
  */
 @Component({
+  standalone: false,
   selector: 'mifosx-reject-fixed-deposits-account',
   templateUrl: './reject-fixed-deposits-account.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./reject-fixed-deposits-account.component.scss']
 })
 export class RejectFixedDepositsAccountComponent implements OnInit {

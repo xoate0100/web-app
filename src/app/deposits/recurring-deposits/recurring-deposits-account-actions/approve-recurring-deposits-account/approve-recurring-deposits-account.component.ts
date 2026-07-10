@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { DatePipe } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -12,8 +12,10 @@ import { SettingsService } from 'app/settings/settings.service';
  * Approve Recurring Deposits Account Component
  */
 @Component({
+  standalone: false,
   selector: 'mifosx-approve-recurring-deposits-account',
   templateUrl: './approve-recurring-deposits-account.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./approve-recurring-deposits-account.component.scss']
 })
 export class ApproveRecurringDepositsAccountComponent implements OnInit {

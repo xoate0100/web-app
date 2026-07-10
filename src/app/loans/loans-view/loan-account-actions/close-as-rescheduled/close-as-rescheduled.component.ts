@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, ChangeDetectionStrategy } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { LoansService } from 'app/loans/loans.service';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -8,8 +8,10 @@ import { DatePipe } from '@angular/common';
 import { SettingsService } from 'app/settings/settings.service';
 
 @Component({
+  standalone: false,
   selector: 'mifosx-close-as-rescheduled',
   templateUrl: './close-as-rescheduled.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./close-as-rescheduled.component.scss']
 })
 export class CloseAsRescheduledComponent implements OnInit {

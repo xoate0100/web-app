@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ChangeDetectionStrategy } from '@angular/core';
 import { Router } from '@angular/router';
 
 /** rxjs Imports */
@@ -18,8 +18,10 @@ import { environment } from '../../environments/environment';
  * Login component.
  */
 @Component({
+  standalone: false,
   selector: 'mifosx-login',
   templateUrl: './login.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit, OnDestroy {

@@ -1,13 +1,15 @@
 /** Angular Imports */
-import { Component, OnChanges, OnInit, Input } from '@angular/core';
+import { Component, OnChanges, OnInit, Input, ChangeDetectionStrategy } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 
 /**
  * Savings Account Terms Step
  */
 @Component({
+  standalone: false,
   selector: 'mifosx-savings-account-terms-step',
   templateUrl: './savings-account-terms-step.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./savings-account-terms-step.component.scss']
 })
 export class SavingsAccountTermsStepComponent implements OnChanges, OnInit {

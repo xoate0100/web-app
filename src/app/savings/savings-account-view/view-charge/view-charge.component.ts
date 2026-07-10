@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { DatePipe } from '@angular/common';
@@ -23,8 +23,10 @@ import { DatepickerBase } from 'app/shared/form-dialog/formfield/model/datepicke
  * View Charge Component.
  */
 @Component({
+  standalone: false,
   selector: 'mifosx-view-charge',
   templateUrl: './view-charge.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./view-charge.component.scss']
 })
 export class ViewChargeComponent {

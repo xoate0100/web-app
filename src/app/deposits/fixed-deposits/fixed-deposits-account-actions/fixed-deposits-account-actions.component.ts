@@ -1,13 +1,15 @@
 /** Angular Imports */
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 /**
  * Fixed deposits account actions component.
  */
 @Component({
+  standalone: false,
   selector: 'mifosx-fixed-deposits-account-actions',
   templateUrl: './fixed-deposits-account-actions.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./fixed-deposits-account-actions.component.scss']
 })
 export class FixedDepositsAccountActionsComponent {

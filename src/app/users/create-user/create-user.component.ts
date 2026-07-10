@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 
@@ -13,8 +13,10 @@ import { confirmPasswordValidator } from '../../login/reset-password/confirm-pas
  * Create user component.
  */
 @Component({
+  standalone: false,
   selector: 'mifosx-create-user',
   templateUrl: './create-user.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./create-user.component.scss']
 })
 export class CreateUserComponent implements OnInit {

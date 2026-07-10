@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 /** rxjs Imports */
@@ -12,8 +12,10 @@ import { AuthenticationService } from '../../core/authentication/authentication.
  * Two factor authentication component.
  */
 @Component({
+  standalone: false,
   selector: 'mifosx-two-factor-authentication',
   templateUrl: './two-factor-authentication.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./two-factor-authentication.component.scss']
 })
 export class TwoFactorAuthenticationComponent implements OnInit {

@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { style, animate, transition, trigger } from '@angular/animations';
 import { Router } from '@angular/router';
 import { FormControl } from '@angular/forms';
@@ -8,9 +8,11 @@ import { FormControl } from '@angular/forms';
  * Search Tool Component
  */
 @Component({
+  standalone: false,
   selector: 'mifosx-search-tool',
   templateUrl: './search-tool.component.html',
   styleUrls: ['./search-tool.component.scss'],
+  changeDetection: ChangeDetectionStrategy.Eager,
   animations: [
     trigger('fadeInOut', [
       transition(':enter', [

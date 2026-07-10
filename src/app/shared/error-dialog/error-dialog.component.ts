@@ -1,10 +1,12 @@
 /** Angular Imports. */
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, OnInit, Inject, ChangeDetectionStrategy } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 @Component({
+  standalone: false,
   selector: 'mifosx-error-dialog',
   templateUrl: './error-dialog.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./error-dialog.component.scss']
 })
 export class ErrorDialogComponent {

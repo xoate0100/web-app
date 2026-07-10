@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, ChangeDetectionStrategy } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
@@ -16,8 +16,10 @@ import { DeleteDialogComponent } from '../../shared/delete-dialog/delete-dialog.
  * Entity Data Table Checks component.
  */
 @Component({
+  standalone: false,
   selector: 'mifosx-entity-data-table-checks',
   templateUrl: './entity-data-table-checks.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./entity-data-table-checks.component.scss']
 })
 export class EntityDataTableChecksComponent implements OnInit {

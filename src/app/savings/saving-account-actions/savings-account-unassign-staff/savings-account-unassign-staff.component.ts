@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, ChangeDetectionStrategy } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { DatePipe } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -12,8 +12,10 @@ import { SettingsService } from 'app/settings/settings.service';
  * Savings Account Unassign Staff Component
  */
 @Component({
+  standalone: false,
   selector: 'mifosx-savings-account-unassign-staff',
   templateUrl: './savings-account-unassign-staff.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./savings-account-unassign-staff.component.scss']
 })
 export class SavingsAccountUnassignStaffComponent implements OnInit {

@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit, ChangeDetectionStrategy } from '@angular/core';
 import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { DatePipe } from '@angular/common';
@@ -13,8 +13,10 @@ import { SettingsService } from 'app/settings/settings.service';
  * Create Group component.
  */
 @Component({
+  standalone: false,
   selector: 'mifosx-create-group',
   templateUrl: './create-group.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./create-group.component.scss']
 })
 export class CreateGroupComponent implements OnInit, AfterViewInit {

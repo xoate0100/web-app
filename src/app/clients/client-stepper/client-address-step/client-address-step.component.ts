@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, Input } from '@angular/core';
+import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 
 /** Custom Models */
@@ -15,8 +15,10 @@ import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.co
  * Client Address Step Component
  */
 @Component({
+  standalone: false,
   selector: 'mifosx-client-address-step',
   templateUrl: './client-address-step.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./client-address-step.component.scss']
 })
 export class ClientAddressStepComponent {

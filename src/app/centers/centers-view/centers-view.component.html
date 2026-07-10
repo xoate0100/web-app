@@ -38,11 +38,11 @@
       <div class="center-meeting" fxLayoutAlign="start start">
         <div *ngIf="centerViewData.collectionMeetingCalendar; else unassigned">
           <p>
-             Next Meeting on: {{centerViewData.collectionMeetingCalendar?.nextTenRecurringDates[0] | date}}
+             Next Meeting on: {{$safeNavigationMigration(centerViewData.collectionMeetingCalendar?.nextTenRecurringDates[0]) | date}}
              <span *ngIf="editMeeting">
               <i class="fa fa-edit" (click)="doAction('Edit Meeting')" *mifosxHasPermission="'UPDATE_MEETING'"></i><br />
              </span>
-             Meeting Frequency: {{centerViewData.collectionMeetingCalendar?.frequency.value | lowercase}}
+             Meeting Frequency: {{$safeNavigationMigration(centerViewData.collectionMeetingCalendar?.frequency.value) | lowercase}}
           </p>
         </div>
         <ng-template #unassigned>

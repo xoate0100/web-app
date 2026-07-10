@@ -1,12 +1,14 @@
 /** Angular Imports */
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
 
 /**
  * Savings account preview step
  */
 @Component({
+  standalone: false,
   selector: 'mifosx-savings-account-preview-step',
   templateUrl: './savings-account-preview-step.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./savings-account-preview-step.component.scss']
 })
 export class SavingsAccountPreviewStepComponent {

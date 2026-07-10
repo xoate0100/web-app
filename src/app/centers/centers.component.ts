@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
+import { Component, OnInit, ViewChild, AfterViewInit, ChangeDetectionStrategy } from '@angular/core';
 import { MatCheckbox } from '@angular/material/checkbox';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
@@ -20,8 +20,10 @@ import { CentersDataSource } from './centers.datasource';
  * Centers component.
  */
 @Component({
+  standalone: false,
   selector: 'mifosx-app-centers',
   templateUrl: './centers.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./centers.component.scss'],
 })
 export class CentersComponent implements OnInit, AfterViewInit {

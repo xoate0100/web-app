@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, ChangeDetectionStrategy } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 
@@ -11,8 +11,10 @@ import { ClientFamilyMemberDialogComponent } from './client-family-member-dialog
  * Client Family Members Step
  */
 @Component({
+  standalone: false,
   selector: 'mifosx-client-family-members-step',
   templateUrl: './client-family-members-step.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./client-family-members-step.component.scss']
 })
 export class ClientFamilyMembersStepComponent {

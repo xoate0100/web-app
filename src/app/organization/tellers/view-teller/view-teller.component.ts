@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 
@@ -13,8 +13,10 @@ import { DeleteDialogComponent } from '../../../shared/delete-dialog/delete-dial
  * View Teller Component.
  */
 @Component({
+  standalone: false,
   selector: 'mifosx-view-teller',
   templateUrl: './view-teller.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./view-teller.component.scss']
 })
 export class ViewTellerComponent implements OnInit {

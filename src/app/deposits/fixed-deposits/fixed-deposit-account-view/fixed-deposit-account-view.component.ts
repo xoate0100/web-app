@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 
@@ -20,8 +20,10 @@ import { SavingsService } from 'app/savings/savings.service';
  * Fixed Deposits Account View Component
  */
 @Component({
+  standalone: false,
   selector: 'mifosx-fixed-deposit-account-view',
   templateUrl: './fixed-deposit-account-view.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./fixed-deposit-account-view.component.scss']
 })
 export class FixedDepositAccountViewComponent implements OnInit {

@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnChanges, Input } from '@angular/core';
+import { Component, OnChanges, Input, ChangeDetectionStrategy } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 
 /** Custom Services */
@@ -10,8 +10,10 @@ import { SettingsService } from 'app/settings/settings.service';
  * Pentaho Component
  */
 @Component({
+  standalone: false,
   selector: 'mifosx-pentaho',
   templateUrl: './pentaho.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./pentaho.component.scss']
 })
 export class PentahoComponent implements OnChanges {

@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 
 /** Custom Service */
 import { SettingsService } from './settings.service';
@@ -9,8 +9,10 @@ import { FormControl } from '@angular/forms';
  * Settings component.
  */
 @Component({
+  standalone: false,
   selector: 'mifosx-settings',
   templateUrl: './settings.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./settings.component.scss']
 })
 export class SettingsComponent implements OnInit {

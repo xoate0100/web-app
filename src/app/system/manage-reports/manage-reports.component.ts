@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, ChangeDetectionStrategy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
@@ -9,8 +9,10 @@ import { MatTableDataSource } from '@angular/material/table';
  * Manage Reports Component.
  */
 @Component({
+  standalone: false,
   selector: 'mifosx-manage-reports',
   templateUrl: './manage-reports.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./manage-reports.component.scss']
 })
 export class ManageReportsComponent implements OnInit {

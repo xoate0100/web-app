@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { ActivatedRoute, Router, NavigationEnd } from '@angular/router';
 
 /** rxjs Imports */
@@ -41,8 +41,10 @@ const routeAddBreadcrumbLink = 'addBreadcrumbLink';
  * Generate breadcrumbs dynamically via route configuration.
  */
 @Component({
+  standalone: false,
   selector: 'mifosx-breadcrumb',
   templateUrl: './breadcrumb.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./breadcrumb.component.scss']
 })
 export class BreadcrumbComponent implements OnInit {

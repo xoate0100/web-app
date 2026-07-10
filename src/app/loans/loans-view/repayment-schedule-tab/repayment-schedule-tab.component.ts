@@ -1,9 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 @Component({
+  standalone: false,
   selector: 'mifosx-repayment-schedule-tab',
   templateUrl: './repayment-schedule-tab.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./repayment-schedule-tab.component.scss']
 })
 export class RepaymentScheduleTabComponent implements OnInit {

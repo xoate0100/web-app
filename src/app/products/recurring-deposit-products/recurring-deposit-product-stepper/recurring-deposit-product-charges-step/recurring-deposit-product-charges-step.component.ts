@@ -1,12 +1,14 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, ChangeDetectionStrategy } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { FormControl } from '@angular/forms';
 
 import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.component';
 
 @Component({
+  standalone: false,
   selector: 'mifosx-recurring-deposit-product-charges-step',
   templateUrl: './recurring-deposit-product-charges-step.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./recurring-deposit-product-charges-step.component.scss']
 })
 export class RecurringDepositProductChargesStepComponent implements OnInit {

@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, ViewChild } from '@angular/core';
+import { Component, ViewChild, ChangeDetectionStrategy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DatePipe } from '@angular/common';
 
@@ -14,8 +14,10 @@ import { CampaignMessageStepComponent } from '../sms-campaign-stepper/campaign-m
  * Edit Campaign Component
  */
 @Component({
+  standalone: false,
   selector: 'mifosx-edit-campaign',
   templateUrl: './edit-campaign.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./edit-campaign.component.scss']
 })
 export class EditCampaignComponent {

@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, ChangeDetectionStrategy } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 
@@ -16,8 +16,10 @@ import { frequentActivities } from './frequent-activities';
  * Sidenav component.
  */
 @Component({
+  standalone: false,
   selector: 'mifosx-sidenav',
   templateUrl: './sidenav.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./sidenav.component.scss']
 })
 export class SidenavComponent implements OnInit {

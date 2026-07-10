@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, Inject, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { DomSanitizer } from '@angular/platform-browser';
 
@@ -10,8 +10,10 @@ import { ClientsService } from 'app/clients/clients.service';
  * View signature dialog component.
  */
 @Component({
+  standalone: false,
   selector: 'mifosx-view-signature-dialog',
   templateUrl: './view-signature-dialog.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./view-signature-dialog.component.scss']
 })
 export class ViewSignatureDialogComponent implements OnInit {

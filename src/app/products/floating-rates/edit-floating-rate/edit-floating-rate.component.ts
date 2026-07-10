@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, ChangeDetectionStrategy } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup, Validators, FormArray } from '@angular/forms';
 import { DatePipe } from '@angular/common';
@@ -19,8 +19,10 @@ import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.co
  * Edit Floating Rate Component.
  */
 @Component({
+  standalone: false,
   selector: 'mifosx-edit-floating-rate',
   templateUrl: './edit-floating-rate.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./edit-floating-rate.component.scss']
 })
 export class EditFloatingRateComponent implements OnInit {

@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit, Input, ViewChild } from '@angular/core';
+import { Component, OnInit, Input, ViewChild, ChangeDetectionStrategy } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
@@ -8,8 +8,10 @@ import { MatTableDataSource } from '@angular/material/table';
 import { AccountsFilterPipe } from '../../pipes/accounts-filter.pipe';
 
 @Component({
+  standalone: false,
   selector: 'mifosx-savings-account-table',
   templateUrl: './savings-account-table.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./savings-account-table.component.scss']
 })
 export class SavingsAccountTableComponent implements OnInit {

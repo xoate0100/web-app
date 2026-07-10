@@ -1,13 +1,15 @@
 /** Angular Imports */
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 /**
  * Groups View General Tab Component.
  */
 @Component({
+  standalone: false,
   selector: 'mifosx-general-tab',
   templateUrl: './general-tab.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./general-tab.component.scss']
 })
 export class GeneralTabComponent {

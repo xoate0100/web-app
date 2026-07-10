@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { DatePipe } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -20,8 +20,10 @@ import { SelectBase } from 'app/shared/form-dialog/formfield/model/select-base';
  * Center Attendance component.
  */
 @Component({
+  standalone: false,
   selector: 'mifosx-center-attendance',
   templateUrl: './center-attendance.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./center-attendance.component.scss']
 })
 export class CenterAttendanceComponent implements OnInit {

@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormControl} from '@angular/forms';
 import { MatTableDataSource } from '@angular/material/table';
 import { DatePipe } from '@angular/common';
@@ -13,8 +13,10 @@ import { SettingsService } from 'app/settings/settings.service';
  * XBRL Report Component
  */
 @Component({
+  standalone: false,
   selector: 'mifosx-xbrl-report',
   templateUrl: './xbrl-report.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./xbrl-report.component.scss']
 })
 export class XBRLReportComponent implements OnInit {

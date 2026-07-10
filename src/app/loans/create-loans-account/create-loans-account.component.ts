@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, ChangeDetectionStrategy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DatePipe } from '@angular/common';
 
@@ -16,8 +16,10 @@ import { LoansAccountChargesStepComponent } from '../loans-account-stepper/loans
  * Create loans account
  */
 @Component({
+  standalone: false,
   selector: 'mifosx-create-loans-account',
   templateUrl: './create-loans-account.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./create-loans-account.component.scss']
 })
 export class CreateLoansAccountComponent implements OnInit {

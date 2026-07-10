@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
+import { Component, OnInit, ViewChild, AfterViewInit, ChangeDetectionStrategy } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { ActivatedRoute } from '@angular/router';
@@ -20,8 +20,10 @@ import { tap, debounceTime, distinctUntilChanged, startWith, map } from 'rxjs/op
  * Audit Trails Component.
  */
 @Component({
+  standalone: false,
   selector: 'mifosx-audit-trails',
   templateUrl: './audit-trails.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./audit-trails.component.scss']
 })
 export class AuditTrailsComponent implements OnInit, AfterViewInit {
@@ -155,7 +157,7 @@ export class AuditTrailsComponent implements OnInit, AfterViewInit {
   ngAfterViewInit() {
     this.user.valueChanges
       .pipe(
-        map(value => value.id ? value.id : ''),
+        map((value: any) => value?.id ? value.id : ''),
         debounceTime(500),
         distinctUntilChanged(),
         tap((filterValue) => {

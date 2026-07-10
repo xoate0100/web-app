@@ -6,7 +6,7 @@
       <p>
         # of Repayments :{{loanDetails?.numberOfRepayments}}
       <p>
-        Maturity Date :{{loanDetails?.timeline.expectedMaturityDate | date}}
+        Maturity Date :{{$safeNavigationMigration(loanDetails?.timeline.expectedMaturityDate) | date}}
       </p>
     </div>
   </ng-container>

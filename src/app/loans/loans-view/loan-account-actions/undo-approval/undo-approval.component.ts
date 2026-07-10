@@ -1,5 +1,5 @@
 /** Angular Imports. */
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { FormControl, FormBuilder } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 
@@ -9,8 +9,10 @@ import { LoansService } from 'app/loans/loans.service';
  * Undo Loan component.
  */
 @Component({
+  standalone: false,
   selector: 'mifosx-undo-approval',
   templateUrl: './undo-approval.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./undo-approval.component.scss']
 })
 export class UndoApprovalComponent implements OnInit {

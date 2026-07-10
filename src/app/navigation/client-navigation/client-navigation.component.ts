@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit, Input, ViewChild } from '@angular/core';
+import { Component, OnInit, Input, ViewChild, ChangeDetectionStrategy } from '@angular/core';
 
 /** Custom Components */
 import { LoanAccountTableComponent } from '../loan-account-table/loan-account-table.component';
@@ -8,8 +8,10 @@ import { ShareAccountTableComponent } from '../share-account-table/share-account
 import { MemberGroupsComponent } from '../member-groups/member-groups.component';
 
 @Component({
+  standalone: false,
   selector: 'mifosx-client-navigation',
   templateUrl: './client-navigation.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./client-navigation.component.scss']
 })
 export class ClientNavigationComponent implements OnInit {

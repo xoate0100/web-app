@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 
@@ -10,8 +10,10 @@ import { ProductsService } from 'app/products/products.service';
  * Edit Charge component.
  */
 @Component({
+  standalone: false,
   selector: 'mifosx-edit-charge',
   templateUrl: './edit-charge.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./edit-charge.component.scss']
 })
 export class EditChargeComponent implements OnInit {

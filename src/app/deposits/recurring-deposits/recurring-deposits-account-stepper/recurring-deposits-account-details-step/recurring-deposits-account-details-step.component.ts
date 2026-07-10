@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 /** Custom Services */
@@ -10,8 +10,10 @@ import { DatePipe } from '@angular/common';
  * Recurring Deposits Account Details Step
  */
 @Component({
+  standalone: false,
   selector: 'mifosx-recurring-deposits-account-details-step',
   templateUrl: './recurring-deposits-account-details-step.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./recurring-deposits-account-details-step.component.scss']
 })
 export class RecurringDepositsAccountDetailsStepComponent implements OnInit {

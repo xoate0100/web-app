@@ -1,13 +1,15 @@
 /** Angular Imports */
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
 /**
  * Client actions component.
  */
 @Component({
+  standalone: false,
   selector: 'mifosx-client-actions',
   templateUrl: './client-actions.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./client-actions.component.scss']
 })
 export class ClientActionsComponent {

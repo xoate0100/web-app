@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { DatePipe } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -11,8 +11,10 @@ import { FixedDepositsService } from 'app/deposits/fixed-deposits/fixed-deposits
  * Withdraw By Client Fixed Deposits Account Component
  */
 @Component({
+  standalone: false,
   selector: 'mifosx-withdraw-by-client-fixed-deposits-account',
   templateUrl: './withdraw-by-client-fixed-deposits-account.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./withdraw-by-client-fixed-deposits-account.component.scss']
 })
 export class WithdrawByClientFixedDepositsAccountComponent implements OnInit {

@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 
@@ -10,8 +10,10 @@ import { OrganizationService } from '../../organization.service';
  * Create Payment Type Component.
  */
 @Component({
+  standalone: false,
   selector: 'mifosx-create-payment-type',
   templateUrl: './create-payment-type.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./create-payment-type.component.scss']
 })
 export class CreatePaymentTypeComponent implements OnInit {

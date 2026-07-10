@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, ChangeDetectionStrategy } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
@@ -19,8 +19,10 @@ import { DeleteDialogComponent } from '../../shared/delete-dialog/delete-dialog.
  * Payment Types component.
  */
 @Component({
+  standalone: false,
   selector: 'mifosx-payment-types',
   templateUrl: './payment-types.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./payment-types.component.scss']
 })
 export class PaymentTypesComponent implements OnInit {

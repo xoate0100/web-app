@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { DatePipe } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -12,8 +12,10 @@ import { SettingsService } from 'app/settings/settings.service';
  * Activate Group Component
  */
 @Component({
+  standalone: false,
   selector: 'mifosx-activate-group',
   templateUrl: './activate-group.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./activate-group.component.scss']
 })
 export class ActivateGroupComponent implements OnInit {

@@ -1,13 +1,15 @@
 /** Angular Imports */
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 /**
  * Savings account actions component.
  */
 @Component({
+  standalone: false,
   selector: 'mifosx-saving-account-actions',
   templateUrl: './saving-account-actions.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./saving-account-actions.component.scss']
 })
 export class SavingAccountActionsComponent {

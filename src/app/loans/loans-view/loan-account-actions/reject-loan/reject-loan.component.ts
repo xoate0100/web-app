@@ -1,5 +1,5 @@
 /** Angular Imports. */
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { DatePipe } from '@angular/common';
@@ -12,8 +12,10 @@ import { SettingsService } from 'app/settings/settings.service';
  * Reject Loan component.
  */
 @Component({
+  standalone: false,
   selector: 'mifosx-reject-loan',
   templateUrl: './reject-loan.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./reject-loan.component.scss']
 })
 export class RejectLoanComponent implements OnInit {

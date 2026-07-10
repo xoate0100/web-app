@@ -1,13 +1,15 @@
 /** Angular Imports */
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 /**
  * View tax Component component.
  */
 @Component({
+  standalone: false,
   selector: 'mifosx-view-tax-component',
   templateUrl: './view-tax-component.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./view-tax-component.component.scss']
 })
 export class ViewTaxComponentComponent implements OnInit {

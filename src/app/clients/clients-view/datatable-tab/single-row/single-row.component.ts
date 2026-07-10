@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, ChangeDetectionStrategy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { FormfieldBase } from 'app/shared/form-dialog/formfield/model/formfield-base';
@@ -17,8 +17,10 @@ import { SettingsService } from 'app/settings/settings.service';
 
 
 @Component({
+  standalone: false,
   selector: 'mifosx-single-row',
   templateUrl: './single-row.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./single-row.component.scss']
 })
 export class SingleRowComponent implements OnInit {

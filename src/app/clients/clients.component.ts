@@ -1,5 +1,5 @@
 /** Angular Imports. */
-import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
+import { Component, OnInit, ViewChild, AfterViewInit, ChangeDetectionStrategy } from '@angular/core';
 import { MatCheckbox } from '@angular/material/checkbox';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
@@ -13,8 +13,10 @@ import { tap } from 'rxjs/operators';
 import { ClientsService } from './clients.service';
 
 @Component({
+  standalone: false,
   selector: 'mifosx-clients',
   templateUrl: './clients.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./clients.component.scss'],
 })
 export class ClientsComponent implements OnInit, AfterViewInit {

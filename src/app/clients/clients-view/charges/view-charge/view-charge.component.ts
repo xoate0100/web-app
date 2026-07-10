@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DatePipe } from '@angular/common';
 import { ClientsService } from 'app/clients/clients.service';
@@ -8,8 +8,10 @@ import { ClientsService } from 'app/clients/clients.service';
  * View Charge component.
  */
 @Component({
+  standalone: false,
   selector: 'mifosx-view-charge',
   templateUrl: './view-charge.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./view-charge.component.scss']
 })
 export class ViewChargeComponent implements OnInit {

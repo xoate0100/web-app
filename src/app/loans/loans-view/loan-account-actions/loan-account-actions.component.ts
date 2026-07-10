@@ -1,13 +1,15 @@
 /** Angular Imports. */
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
 /**
  * Loan Account Actions component.
  */
 @Component({
+  standalone: false,
   selector: 'mifosx-loan-account-actions',
   templateUrl: './loan-account-actions.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./loan-account-actions.component.scss']
 })
 export class LoanAccountActionsComponent {

@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 
@@ -13,8 +13,10 @@ import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.co
  * View Template Component.
  */
 @Component({
+  standalone: false,
   selector: 'mifosx-view-template',
   templateUrl: './view-template.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./view-template.component.scss']
 })
 export class ViewTemplateComponent {

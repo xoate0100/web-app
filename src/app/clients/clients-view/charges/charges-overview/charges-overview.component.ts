@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, ChangeDetectionStrategy } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
@@ -9,8 +9,10 @@ import { ActivatedRoute } from '@angular/router';
  * Client Charge Overview component.
  */
 @Component({
+  standalone: false,
   selector: 'mifosx-charges-overview',
   templateUrl: './charges-overview.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./charges-overview.component.scss']
 })
 export class ChargesOverviewComponent implements OnInit {

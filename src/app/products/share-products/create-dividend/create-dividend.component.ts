@@ -1,5 +1,5 @@
 /** Angular Imports. */
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DatePipe } from '@angular/common';
@@ -11,8 +11,10 @@ import { ProductsService } from 'app/products/products.service';
  * Create Dividend component.
  */
 @Component({
+  standalone: false,
   selector: 'mifosx-create-dividend',
   templateUrl: './create-dividend.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./create-dividend.component.scss']
 })
 export class CreateDividendComponent implements OnInit {

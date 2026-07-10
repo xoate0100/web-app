@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, ChangeDetectionStrategy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
@@ -16,8 +16,10 @@ import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.co
  * View Data Table Component
  */
 @Component({
+  standalone: false,
   selector: 'mifosx-view-data-table',
   templateUrl: './view-data-table.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./view-data-table.component.scss']
 })
 export class ViewDataTableComponent implements OnInit {

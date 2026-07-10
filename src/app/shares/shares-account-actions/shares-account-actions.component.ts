@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 /** Custom Services */
@@ -9,8 +9,10 @@ import { SharesService } from '../shares.service';
  * Shares Account Actions Component
  */
 @Component({
+  standalone: false,
   selector: 'mifosx-shares-account-actions',
   templateUrl: './shares-account-actions.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./shares-account-actions.component.scss']
 })
 export class SharesAccountActionsComponent {

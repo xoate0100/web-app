@@ -1,9 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 @Component({
+  standalone: false,
   selector: 'mifosx-floating-interest-rates',
   templateUrl: './floating-interest-rates.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./floating-interest-rates.component.scss']
 })
 export class FloatingInterestRatesComponent implements OnInit {

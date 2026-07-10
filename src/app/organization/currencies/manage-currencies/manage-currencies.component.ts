@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, ChangeDetectionStrategy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { FormBuilder, Validators } from '@angular/forms';
@@ -14,8 +14,10 @@ import { OrganizationService } from '../../organization.service';
  * Manage Currencies component.
  */
 @Component({
+  standalone: false,
   selector: 'mifosx-manage-currencies',
   templateUrl: './manage-currencies.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./manage-currencies.component.scss']
 })
 export class ManageCurrenciesComponent implements OnInit {

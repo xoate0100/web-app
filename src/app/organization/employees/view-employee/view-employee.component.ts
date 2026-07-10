@@ -1,13 +1,15 @@
 /** Angular Imports */
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 /**
  * View Employee Component.
  */
 @Component({
+  standalone: false,
   selector: 'mifosx-view-employee',
   templateUrl: './view-employee.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./view-employee.component.scss']
 })
 export class ViewEmployeeComponent implements OnInit {

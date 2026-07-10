@@ -1,5 +1,5 @@
 /** Angular Imports. */
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DatePipe } from '@angular/common';
@@ -9,8 +9,10 @@ import { OrganizationService } from 'app/organization/organization.service';
 import { SettingsService } from 'app/settings/settings.service';
 
 @Component({
+  standalone: false,
   selector: 'mifosx-settle-cash',
   templateUrl: './settle-cash.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./settle-cash.component.scss']
 })
 export class SettleCashComponent implements OnInit {

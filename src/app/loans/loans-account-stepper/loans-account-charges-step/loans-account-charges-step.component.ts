@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit, Input, OnChanges } from '@angular/core';
+import { Component, OnInit, Input, OnChanges, ChangeDetectionStrategy } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 
@@ -19,8 +19,10 @@ import { SettingsService } from 'app/settings/settings.service';
  * Recurring Deposit Account Charges Step
  */
 @Component({
+  standalone: false,
   selector: 'mifosx-loans-account-charges-step',
   templateUrl: './loans-account-charges-step.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./loans-account-charges-step.component.scss']
 })
 export class LoansAccountChargesStepComponent implements OnInit, OnChanges {

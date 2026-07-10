@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, ChangeDetectionStrategy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
@@ -14,8 +14,10 @@ import { ProductsService } from 'app/products/products.service';
  * View product mix component.
  */
 @Component({
+  standalone: false,
   selector: 'mifosx-view-product-mix',
   templateUrl: './view-product-mix.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./view-product-mix.component.scss']
 })
 export class ViewProductMixComponent implements OnInit {

@@ -1,5 +1,5 @@
 /** Angular Imports  */
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
@@ -15,8 +15,10 @@ import { EnableDialogComponent } from '../../../shared/enable-dialog/enable-dial
  * View Role and Permissions Component
  */
 @Component({
+  standalone: false,
   selector: 'mifosx-view-role',
   templateUrl: './view-role.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./view-role.component.scss']
 })
 export class ViewRoleComponent implements OnInit {

@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, ChangeDetectionStrategy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
@@ -8,8 +8,10 @@ import { MatTableDataSource } from '@angular/material/table';
  * SMS Configuration Component.
  */
 @Component({
+  standalone: false,
   selector: 'mifosx-sms',
   templateUrl: './sms.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./sms.component.scss']
 })
 export class SMSComponent implements OnInit {

@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, ChangeDetectionStrategy } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
 import { DatePipe } from '@angular/common';
 import { MatDialog } from '@angular/material/dialog';
@@ -13,9 +13,11 @@ import { SelectBase } from 'app/shared/form-dialog/formfield/model/select-base';
 import { InputBase } from 'app/shared/form-dialog/formfield/model/input-base';
 
 @Component({
+  standalone: false,
   selector: 'mifosx-fixed-deposit-product-interest-rate-chart-step',
   templateUrl: './fixed-deposit-product-interest-rate-chart-step.component.html',
   styleUrls: ['./fixed-deposit-product-interest-rate-chart-step.component.scss'],
+  changeDetection: ChangeDetectionStrategy.Eager,
   animations: [
     trigger('expandChartSlab', [
       state('collapsed', style({ height: '0px', minHeight: '0' })),

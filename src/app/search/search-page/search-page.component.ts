@@ -1,13 +1,15 @@
 /** Angular Imports */
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 
 /**
  * Search Page Component
  */
 @Component({
+  standalone: false,
   selector: 'mifosx-search-page',
   templateUrl: './search-page.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./search-page.component.scss']
 })
 export class SearchPageComponent {

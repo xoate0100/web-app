@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, ChangeDetectionStrategy } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
@@ -12,8 +12,10 @@ import { of } from 'rxjs';
  * Fixed Deposit Products component.
  */
 @Component({
+  standalone: false,
   selector: 'mifosx-fixed-deposit-products',
   templateUrl: './fixed-deposit-products.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./fixed-deposit-products.component.scss']
 })
 export class FixedDepositProductsComponent implements OnInit {

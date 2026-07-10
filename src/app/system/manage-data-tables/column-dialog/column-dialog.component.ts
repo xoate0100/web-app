@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, OnInit, Inject, ChangeDetectionStrategy } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
@@ -10,8 +10,10 @@ import { columnTypeData } from '../column-type-data';
  * Column Dialog Component.
  */
 @Component({
+  standalone: false,
   selector: 'mifosx-column-dialog',
   templateUrl: './column-dialog.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./column-dialog.component.scss']
 })
 export class ColumnDialogComponent implements OnInit {

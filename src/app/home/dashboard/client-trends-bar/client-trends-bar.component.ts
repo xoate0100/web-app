@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { DatePipe } from '@angular/common';
@@ -12,14 +12,16 @@ import { skip } from 'rxjs/operators';
 import { HomeService } from '../../home.service';
 
 /** Charting Imports */
-import Chart from 'chart.js';
+import { createChart } from 'app/shared/chart-setup';
 
 /**
  * Client Trends Bar Chart Component.
  */
 @Component({
+  standalone: false,
   selector: 'mifosx-client-trends-bar',
   templateUrl: './client-trends-bar.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./client-trends-bar.component.scss']
 })
 export class ClientTrendsBarComponent implements OnInit {
@@ -217,7 +219,7 @@ export class ClientTrendsBarComponent implements OnInit {
    */
   setChart(labels: any[], clientCounts: number[], loanCounts: number[]) {
     if (!this.chart) {
-      this.chart = new Chart('client-trends-bar', {
+      this.chart = createChart('client-trends-bar', {
         type: 'bar',
         data: {
           labels: labels,

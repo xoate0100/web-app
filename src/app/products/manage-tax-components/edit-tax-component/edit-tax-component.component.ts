@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { DatePipe } from '@angular/common';
@@ -11,8 +11,10 @@ import { ProductsService } from '../../products.service';
  * Edit tax component.
  */
 @Component({
+  standalone: false,
   selector: 'mifosx-edit-tax-component',
   templateUrl: './edit-tax-component.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./edit-tax-component.component.scss']
 })
 export class EditTaxComponentComponent implements OnInit {

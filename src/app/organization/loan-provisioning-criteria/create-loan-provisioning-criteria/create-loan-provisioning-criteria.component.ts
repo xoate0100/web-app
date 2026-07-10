@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
@@ -21,8 +21,10 @@ import { SettingsService } from 'app/settings/settings.service';
  * Create Loan Provisioning Criteria Component.
  */
 @Component({
+  standalone: false,
   selector: 'mifosx-create-loan-provisioning-criteria',
   templateUrl: './create-loan-provisioning-criteria.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./create-loan-provisioning-criteria.component.scss']
 })
 export class CreateLoanProvisioningCriteriaComponent implements OnInit {

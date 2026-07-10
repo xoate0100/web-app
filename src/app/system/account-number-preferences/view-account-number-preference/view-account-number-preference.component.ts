@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 
@@ -13,8 +13,10 @@ import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.co
  * View Account Number Preference Component.
  */
 @Component({
+  standalone: false,
   selector: 'mifosx-view-account-number-preference',
   templateUrl: './view-account-number-preference.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./view-account-number-preference.component.scss']
 })
 export class ViewAccountNumberPreferenceComponent implements OnInit {

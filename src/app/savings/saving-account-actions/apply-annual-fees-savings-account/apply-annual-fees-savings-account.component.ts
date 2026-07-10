@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { DatePipe } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -12,8 +12,10 @@ import { SettingsService } from 'app/settings/settings.service';
  * Apply Annual Fees Component
  */
 @Component({
+  standalone: false,
   selector: 'mifosx-apply-annual-fees-savings-account',
   templateUrl: './apply-annual-fees-savings-account.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./apply-annual-fees-savings-account.component.scss']
 })
 export class ApplyAnnualFeesSavingsAccountComponent implements OnInit {

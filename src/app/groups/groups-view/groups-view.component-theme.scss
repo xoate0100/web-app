@@ -1,11 +1,12 @@
-@import "~@angular/material/theming";
+@use 'sass:map';
+@use '@angular/material' as mat;
 
 @mixin groups-view-component-theme($theme) {
-  $primary: map-get($theme, primary);
+  $primary: map.get($theme, primary);
   mifosx-groups-view {
     .group-card {
       .header {
-        background-color: mat-color($primary, 500);
+        background-color: mat.m2-get-color-from-palette($primary, 500);
       }
     }
   }

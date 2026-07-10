@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { DatePipe } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -11,8 +11,10 @@ import { SharesService } from 'app/shares/shares.service';
  * Approve Shares Account Component
  */
 @Component({
+  standalone: false,
   selector: 'mifosx-approve-shares-account',
   templateUrl: './approve-shares-account.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./approve-shares-account.component.scss']
 })
 export class ApproveSharesAccountComponent implements OnInit {

@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 
@@ -10,8 +10,10 @@ import { AccountingService } from '../accounting.service';
  * Frequent Postings component.
  */
 @Component({
+  standalone: false,
   selector: 'mifosx-frequent-postings',
   templateUrl: './frequent-postings.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./frequent-postings.component.scss']
 })
 export class FrequentPostingsComponent implements OnInit {

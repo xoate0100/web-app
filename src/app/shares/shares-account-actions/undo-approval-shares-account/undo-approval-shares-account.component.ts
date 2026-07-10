@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
 /** Custom Services */
@@ -9,8 +9,10 @@ import { SharesService } from 'app/shares/shares.service';
  * Undo Approval Shares Account Component
  */
 @Component({
+  standalone: false,
   selector: 'mifosx-undo-approval-shares-account',
   templateUrl: './undo-approval-shares-account.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./undo-approval-shares-account.component.scss']
 })
 export class UndoApprovalSharesAccountComponent {

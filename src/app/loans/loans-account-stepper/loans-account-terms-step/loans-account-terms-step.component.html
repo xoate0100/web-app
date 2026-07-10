@@ -119,7 +119,7 @@
         </mat-form-field>
 
         <mat-checkbox fxFlex="48%" formControlName="isEqualAmortization"
-          [checked]="loansAccountProductTemplate?.isEqualAmortization">
+          [checked]="$safeNavigationMigration(loansAccountProductTemplate?.isEqualAmortization)">
           <p>Is Equal Amortization</p>
         </mat-checkbox>
 

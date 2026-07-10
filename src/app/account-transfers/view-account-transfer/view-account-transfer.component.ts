@@ -1,10 +1,12 @@
 /** Angular Imports */
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 @Component({
+  standalone: false,
   selector: 'mifosx-view-account-transfer',
   templateUrl: './view-account-transfer.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./view-account-transfer.component.scss']
 })
 export class ViewAccountTransferComponent {

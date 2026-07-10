@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit, OnDestroy, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewEncapsulation, ChangeDetectionStrategy } from '@angular/core';
 
 /** RxJS Imports */
 import { forkJoin } from 'rxjs';
@@ -11,9 +11,11 @@ import { NotificationsService } from 'app/notifications/notifications.service';
  * Notifications Tray Component
  */
 @Component({
+  standalone: false,
   selector: 'mifosx-notifications-tray',
   templateUrl: './notifications-tray.component.html',
   styleUrls: ['./notifications-tray.component.scss'],
+  changeDetection: ChangeDetectionStrategy.Eager,
   encapsulation: ViewEncapsulation.None
 })
 export class NotificationsTrayComponent implements OnInit, OnDestroy {

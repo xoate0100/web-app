@@ -1,13 +1,15 @@
 /** Angular Imports */
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
 /**
  * Center actions component.
  */
 @Component({
+  standalone: false,
   selector: 'mifosx-center-actions',
   templateUrl: './center-actions.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./center-actions.component.scss']
 })
 export class CenterActionsComponent {

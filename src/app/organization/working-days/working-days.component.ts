@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { FormGroup, FormBuilder, FormArray, FormControl } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 
@@ -14,8 +14,10 @@ const recurrenceDefaultValue = 'FREQ=WEEKLY;INTERVAL=1;BYDAY=';
  * Working days component.
  */
 @Component({
+  standalone: false,
   selector: 'mifosx-working-days',
   templateUrl: './working-days.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./working-days.component.scss']
 })
 export class WorkingDaysComponent implements OnInit {

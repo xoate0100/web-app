@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import * as _ from 'lodash';
 import { MatDialog } from '@angular/material/dialog';
@@ -11,8 +11,10 @@ import { TasksService } from '../tasks.service';
 import { ConfirmationDialogComponent } from 'app/shared/confirmation-dialog/confirmation-dialog.component';
 
 @Component({
+  standalone: false,
   selector: 'mifosx-view-checker-inbox',
   templateUrl: './view-checker-inbox.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./view-checker-inbox.component.scss']
 })
 export class ViewCheckerInboxComponent {

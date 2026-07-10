@@ -1,9 +1,11 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, ChangeDetectionStrategy } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 @Component({
+  standalone: false,
   selector: 'mifosx-recurring-deposit-product-currency-step',
   templateUrl: './recurring-deposit-product-currency-step.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./recurring-deposit-product-currency-step.component.scss']
 })
 export class RecurringDepositProductCurrencyStepComponent implements OnInit {

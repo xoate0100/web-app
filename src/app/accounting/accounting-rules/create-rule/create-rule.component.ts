@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 
@@ -13,8 +13,10 @@ import { oneOfTheFieldsIsRequiredValidator } from '../one-of-the-fields-is-requi
  * Create accounting rule component.
  */
 @Component({
+  standalone: false,
   selector: 'mifosx-create-rule',
   templateUrl: './create-rule.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./create-rule.component.scss']
 })
 export class CreateRuleComponent implements OnInit {

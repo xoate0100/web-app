@@ -1,13 +1,15 @@
 /** Angular Imports */
-import { Component, Inject } from '@angular/core';
+import { Component, Inject, ChangeDetectionStrategy } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 /**
  * Toggle withhold tax dialog dialog component.
  */
 @Component({
+  standalone: false,
   selector: 'mifosx-toggle-withhold-tax-dialog',
   templateUrl: './toggle-withhold-tax-dialog.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./toggle-withhold-tax-dialog.component.scss']
 })
 export class ToggleWithholdTaxDialogComponent {

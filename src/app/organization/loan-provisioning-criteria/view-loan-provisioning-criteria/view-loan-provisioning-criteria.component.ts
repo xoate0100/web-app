@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router, ActivatedRoute } from '@angular/router';
 import { MatTableDataSource } from '@angular/material/table';
@@ -14,8 +14,10 @@ import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.co
  * View Loan Provisioning
  */
 @Component({
+  standalone: false,
   selector: 'mifosx-view-loan-provisioning-criteria',
   templateUrl: './view-loan-provisioning-criteria.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./view-loan-provisioning-criteria.component.scss']
 })
 export class ViewLoanProvisioningCriteriaComponent implements OnInit {

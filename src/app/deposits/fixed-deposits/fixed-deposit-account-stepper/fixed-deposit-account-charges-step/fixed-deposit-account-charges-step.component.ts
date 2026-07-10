@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit, Input, OnChanges } from '@angular/core';
+import { Component, OnInit, Input, OnChanges, ChangeDetectionStrategy } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 
@@ -16,8 +16,10 @@ import { InputBase } from 'app/shared/form-dialog/formfield/model/input-base';
  * Fixed Deposit Account Charges Step
  */
 @Component({
+  standalone: false,
   selector: 'mifosx-fixed-deposit-account-charges-step',
   templateUrl: './fixed-deposit-account-charges-step.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./fixed-deposit-account-charges-step.component.scss']
 })
 export class FixedDepositAccountChargesStepComponent implements OnInit, OnChanges {

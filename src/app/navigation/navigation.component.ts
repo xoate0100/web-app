@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, ChangeDetectionStrategy } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormControl } from '@angular/forms';
 
@@ -17,8 +17,10 @@ import { ClientNavigationComponent } from './client-navigation/client-navigation
  * Navigation component.
  */
 @Component({
+  standalone: false,
   selector: 'mifosx-navigation',
   templateUrl: './navigation.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./navigation.component.scss']
 })
 export class NavigationComponent implements OnInit {

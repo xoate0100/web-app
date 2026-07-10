@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, ChangeDetectionStrategy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { FormBuilder, Validators } from '@angular/forms';
@@ -18,8 +18,10 @@ import { OrganizationService } from '../organization.service';
  * Manage Funds component.
  */
 @Component({
+  standalone: false,
   selector: 'mifosx-manage-funds',
   templateUrl: './manage-funds.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./manage-funds.component.scss']
 })
 export class ManageFundsComponent implements OnInit {

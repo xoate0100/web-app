@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, ViewChild, OnInit, AfterViewInit } from '@angular/core';
+import { Component, ViewChild, OnInit, AfterViewInit, ChangeDetectionStrategy } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
@@ -21,8 +21,10 @@ import { GlAccountTreeService } from './gl-account-tree.service';
  * Chart of accounts component.
  */
 @Component({
+  standalone: false,
   selector: 'mifosx-chart-of-accounts',
   templateUrl: './chart-of-accounts.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./chart-of-accounts.component.scss']
 })
 export class ChartOfAccountsComponent implements AfterViewInit, OnInit {

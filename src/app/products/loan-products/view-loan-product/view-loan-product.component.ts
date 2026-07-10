@@ -1,9 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 @Component({
+  standalone: false,
   selector: 'mifosx-view-loan-product',
   templateUrl: './view-loan-product.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./view-loan-product.component.scss']
 })
 export class ViewLoanProductComponent implements OnInit {

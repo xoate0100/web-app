@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 
@@ -10,8 +10,10 @@ import { ClientsService } from 'app/clients/clients.service';
  * Clients Update Savings Account Component
  */
 @Component({
+  standalone: false,
   selector: 'mifosx-update-client-savings-account',
   templateUrl: './update-client-savings-account.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./update-client-savings-account.component.scss']
 })
 export class UpdateClientSavingsAccountComponent implements OnInit {

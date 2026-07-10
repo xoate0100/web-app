@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 
@@ -10,8 +10,10 @@ import { ProductsService } from '../../products.service';
  * Edit Product mix component.
  */
 @Component({
+  standalone: false,
   selector: 'mifosx-edit-product-mix',
   templateUrl: './edit-product-mix.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./edit-product-mix.component.scss']
 })
 export class EditProductMixComponent implements OnInit {

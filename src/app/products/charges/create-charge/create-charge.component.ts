@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { DatePipe } from '@angular/common';
@@ -11,8 +11,10 @@ import { ProductsService } from '../../products.service';
  * Create charge component.
  */
 @Component({
+  standalone: false,
   selector: 'mifosx-create-charge',
   templateUrl: './create-charge.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./create-charge.component.scss']
 })
 export class CreateChargeComponent implements OnInit {

@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { FormControl } from '@angular/forms';
 
 /** Custom Services */
@@ -9,8 +9,10 @@ import { SettingsService } from 'app/settings/settings.service';
  * Server Selector Component
  */
 @Component({
+  standalone: false,
   selector: 'mifosx-server-selector',
   templateUrl: './server-selector.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./server-selector.component.scss']
 })
 export class ServerSelectorComponent implements OnInit {
