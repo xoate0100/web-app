@@ -3,17 +3,26 @@ import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 
 /** Custom Service */
 import { SettingsService } from './settings.service';
-import { FormControl } from '@angular/forms';
+import { FormControl, ReactiveFormsModule } from '@angular/forms';
+import { MatAccordion, MatExpansionPanel, MatExpansionPanelHeader, MatExpansionPanelTitle } from '@angular/material/expansion';
+import { LayoutDirective } from '@ngbracket/ngx-layout/flex';
+import { MatFormField, MatLabel } from '@angular/material/form-field';
+import { MatInput } from '@angular/material/input';
+import { MatSelect } from '@angular/material/select';
+import { NgFor } from '@angular/common';
+import { MatOption } from '@angular/material/autocomplete';
+import { FileUploadComponent } from '../shared/file-upload/file-upload.component';
+import { ThemePickerComponent } from '../shared/theme-picker/theme-picker.component';
 
 /**
  * Settings component.
  */
 @Component({
-  standalone: false,
-  selector: 'mifosx-settings',
-  templateUrl: './settings.component.html',
-  changeDetection: ChangeDetectionStrategy.Eager,
-  styleUrls: ['./settings.component.scss']
+    selector: 'mifosx-settings',
+    templateUrl: './settings.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    styleUrls: ['./settings.component.scss'],
+    imports: [MatAccordion, MatExpansionPanel, MatExpansionPanelHeader, MatExpansionPanelTitle, LayoutDirective, MatFormField, MatLabel, MatInput, MatSelect, ReactiveFormsModule, NgFor, MatOption, FileUploadComponent, ThemePickerComponent]
 })
 export class SettingsComponent implements OnInit {
 
@@ -62,8 +71,10 @@ export class SettingsComponent implements OnInit {
     this.language.valueChanges.subscribe((language: any) => {
       this.settingsService.setLanguage(language);
     });
-    this.dateFormat.valueChanges.subscribe((dateFormat: string) => {
-      this.settingsService.setDateFormat(dateFormat);
+    this.dateFormat.valueChanges.subscribe((dateFormat: string | null) => {
+      if (dateFormat) {
+        this.settingsService.setDateFormat(dateFormat);
+      }
     });
   }
 

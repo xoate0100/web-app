@@ -1,19 +1,29 @@
 /** Angular Imports */
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router, ActivatedRoute, RouterLink } from '@angular/router';
 
 /** Custom Services. */
 import { ClientsService } from 'app/clients/clients.service';
+import { LayoutDirective, LayoutGapDirective, FlexDirective, LayoutAlignDirective } from '@ngbracket/ngx-layout/flex';
+import { HasPermissionDirective } from '../../../directives/has-permission/has-permission.directive';
+import { MatButton } from '@angular/material/button';
+import { MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow } from '@angular/material/table';
+import { NgClass, NgIf, DatePipe } from '@angular/common';
+import { ClassDirective } from '@ngbracket/ngx-layout/extended';
+import { MatTooltip } from '@angular/material/tooltip';
+import { StatusLookupPipe } from '../../../pipes/status-lookup.pipe';
+import { AccountsFilterPipe } from '../../../pipes/accounts-filter.pipe';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 
 /**
  * General Tab component.
  */
 @Component({
-  standalone: false,
-  selector: 'mifosx-general-tab',
-  templateUrl: './general-tab.component.html',
-  changeDetection: ChangeDetectionStrategy.Eager,
-  styleUrls: ['./general-tab.component.scss']
+    selector: 'mifosx-general-tab',
+    templateUrl: './general-tab.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    styleUrls: ['./general-tab.component.scss'],
+    imports: [FaIconComponent, LayoutDirective, LayoutGapDirective, FlexDirective, LayoutAlignDirective, HasPermissionDirective, MatButton, RouterLink, MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, NgClass, ClassDirective, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow, NgIf, MatTooltip, DatePipe, StatusLookupPipe, AccountsFilterPipe]
 })
 export class GeneralTabComponent {
 
@@ -69,14 +79,14 @@ export class GeneralTabComponent {
     private clientService: ClientsService,
     private router: Router
   ) {
-    this.route.data.subscribe((data: { clientAccountsData: any, clientChargesData: any, clientSummary: any }) => {
+    this.route.data.subscribe((data: any) => {
       this.clientAccountData = data.clientAccountsData;
       this.savingAccounts = data.clientAccountsData.savingsAccounts;
       this.loanAccounts = data.clientAccountsData.loanAccounts;
       this.shareAccounts = data.clientAccountsData.shareAccounts;
       this.upcomingCharges = data.clientChargesData.pageItems;
       this.clientSummary = data.clientSummary[0];
-      this.clientid = this.route.parent.snapshot.params['clientId'];
+      this.clientid = this.route.parent!.snapshot.params['clientId']!;
   });
   }
 

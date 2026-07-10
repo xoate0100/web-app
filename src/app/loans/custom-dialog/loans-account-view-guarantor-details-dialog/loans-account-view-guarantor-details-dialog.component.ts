@@ -1,12 +1,16 @@
 import { Component, OnInit, Inject, ChangeDetectionStrategy } from '@angular/core';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatDialogRef, MAT_DIALOG_DATA, MatDialogTitle, MatDialogContent, MatDialogActions, MatDialogClose } from '@angular/material/dialog';
+import { CdkScrollable } from '@angular/cdk/scrolling';
+import { LayoutDirective, FlexFillDirective, FlexDirective, LayoutAlignDirective, LayoutGapDirective } from '@ngbracket/ngx-layout/flex';
+import { NgIf } from '@angular/common';
+import { MatButton } from '@angular/material/button';
 
 @Component({
-  standalone: false,
-  selector: 'mifosx-loans-account-view-guarantor-details-dialog',
-  templateUrl: './loans-account-view-guarantor-details-dialog.component.html',
-  changeDetection: ChangeDetectionStrategy.Eager,
-  styleUrls: ['./loans-account-view-guarantor-details-dialog.component.scss']
+    selector: 'mifosx-loans-account-view-guarantor-details-dialog',
+    templateUrl: './loans-account-view-guarantor-details-dialog.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    styleUrls: ['./loans-account-view-guarantor-details-dialog.component.scss'],
+    imports: [MatDialogTitle, CdkScrollable, MatDialogContent, LayoutDirective, FlexFillDirective, FlexDirective, NgIf, MatDialogActions, LayoutAlignDirective, LayoutGapDirective, MatButton, MatDialogClose]
 })
 export class LoansAccountViewGuarantorDetailsDialogComponent implements OnInit {
 

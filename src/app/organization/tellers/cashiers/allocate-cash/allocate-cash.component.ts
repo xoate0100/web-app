@@ -1,22 +1,31 @@
 /** Angular Imports. */
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
-import { DatePipe } from '@angular/common';
+import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { DatePipe, NgIf, NgFor } from '@angular/common';
 
 /** Custom Services. */
 import { OrganizationService } from 'app/organization/organization.service';
 import { SettingsService } from 'app/settings/settings.service';
+import { MatCard, MatCardContent, MatCardActions } from '@angular/material/card';
+import { LayoutDirective, LayoutGapDirective, FlexDirective, LayoutAlignDirective } from '@ngbracket/ngx-layout/flex';
+import { MatFormField, MatLabel, MatSuffix, MatError } from '@angular/material/form-field';
+import { MatInput } from '@angular/material/input';
+import { MatDatepickerInput, MatDatepickerToggle, MatDatepicker } from '@angular/material/datepicker';
+import { MatSelect } from '@angular/material/select';
+import { MatOption } from '@angular/material/autocomplete';
+import { MatButton } from '@angular/material/button';
+import { HasPermissionDirective } from '../../../../directives/has-permission/has-permission.directive';
 
 /**
  * Allocate Cash component.
  */
 @Component({
-  standalone: false,
-  selector: 'mifosx-allocate-cash',
-  templateUrl: './allocate-cash.component.html',
-  changeDetection: ChangeDetectionStrategy.Eager,
-  styleUrls: ['./allocate-cash.component.scss']
+    selector: 'mifosx-allocate-cash',
+    templateUrl: './allocate-cash.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    styleUrls: ['./allocate-cash.component.scss'],
+    imports: [MatCard, ReactiveFormsModule, MatCardContent, LayoutDirective, LayoutGapDirective, MatFormField, FlexDirective, MatLabel, MatInput, MatDatepickerInput, MatDatepickerToggle, MatSuffix, MatDatepicker, NgIf, MatError, MatSelect, NgFor, MatOption, MatCardActions, LayoutAlignDirective, MatButton, RouterLink, HasPermissionDirective]
 })
 export class AllocateCashComponent implements OnInit {
 
@@ -44,7 +53,7 @@ export class AllocateCashComponent implements OnInit {
               private organizationService: OrganizationService,
               private settingsService: SettingsService,
               private router: Router) {
-    this.route.data.subscribe((data: { cashierTemplate: any}) => {
+    this.route.data.subscribe((data: any) => {
       this.cashierData = data.cashierTemplate;
     });
   }
@@ -76,7 +85,7 @@ export class AllocateCashComponent implements OnInit {
     const dateFormat = this.settingsService.dateFormat;
     const txnDate = this.allocateCashForm.value.txnDate;
     this.allocateCashForm.patchValue({
-      txnDate: this.datePipe.transform(txnDate, dateFormat)
+      txnDate: this.datePipe.transform(txnDate as Date, dateFormat)
     });
     const allocateCashForm = this.allocateCashForm.value;
     allocateCashForm.dateFormat = dateFormat;

@@ -124,7 +124,7 @@
         <th mat-header-cell *matHeaderCellDef mat-sort-header> Error Log </th>
         <td mat-cell *matCellDef="let instruction">
           <button *ngIf="instruction.status === 'failed'" class="error-log" mat-raised-button color="warn" [matTooltip]="instruction.errorLog">
-            <i class="fa fa-exclamation"></i>
+            <fa-icon icon="triangle-exclamation"></fa-icon>
           </button>
         </td>
       </ng-container>

@@ -1,19 +1,30 @@
 /** Angular Imports */
 import { Component, OnInit, Input, OnChanges, ChangeDetectionStrategy } from '@angular/core';
-import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, FormControl, ReactiveFormsModule } from '@angular/forms';
 
 /** Custom Services */
-import { DatePipe } from '@angular/common';
+import { DatePipe, NgFor, NgIf } from '@angular/common';
+import { LayoutDirective, LayoutGapDirective, FlexDirective, LayoutAlignDirective } from '@ngbracket/ngx-layout/flex';
+import { MatCheckbox } from '@angular/material/checkbox';
+import { MatFormField, MatLabel, MatError, MatSuffix } from '@angular/material/form-field';
+import { MatInput } from '@angular/material/input';
+import { MatSelect } from '@angular/material/select';
+import { MatOption } from '@angular/material/autocomplete';
+import { MatDatepickerInput, MatDatepickerToggle, MatDatepicker } from '@angular/material/datepicker';
+import { MatDivider } from '@angular/material/divider';
+import { MatButton } from '@angular/material/button';
+import { MatStepperPrevious, MatStepperNext } from '@angular/material/stepper';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 
 /**
  * Recurring Deposits Account Settings Step
  */
 @Component({
-  standalone: false,
-  selector: 'mifosx-recurring-deposits-account-settings-step',
-  templateUrl: './recurring-deposits-account-settings-step.component.html',
-  changeDetection: ChangeDetectionStrategy.Eager,
-  styleUrls: ['./recurring-deposits-account-settings-step.component.scss']
+    selector: 'mifosx-recurring-deposits-account-settings-step',
+    templateUrl: './recurring-deposits-account-settings-step.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    styleUrls: ['./recurring-deposits-account-settings-step.component.scss'],
+    imports: [ReactiveFormsModule, LayoutDirective, LayoutGapDirective, MatCheckbox, FlexDirective, MatFormField, MatLabel, MatInput, MatSelect, NgFor, MatOption, MatError, NgIf, MatDatepickerInput, MatDatepickerToggle, MatSuffix, MatDatepicker, MatDivider, LayoutAlignDirective, MatButton, MatStepperPrevious, FaIconComponent, MatStepperNext]
 })
 export class RecurringDepositsAccountSettingsStepComponent implements OnInit, OnChanges {
 
@@ -65,15 +76,15 @@ export class RecurringDepositsAccountSettingsStepComponent implements OnInit, On
       });
       if (this.recurringDepositsAccountProductTemplate.withHoldTax) {
         this.recurringDepositAccountSettingsForm.addControl('withHoldTax', new FormControl(false));
-        this.recurringDepositAccountSettingsForm.get('withHoldTax').valueChanges.subscribe((value: boolean) => {
+        this.recurringDepositAccountSettingsForm.get('withHoldTax')!.valueChanges.subscribe((value: boolean) => {
           if (value) {
             this.recurringDepositAccountSettingsForm.addControl('taxGroupId', new FormControl({ value: '', disabled: true }));
-            this.recurringDepositAccountSettingsForm.get('taxGroupId').patchValue(this.recurringDepositsAccountProductTemplate.taxGroup && this.recurringDepositsAccountProductTemplate.taxGroup.name);
+            this.recurringDepositAccountSettingsForm.get('taxGroupId')!.patchValue(this.recurringDepositsAccountProductTemplate.taxGroup && this.recurringDepositsAccountProductTemplate.taxGroup.name);
           } else {
             this.recurringDepositAccountSettingsForm.removeControl('taxGroupId');
           }
         });
-        this.recurringDepositAccountSettingsForm.get('withHoldTax').patchValue(this.recurringDepositsAccountTemplate.withHoldTax);
+        this.recurringDepositAccountSettingsForm.get('withHoldTax')!.patchValue(this.recurringDepositsAccountTemplate.withHoldTax);
       } else {
         this.recurringDepositAccountSettingsForm.removeControl('withHoldTax');
       }
@@ -135,7 +146,7 @@ export class RecurringDepositsAccountSettingsStepComponent implements OnInit, On
    * Subscribes to value changes and sets new form controls accordingly.
    */
   buildDependencies() {
-    this.recurringDepositAccountSettingsForm.get('isCalendarInherited').valueChanges.subscribe((isCalendarInherited: any) => {
+    this.recurringDepositAccountSettingsForm.get('isCalendarInherited')!.valueChanges.subscribe((isCalendarInherited: any) => {
       if (isCalendarInherited) {
         this.recurringDepositAccountSettingsForm.removeControl('expectedFirstDepositOnDate');
         this.recurringDepositAccountSettingsForm.removeControl('recurringFrequency');

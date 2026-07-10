@@ -3,13 +3,13 @@ import { Component, OnInit, ViewChild, ChangeDetectionStrategy } from '@angular/
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
-import { MatTableDataSource } from '@angular/material/table';
+import { MatTableDataSource, MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow } from '@angular/material/table';
 import { ActivatedRoute } from '@angular/router';
-import { DatePipe } from '@angular/common';
+import { DatePipe, NgIf, NgFor } from '@angular/common';
 
 /** Custom Services */
 import { SystemService } from 'app/system/system.service';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
 
 /** Custom Components */
 import { DeleteDialogComponent } from '../../shared/delete-dialog/delete-dialog.component';
@@ -17,16 +17,25 @@ import { FormfieldBase } from 'app/shared/form-dialog/formfield/model/formfield-
 import { SelectBase } from 'app/shared/form-dialog/formfield/model/select-base';
 import { DatepickerBase } from 'app/shared/form-dialog/formfield/model/datepicker-base';
 import { FormDialogComponent } from 'app/shared/form-dialog/form-dialog.component';
+import { MatCard, MatCardTitle, MatCardContent, MatCardActions } from '@angular/material/card';
+import { LayoutDirective, LayoutAlignDirective, LayoutGapDirective } from '@ngbracket/ngx-layout/flex';
+import { MatFormField, MatLabel, MatError } from '@angular/material/form-field';
+import { MatSelect } from '@angular/material/select';
+import { MatOption } from '@angular/material/autocomplete';
+import { MatButton, MatIconButton } from '@angular/material/button';
+import { HasPermissionDirective } from '../../directives/has-permission/has-permission.directive';
+import { MatTooltip } from '@angular/material/tooltip';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 
 /**
  * Entity to Entity Mapping Component
  */
 @Component({
-  standalone: false,
-  selector: 'mifosx-entity-to-entity-mapping',
-  templateUrl: './entity-to-entity-mapping.component.html',
-  changeDetection: ChangeDetectionStrategy.Eager,
-  styleUrls: ['./entity-to-entity-mapping.component.scss']
+    selector: 'mifosx-entity-to-entity-mapping',
+    templateUrl: './entity-to-entity-mapping.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    styleUrls: ['./entity-to-entity-mapping.component.scss'],
+    imports: [MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, NgIf, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow, MatCard, ReactiveFormsModule, MatCardTitle, MatCardContent, LayoutDirective, LayoutAlignDirective, MatFormField, MatLabel, MatSelect, MatOption, NgFor, MatError, MatCardActions, LayoutGapDirective, MatButton, HasPermissionDirective, MatIconButton, MatTooltip, FaIconComponent, MatPaginator]
 })
 export class EntityToEntityMappingComponent implements OnInit {
 
@@ -85,7 +94,7 @@ export class EntityToEntityMappingComponent implements OnInit {
     private systemService: SystemService,
     private datePipe: DatePipe,
     private dialog: MatDialog) {
-    this.route.data.subscribe((data: { entityMappings: any }) => {
+    this.route.data.subscribe((data: any) => {
       this.entityMappings = data.entityMappings;
     });
   }
@@ -321,8 +330,8 @@ export class EntityToEntityMappingComponent implements OnInit {
     const endDate: Date = addMappingForm.value.endDate;
 
     addMappingForm.patchValue({
-      startDate: this.datePipe.transform(startDate, dateFormat),
-      endDate: this.datePipe.transform(endDate, dateFormat)
+      startDate: this.datePipe.transform(startDate as Date, dateFormat),
+      endDate: this.datePipe.transform(endDate as Date, dateFormat)
     });
     const newMappingData = addMappingForm.value;
     newMappingData.dateFormat = dateFormat;
@@ -343,8 +352,8 @@ export class EntityToEntityMappingComponent implements OnInit {
     const endDate: Date = editMappingForm.value.endDate;
 
     editMappingForm.patchValue({
-      startDate: this.datePipe.transform(startDate, dateFormat),
-      endDate: this.datePipe.transform(endDate, dateFormat)
+      startDate: this.datePipe.transform(startDate as Date, dateFormat),
+      endDate: this.datePipe.transform(endDate as Date, dateFormat)
     });
     const newMappingData = editMappingForm.value;
     newMappingData.dateFormat = dateFormat;

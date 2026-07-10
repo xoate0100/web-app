@@ -1,12 +1,22 @@
 import { Component, OnInit, Input, ChangeDetectionStrategy } from '@angular/core';
-import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, FormControl, ReactiveFormsModule } from '@angular/forms';
+import { LayoutDirective, LayoutGapDirective, FlexDirective, FlexFillDirective, LayoutAlignDirective } from '@ngbracket/ngx-layout/flex';
+import { MatRadioGroup, MatRadioButton } from '@angular/material/radio';
+import { NgFor, NgIf } from '@angular/common';
+import { MatDivider } from '@angular/material/divider';
+import { MatFormField, MatLabel, MatError } from '@angular/material/form-field';
+import { MatSelect } from '@angular/material/select';
+import { MatOption } from '@angular/material/autocomplete';
+import { MatButton } from '@angular/material/button';
+import { MatStepperPrevious, MatStepperNext } from '@angular/material/stepper';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 
 @Component({
-  standalone: false,
-  selector: 'mifosx-share-product-accounting-step',
-  templateUrl: './share-product-accounting-step.component.html',
-  changeDetection: ChangeDetectionStrategy.Eager,
-  styleUrls: ['./share-product-accounting-step.component.scss']
+    selector: 'mifosx-share-product-accounting-step',
+    templateUrl: './share-product-accounting-step.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    styleUrls: ['./share-product-accounting-step.component.scss'],
+    imports: [ReactiveFormsModule, LayoutDirective, LayoutGapDirective, MatRadioGroup, FlexDirective, NgFor, MatRadioButton, MatDivider, NgIf, FlexFillDirective, MatFormField, MatLabel, MatSelect, MatOption, MatError, LayoutAlignDirective, MatButton, MatStepperPrevious, FaIconComponent, MatStepperNext]
 })
 export class ShareProductAccountingStepComponent implements OnInit {
 
@@ -55,7 +65,7 @@ export class ShareProductAccountingStepComponent implements OnInit {
   }
 
   setConditionalControls() {
-    this.shareProductAccountingForm.get('accountingRule').valueChanges
+    this.shareProductAccountingForm.get('accountingRule')!.valueChanges
       .subscribe((accountingRule: any) => {
         if (accountingRule === 2) {
           this.shareProductAccountingForm.addControl('shareReferenceId', new FormControl('', Validators.required));

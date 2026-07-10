@@ -1,12 +1,37 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { FlexFillDirective, FlexDirective, LayoutDirective, LayoutAlignDirective } from '@ngbracket/ngx-layout/flex';
+import { NgIf, DecimalPipe, DatePipe } from '@angular/common';
+import { MatButton } from '@angular/material/button';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import { MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow } from '@angular/material/table';
 
 @Component({
-  standalone: false,
-  selector: 'mifosx-loan-tranche-details',
-  templateUrl: './loan-tranche-details.component.html',
-  changeDetection: ChangeDetectionStrategy.Eager,
-  styleUrls: ['./loan-tranche-details.component.scss'],
+    selector: 'mifosx-loan-tranche-details',
+    templateUrl: './loan-tranche-details.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    styleUrls: ['./loan-tranche-details.component.scss'],
+    imports: [
+        FlexFillDirective,
+        FlexDirective,
+        LayoutDirective,
+        LayoutAlignDirective,
+        NgIf,
+        MatButton,
+        FaIconComponent,
+        MatTable,
+        MatColumnDef,
+        MatHeaderCellDef,
+        MatHeaderCell,
+        MatCellDef,
+        MatCell,
+        MatHeaderRowDef,
+        MatHeaderRow,
+        MatRowDef,
+        MatRow,
+        DecimalPipe,
+        DatePipe,
+    ],
 })
 export class LoanTrancheDetailsComponent implements OnInit {
   loanDetails: any;
@@ -22,7 +47,7 @@ export class LoanTrancheDetailsComponent implements OnInit {
    * @param {ActivatedRoute} route Activated Route.
    */
   constructor(private route: ActivatedRoute) {
-    this.route.parent.data.subscribe((data: { loanDetailsData: any }) => {
+    this.route.parent!.data.subscribe((data: any) => {
       this.loanDetails = data.loanDetailsData;
     });
   }
@@ -70,5 +95,9 @@ export class LoanTrancheDetailsComponent implements OnInit {
       return true;
     }
     return false;
+  }
+
+  delete() {
+    // Tranche deletion is not yet implemented.
   }
 }

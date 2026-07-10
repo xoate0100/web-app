@@ -40,15 +40,15 @@
         <td mat-cell *matCellDef="let cashier">
           <button class="cashier-action-button" mat-raised-button color="accent" matTooltip="Allocate Cash"
             (click)="routeEdit($event)" [routerLink]="[cashier.id, 'allocate']" *mifosxHasPermission="'ALLOCATECASHIER_TELLER'">
-            <i class="fa fa-arrow-up"></i>
+            <fa-icon icon="arrow-up"></fa-icon>
           </button>
           <button class="cashier-action-button" mat-raised-button color="warn" matTooltip="Settle Cash"
             (click)="routeEdit($event)" [routerLink]="[cashier.id, 'settle']" *mifosxHasPermission="'SETTLECASHIER_TELLER'">
-            <i class="fa fa-arrow-down"></i>
+            <fa-icon icon="arrow-down"></fa-icon>
           </button>
           <button class="cashier-action-button" mat-raised-button color="primary" matTooltip="View Transactions"
             (click)="routeEdit($event)" [routerLink]="[cashier.id, 'transactions']" *mifosxHasPermission="'ALLOCATECASHIER_TELLER'">
-            <i class="fa fa-eye"></i>
+            <fa-icon icon="eye"></fa-icon>
           </button>
         </td>
       </ng-container>

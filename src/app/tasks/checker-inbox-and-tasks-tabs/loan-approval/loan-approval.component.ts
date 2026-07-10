@@ -1,10 +1,10 @@
 /** Angular Imports */
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { SelectionModel } from '@angular/cdk/collections';
 import * as _ from 'lodash';
-import { DatePipe } from '@angular/common';
-import { MatTableDataSource } from '@angular/material/table';
+import { DatePipe, NgIf, NgFor, DecimalPipe } from '@angular/common';
+import { MatTableDataSource, MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow } from '@angular/material/table';
 import { MatDialog } from '@angular/material/dialog';
 
 /** Dialog Imports */
@@ -13,13 +13,20 @@ import { ConfirmationDialogComponent } from 'app/shared/confirmation-dialog/conf
 /** Custom Services */
 import { TasksService } from '../../tasks.service';
 import { SettingsService } from 'app/settings/settings.service';
+import { LayoutDirective, LayoutAlignDirective, FlexDirective } from '@ngbracket/ngx-layout/flex';
+import { MatFormField } from '@angular/material/form-field';
+import { MatInput } from '@angular/material/input';
+import { HasPermissionDirective } from '../../../directives/has-permission/has-permission.directive';
+import { MatButton } from '@angular/material/button';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import { MatCheckbox } from '@angular/material/checkbox';
 
 @Component({
-  standalone: false,
-  selector: 'mifosx-loan-approval',
-  templateUrl: './loan-approval.component.html',
-  changeDetection: ChangeDetectionStrategy.Eager,
-  styleUrls: ['./loan-approval.component.scss']
+    selector: 'mifosx-loan-approval',
+    templateUrl: './loan-approval.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    styleUrls: ['./loan-approval.component.scss'],
+    imports: [NgIf, LayoutDirective, LayoutAlignDirective, FlexDirective, MatFormField, MatInput, HasPermissionDirective, MatButton, FaIconComponent, NgFor, MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCheckbox, MatCellDef, MatCell, RouterLink, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow, DecimalPipe]
 })
 export class LoanApprovalComponent {
 
@@ -34,7 +41,7 @@ export class LoanApprovalComponent {
   /** Row Selection Data */
   selection: SelectionModel<any>;
   /** Map data */
-  idToNodeMap = {};
+  idToNodeMap: Record<string, any> = {};
   /** Grouped Office Data */
   officesArray: any[];
   /** List of Requests */
@@ -57,7 +64,7 @@ export class LoanApprovalComponent {
     private router: Router,
     private settingsService: SettingsService,
     private tasksService: TasksService) {
-    this.route.data.subscribe((data: { officesData: any, loansData: any }) => {
+    this.route.data.subscribe((data: any) => {
       this.offices = data.officesData;
       this.loans = data.loansData.pageItems;
       this.setOfficeData();
@@ -72,7 +79,7 @@ export class LoanApprovalComponent {
     });
     this.loans.forEach((loanEle: any) => {
       if (loanEle.status.pendingApproval) {
-        let tempOffice = {};
+        let tempOffice: Record<string, any> = {};
         if (loanEle.clientOfficeId) {
           tempOffice = this.idToNodeMap[loanEle.clientOfficeId];
           tempOffice['loans'].push(loanEle);
@@ -93,7 +100,7 @@ export class LoanApprovalComponent {
     });
     this.officesArray = finalArray;
     this.dataSource = new MatTableDataSource(this.officesArray);
-    this.selection = new SelectionModel(true, []);
+    this.selection = new SelectionModel<any>(true, []);
   }
 
   /** Whether the number of selected elements matches the total number of rows. */
@@ -135,7 +142,7 @@ export class LoanApprovalComponent {
 
   bulkLoanApproval() {
     const dateFormat = this.settingsService.dateFormat;
-    const approvedOnDate = this.datePipe.transform(new Date(), dateFormat);
+    const approvedOnDate = this.datePipe.transform(new Date() as Date, dateFormat);
     const locale = this.settingsService.language.code;
     const formData = {
       dateFormat,
@@ -178,7 +185,7 @@ export class LoanApprovalComponent {
         return (account.status.waitingForDisbursal === true);
       });
       this.dataSource = new MatTableDataSource(this.loans);
-      this.selection = new SelectionModel(true, []);
+      this.selection = new SelectionModel<any>(true, []);
     });
   }
 

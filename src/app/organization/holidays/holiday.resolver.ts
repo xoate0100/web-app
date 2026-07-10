@@ -24,7 +24,7 @@ export class HolidayResolver implements Resolve<Object> {
    * @returns {Observable<any>}
    */
   resolve(route: ActivatedRouteSnapshot): Observable<any> {
-    const holidayId  = route.paramMap.get('id');
+    const holidayId  = route.paramMap.get('id')!;
     return this.organizationService.getHoliday(holidayId);
   }
 

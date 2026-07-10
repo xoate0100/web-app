@@ -1,22 +1,31 @@
 /** Angular Imports */
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { DatePipe } from '@angular/common';
-import { ActivatedRoute, Router } from '@angular/router';
+import { FormGroup, FormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
+import { DatePipe, NgIf, NgFor } from '@angular/common';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 
 /** Custom Services */
 import { CentersService } from 'app/centers/centers.service';
 import { SettingsService } from 'app/settings/settings.service';
+import { MatCard, MatCardContent, MatCardActions } from '@angular/material/card';
+import { LayoutDirective, FlexDirective, LayoutAlignDirective, LayoutGapDirective } from '@ngbracket/ngx-layout/flex';
+import { MatFormField, MatLabel, MatSuffix, MatError } from '@angular/material/form-field';
+import { MatInput } from '@angular/material/input';
+import { MatDatepickerInput, MatDatepickerToggle, MatDatepicker } from '@angular/material/datepicker';
+import { MatSelect } from '@angular/material/select';
+import { MatOption } from '@angular/material/autocomplete';
+import { MatButton } from '@angular/material/button';
+import { HasPermissionDirective } from '../../../../directives/has-permission/has-permission.directive';
 
 /**
  * Close Center Component
  */
 @Component({
-  standalone: false,
-  selector: 'mifosx-close-center',
-  templateUrl: './close-center.component.html',
-  changeDetection: ChangeDetectionStrategy.Eager,
-  styleUrls: ['./close-center.component.scss']
+    selector: 'mifosx-close-center',
+    templateUrl: './close-center.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    styleUrls: ['./close-center.component.scss'],
+    imports: [MatCard, ReactiveFormsModule, MatCardContent, LayoutDirective, MatFormField, MatLabel, MatInput, MatDatepickerInput, MatDatepickerToggle, MatSuffix, MatDatepicker, NgIf, MatError, FlexDirective, MatSelect, NgFor, MatOption, MatCardActions, LayoutAlignDirective, LayoutGapDirective, MatButton, RouterLink, HasPermissionDirective]
 })
 export class CloseCenterComponent implements OnInit {
 
@@ -45,10 +54,10 @@ export class CloseCenterComponent implements OnInit {
               private datePipe: DatePipe,
               private route: ActivatedRoute,
               private router: Router) {
-    this.route.data.subscribe((data: { centeractionData: any }) => {
+    this.route.data.subscribe((data: any) => {
       this.closureData = data.centeractionData.closureReasons;
     });
-    this.centerId = this.route.parent.snapshot.params['centerId'];
+    this.centerId = this.route.parent!.snapshot.params['centerId']!;
   }
 
   ngOnInit() {
@@ -74,7 +83,7 @@ export class CloseCenterComponent implements OnInit {
     const dateFormat = this.settingsService.dateFormat;
     const prevClosedDate: Date = this.closeCenterForm.value.closureDate;
     this.closeCenterForm.patchValue({
-      closureDate: this.datePipe.transform(prevClosedDate, dateFormat),
+      closureDate: this.datePipe.transform(prevClosedDate as Date, dateFormat),
     });
     const data = {
       ...this.closeCenterForm.value,

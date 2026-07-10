@@ -1,18 +1,25 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { LoansService } from 'app/loans/loans.service';
-import { ActivatedRoute, Router } from '@angular/router';
-import { DatePipe } from '@angular/common';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { DatePipe, NgIf } from '@angular/common';
 
 /** Custom Services */
 import { SettingsService } from 'app/settings/settings.service';
+import { MatCard, MatCardContent, MatCardActions } from '@angular/material/card';
+import { LayoutDirective, LayoutAlignDirective, LayoutGapDirective } from '@ngbracket/ngx-layout/flex';
+import { MatFormField, MatLabel, MatSuffix, MatError } from '@angular/material/form-field';
+import { MatInput } from '@angular/material/input';
+import { MatDatepickerInput, MatDatepickerToggle, MatDatepicker } from '@angular/material/datepicker';
+import { MatButton } from '@angular/material/button';
+import { HasPermissionDirective } from '../../../../directives/has-permission/has-permission.directive';
 
 @Component({
-  standalone: false,
-  selector: 'mifosx-foreclosure',
-  templateUrl: './foreclosure.component.html',
-  changeDetection: ChangeDetectionStrategy.Eager,
-  styleUrls: ['./foreclosure.component.scss']
+    selector: 'mifosx-foreclosure',
+    templateUrl: './foreclosure.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    styleUrls: ['./foreclosure.component.scss'],
+    imports: [MatCard, ReactiveFormsModule, MatCardContent, LayoutDirective, MatFormField, MatLabel, MatInput, MatDatepickerInput, MatDatepickerToggle, MatSuffix, MatDatepicker, NgIf, MatError, MatCardActions, LayoutAlignDirective, LayoutGapDirective, MatButton, RouterLink, HasPermissionDirective]
 })
 export class ForeclosureComponent implements OnInit {
 
@@ -40,7 +47,7 @@ export class ForeclosureComponent implements OnInit {
     private router: Router,
     private datePipe: DatePipe,
     private settingsService: SettingsService) {
-      this.loanId = this.route.parent.snapshot.params['loanId'];
+      this.loanId = this.route.parent!.snapshot.params['loanId']!;
     }
 
   ngOnInit() {
@@ -62,7 +69,7 @@ export class ForeclosureComponent implements OnInit {
   }
 
   onChanges(): void {
-    this.foreclosureForm.get('transactionDate').valueChanges.subscribe(val => {
+    this.foreclosureForm.get('transactionDate')!.valueChanges.subscribe(val => {
       this.retrieveLoanForeclosureTemplate(val);
     });
 
@@ -70,7 +77,7 @@ export class ForeclosureComponent implements OnInit {
 
   retrieveLoanForeclosureTemplate(val: any) {
     const dateFormat = this.settingsService.dateFormat;
-    const transactionDateFormatted = this.datePipe.transform(val, dateFormat);
+    const transactionDateFormatted = this.datePipe.transform(val as Date, dateFormat);
     const data = {
       command: 'foreclosure',
       dateFormat: this.settingsService.dateFormat,
@@ -113,7 +120,7 @@ export class ForeclosureComponent implements OnInit {
     const transactionDate = this.foreclosureForm.value.transactionDate;
     const dateFormat = this.settingsService.dateFormat;
     this.foreclosureForm.patchValue({
-      transactionDate: this.datePipe.transform(transactionDate, dateFormat)
+      transactionDate: this.datePipe.transform(transactionDate as Date, dateFormat)
     });
     const formData = {
       transactionDate: this.foreclosureForm.value.transactionDate,

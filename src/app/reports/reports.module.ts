@@ -21,19 +21,17 @@ import { XBRLReportComponent } from './xbrl-report/xbrl-report.component';
  * Reports components should be declared here.
  */
 @NgModule({
-  imports: [
-    SharedModule,
-    ReportsRoutingModule
-  ],
-  declarations: [
-    ReportsComponent,
-    RunReportComponent,
-    TableAndSmsComponent,
-    ChartComponent,
-    PentahoComponent,
-    XBRLComponent,
-    XBRLReportComponent
-  ],
-  providers: [ DecimalPipe ]
+    imports: [
+        SharedModule,
+        ReportsRoutingModule,
+        ReportsComponent,
+        RunReportComponent,
+        TableAndSmsComponent,
+        ChartComponent,
+        PentahoComponent,
+        XBRLComponent,
+        XBRLReportComponent
+    ],
+    providers: [DecimalPipe]
 })
 export class ReportsModule { }

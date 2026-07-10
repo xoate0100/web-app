@@ -1,16 +1,23 @@
 /** Angular Imports */
 import { Component, Input, OnChanges, ChangeDetectionStrategy } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { FormControl, ReactiveFormsModule } from '@angular/forms';
+import { LayoutDirective, FlexDirective, LayoutAlignDirective, LayoutGapDirective } from '@ngbracket/ngx-layout/flex';
+import { MatFormField, MatLabel } from '@angular/material/form-field';
+import { MatInput } from '@angular/material/input';
+import { NgFor } from '@angular/common';
+import { MatButton } from '@angular/material/button';
+import { MatStepperPrevious, MatStepperNext } from '@angular/material/stepper';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 
 /**
  * Campaign Message Step
  */
 @Component({
-  standalone: false,
-  selector: 'mifosx-campaign-message-step',
-  templateUrl: './campaign-message-step.component.html',
-  changeDetection: ChangeDetectionStrategy.Eager,
-  styleUrls: ['./campaign-message-step.component.scss']
+    selector: 'mifosx-campaign-message-step',
+    templateUrl: './campaign-message-step.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    styleUrls: ['./campaign-message-step.component.scss'],
+    imports: [LayoutDirective, MatFormField, FlexDirective, MatLabel, MatInput, ReactiveFormsModule, LayoutAlignDirective, NgFor, MatButton, LayoutGapDirective, MatStepperPrevious, FaIconComponent, MatStepperNext]
 })
 export class CampaignMessageStepComponent implements OnChanges {
 

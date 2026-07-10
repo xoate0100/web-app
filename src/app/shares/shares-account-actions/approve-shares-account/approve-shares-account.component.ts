@@ -1,21 +1,27 @@
 /** Angular Imports */
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { DatePipe } from '@angular/common';
-import { ActivatedRoute, Router } from '@angular/router';
+import { FormGroup, FormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
+import { DatePipe, NgIf } from '@angular/common';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 
 /** Custom Services */
 import { SharesService } from 'app/shares/shares.service';
+import { MatCard, MatCardContent, MatCardActions } from '@angular/material/card';
+import { LayoutDirective, LayoutAlignDirective, LayoutGapDirective } from '@ngbracket/ngx-layout/flex';
+import { MatFormField, MatLabel, MatSuffix, MatError } from '@angular/material/form-field';
+import { MatInput } from '@angular/material/input';
+import { MatDatepickerInput, MatDatepickerToggle, MatDatepicker } from '@angular/material/datepicker';
+import { MatButton } from '@angular/material/button';
 
 /**
  * Approve Shares Account Component
  */
 @Component({
-  standalone: false,
-  selector: 'mifosx-approve-shares-account',
-  templateUrl: './approve-shares-account.component.html',
-  changeDetection: ChangeDetectionStrategy.Eager,
-  styleUrls: ['./approve-shares-account.component.scss']
+    selector: 'mifosx-approve-shares-account',
+    templateUrl: './approve-shares-account.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    styleUrls: ['./approve-shares-account.component.scss'],
+    imports: [MatCard, ReactiveFormsModule, MatCardContent, LayoutDirective, MatFormField, MatLabel, MatInput, MatDatepickerInput, MatDatepickerToggle, MatSuffix, MatDatepicker, NgIf, MatError, MatCardActions, LayoutAlignDirective, LayoutGapDirective, MatButton, RouterLink]
 })
 export class ApproveSharesAccountComponent implements OnInit {
 
@@ -40,7 +46,7 @@ export class ApproveSharesAccountComponent implements OnInit {
               private datePipe: DatePipe,
               private route: ActivatedRoute,
               private router: Router) {
-    this.accountId = this.route.parent.snapshot.params['shareAccountId'];
+    this.accountId = this.route.parent!.snapshot.params['shareAccountId']!;
   }
 
   /**
@@ -70,7 +76,7 @@ export class ApproveSharesAccountComponent implements OnInit {
     const dateFormat = 'dd MMMM yyyy';
     const prevApprovedDate: Date = this.approveSharesAccountForm.value.approvedDate;
     this.approveSharesAccountForm.patchValue({
-      approvedDate: this.datePipe.transform(prevApprovedDate, dateFormat),
+      approvedDate: this.datePipe.transform(prevApprovedDate as Date, dateFormat),
     });
     const data = {
       ...this.approveSharesAccountForm.value,

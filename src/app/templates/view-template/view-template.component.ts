@@ -1,6 +1,6 @@
 /** Angular Imports */
 import { Component, ChangeDetectionStrategy } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 
 /** Custom Services */
@@ -8,16 +8,21 @@ import { TemplatesService } from '../templates.service';
 
 /** Custom Components */
 import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.component';
+import { LayoutDirective, LayoutAlignDirective, LayoutGapDirective, FlexDirective } from '@ngbracket/ngx-layout/flex';
+import { HasPermissionDirective } from '../../directives/has-permission/has-permission.directive';
+import { MatButton } from '@angular/material/button';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import { MatCard, MatCardContent } from '@angular/material/card';
 
 /**
  * View Template Component.
  */
 @Component({
-  standalone: false,
-  selector: 'mifosx-view-template',
-  templateUrl: './view-template.component.html',
-  changeDetection: ChangeDetectionStrategy.Eager,
-  styleUrls: ['./view-template.component.scss']
+    selector: 'mifosx-view-template',
+    templateUrl: './view-template.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    styleUrls: ['./view-template.component.scss'],
+    imports: [LayoutDirective, LayoutAlignDirective, LayoutGapDirective, HasPermissionDirective, MatButton, RouterLink, FaIconComponent, MatCard, MatCardContent, FlexDirective]
 })
 export class ViewTemplateComponent {
 
@@ -35,7 +40,7 @@ export class ViewTemplateComponent {
               private templatesService: TemplatesService,
               private router: Router,
               private dialog: MatDialog) {
-    this.route.data.subscribe((data: { template: any }) => {
+    this.route.data.subscribe((data: any) => {
       this.templateData = data.template;
     });
   }

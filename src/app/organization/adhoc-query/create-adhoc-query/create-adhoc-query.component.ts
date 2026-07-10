@@ -1,20 +1,30 @@
 /** Angular Imports */
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
-import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
-import { Router, ActivatedRoute } from '@angular/router';
+import { FormGroup, FormBuilder, Validators, FormControl, ReactiveFormsModule } from '@angular/forms';
+import { Router, ActivatedRoute, RouterLink } from '@angular/router';
 
 /** Custom Services */
 import { OrganizationService } from '../../organization.service';
+import { MatCard, MatCardContent, MatCardActions } from '@angular/material/card';
+import { LayoutDirective, LayoutAlignDirective, LayoutGapDirective } from '@ngbracket/ngx-layout/flex';
+import { MatFormField, MatLabel, MatError } from '@angular/material/form-field';
+import { MatInput } from '@angular/material/input';
+import { NgIf, NgFor } from '@angular/common';
+import { MatSelect } from '@angular/material/select';
+import { MatOption } from '@angular/material/autocomplete';
+import { MatCheckbox } from '@angular/material/checkbox';
+import { MatButton } from '@angular/material/button';
+import { HasPermissionDirective } from '../../../directives/has-permission/has-permission.directive';
 
 /**
  * Create Adhoc Query component.
  */
 @Component({
-  standalone: false,
-  selector: 'mifosx-create-adhoc-query',
-  templateUrl: './create-adhoc-query.component.html',
-  changeDetection: ChangeDetectionStrategy.Eager,
-  styleUrls: ['./create-adhoc-query.component.scss']
+    selector: 'mifosx-create-adhoc-query',
+    templateUrl: './create-adhoc-query.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    styleUrls: ['./create-adhoc-query.component.scss'],
+    imports: [MatCard, ReactiveFormsModule, MatCardContent, LayoutDirective, MatFormField, MatLabel, MatInput, NgIf, MatError, MatSelect, NgFor, MatOption, MatCheckbox, MatCardActions, LayoutAlignDirective, LayoutGapDirective, MatButton, RouterLink, HasPermissionDirective]
 })
 export class CreateAdhocQueryComponent implements OnInit {
 
@@ -36,7 +46,7 @@ export class CreateAdhocQueryComponent implements OnInit {
               private organizationService: OrganizationService,
               private route: ActivatedRoute,
               private router: Router) {
-    this.route.data.subscribe((data: { adhocQueryTemplate: any }) => {
+    this.route.data.subscribe((data: any) => {
       this.adhocQueryTemplateData = data.adhocQueryTemplate;
     });
   }
@@ -69,7 +79,7 @@ export class CreateAdhocQueryComponent implements OnInit {
    * Sets the conditional controls of the adhoc query form
    */
   setConditionalControls() {
-    this.adhocQueryForm.get('reportRunFrequency').valueChanges.subscribe(reportRunFrequencyId => {
+    this.adhocQueryForm.get('reportRunFrequency')!.valueChanges.subscribe(reportRunFrequencyId => {
       if (reportRunFrequencyId === 5) {
         this.adhocQueryForm.addControl('reportRunEvery', new FormControl('', [Validators.required, Validators.min(1)]));
       } else {

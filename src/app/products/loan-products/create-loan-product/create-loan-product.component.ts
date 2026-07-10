@@ -9,13 +9,17 @@ import { LoanProductChargesStepComponent } from '../loan-product-stepper/loan-pr
 import { LoanProductAccountingStepComponent } from '../loan-product-stepper/loan-product-accounting-step/loan-product-accounting-step.component';
 
 import { ProductsService } from 'app/products/products.service';
+import { MatStepper, MatStepperIcon, MatStep, MatStepLabel } from '@angular/material/stepper';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import { NgIf } from '@angular/common';
+import { LoanProductPreviewStepComponent } from '../loan-product-stepper/loan-product-preview-step/loan-product-preview-step.component';
 
 @Component({
-  standalone: false,
-  selector: 'mifosx-create-loan-product',
-  templateUrl: './create-loan-product.component.html',
-  changeDetection: ChangeDetectionStrategy.Eager,
-  styleUrls: ['./create-loan-product.component.scss']
+    selector: 'mifosx-create-loan-product',
+    templateUrl: './create-loan-product.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    styleUrls: ['./create-loan-product.component.scss'],
+    imports: [MatStepper, MatStepperIcon, FaIconComponent, MatStep, MatStepLabel, LoanProductDetailsStepComponent, LoanProductCurrencyStepComponent, LoanProductTermsStepComponent, LoanProductSettingsStepComponent, LoanProductChargesStepComponent, LoanProductAccountingStepComponent, NgIf, LoanProductPreviewStepComponent]
 })
 export class CreateLoanProductComponent implements OnInit {
 
@@ -32,7 +36,7 @@ export class CreateLoanProductComponent implements OnInit {
   constructor(private route: ActivatedRoute,
               private productsService: ProductsService,
               private router: Router) {
-    this.route.data.subscribe((data: { loanProductsTemplate: any }) => {
+    this.route.data.subscribe((data: any) => {
       this.loanProductsTemplate = data.loanProductsTemplate;
     });
   }
@@ -90,8 +94,8 @@ export class CreateLoanProductComponent implements OnInit {
       dateFormat,
       locale: 'en'
     };
-    delete loanProduct.allowAttributeConfiguration;
-    delete loanProduct.advancedAccountingRules;
+    delete (loanProduct as any).allowAttributeConfiguration;
+    delete (loanProduct as any).advancedAccountingRules;
     this.productsService.createLoanProduct(loanProduct)
       .subscribe((response: any) => {
         this.router.navigate(['../', response.resourceId], { relativeTo: this.route });

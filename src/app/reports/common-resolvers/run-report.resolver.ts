@@ -24,7 +24,7 @@ export class RunReportResolver implements Resolve<Object> {
    * @returns {Observable<any>}
    */
   resolve(route: ActivatedRouteSnapshot): Observable<any> {
-    return this.reportsService.getReportParams(route.params['name']);
+    return this.reportsService.getReportParams(route.params['name']!);
   }
 
 }

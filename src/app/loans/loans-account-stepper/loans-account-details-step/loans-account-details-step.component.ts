@@ -1,20 +1,31 @@
 /** Angular Imports */
 import { Component, OnInit, Input, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
 
 /** Custom Services */
 import { LoansService } from '../../loans.service';
-import { DatePipe } from '@angular/common';
+import { DatePipe, NgFor, NgIf } from '@angular/common';
+import { LayoutDirective, LayoutGapDirective, FlexDirective, FlexFillDirective, LayoutAlignDirective } from '@ngbracket/ngx-layout/flex';
+import { MatFormField, MatLabel, MatError, MatSuffix } from '@angular/material/form-field';
+import { MatSelect } from '@angular/material/select';
+import { MatOption } from '@angular/material/autocomplete';
+import { MatInput } from '@angular/material/input';
+import { MatDatepickerInput, MatDatepickerToggle, MatDatepicker } from '@angular/material/datepicker';
+import { MatDivider } from '@angular/material/divider';
+import { MatCheckbox } from '@angular/material/checkbox';
+import { MatButton } from '@angular/material/button';
+import { MatStepperPrevious, MatStepperNext } from '@angular/material/stepper';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 
 /**
  * Loans Account Details Step
  */
 @Component({
-  standalone: false,
-  selector: 'mifosx-loans-account-details-step',
-  templateUrl: './loans-account-details-step.component.html',
-  changeDetection: ChangeDetectionStrategy.Eager,
-  styleUrls: ['./loans-account-details-step.component.scss']
+    selector: 'mifosx-loans-account-details-step',
+    templateUrl: './loans-account-details-step.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    styleUrls: ['./loans-account-details-step.component.scss'],
+    imports: [ReactiveFormsModule, LayoutDirective, LayoutGapDirective, MatFormField, FlexDirective, MatLabel, MatSelect, NgFor, MatOption, MatError, MatInput, MatDatepickerInput, MatDatepickerToggle, MatSuffix, MatDatepicker, NgIf, MatDivider, FlexFillDirective, MatCheckbox, LayoutAlignDirective, MatButton, MatStepperPrevious, FaIconComponent, MatStepperNext]
 })
 export class LoansAccountDetailsStepComponent implements OnInit {
 
@@ -93,7 +104,7 @@ export class LoansAccountDetailsStepComponent implements OnInit {
    */
   buildDependencies() {
     const clientId = this.loansAccountTemplate.clientId;
-    this.loansAccountDetailsForm.get('productId').valueChanges.subscribe((productId: string) => {
+    this.loansAccountDetailsForm.get('productId')!.valueChanges.subscribe((productId: string) => {
       this.loansService.getLoansAccountTemplateResource(clientId, productId).subscribe((response: any) => {
         this.loansAccountProductTemplate.emit(response);
         this.loanOfficerOptions = response.loanOfficerOptions;
@@ -101,7 +112,7 @@ export class LoansAccountDetailsStepComponent implements OnInit {
         this.fundOptions = response.fundOptions;
         this.accountLinkingOptions = response.accountLinkingOptions;
         if (response.createStandingInstructionAtDisbursement) {
-          this.loansAccountDetailsForm.get('createStandingInstructionAtDisbursement').patchValue(response.createStandingInstructionAtDisbursement);
+          this.loansAccountDetailsForm.get('createStandingInstructionAtDisbursement')!.patchValue(response.createStandingInstructionAtDisbursement);
         }
       });
     });

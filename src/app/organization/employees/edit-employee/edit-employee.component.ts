@@ -1,22 +1,32 @@
 /** Angular Imports */
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { DatePipe } from '@angular/common';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { FormGroup, FormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
+import { DatePipe, NgFor, NgIf } from '@angular/common';
 
 /** Custom Services */
 import { OrganizationService } from '../../organization.service';
 import { SettingsService } from 'app/settings/settings.service';
+import { MatCard, MatCardContent, MatCardActions } from '@angular/material/card';
+import { LayoutDirective, LayoutAlignDirective, LayoutGapDirective } from '@ngbracket/ngx-layout/flex';
+import { MatFormField, MatLabel, MatError, MatSuffix } from '@angular/material/form-field';
+import { MatSelect } from '@angular/material/select';
+import { MatOption } from '@angular/material/autocomplete';
+import { MatInput } from '@angular/material/input';
+import { MatCheckbox } from '@angular/material/checkbox';
+import { MatDatepickerInput, MatDatepickerToggle, MatDatepicker } from '@angular/material/datepicker';
+import { MatButton } from '@angular/material/button';
+import { HasPermissionDirective } from '../../../directives/has-permission/has-permission.directive';
 
 /**
  * Edit Employee Component.
  */
 @Component({
-  standalone: false,
-  selector: 'mifosx-edit-employee',
-  templateUrl: './edit-employee.component.html',
-  changeDetection: ChangeDetectionStrategy.Eager,
-  styleUrls: ['./edit-employee.component.scss']
+    selector: 'mifosx-edit-employee',
+    templateUrl: './edit-employee.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    styleUrls: ['./edit-employee.component.scss'],
+    imports: [MatCard, ReactiveFormsModule, MatCardContent, LayoutDirective, MatFormField, MatLabel, MatSelect, NgFor, MatOption, NgIf, MatError, MatInput, MatCheckbox, MatDatepickerInput, MatDatepickerToggle, MatSuffix, MatDatepicker, MatCardActions, LayoutAlignDirective, LayoutGapDirective, MatButton, RouterLink, HasPermissionDirective]
 })
 export class EditEmployeeComponent implements OnInit {
 
@@ -46,7 +56,7 @@ export class EditEmployeeComponent implements OnInit {
               private route: ActivatedRoute,
               private router: Router,
               private datePipe: DatePipe) {
-    this.route.data.subscribe((data: { employee: any, offices: any  }) => {
+    this.route.data.subscribe((data: any) => {
       this.employeeData = data.employee;
       this.officeData = data.employee.allowedOffices;
     });
@@ -83,7 +93,7 @@ export class EditEmployeeComponent implements OnInit {
     // TODO: Update once language and date settings are setup
     const dateFormat = this.settingsService.dateFormat;
     this.editEmployeeForm.patchValue({
-      joiningDate: this.datePipe.transform(prevJoiningDate, dateFormat)
+      joiningDate: this.datePipe.transform(prevJoiningDate as Date, dateFormat)
     });
     const employee = this.editEmployeeForm.value;
     employee.locale = this.settingsService.language.code;

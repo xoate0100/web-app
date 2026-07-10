@@ -1,18 +1,25 @@
 /** Angular Imports. */
 import { Component, OnInit, ViewChild, ChangeDetectionStrategy } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
-import { MatTableDataSource } from '@angular/material/table';
-import { MatSort } from '@angular/material/sort';
+import { MatTableDataSource, MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow } from '@angular/material/table';
+import { MatSort, MatSortHeader } from '@angular/material/sort';
 import { MatDialog } from '@angular/material/dialog';
 import { ErrorDialogComponent } from 'app/shared/error-dialog/error-dialog.component';
 import { ActivatedRoute, Router } from '@angular/router';
+import { LayoutDirective, LayoutGapDirective, FlexDirective } from '@ngbracket/ngx-layout/flex';
+import { MatFormField, MatLabel } from '@angular/material/form-field';
+import { MatInput } from '@angular/material/input';
+import { NgIf } from '@angular/common';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import { MatTooltip } from '@angular/material/tooltip';
+import { MatIconButton } from '@angular/material/button';
 
 @Component({
-  standalone: false,
-  selector: 'mifosx-view-history-scheduler-job',
-  templateUrl: './view-history-scheduler-job.component.html',
-  changeDetection: ChangeDetectionStrategy.Eager,
-  styleUrls: ['./view-history-scheduler-job.component.scss']
+    selector: 'mifosx-view-history-scheduler-job',
+    templateUrl: './view-history-scheduler-job.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    styleUrls: ['./view-history-scheduler-job.component.scss'],
+    imports: [LayoutDirective, LayoutGapDirective, MatFormField, FlexDirective, MatLabel, MatInput, MatTable, MatSort, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatSortHeader, MatCellDef, MatCell, NgIf, FaIconComponent, MatTooltip, MatIconButton, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow, MatPaginator]
 })
 export class ViewHistorySchedulerJobComponent implements OnInit {
 
@@ -35,7 +42,7 @@ export class ViewHistorySchedulerJobComponent implements OnInit {
   constructor(private route: ActivatedRoute,
               private dialog: MatDialog,
               private router: Router ) {
-    this.route.data.subscribe(( data: { jobsSchedulerHistory: any }) => {
+    this.route.data.subscribe((data: any) => {
       this.jobHistoryData = data.jobsSchedulerHistory;
       console.log(this.jobHistoryData);
     });

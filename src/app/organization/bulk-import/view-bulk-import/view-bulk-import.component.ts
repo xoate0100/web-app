@@ -2,23 +2,33 @@
 import { Component, OnInit, ViewChild, ChangeDetectionStrategy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { MatPaginator } from '@angular/material/paginator';
-import { MatSort } from '@angular/material/sort';
-import { MatTableDataSource, MatTable } from '@angular/material/table';
-import { FormGroup, FormBuilder} from '@angular/forms';
+import { MatSort, MatSortHeader } from '@angular/material/sort';
+import { MatTableDataSource, MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow } from '@angular/material/table';
+import { FormGroup, FormBuilder, ReactiveFormsModule } from '@angular/forms';
 
 /** Custom Imports */
 import { OrganizationService } from '../../organization.service';
 import { BulkImports } from './bulk-imports';
+import { LayoutGapDirective, LayoutDirective, FlexDirective, LayoutAlignDirective } from '@ngbracket/ngx-layout/flex';
+import { MatCard, MatCardContent } from '@angular/material/card';
+import { NgIf, NgFor, DatePipe } from '@angular/common';
+import { MatFormField, MatLabel, MatHint } from '@angular/material/form-field';
+import { MatSelect } from '@angular/material/select';
+import { MatOption } from '@angular/material/autocomplete';
+import { HasPermissionDirective } from '../../../directives/has-permission/has-permission.directive';
+import { MatButton, MatIconButton } from '@angular/material/button';
+import { FileUploadComponent } from '../../../shared/file-upload/file-upload.component';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 
 /**
  * View Bulk Imports Component
  */
 @Component({
-  standalone: false,
-  selector: 'mifosx-view-bulk-import',
-  templateUrl: './view-bulk-import.component.html',
-  changeDetection: ChangeDetectionStrategy.Eager,
-  styleUrls: ['./view-bulk-import.component.scss']
+    selector: 'mifosx-view-bulk-import',
+    templateUrl: './view-bulk-import.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    styleUrls: ['./view-bulk-import.component.scss'],
+    imports: [LayoutGapDirective, MatCard, LayoutDirective, FlexDirective, ReactiveFormsModule, MatCardContent, NgIf, MatFormField, MatLabel, MatSelect, NgFor, MatOption, HasPermissionDirective, MatButton, FileUploadComponent, MatHint, LayoutAlignDirective, MatTable, MatSort, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatSortHeader, MatCellDef, MatCell, MatIconButton, FaIconComponent, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow, MatPaginator, DatePipe]
 })
 export class ViewBulkImportComponent implements OnInit {
 
@@ -68,7 +78,7 @@ export class ViewBulkImportComponent implements OnInit {
               private formBuilder: FormBuilder,
               private organizationService: OrganizationService,
               ) {
-    this.bulkImport.name = this.route.snapshot.params['import-name'];
+    this.bulkImport.name = this.route.snapshot.params['import-name']!;
     this.route.data.subscribe( (data: any) => {
       this.officeData = data.offices;
       this.importsData = data.imports;
@@ -100,7 +110,7 @@ export class ViewBulkImportComponent implements OnInit {
    * Subscribe to value changes and fetches select options accordingly.
    */
   buildDependencies() {
-    this.bulkImportForm.get('officeId').valueChanges.subscribe((value: any) => {
+    this.bulkImportForm.get('officeId')!.valueChanges.subscribe((value: any) => {
       if (this.bulkImport.formFields >= 2) {
          this.organizationService.getStaff(value).subscribe( (data: any) => {
           this.staffData = data;
@@ -122,11 +132,11 @@ export class ViewBulkImportComponent implements OnInit {
    * Gets bulk import's downloadable template from API.
    */
   downloadTemplate() {
-    const officeId = this.bulkImportForm.get('officeId').value;
-    const staffId = this.bulkImportForm.get('staffId').value;
+    const officeId = this.bulkImportForm.get('officeId')!.value;
+    const staffId = this.bulkImportForm.get('staffId')!.value;
     let legalFormType = '';
     /** Only for Client Bulk Imports */
-    switch (this.bulkImportForm.get('legalForm').value) {
+    switch (this.bulkImportForm.get('legalForm')!.value) {
       case 'Person':
           legalFormType = 'CLIENTS_PERSON';
         break;

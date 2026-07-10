@@ -1,7 +1,7 @@
 /** Angular Imports */
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { FormGroup, FormBuilder, Validators, FormArray, ReactiveFormsModule } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 
 /** Custom Services */
@@ -9,16 +9,26 @@ import { SystemService } from 'app/system/system.service';
 
 /** Custom Components */
 import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.component';
+import { LayoutDirective, LayoutAlignDirective, LayoutGapDirective, FlexFillDirective, FlexDirective } from '@ngbracket/ngx-layout/flex';
+import { HasPermissionDirective } from '../../../directives/has-permission/has-permission.directive';
+import { MatButton, MatIconButton } from '@angular/material/button';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import { NgIf, NgFor } from '@angular/common';
+import { MatCard, MatCardTitle, MatCardContent } from '@angular/material/card';
+import { MatFormField, MatLabel, MatError } from '@angular/material/form-field';
+import { MatInput } from '@angular/material/input';
+import { MatCheckbox } from '@angular/material/checkbox';
+import { MatTooltip } from '@angular/material/tooltip';
 
 /**
  * View Code Component.
  */
 @Component({
-  standalone: false,
-  selector: 'mifosx-view-code',
-  templateUrl: './view-code.component.html',
-  changeDetection: ChangeDetectionStrategy.Eager,
-  styleUrls: ['./view-code.component.scss']
+    selector: 'mifosx-view-code',
+    templateUrl: './view-code.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    styleUrls: ['./view-code.component.scss'],
+    imports: [LayoutDirective, LayoutAlignDirective, LayoutGapDirective, HasPermissionDirective, MatButton, FaIconComponent, NgIf, RouterLink, MatCard, MatCardTitle, ReactiveFormsModule, MatCardContent, NgFor, FlexFillDirective, MatFormField, FlexDirective, MatLabel, MatInput, MatError, MatCheckbox, MatIconButton, MatTooltip]
 })
 export class ViewCodeComponent implements OnInit {
 
@@ -44,7 +54,7 @@ export class ViewCodeComponent implements OnInit {
               private router: Router,
               private formBuilder: FormBuilder,
               private dialog: MatDialog) {
-    this.route.data.subscribe((data: { code: any, codeValues: any }) => {
+    this.route.data.subscribe((data: any) => {
       this.codeData = data.code;
       this.codeValuesData = data.codeValues;
     });
@@ -90,7 +100,7 @@ export class ViewCodeComponent implements OnInit {
    */
   addCodeValueRow() {
     this.codeValues.push(this.createCodeValuesRow());
-    this.codeValues.at(this.codeValues.length - 1).enable();
+    this.codeValues.at(this.codeValues.length - 1)!.enable();
     this.codeValueRowStatus.push('new');
   }
 
@@ -135,12 +145,12 @@ export class ViewCodeComponent implements OnInit {
    * @param {number} index Index of the row.
    */
   updateCodeValue(index: number) {
-    const updatedCodeValue: { name: string, description: string, position: number, isActive: boolean } = this.codeValues.at(index).value;
+    const updatedCodeValue: { name: string, description: string, position: number, isActive: boolean } = this.codeValues.at(index)!.value;
     this.systemService.updateCodeValue(this.codeData.id, this.codeValuesData[index].id, updatedCodeValue)
       .subscribe((response: any) => {
-        this.codeValues.at(index).disable();
+        this.codeValues.at(index)!.disable();
         this.codeValueRowStatus[index] = 'disabled';
-        this.codeValues.at(index).markAsPristine();
+        this.codeValues.at(index)!.markAsPristine();
       });
   }
 
@@ -166,13 +176,13 @@ export class ViewCodeComponent implements OnInit {
    * @param {number} index Index of the row.
    */
   disableRow(index: number) {
-    this.codeValues.at(index).get('name').setValue(this.codeValuesData[index].name);
-    this.codeValues.at(index).get('description').setValue(this.codeValuesData[index].description);
-    this.codeValues.at(index).get('position').setValue(this.codeValuesData[index].position);
-    this.codeValues.at(index).get('isActive').setValue(this.codeValuesData[index].isActive);
-    this.codeValues.at(index).disable();
+    this.codeValues.at(index)!.get('name')!.setValue(this.codeValuesData[index].name);
+    this.codeValues.at(index)!.get('description')!.setValue(this.codeValuesData[index].description);
+    this.codeValues.at(index)!.get('position')!.setValue(this.codeValuesData[index].position);
+    this.codeValues.at(index)!.get('isActive')!.setValue(this.codeValuesData[index].isActive);
+    this.codeValues.at(index)!.disable();
     this.codeValueRowStatus[index] = 'disabled';
-    this.codeValues.at(index).markAsPristine();
+    this.codeValues.at(index)!.markAsPristine();
   }
 
   /**
@@ -180,19 +190,19 @@ export class ViewCodeComponent implements OnInit {
    * @param {number} index Index of the row.
    */
   addCodeValue(index: number) {
-    const newCodeValue: { name: string, description: string, position: string, isActive: boolean } = this.codeValues.at(index).value;
+    const newCodeValue: { name: string, description: string, position: string, isActive: boolean } = this.codeValues.at(index)!.value;
     this.systemService.createCodeValue(this.codeData.id, newCodeValue)
       .subscribe((response: any) => {
-        this.codeValues.at(index).disable();
+        this.codeValues.at(index)!.disable();
         this.codeValueRowStatus[index] = 'disabled';
         this.codeValuesData.push({
           id: response.subResourceId,
-          name: this.codeValues.at(index).get('name').value,
-          description: this.codeValues.at(index).get('description').value,
-          position: this.codeValues.at(index).get('position').value,
-          isActive: this.codeValues.at(index).get('isActive').value
+          name: this.codeValues.at(index)!.get('name')!.value,
+          description: this.codeValues.at(index)!.get('description')!.value,
+          position: this.codeValues.at(index)!.get('position')!.value,
+          isActive: this.codeValues.at(index)!.get('isActive')!.value
         });
-        this.codeValues.at(index).markAsPristine();
+        this.codeValues.at(index)!.markAsPristine();
       });
   }
 
@@ -201,7 +211,7 @@ export class ViewCodeComponent implements OnInit {
    * @param {number} index Index of the row.
    */
   enableRow(index: number) {
-    this.codeValues.at(index).enable();
+    this.codeValues.at(index)!.enable();
     this.codeValueRowStatus[index] = 'edit';
   }
 

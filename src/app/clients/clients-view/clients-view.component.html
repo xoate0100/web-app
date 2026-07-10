@@ -11,13 +11,13 @@
         </div>
         <div fxLayoutAlign="center center" class="m-b-5">
           <button class="client-image-button" mat-raised-button (click)="doAction('Upload Image')" matTooltip="Upload Image" *mifosxHasPermission="'CREATE_CLIENTIMAGE'">
-            <i class="fa fa-upload"></i>
+            <fa-icon icon="upload"></fa-icon>
           </button>
           <button class="client-image-button" mat-raised-button (click)="doAction('Capture Image')" matTooltip="Capture Image" *mifosxHasPermission="'CREATE_CLIENTIMAGE'">
-            <i class="fa fa-camera"></i>
+            <fa-icon icon="camera"></fa-icon>
           </button>
           <button class="client-image-button" mat-raised-button (click)="doAction('Delete Image')" matTooltip="Delete Image" *mifosxHasPermission="'DELETE_CLIENTIMAGE'">
-            <i class="fa fa-trash"></i>
+            <fa-icon icon="trash"></fa-icon>
           </button>
           <br>
         </div>
@@ -28,7 +28,7 @@
 
         <mat-card-title>
           <h3>
-            <i class="fa fa-stop" [ngClass]="clientViewData.status.code|statusLookup" [matTooltip]="clientViewData.status.value"></i>
+            <fa-icon icon="stop" [ngClass]="clientViewData.status.code|statusLookup" [matTooltip]="clientViewData.status.value"></fa-icon>
             Client Name : {{clientViewData.displayName}}
           </h3>
         </mat-card-title>
@@ -56,11 +56,11 @@
 
       <span *mifosxHasPermission="'UPDATE_CLIENT'">
         <button mat-raised-button [routerLink]="['edit']">
-          <i class="fa fa-edit"></i>Edit</button>
+          <fa-icon icon="edit"></fa-icon>Edit</button>
       </span>
 
       <button mat-raised-button [matMenuTriggerFor]="Applications">
-        <i class="fa fa-file"></i>Applications</button>
+        <fa-icon icon="file"></fa-icon>Applications</button>
       <mat-menu #Applications="matMenu">
         <button mat-menu-item [routerLink]="['loans-accounts', 'create']">New Loan Account</button>
         <button mat-menu-item [routerLink]="['savings-accounts', 'create']">New Savings Account</button>
@@ -70,7 +70,7 @@
       </mat-menu>
 
       <button mat-raised-button [matMenuTriggerFor]="Actions">
-        <i class="fa fa-tasks"></i>Actions</button>
+        <fa-icon icon="list-check"></fa-icon>Actions</button>
       <mat-menu #Actions="matMenu">
         <button mat-menu-item (click)="doAction('Close')">Close</button>
         <button mat-menu-item (click)="doAction('Transfer Client')">Transfer Client</button>
@@ -87,11 +87,11 @@
 
       <span *ngIf="!clientViewData.staffId">
         <button mat-raised-button (click)="doAction('Assign Staff')">
-          <i class="fa fa-user"></i>Assign Staff</button>
+          <fa-icon icon="user"></fa-icon>Assign Staff</button>
       </span>
       <span *ngIf="clientViewData.staffId">
         <button mat-raised-button *mifosxHasPermission="'UNASSIGNSTAFF_CLIENT'" (click)="doAction('Unassign Staff')">
-          <i class="fa fa-user"></i>Unassign Staff</button>
+          <fa-icon icon="user"></fa-icon>Unassign Staff</button>
       </span>
 
       <button mat-raised-button [matMenuTriggerFor]="More">More</button>

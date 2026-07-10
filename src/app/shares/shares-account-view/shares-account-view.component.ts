@@ -1,6 +1,6 @@
 /** Angular Imports */
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterLinkActive, RouterLink, RouterOutlet } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 
 /** Custom Dialogs */
@@ -11,16 +11,27 @@ import { SharesService } from '../shares.service';
 
 /** Custom Buttons Configuration */
 import { SharesButtonsConfiguration } from './shares-buttons.config';
+import { MatCard, MatCardHeader, MatCardTitleGroup, MatCardMdImage, MatCardTitle, MatCardSubtitle, MatCardActions, MatCardContent } from '@angular/material/card';
+import { LayoutDirective, LayoutGapDirective, FlexDirective } from '@ngbracket/ngx-layout/flex';
+import { MatTooltip } from '@angular/material/tooltip';
+import { NgClass, NgFor, NgIf, DatePipe } from '@angular/common';
+import { ClassDirective } from '@ngbracket/ngx-layout/extended';
+import { HasPermissionDirective } from '../../directives/has-permission/has-permission.directive';
+import { MatButton } from '@angular/material/button';
+import { MatMenuTrigger, MatMenu, MatMenuItem } from '@angular/material/menu';
+import { MatTabNav, MatTabLink } from '@angular/material/tabs';
+import { StatusLookupPipe } from '../../pipes/status-lookup.pipe';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 
 /**
  * Shares Account View
  */
 @Component({
-  standalone: false,
-  selector: 'mifosx-shares-account-view',
-  templateUrl: './shares-account-view.component.html',
-  changeDetection: ChangeDetectionStrategy.Eager,
-  styleUrls: ['./shares-account-view.component.scss']
+    selector: 'mifosx-shares-account-view',
+    templateUrl: './shares-account-view.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    styleUrls: ['./shares-account-view.component.scss'],
+    imports: [FaIconComponent, MatCard, MatCardHeader, LayoutDirective, MatCardTitleGroup, MatCardMdImage, MatTooltip, MatCardTitle, NgClass, ClassDirective, MatCardSubtitle, MatCardActions, NgFor, HasPermissionDirective, MatButton, NgIf, MatMenuTrigger, MatMenu, MatMenuItem, MatCardContent, LayoutGapDirective, FlexDirective, MatTabNav, MatTabLink, RouterLinkActive, RouterLink, RouterOutlet, DatePipe, StatusLookupPipe]
 })
 export class SharesAccountViewComponent implements OnInit {
 
@@ -40,7 +51,7 @@ export class SharesAccountViewComponent implements OnInit {
               private router: Router,
               private sharesService: SharesService,
               public dialog: MatDialog) {
-    this.route.data.subscribe((data: { sharesAccountData: any }) => {
+    this.route.data.subscribe((data: any) => {
       this.sharesAccountData = data.sharesAccountData;
     });
   }

@@ -1,16 +1,22 @@
 /** Angular Imports */
 import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
+import { MatCard } from '@angular/material/card';
+import { LayoutDirective, LayoutGapDirective } from '@ngbracket/ngx-layout/flex';
+import { NgIf, NgFor } from '@angular/common';
+import { MatError } from '@angular/material/form-field';
+import { MatList, MatListItem } from '@angular/material/list';
+import { MatLine } from '@angular/material/grid-list';
 
 /**
  * Search Page Component
  */
 @Component({
-  standalone: false,
-  selector: 'mifosx-search-page',
-  templateUrl: './search-page.component.html',
-  changeDetection: ChangeDetectionStrategy.Eager,
-  styleUrls: ['./search-page.component.scss']
+    selector: 'mifosx-search-page',
+    templateUrl: './search-page.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    styleUrls: ['./search-page.component.scss'],
+    imports: [MatCard, LayoutDirective, LayoutGapDirective, NgIf, MatError, MatList, NgFor, MatListItem, MatLine]
 })
 export class SearchPageComponent {
 
@@ -25,7 +31,7 @@ export class SearchPageComponent {
    */
   constructor(private route: ActivatedRoute,
               private router: Router) {
-    this.route.data.subscribe(( data: { searchResults: any }) => {
+    this.route.data.subscribe((data: any) => {
       this.searchResults = data.searchResults;
       this.overload = this.searchResults.length > 200 ? true : false;
       if (this.overload) {

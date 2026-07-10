@@ -14,10 +14,10 @@ import { SettingsComponent } from './settings.component';
  * All components related to settings and web app configuration should be declared here.
  */
 @NgModule({
-  imports: [
-    SharedModule,
-    SettingsRoutingModule
-  ],
-  declarations: [SettingsComponent]
+    imports: [
+        SharedModule,
+        SettingsRoutingModule,
+        SettingsComponent
+    ]
 })
 export class SettingsModule { }

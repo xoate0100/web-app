@@ -1,23 +1,33 @@
 /** Angular Imports */
 import { Component, OnInit, ViewChild, ChangeDetectionStrategy } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
-import { MatSort } from '@angular/material/sort';
-import { MatTableDataSource } from '@angular/material/table';
-import { ActivatedRoute } from '@angular/router';
-import { FormControl } from '@angular/forms';
+import { MatSort, MatSortHeader } from '@angular/material/sort';
+import { MatTableDataSource, MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow } from '@angular/material/table';
+import { ActivatedRoute, RouterLink } from '@angular/router';
+import { FormControl, ReactiveFormsModule } from '@angular/forms';
 
 /** Custom Services */
 import { OrganizationService } from 'app/organization/organization.service';
+import { LayoutDirective, LayoutGapDirective, LayoutAlignDirective, FlexDirective } from '@ngbracket/ngx-layout/flex';
+import { HasPermissionDirective } from '../../../../directives/has-permission/has-permission.directive';
+import { MatButton } from '@angular/material/button';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import { NgIf, NgFor, DecimalPipe, DatePipe } from '@angular/common';
+import { MatCard, MatCardContent } from '@angular/material/card';
+import { MatFormField, MatLabel } from '@angular/material/form-field';
+import { MatInput } from '@angular/material/input';
+import { MatSelect } from '@angular/material/select';
+import { MatOption } from '@angular/material/autocomplete';
 
 /**
  * Cashier Transactions Component.
  */
 @Component({
-  standalone: false,
-  selector: 'mifosx-transactions',
-  templateUrl: './transactions.component.html',
-  changeDetection: ChangeDetectionStrategy.Eager,
-  styleUrls: ['./transactions.component.scss']
+    selector: 'mifosx-transactions',
+    templateUrl: './transactions.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    styleUrls: ['./transactions.component.scss'],
+    imports: [LayoutDirective, LayoutGapDirective, LayoutAlignDirective, HasPermissionDirective, MatButton, RouterLink, FaIconComponent, NgIf, MatCard, MatCardContent, FlexDirective, MatFormField, MatLabel, MatInput, MatSelect, ReactiveFormsModule, NgFor, MatOption, MatTable, MatSort, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatSortHeader, MatCellDef, MatCell, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow, MatPaginator, DecimalPipe, DatePipe]
 })
 export class TransactionsComponent implements OnInit {
 
@@ -48,11 +58,11 @@ export class TransactionsComponent implements OnInit {
    */
   constructor(private organizationService: OrganizationService,
               private route: ActivatedRoute) {
-    this.route.data.subscribe(( data: { currencies: any }) => {
+    this.route.data.subscribe((data: any) => {
       this.currencyData = data.currencies.selectedCurrencyOptions;
     });
-    this.tellerId = this.route.parent.parent.parent.snapshot.params['id'];
-    this.cashierId = this.route.parent.snapshot.params['id'];
+    this.tellerId = this.route.parent!.parent!.parent!.snapshot.params['id']!;
+    this.cashierId = this.route.parent!.snapshot.params['id']!;
   }
 
   /**

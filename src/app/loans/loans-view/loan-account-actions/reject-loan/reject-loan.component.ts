@@ -1,22 +1,29 @@
 /** Angular Imports. */
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { Router, ActivatedRoute } from '@angular/router';
-import { DatePipe } from '@angular/common';
+import { FormGroup, FormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
+import { Router, ActivatedRoute, RouterLink } from '@angular/router';
+import { DatePipe, NgIf } from '@angular/common';
 
 /** Custom services. */
 import { LoansService } from 'app/loans/loans.service';
 import { SettingsService } from 'app/settings/settings.service';
+import { MatCard, MatCardContent, MatCardActions } from '@angular/material/card';
+import { LayoutDirective, LayoutAlignDirective, LayoutGapDirective } from '@ngbracket/ngx-layout/flex';
+import { MatFormField, MatLabel, MatSuffix, MatError } from '@angular/material/form-field';
+import { MatInput } from '@angular/material/input';
+import { MatDatepickerInput, MatDatepickerToggle, MatDatepicker } from '@angular/material/datepicker';
+import { MatButton } from '@angular/material/button';
+import { HasPermissionDirective } from '../../../../directives/has-permission/has-permission.directive';
 
 /**
  * Reject Loan component.
  */
 @Component({
-  standalone: false,
-  selector: 'mifosx-reject-loan',
-  templateUrl: './reject-loan.component.html',
-  changeDetection: ChangeDetectionStrategy.Eager,
-  styleUrls: ['./reject-loan.component.scss']
+    selector: 'mifosx-reject-loan',
+    templateUrl: './reject-loan.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    styleUrls: ['./reject-loan.component.scss'],
+    imports: [MatCard, ReactiveFormsModule, MatCardContent, LayoutDirective, MatFormField, MatLabel, MatInput, MatDatepickerInput, MatDatepickerToggle, MatSuffix, MatDatepicker, NgIf, MatError, MatCardActions, LayoutAlignDirective, LayoutGapDirective, MatButton, RouterLink, HasPermissionDirective]
 })
 export class RejectLoanComponent implements OnInit {
 
@@ -43,7 +50,7 @@ export class RejectLoanComponent implements OnInit {
               private loanService: LoansService,
               private datePipe: DatePipe,
               private settingsService: SettingsService ) {
-    this.loanId = this.route.parent.snapshot.params['loanId'];
+    this.loanId = this.route.parent!.snapshot.params['loanId']!;
   }
 
   ngOnInit() {
@@ -67,7 +74,7 @@ export class RejectLoanComponent implements OnInit {
     const rejectedOnDate = this.rejectLoanForm.value.rejectedOnDate;
     const dateFormat = this.settingsService.dateFormat;
     this.rejectLoanForm.patchValue({
-      rejectedOnDate: this.datePipe.transform(rejectedOnDate, dateFormat)
+      rejectedOnDate: this.datePipe.transform(rejectedOnDate as Date, dateFormat)
     });
     const rejectForm = this.rejectLoanForm.value;
     rejectForm.locale = this.settingsService.language.code;

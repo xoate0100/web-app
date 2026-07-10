@@ -41,50 +41,48 @@ import { ContentComponent } from './shell/content/content.component';
  * Main app shell components and singleton services should be here.
  */
 @NgModule({
-  imports: [
-    SharedModule,
-    HttpClientModule,
-    RouterModule
-  ],
-  declarations: [
-    ShellComponent,
-    SidenavComponent,
-    ToolbarComponent,
-    BreadcrumbComponent,
-    ContentComponent
-  ],
-  exports: [
-    SharedModule // TO BE REMOVED: Once all components have replaced the core module import by shared module.
-  ],
-  providers: [
-    AuthenticationService,
-    AuthenticationGuard,
-    AuthenticationInterceptor,
-    {
-      provide: HTTP_INTERCEPTORS,
-      useClass: AuthenticationInterceptor,
-      multi: true
-    },
-    I18nService,
-    HttpCacheService,
-    ApiPrefixInterceptor,
-    ErrorHandlerInterceptor,
-    CacheInterceptor,
-    {
-      provide: HttpClient,
-      useClass: HttpService
-    },
-    ProgressBarService,
-    {
-      provide: HTTP_INTERCEPTORS,
-      useClass: ProgressInterceptor,
-      multi: true
-    },
-    {
-      provide: RouteReuseStrategy,
-      useClass: RouteReusableStrategy
-    }
-  ]
+    imports: [
+        SharedModule,
+        HttpClientModule,
+        RouterModule,
+        ShellComponent,
+        SidenavComponent,
+        ToolbarComponent,
+        BreadcrumbComponent,
+        ContentComponent
+    ],
+    exports: [
+        SharedModule // TO BE REMOVED: Once all components have replaced the core module import by shared module.
+    ],
+    providers: [
+        AuthenticationService,
+        AuthenticationGuard,
+        AuthenticationInterceptor,
+        {
+            provide: HTTP_INTERCEPTORS,
+            useClass: AuthenticationInterceptor,
+            multi: true
+        },
+        I18nService,
+        HttpCacheService,
+        ApiPrefixInterceptor,
+        ErrorHandlerInterceptor,
+        CacheInterceptor,
+        {
+            provide: HttpClient,
+            useClass: HttpService
+        },
+        ProgressBarService,
+        {
+            provide: HTTP_INTERCEPTORS,
+            useClass: ProgressInterceptor,
+            multi: true
+        },
+        {
+            provide: RouteReuseStrategy,
+            useClass: RouteReusableStrategy
+        }
+    ]
 })
 export class CoreModule {
 

@@ -1,7 +1,7 @@
 /** Angular Imports */
 import { Component, OnChanges, Input, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
-import { Validators, FormGroup, FormControl } from '@angular/forms';
-import { DatePipe } from '@angular/common';
+import { Validators, FormGroup, FormControl, ReactiveFormsModule } from '@angular/forms';
+import { DatePipe, NgFor, NgSwitch, NgIf, NgSwitchCase } from '@angular/common';
 
 /** Custom Services */
 import { ReportsService } from 'app/reports/reports.service';
@@ -10,16 +10,25 @@ import { SettingsService } from 'app/settings/settings.service';
 /** Custom Models */
 import { ReportParameter } from 'app/reports/common-models/report-parameter.model';
 import { SelectOption } from 'app/reports/common-models/select-option.model';
+import { LayoutDirective, FlexDirective, LayoutGapDirective, LayoutAlignDirective } from '@ngbracket/ngx-layout/flex';
+import { MatDivider } from '@angular/material/divider';
+import { MatFormField, MatLabel, MatError, MatSuffix } from '@angular/material/form-field';
+import { MatInput } from '@angular/material/input';
+import { MatDatepickerInput, MatDatepickerToggle, MatDatepicker } from '@angular/material/datepicker';
+import { MatSelect } from '@angular/material/select';
+import { MatOption } from '@angular/material/autocomplete';
+import { MatButton } from '@angular/material/button';
+import { MatStepperNext } from '@angular/material/stepper';
 
 /**
  * Business Rule Parameters Component.
  */
 @Component({
-  standalone: false,
-  selector: 'mifosx-business-rule-parameters',
-  templateUrl: './business-rule-parameters.component.html',
-  changeDetection: ChangeDetectionStrategy.Eager,
-  styleUrls: ['./business-rule-parameters.component.scss']
+    selector: 'mifosx-business-rule-parameters',
+    templateUrl: './business-rule-parameters.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    styleUrls: ['./business-rule-parameters.component.scss'],
+    imports: [LayoutDirective, MatDivider, FlexDirective, ReactiveFormsModule, LayoutGapDirective, NgFor, NgSwitch, NgIf, NgSwitchCase, MatFormField, MatLabel, MatInput, MatError, MatDatepickerInput, MatDatepickerToggle, MatSuffix, MatDatepicker, MatSelect, MatOption, LayoutAlignDirective, MatButton, MatStepperNext]
 })
 export class BusinessRuleParametersComponent implements OnChanges {
 
@@ -108,7 +117,7 @@ export class BusinessRuleParametersComponent implements OnChanges {
     */
   setChildControls() {
     this.parentParameters.forEach((param: ReportParameter) => {
-      this.ReportForm.get(param.name).valueChanges.subscribe((option: any) => {
+      this.ReportForm.get(param.name)!.valueChanges.subscribe((option: any) => {
         param.childParameters.forEach((child: ReportParameter) => {
           if (child.displayType === 'none') {
             this.ReportForm.addControl(child.name, new FormControl(child.defaultVal));
@@ -154,11 +163,11 @@ export class BusinessRuleParametersComponent implements OnChanges {
           formattedResponse[newKey] = value;
           break;
         case 'select':
-          formattedResponse[newKey] = value['id'];
+          formattedResponse[newKey] = (value as { id: string }).id;
           break;
         case 'date':
           const dateFormat = this.settingsService.dateFormat;
-          formattedResponse[newKey] = this.datePipe.transform(value as string | number | Date, dateFormat);
+          formattedResponse[newKey] = this.datePipe.transform(value as string | number | Date as Date, dateFormat);
           break;
         case 'none':
           formattedResponse[newKey] = value;

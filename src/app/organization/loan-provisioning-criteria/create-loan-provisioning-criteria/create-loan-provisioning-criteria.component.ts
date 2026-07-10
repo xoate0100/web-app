@@ -1,9 +1,9 @@
 /** Angular Imports */
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
-import { MatTableDataSource } from '@angular/material/table';
-import { Router, ActivatedRoute } from '@angular/router';
+import { MatTableDataSource, MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow } from '@angular/material/table';
+import { Router, ActivatedRoute, RouterLink } from '@angular/router';
 
 /** Custom Models */
 import { FormfieldBase } from 'app/shared/form-dialog/formfield/model/formfield-base';
@@ -16,16 +16,27 @@ import { FormDialogComponent } from 'app/shared/form-dialog/form-dialog.componen
 /** Custom Services */
 import { OrganizationService } from '../../organization.service';
 import { SettingsService } from 'app/settings/settings.service';
+import { MatCard } from '@angular/material/card';
+import { LayoutDirective, LayoutGapDirective, FlexDirective, LayoutAlignDirective } from '@ngbracket/ngx-layout/flex';
+import { MatFormField, MatLabel, MatError, MatHint } from '@angular/material/form-field';
+import { MatInput } from '@angular/material/input';
+import { NgIf, NgFor } from '@angular/common';
+import { MatSelect } from '@angular/material/select';
+import { MatOption } from '@angular/material/autocomplete';
+import { MatButton } from '@angular/material/button';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import { HasPermissionDirective } from '../../../directives/has-permission/has-permission.directive';
+import { FindPipe } from '../../../pipes/find.pipe';
 
 /**
  * Create Loan Provisioning Criteria Component.
  */
 @Component({
-  standalone: false,
-  selector: 'mifosx-create-loan-provisioning-criteria',
-  templateUrl: './create-loan-provisioning-criteria.component.html',
-  changeDetection: ChangeDetectionStrategy.Eager,
-  styleUrls: ['./create-loan-provisioning-criteria.component.scss']
+    selector: 'mifosx-create-loan-provisioning-criteria',
+    templateUrl: './create-loan-provisioning-criteria.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    styleUrls: ['./create-loan-provisioning-criteria.component.scss'],
+    imports: [MatCard, ReactiveFormsModule, LayoutDirective, LayoutGapDirective, MatFormField, FlexDirective, MatLabel, MatInput, NgIf, MatError, MatSelect, NgFor, MatOption, MatHint, MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatButton, FaIconComponent, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow, LayoutAlignDirective, RouterLink, HasPermissionDirective, FindPipe]
 })
 export class CreateLoanProvisioningCriteriaComponent implements OnInit {
 
@@ -67,7 +78,7 @@ export class CreateLoanProvisioningCriteriaComponent implements OnInit {
               private router: Router,
               public dialog: MatDialog,
               private route: ActivatedRoute) {
-     this.route.data.subscribe((data: { loanProvisioningCriteriaTemplate: any }) => {
+     this.route.data.subscribe((data: any) => {
       this.loanProvisioningCriteriaTemplate = data.loanProvisioningCriteriaTemplate;
       this.definitions = this.loanProvisioningCriteriaTemplate.definitions;
       this.liabilityAccounts = this.loanProvisioningCriteriaTemplate.glAccounts.filter((account: any) => account.type.value === 'LIABILITY');
@@ -179,7 +190,7 @@ export class CreateLoanProvisioningCriteriaComponent implements OnInit {
     const locale = this.settingsService.language.code;
     const loanProvisioningCriteria = {
       ...this.provisioningCriteriaForm.value,
-      loanProducts: this.provisioningCriteriaForm.get('loanProducts').value.map((product: any) => ({
+      loanProducts: this.provisioningCriteriaForm.get('loanProducts')!.value.map((product: any) => ({
         id: product.id,
         name: product.name,
         includeInBorrowerCycle: product.includeInBorrowerCycle

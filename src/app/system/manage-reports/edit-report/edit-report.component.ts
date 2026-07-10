@@ -1,11 +1,11 @@
 /** Angular Imports */
 import { Component, OnInit, ViewChild, ChangeDetectionStrategy } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
-import { MatSort } from '@angular/material/sort';
-import { MatTableDataSource } from '@angular/material/table';
+import { MatSort, MatSortHeader } from '@angular/material/sort';
+import { MatTableDataSource, MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow } from '@angular/material/table';
 
 /** Custom Services */
 import { SystemService } from 'app/system/system.service';
@@ -13,16 +13,27 @@ import { SystemService } from 'app/system/system.service';
 /** Custom Components */
 import { ReportParameterDialogComponent } from '../report-parameter-dialog/report-parameter-dialog.component';
 import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.component';
+import { MatCard, MatCardContent, MatCardActions } from '@angular/material/card';
+import { LayoutDirective, LayoutGapDirective, FlexDirective, LayoutAlignDirective } from '@ngbracket/ngx-layout/flex';
+import { MatFormField, MatLabel, MatError } from '@angular/material/form-field';
+import { MatInput } from '@angular/material/input';
+import { NgIf, NgFor } from '@angular/common';
+import { MatSelect } from '@angular/material/select';
+import { MatOption } from '@angular/material/autocomplete';
+import { MatCheckbox } from '@angular/material/checkbox';
+import { MatButton, MatIconButton } from '@angular/material/button';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import { HasPermissionDirective } from '../../../directives/has-permission/has-permission.directive';
 
 /**
  * Edit Report Component.
  */
 @Component({
-  standalone: false,
-  selector: 'mifosx-edit-report',
-  templateUrl: './edit-report.component.html',
-  changeDetection: ChangeDetectionStrategy.Eager,
-  styleUrls: ['./edit-report.component.scss']
+    selector: 'mifosx-edit-report',
+    templateUrl: './edit-report.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    styleUrls: ['./edit-report.component.scss'],
+    imports: [MatCard, ReactiveFormsModule, MatCardContent, LayoutDirective, LayoutGapDirective, MatFormField, FlexDirective, MatLabel, MatInput, NgIf, MatError, MatSelect, NgFor, MatOption, MatCheckbox, MatButton, FaIconComponent, MatTable, MatSort, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatSortHeader, MatCellDef, MatCell, MatIconButton, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow, MatPaginator, MatCardActions, LayoutAlignDirective, RouterLink, HasPermissionDirective]
 })
 export class EditReportComponent implements OnInit {
 
@@ -33,7 +44,7 @@ export class EditReportComponent implements OnInit {
   /** Report Parameters Data. */
   reportParametersData: any[] = [];
   /** Data passed to dialog. */
-  dataForDialog: { allowedParameters: any[], parameterName: string, reportParameterName: string } =
+  dataForDialog: { allowedParameters?: any[], parameterName?: string, reportParameterName?: string } =
     {
       allowedParameters: undefined,
       parameterName: undefined,
@@ -66,7 +77,7 @@ export class EditReportComponent implements OnInit {
               private router: Router,
               private systemService: SystemService,
               private dialog: MatDialog) {
-    this.route.data.subscribe((data: { report: any, reportTemplate: any }) => {
+    this.route.data.subscribe((data: any) => {
       this.reportData = data.report;
       this.reportParametersData = data.report.reportParameters ? data.report.reportParameters : [];
       this.reportTemplateData = data.reportTemplate;
@@ -171,20 +182,20 @@ export class EditReportComponent implements OnInit {
    * Toggles the visibility status of Report Sub Type dropdown.
    */
   toggleVisibility() {
-    this.reportForm.get('reportType').valueChanges
+    this.reportForm.get('reportType')!.valueChanges
       .subscribe(type => {
         switch (type) {
           case 'Chart':
-            this.reportForm.get('reportSubType').enable();
-            this.reportForm.get('reportSql').enable();
+            this.reportForm.get('reportSubType')!.enable();
+            this.reportForm.get('reportSql')!.enable();
             break;
           case 'Pentaho':
-            this.reportForm.get('reportSql').disable();
-            this.reportForm.get('reportSubType').disable();
+            this.reportForm.get('reportSql')!.disable();
+            this.reportForm.get('reportSubType')!.disable();
             break;
           default:
-            this.reportForm.get('reportSql').enable();
-            this.reportForm.get('reportSubType').disable();
+            this.reportForm.get('reportSql')!.enable();
+            this.reportForm.get('reportSubType')!.disable();
         }
       });
   }

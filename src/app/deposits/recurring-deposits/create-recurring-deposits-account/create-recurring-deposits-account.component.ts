@@ -1,7 +1,7 @@
 /** Angular Imports */
 import { Component, OnInit, ViewChild, ChangeDetectionStrategy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { DatePipe } from '@angular/common';
+import { DatePipe, NgIf } from '@angular/common';
 
 /** Custom Services */
 import { RecurringDepositsService } from '../recurring-deposits.service';
@@ -13,16 +13,20 @@ import { RecurringDepositsAccountTermsStepComponent } from '../recurring-deposit
 import { RecurringDepositsAccountCurrencyStepComponent } from '../recurring-deposits-account-stepper/recurring-deposits-account-currency-step/recurring-deposits-account-currency-step.component';
 import { RecurringDepositsAccountSettingsStepComponent } from '../recurring-deposits-account-stepper/recurring-deposits-account-settings-step/recurring-deposits-account-settings-step.component';
 import { RecurringDepositsAccountChargesStepComponent } from '../recurring-deposits-account-stepper/recurring-deposits-account-charges-step/recurring-deposits-account-charges-step.component';
+import { MatStepper, MatStepperIcon, MatStep, MatStepLabel } from '@angular/material/stepper';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import { RecurringDepositsAccountInterestRateChartStepComponent } from '../recurring-deposits-account-stepper/recurring-deposits-account-interest-rate-chart-step/recurring-deposits-account-interest-rate-chart-step.component';
+import { RecurringDepositsAccountPreviewStepComponent } from '../recurring-deposits-account-stepper/recurring-deposits-account-preview-step/recurring-deposits-account-preview-step.component';
 
 /**
  * Create new recurring deposit account
  */
 @Component({
-  standalone: false,
-  selector: 'mifosx-create-recurring-deposits-account',
-  templateUrl: './create-recurring-deposits-account.component.html',
-  changeDetection: ChangeDetectionStrategy.Eager,
-  styleUrls: ['./create-recurring-deposits-account.component.scss']
+    selector: 'mifosx-create-recurring-deposits-account',
+    templateUrl: './create-recurring-deposits-account.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    styleUrls: ['./create-recurring-deposits-account.component.scss'],
+    imports: [MatStepper, MatStepperIcon, FaIconComponent, MatStep, MatStepLabel, RecurringDepositsAccountDetailsStepComponent, RecurringDepositsAccountCurrencyStepComponent, RecurringDepositsAccountTermsStepComponent, RecurringDepositsAccountSettingsStepComponent, RecurringDepositsAccountInterestRateChartStepComponent, RecurringDepositsAccountChargesStepComponent, NgIf, RecurringDepositsAccountPreviewStepComponent]
 })
 export class CreateRecurringDepositsAccountComponent implements OnInit {
 
@@ -44,7 +48,7 @@ export class CreateRecurringDepositsAccountComponent implements OnInit {
     private recurringDepositsService: RecurringDepositsService,
     private settingsService: SettingsService,
   ) {
-    this.route.data.subscribe((data: { recurringDepositsAccountTemplate: any }) => {
+    this.route.data.subscribe((data: any) => {
       this.recurringDepositsAccountTemplate = data.recurringDepositsAccountTemplate;
     });
   }
@@ -124,13 +128,13 @@ export class CreateRecurringDepositsAccountComponent implements OnInit {
       charges: this.recurringDepositAccount.charges.map((charge: any) => ({
         chargeId: charge.id,
         amount: charge.amount,
-        dueDate: charge.dueDate && this.datePipe.transform(charge.dueDate, dateFormat),
+        dueDate: charge.dueDate && this.datePipe.transform(charge.dueDate as Date, dateFormat),
         feeOnMonthDay: charge.feeOnMonthDay,
         feeInterval: charge.feeInterval
       })),
       isCalendarInherited: this.recurringDepositAccount.recurringDepositAccount ? this.recurringDepositAccount.recurringDepositAccount : false,
-      submittedOnDate: this.datePipe.transform(this.recurringDepositAccount.submittedOnDate, dateFormat),
-      expectedFirstDepositOnDate: this.datePipe.transform(this.recurringDepositAccount.expectedFirstDepositOnDate, dateFormat),
+      submittedOnDate: this.datePipe.transform(this.recurringDepositAccount.submittedOnDate as Date, dateFormat),
+      expectedFirstDepositOnDate: this.datePipe.transform(this.recurringDepositAccount.expectedFirstDepositOnDate as Date, dateFormat),
       dateFormat,
       monthDayFormat,
       locale

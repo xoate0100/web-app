@@ -12,10 +12,10 @@ import { SearchPageComponent } from './search-page/search-page.component';
  * Search Module
  */
 @NgModule({
-  declarations: [SearchPageComponent],
-  imports: [
-    SharedModule,
-    SearchRoutingModule
-  ]
+    imports: [
+        SharedModule,
+        SearchRoutingModule,
+        SearchPageComponent
+    ]
 })
 export class SearchModule { }

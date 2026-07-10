@@ -10,7 +10,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from '../shared/shared.module';
 import { ProductsRoutingModule } from './products-routing.module';
 import { PipesModule } from 'app/pipes/pipes.module';
-import { DirectivesModule } from '../directives/directives.module';
+
 
 /** Custom Components */
 import { ProductsComponent } from './products.component';
@@ -105,13 +105,10 @@ import { EditFixedDepositProductComponent } from './fixed-deposit-products/edit-
  * All components related to product functions should be declared here.
  */
 @NgModule({
-  imports: [
+    imports: [
     SharedModule,
     ProductsRoutingModule,
     PipesModule,
-    DirectivesModule
-  ],
-  declarations: [
     ProductsComponent,
     LoanProductsComponent,
     LoanProductDetailsStepComponent,
@@ -199,7 +196,7 @@ import { EditFixedDepositProductComponent } from './fixed-deposit-products/edit-
     ManageTaxGroupsComponent,
     CreateChargeComponent,
     EditFixedDepositProductComponent
-  ],
-  providers: [DatePipe]
+],
+    providers: [DatePipe]
 })
 export class ProductsModule { }

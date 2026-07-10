@@ -1,22 +1,30 @@
 /** Angular Imports */
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { DatePipe } from '@angular/common';
-import { ActivatedRoute, Router } from '@angular/router';
+import { FormGroup, FormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
+import { DatePipe, NgIf, NgFor } from '@angular/common';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 
 /** Custom Services */
 import { ClientsService } from 'app/clients/clients.service';
 import { SettingsService } from 'app/settings/settings.service';
+import { MatCard, MatCardContent, MatCardActions } from '@angular/material/card';
+import { LayoutDirective, FlexDirective, LayoutAlignDirective, LayoutGapDirective } from '@ngbracket/ngx-layout/flex';
+import { MatFormField, MatLabel, MatSuffix, MatError } from '@angular/material/form-field';
+import { MatInput } from '@angular/material/input';
+import { MatDatepickerInput, MatDatepickerToggle, MatDatepicker } from '@angular/material/datepicker';
+import { MatSelect } from '@angular/material/select';
+import { MatOption } from '@angular/material/autocomplete';
+import { MatButton } from '@angular/material/button';
 
 /**
  * Withdraw Client Component
  */
 @Component({
-  standalone: false,
-  selector: 'mifosx-withdraw-client',
-  templateUrl: './withdraw-client.component.html',
-  changeDetection: ChangeDetectionStrategy.Eager,
-  styleUrls: ['./withdraw-client.component.scss']
+    selector: 'mifosx-withdraw-client',
+    templateUrl: './withdraw-client.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    styleUrls: ['./withdraw-client.component.scss'],
+    imports: [MatCard, ReactiveFormsModule, MatCardContent, LayoutDirective, MatFormField, MatLabel, MatInput, MatDatepickerInput, MatDatepickerToggle, MatSuffix, MatDatepicker, NgIf, MatError, FlexDirective, MatSelect, NgFor, MatOption, MatCardActions, LayoutAlignDirective, LayoutGapDirective, MatButton, RouterLink]
 })
 export class WithdrawClientComponent implements OnInit {
 
@@ -45,10 +53,10 @@ export class WithdrawClientComponent implements OnInit {
               private route: ActivatedRoute,
               private router: Router,
               private settingsService: SettingsService) {
-    this.route.data.subscribe((data: { clientActionData: any }) => {
+    this.route.data.subscribe((data: any) => {
       this.withdrawalData = data.clientActionData.narrations;
     });
-    this.clientId = this.route.parent.snapshot.params['clientId'];
+    this.clientId = this.route.parent!.snapshot.params['clientId']!;
   }
 
   ngOnInit() {
@@ -74,7 +82,7 @@ export class WithdrawClientComponent implements OnInit {
     const dateFormat = this.settingsService.dateFormat;
     const prevWithdrawalDate: Date = this.withdrawClientForm.value.withdrawalDate;
     this.withdrawClientForm.patchValue({
-      withdrawalDate: this.datePipe.transform(prevWithdrawalDate, dateFormat),
+      withdrawalDate: this.datePipe.transform(prevWithdrawalDate as Date, dateFormat),
     });
     const data = {
       ...this.withdrawClientForm.value,

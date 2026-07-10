@@ -31,15 +31,15 @@ export class RecurringDepositsButtonsConfiguration {
         this.buttonsArray = [
           {
             name: 'Deposit',
-            icon: 'fa fa-arrow-up'
+            icon: 'arrow-up'
           },
           {
             name: 'Premature Close',
-            icon: 'fa fa-arrow-left'
+            icon: 'arrow-left'
           },
           {
             name: 'Calculate Interest',
-            icon: 'fa fa-table',
+            icon: 'table',
           }
         ];
         break;
@@ -47,11 +47,11 @@ export class RecurringDepositsButtonsConfiguration {
         this.buttonsArray = [
           {
             name: 'Modify Application',
-            icon: 'fa fa-pencil ',
+            icon: 'pencil',
           },
           {
             name: 'Approve',
-            icon: 'fa fa-check'
+            icon: 'check'
           }
         ];
         break;
@@ -59,11 +59,11 @@ export class RecurringDepositsButtonsConfiguration {
         this.buttonsArray = [
           {
             name: 'Undo Approval',
-            icon: 'fa fa-undo'
+            icon: 'undo'
           },
           {
             name: 'Activate',
-            icon: 'fa fa-check'
+            icon: 'check'
           }
         ];
       break;
@@ -71,15 +71,15 @@ export class RecurringDepositsButtonsConfiguration {
         this.buttonsArray = [
           {
             name: 'Close',
-            icon: 'fa fa-arrow-right'
+            icon: 'arrow-right'
           },
           {
             name: 'Calculate Interest',
-            icon: 'fa fa-table'
+            icon: 'table'
           },
           {
             name: 'Post Interest',
-            icon: 'fa fa-table'
+            icon: 'table'
           }
         ];
       break;

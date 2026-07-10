@@ -1,12 +1,22 @@
 import { Component, OnInit, Input, ChangeDetectionStrategy } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
+import { LayoutDirective, LayoutGapDirective, FlexDirective, LayoutAlignDirective } from '@ngbracket/ngx-layout/flex';
+import { MatFormField, MatLabel, MatError } from '@angular/material/form-field';
+import { MatInput } from '@angular/material/input';
+import { MatDivider } from '@angular/material/divider';
+import { MatSelect } from '@angular/material/select';
+import { NgFor } from '@angular/common';
+import { MatOption } from '@angular/material/autocomplete';
+import { MatButton } from '@angular/material/button';
+import { MatStepperPrevious, MatStepperNext } from '@angular/material/stepper';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 
 @Component({
-  standalone: false,
-  selector: 'mifosx-recurring-deposit-product-terms-step',
-  templateUrl: './recurring-deposit-product-terms-step.component.html',
-  changeDetection: ChangeDetectionStrategy.Eager,
-  styleUrls: ['./recurring-deposit-product-terms-step.component.scss']
+    selector: 'mifosx-recurring-deposit-product-terms-step',
+    templateUrl: './recurring-deposit-product-terms-step.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    styleUrls: ['./recurring-deposit-product-terms-step.component.scss'],
+    imports: [ReactiveFormsModule, LayoutDirective, LayoutGapDirective, FlexDirective, MatFormField, MatLabel, MatInput, MatError, MatDivider, MatSelect, NgFor, MatOption, LayoutAlignDirective, MatButton, MatStepperPrevious, FaIconComponent, MatStepperNext]
 })
 export class RecurringDepositProductTermsStepComponent implements OnInit {
 
@@ -59,7 +69,7 @@ export class RecurringDepositProductTermsStepComponent implements OnInit {
     const recurringDepositProductTerms = this.recurringDepositProductTermsForm.value;
     for (const key in recurringDepositProductTerms) {
       if (recurringDepositProductTerms[key] === '') {
-        delete recurringDepositProductTerms[key];
+        recurringDepositProductTerms[key] = undefined;
       }
     }
     return recurringDepositProductTerms;

@@ -1,11 +1,11 @@
 /** Angular Imports */
 import { Component, OnInit, ViewChild, ChangeDetectionStrategy } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
-import { MatSort } from '@angular/material/sort';
-import { MatTableDataSource } from '@angular/material/table';
+import { MatSort, MatSortHeader } from '@angular/material/sort';
+import { MatTableDataSource, MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow } from '@angular/material/table';
 
 /** Custom Services */
 import { SystemService } from '../../system.service';
@@ -13,16 +13,28 @@ import { SystemService } from '../../system.service';
 /** Custom Components */
 import { AddEventDialogComponent } from '../add-event-dialog/add-event-dialog.component';
 import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.component';
+import { MatCard, MatCardContent, MatCardActions } from '@angular/material/card';
+import { LayoutDirective, LayoutGapDirective, FlexDirective, LayoutAlignDirective } from '@ngbracket/ngx-layout/flex';
+import { MatFormField, MatLabel, MatError, MatHint } from '@angular/material/form-field';
+import { MatSelect } from '@angular/material/select';
+import { NgFor, NgIf } from '@angular/common';
+import { MatOption } from '@angular/material/autocomplete';
+import { MatInput } from '@angular/material/input';
+import { MatCheckbox } from '@angular/material/checkbox';
+import { MatDivider } from '@angular/material/divider';
+import { MatButton, MatIconButton } from '@angular/material/button';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import { HasPermissionDirective } from '../../../directives/has-permission/has-permission.directive';
 
 /**
  * Create Hook Component.
  */
 @Component({
-  standalone: false,
-  selector: 'mifosx-create-hook',
-  templateUrl: './create-hook.component.html',
-  changeDetection: ChangeDetectionStrategy.Eager,
-  styleUrls: ['./create-hook.component.scss']
+    selector: 'mifosx-create-hook',
+    templateUrl: './create-hook.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    styleUrls: ['./create-hook.component.scss'],
+    imports: [MatCard, ReactiveFormsModule, MatCardContent, LayoutDirective, LayoutGapDirective, MatFormField, FlexDirective, MatLabel, MatSelect, NgFor, MatOption, NgIf, MatError, MatInput, MatCheckbox, MatHint, MatDivider, MatButton, FaIconComponent, MatTable, MatSort, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatSortHeader, MatCellDef, MatCell, MatIconButton, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow, MatCardActions, LayoutAlignDirective, RouterLink, HasPermissionDirective]
 })
 export class CreateHookComponent implements OnInit {
 
@@ -52,7 +64,7 @@ export class CreateHookComponent implements OnInit {
               private router: Router,
               private formBuilder: FormBuilder,
               private dialog: MatDialog) {
-    this.route.data.subscribe((data: { hooksTemplate: any }) => {
+    this.route.data.subscribe((data: any) => {
       this.hooksTemplateData = data.hooksTemplate;
     });
   }
@@ -62,19 +74,19 @@ export class CreateHookComponent implements OnInit {
    */
   ngOnInit() {
     this.createHookForm();
-    this.hookForm.get('name').valueChanges.subscribe(name => {
+    this.hookForm.get('name')!.valueChanges.subscribe(name => {
       if (name === 'Web') {
-        this.hookForm.get('contentType').enable();
-        this.hookForm.get('phoneNumber').disable();
-        this.hookForm.get('smsProvider').disable();
-        this.hookForm.get('smsProviderAccountId').disable();
-        this.hookForm.get('smsProviderToken').disable();
+        this.hookForm.get('contentType')!.enable();
+        this.hookForm.get('phoneNumber')!.disable();
+        this.hookForm.get('smsProvider')!.disable();
+        this.hookForm.get('smsProviderAccountId')!.disable();
+        this.hookForm.get('smsProviderToken')!.disable();
       } else {
-        this.hookForm.get('contentType').disable();
-        this.hookForm.get('phoneNumber').enable();
-        this.hookForm.get('smsProvider').enable();
-        this.hookForm.get('smsProviderAccountId').enable();
-        this.hookForm.get('smsProviderToken').enable();
+        this.hookForm.get('contentType')!.disable();
+        this.hookForm.get('phoneNumber')!.enable();
+        this.hookForm.get('smsProvider')!.enable();
+        this.hookForm.get('smsProviderAccountId')!.enable();
+        this.hookForm.get('smsProviderToken')!.enable();
       }
     });
     this.setEvents();
@@ -149,16 +161,16 @@ export class CreateHookComponent implements OnInit {
         'SMS Provider Account Id'?: string, 'SMS Provider Token'?: string
       }
     } = {
-      name: this.hookForm.get('name').value,
-      isActive: this.hookForm.get('isActive').value,
-      displayName: this.hookForm.get('displayName').value,
+      name: this.hookForm.get('name')!.value,
+      isActive: this.hookForm.get('isActive')!.value,
+      displayName: this.hookForm.get('displayName')!.value,
       events: this.eventsData,
       config: {
-        'Payload URL': this.hookForm.get('payloadUrl').value,
-        'Content Type': this.hookForm.get('contentType').enabled ? this.hookForm.get('contentType').value : undefined,
-        'SMS Provider': this.hookForm.get('smsProvider').enabled ? this.hookForm.get('smsProvider').value : undefined,
-        'SMS Provider Account Id': this.hookForm.get('smsProviderAccountId').enabled ? this.hookForm.get('smsProviderAccountId').value : undefined,
-        'SMS Provider Token': this.hookForm.get('smsProviderToken').enabled ? this.hookForm.get('smsProviderToken').value : undefined
+        'Payload URL': this.hookForm.get('payloadUrl')!.value,
+        'Content Type': this.hookForm.get('contentType')!.enabled ? this.hookForm.get('contentType')!.value : undefined,
+        'SMS Provider': this.hookForm.get('smsProvider')!.enabled ? this.hookForm.get('smsProvider')!.value : undefined,
+        'SMS Provider Account Id': this.hookForm.get('smsProviderAccountId')!.enabled ? this.hookForm.get('smsProviderAccountId')!.value : undefined,
+        'SMS Provider Token': this.hookForm.get('smsProviderToken')!.enabled ? this.hookForm.get('smsProviderToken')!.value : undefined
       }
     };
     this.systemService.createHook(hook)

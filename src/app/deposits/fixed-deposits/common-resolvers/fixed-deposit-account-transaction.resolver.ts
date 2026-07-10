@@ -25,8 +25,8 @@ export class FixedDepositsAccountTransactionResolver implements Resolve<Object> 
    * @returns {Observable<any>}
    */
   resolve(route: ActivatedRouteSnapshot): Observable<any> {
-    const fixedDepositAccountId = route.parent.paramMap.get('fixedDepositAccountId');
-    const transactionId = route.paramMap.get('id');
+    const fixedDepositAccountId = route.parent!.paramMap.get('fixedDepositAccountId')!;
+    const transactionId = route.paramMap.get('id')!;
     return this.fixedDepositsService.getFixedDepositsAccountTransaction(fixedDepositAccountId, transactionId);
   }
 

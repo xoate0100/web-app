@@ -6,16 +6,24 @@ import { MatDialog } from '@angular/material/dialog';
 /** Custom Components */
 import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.component';
 import { ClientFamilyMemberDialogComponent } from './client-family-member-dialog/client-family-member-dialog.component';
+import { LayoutDirective, LayoutAlignDirective, LayoutGapDirective } from '@ngbracket/ngx-layout/flex';
+import { MatButton } from '@angular/material/button';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import { MatAccordion, MatExpansionPanel, MatExpansionPanelHeader, MatExpansionPanelTitle, MatExpansionPanelDescription } from '@angular/material/expansion';
+import { NgFor, DatePipe } from '@angular/common';
+import { MatDivider } from '@angular/material/divider';
+import { MatStepperPrevious, MatStepperNext } from '@angular/material/stepper';
+import { FindPipe } from '../../../pipes/find.pipe';
 
 /**
  * Client Family Members Step
  */
 @Component({
-  standalone: false,
-  selector: 'mifosx-client-family-members-step',
-  templateUrl: './client-family-members-step.component.html',
-  changeDetection: ChangeDetectionStrategy.Eager,
-  styleUrls: ['./client-family-members-step.component.scss']
+    selector: 'mifosx-client-family-members-step',
+    templateUrl: './client-family-members-step.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    styleUrls: ['./client-family-members-step.component.scss'],
+    imports: [LayoutDirective, LayoutAlignDirective, MatButton, FaIconComponent, MatAccordion, NgFor, MatExpansionPanel, MatExpansionPanelHeader, MatExpansionPanelTitle, MatExpansionPanelDescription, MatDivider, LayoutGapDirective, MatStepperPrevious, MatStepperNext, DatePipe, FindPipe]
 })
 export class ClientFamilyMembersStepComponent {
 

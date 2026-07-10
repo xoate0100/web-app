@@ -24,7 +24,7 @@ export class TaxComponentResolver implements Resolve<Object> {
    * @returns {Observable<any>}
    */
   resolve(route: ActivatedRouteSnapshot): Observable<any> {
-    const taxComponentId = route.paramMap.get('id');
+    const taxComponentId = route.paramMap.get('id')!;
     return this.productsService.getTaxComponent(taxComponentId);
   }
 }

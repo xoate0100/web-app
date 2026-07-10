@@ -1,9 +1,9 @@
 /** Angular Imports */
 import { Component, OnChanges, OnInit, Input, ViewChild, ChangeDetectionStrategy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { MatTable } from '@angular/material/table';
+import { MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow } from '@angular/material/table';
 import { MatDialog } from '@angular/material/dialog';
-import { DatePipe } from '@angular/common';
+import { DatePipe, NgIf, NgFor } from '@angular/common';
 
 /** Custom Dialogs */
 import { FormDialogComponent } from 'app/shared/form-dialog/form-dialog.component';
@@ -19,16 +19,20 @@ import { DatepickerBase } from 'app/shared/form-dialog/formfield/model/datepicke
 /** Custom Services */
 import { CentersService } from '../../../centers.service';
 import { SettingsService } from 'app/settings/settings.service';
+import { LayoutDirective, LayoutAlignDirective, LayoutGapDirective } from '@ngbracket/ngx-layout/flex';
+import { HasPermissionDirective } from '../../../../directives/has-permission/has-permission.directive';
+import { MatButton } from '@angular/material/button';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 
 /**
  * Center Multi Row Data Tables
  */
 @Component({
-  standalone: false,
-  selector: 'mifosx-multi-row',
-  templateUrl: './multi-row.component.html',
-  changeDetection: ChangeDetectionStrategy.Eager,
-  styleUrls: ['./multi-row.component.scss']
+    selector: 'mifosx-multi-row',
+    templateUrl: './multi-row.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    styleUrls: ['./multi-row.component.scss'],
+    imports: [LayoutDirective, LayoutAlignDirective, LayoutGapDirective, HasPermissionDirective, MatButton, FaIconComponent, NgIf, MatTable, NgFor, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow]
 })
 export class MultiRowComponent implements OnInit, OnChanges {
 
@@ -62,7 +66,7 @@ export class MultiRowComponent implements OnInit, OnChanges {
               private centersService: CentersService,
               private settingsService: SettingsService,
               private dialog: MatDialog) {
-    this.centerId = this.route.parent.parent.snapshot.paramMap.get('centerId');
+    this.centerId = this.route.parent!.parent!.snapshot.paramMap.get('centerId')!;
   }
 
   /**

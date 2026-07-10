@@ -1,9 +1,6 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
-@Pipe({
-  standalone: false,
-  name: 'chargesPenaltyFilter'
-})
+@Pipe({ name: 'chargesPenaltyFilter' })
 export class ChargesPenaltyFilterPipe implements PipeTransform {
 
   transform(charges: any, penalty: boolean): any {

@@ -1,17 +1,20 @@
 /** Angular Imports */
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, RouterLink } from '@angular/router';
+import { MatCard } from '@angular/material/card';
+import { MatButton } from '@angular/material/button';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 
 /**
  * View Transaction Reciept Component
  */
 @Component({
-  standalone: false,
-  selector: 'mifosx-view-reciept',
-  templateUrl: './view-reciept.component.html',
-  changeDetection: ChangeDetectionStrategy.Eager,
-  styleUrls: ['./view-reciept.component.scss']
+    selector: 'mifosx-view-reciept',
+    templateUrl: './view-reciept.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    styleUrls: ['./view-reciept.component.scss'],
+    imports: [MatCard, MatButton, RouterLink, FaIconComponent]
 })
 export class ViewRecieptComponent implements OnInit {
 
@@ -27,7 +30,7 @@ export class ViewRecieptComponent implements OnInit {
    */
   constructor(private sanitizer: DomSanitizer,
               private route: ActivatedRoute) {
-    this.route.data.subscribe((data: { loansTransactionReciept: any }) => {
+    this.route.data.subscribe((data: any) => {
       this.transactionRecieptData = data.loansTransactionReciept;
     });
   }

@@ -1,11 +1,16 @@
 /** Angular Imports */
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { ChangePasswordDialogComponent } from 'app/shared/change-password-dialog/change-password-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
 
 /** Custom Services. */
 import { UserService } from '../user.service';
+import { LayoutDirective, LayoutAlignDirective, LayoutGapDirective, FlexDirective } from '@ngbracket/ngx-layout/flex';
+import { MatButton } from '@angular/material/button';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import { MatCard, MatCardContent } from '@angular/material/card';
+import { MatTooltip } from '@angular/material/tooltip';
 
 /**
  * View self service user component.
@@ -13,11 +18,11 @@ import { UserService } from '../user.service';
  * TODO: Complete functionality once API is available.
  */
 @Component({
-  standalone: false,
-  selector: 'mifosx-view-user',
-  templateUrl: './view-user.component.html',
-  changeDetection: ChangeDetectionStrategy.Eager,
-  styleUrls: ['./view-user.component.scss']
+    selector: 'mifosx-view-user',
+    templateUrl: './view-user.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    styleUrls: ['./view-user.component.scss'],
+    imports: [LayoutDirective, LayoutAlignDirective, LayoutGapDirective, MatButton, RouterLink, FaIconComponent, MatCard, MatCardContent, FlexDirective, MatTooltip]
 })
 export class ViewUserComponent implements OnInit {
 
@@ -36,7 +41,7 @@ export class ViewUserComponent implements OnInit {
               private userService: UserService,
               private router: Router,
               private dialog: MatDialog) {
-    this.route.data.subscribe((data: { user: any }) => {
+    this.route.data.subscribe((data: any) => {
       this.user = data.user;
     });
   }

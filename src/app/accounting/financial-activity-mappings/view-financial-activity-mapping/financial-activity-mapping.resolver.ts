@@ -24,7 +24,7 @@ export class FinancialActivityMappingResolver implements Resolve<Object> {
    * @returns {Observable<any>}
    */
   resolve(route: ActivatedRouteSnapshot): Observable<any> {
-    const financialActivityAccountId = route.paramMap.get('id');
+    const financialActivityAccountId = route.paramMap.get('id')!;
     return this.accountingService.getFinancialActivityAccount(financialActivityAccountId, false);
   }
 

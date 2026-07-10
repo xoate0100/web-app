@@ -7,10 +7,7 @@ import { AuthenticationService } from '../../core/authentication/authentication.
 /**
  * Has Permission Directive
  */
-@Directive({
-  standalone: false,
-  selector: '[mifosxHasPermission]'
-})
+@Directive({ selector: '[mifosxHasPermission]' })
 export class HasPermissionDirective {
 
   /** User Permissions */
@@ -25,8 +22,8 @@ export class HasPermissionDirective {
   constructor(private templateRef: TemplateRef<any>,
               private viewContainer: ViewContainerRef,
               private authenticationService: AuthenticationService) {
-    const savedCredentials = this.authenticationService.getCredentials();
-    this.userPermissions = savedCredentials.permissions;
+    const savedCredentials = this.authenticationService.getCredentials()!;
+    this.userPermissions = savedCredentials!.permissions;
   }
 
   /**

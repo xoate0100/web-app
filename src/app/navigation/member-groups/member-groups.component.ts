@@ -1,15 +1,18 @@
 /** Angular Imports */
 import { Component, OnInit, Input, ViewChild, ChangeDetectionStrategy } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
-import { MatSort } from '@angular/material/sort';
-import { MatTableDataSource } from '@angular/material/table';
+import { MatSort, MatSortHeader } from '@angular/material/sort';
+import { MatTableDataSource, MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow } from '@angular/material/table';
+import { LayoutDirective, FlexDirective } from '@ngbracket/ngx-layout/flex';
+import { MatFormField, MatLabel } from '@angular/material/form-field';
+import { MatInput } from '@angular/material/input';
 
 @Component({
-  standalone: false,
-  selector: 'mifosx-member-groups',
-  templateUrl: './member-groups.component.html',
-  changeDetection: ChangeDetectionStrategy.Eager,
-  styleUrls: ['./member-groups.component.scss']
+    selector: 'mifosx-member-groups',
+    templateUrl: './member-groups.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    styleUrls: ['./member-groups.component.scss'],
+    imports: [LayoutDirective, MatFormField, FlexDirective, MatLabel, MatInput, MatTable, MatSort, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatSortHeader, MatCellDef, MatCell, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow, MatPaginator]
 })
 export class MemberGroupsComponent implements OnInit {
 

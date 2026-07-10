@@ -17,15 +17,13 @@ import { TwoFactorAuthenticationComponent } from './two-factor-authentication/tw
  * All components related to user authentication should be declared here.
  */
 @NgModule({
-  imports: [
-    SharedModule,
-    LoginRoutingModule
-  ],
-  declarations: [
-    LoginComponent,
-    LoginFormComponent,
-    ResetPasswordComponent,
-    TwoFactorAuthenticationComponent
-  ]
+    imports: [
+        SharedModule,
+        LoginRoutingModule,
+        LoginComponent,
+        LoginFormComponent,
+        ResetPasswordComponent,
+        TwoFactorAuthenticationComponent
+    ]
 })
 export class LoginModule { }

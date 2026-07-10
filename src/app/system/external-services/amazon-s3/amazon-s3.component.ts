@@ -1,18 +1,21 @@
 /** Angular Imports */
 import { Component, OnInit, ViewChild, ChangeDetectionStrategy } from '@angular/core';
-import { MatSort } from '@angular/material/sort';
-import { MatTableDataSource } from '@angular/material/table';
-import { ActivatedRoute } from '@angular/router';
+import { MatSort, MatSortHeader } from '@angular/material/sort';
+import { MatTableDataSource, MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow } from '@angular/material/table';
+import { ActivatedRoute, RouterLink } from '@angular/router';
+import { LayoutDirective, LayoutAlignDirective, LayoutGapDirective } from '@ngbracket/ngx-layout/flex';
+import { MatButton } from '@angular/material/button';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 
 /**
  * Amazon S3 Component.
  */
 @Component({
-  standalone: false,
-  selector: 'mifosx-amazon-s3',
-  templateUrl: './amazon-s3.component.html',
-  changeDetection: ChangeDetectionStrategy.Eager,
-  styleUrls: ['./amazon-s3.component.scss']
+    selector: 'mifosx-amazon-s3',
+    templateUrl: './amazon-s3.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    styleUrls: ['./amazon-s3.component.scss'],
+    imports: [LayoutDirective, LayoutAlignDirective, LayoutGapDirective, MatButton, RouterLink, FaIconComponent, MatTable, MatSort, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatSortHeader, MatCellDef, MatCell, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow]
 })
 export class AmazonS3Component implements OnInit {
 
@@ -31,7 +34,7 @@ export class AmazonS3Component implements OnInit {
    * @param {ActivatedRoute} route Activated Route.
    */
   constructor(private route: ActivatedRoute) {
-    this.route.data.subscribe((data: { amazonS3Configuration: any }) => {
+    this.route.data.subscribe((data: any) => {
       this.amazonS3ConfigurationData = data.amazonS3Configuration;
     });
   }

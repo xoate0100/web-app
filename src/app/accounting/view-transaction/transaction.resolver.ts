@@ -24,7 +24,7 @@ export class TransactionResolver implements Resolve<Object> {
    * @returns {Observable<any>}
    */
   resolve(route: ActivatedRouteSnapshot): Observable<any> {
-    const transactionId = route.paramMap.get('id');
+    const transactionId = route.paramMap.get('id')!;
     return this.accountingService.getJournalEntry(transactionId);
   }
 

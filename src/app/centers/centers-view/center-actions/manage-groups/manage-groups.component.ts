@@ -1,6 +1,6 @@
 /** Angular Imports */
 import { Component, AfterViewInit, ChangeDetectionStrategy } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 
 /** Custom Dialogs */
@@ -10,14 +10,24 @@ import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.co
 import { CentersService } from 'app/centers/centers.service';
 import { GroupsService } from 'app/groups/groups.service';
 import { MatDialog } from '@angular/material/dialog';
+import { LayoutDirective, LayoutGapDirective, FlexDirective } from '@ngbracket/ngx-layout/flex';
+import { MatCard } from '@angular/material/card';
+import { MatFormField, MatLabel } from '@angular/material/form-field';
+import { MatInput } from '@angular/material/input';
+import { MatAutocompleteTrigger, MatAutocomplete, MatOption } from '@angular/material/autocomplete';
+import { NgFor, NgIf } from '@angular/common';
+import { MatIconButton } from '@angular/material/button';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import { MatListSubheaderCssMatStyler, MatNavList } from '@angular/material/list';
+import { MatLine } from '@angular/material/grid-list';
 
 
 @Component({
-  standalone: false,
-  selector: 'mifosx-manage-groups',
-  templateUrl: './manage-groups.component.html',
-  changeDetection: ChangeDetectionStrategy.Eager,
-  styleUrls: ['./manage-groups.component.scss']
+    selector: 'mifosx-manage-groups',
+    templateUrl: './manage-groups.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    styleUrls: ['./manage-groups.component.scss'],
+    imports: [LayoutDirective, LayoutGapDirective, MatCard, FlexDirective, MatFormField, MatLabel, MatInput, ReactiveFormsModule, MatAutocompleteTrigger, MatAutocomplete, NgFor, MatOption, MatIconButton, FaIconComponent, MatListSubheaderCssMatStyler, NgIf, MatNavList, MatLine]
 })
 export class ManageGroupsComponent implements AfterViewInit {
 
@@ -41,7 +51,7 @@ export class ManageGroupsComponent implements AfterViewInit {
               private centersService: CentersService,
               private groupsService: GroupsService,
               public dialog: MatDialog) {
-    this.route.data.subscribe((data: { centersActionData: any }) => {
+    this.route.data.subscribe((data: any) => {
       this.centerData = data.centersActionData;
       this.groupMembers = data.centersActionData.groupMembers;
     });
@@ -68,11 +78,11 @@ export class ManageGroupsComponent implements AfterViewInit {
   addGroup() {
     if (this.groupMembers !== null && this.groupMembers !== undefined) {
       if (!this.groupMembers.includes(this.groupChoice.value)) {
-        this.centersService.executeCenterActionCommand(this.centerData.id, 'associateGroups', {groupMembers: [this.groupChoice.value.id]})
+        this.centersService.executeCenterActionCommand(this.centerData.id, 'associateGroups', {groupMembers: [(this.groupChoice.value as any).id]})
           .subscribe(() => { this.groupMembers.push(this.groupChoice.value); });
       }
     } else {
-      this.centersService.executeCenterActionCommand(this.centerData.id, 'associateGroups', {groupMembers: [this.groupChoice.value.id]})
+      this.centersService.executeCenterActionCommand(this.centerData.id, 'associateGroups', {groupMembers: [(this.groupChoice.value as any).id]})
       .subscribe(() => { this.groupMembers.push(this.groupChoice.value); });
     }
   }
@@ -98,8 +108,8 @@ export class ManageGroupsComponent implements AfterViewInit {
    * @param {any} group Group data.
    * @returns {string} Group name if valid otherwise undefined.
    */
-  displayGroup(group: any): string | undefined {
-    return group ? group.name : undefined;
+  displayGroup(group: any): string {
+    return group ? group.name : '';
   }
 
 }

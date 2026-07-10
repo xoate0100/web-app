@@ -1,20 +1,26 @@
 /** Angular Imports */
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { FormGroup, FormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
 
 /** Custom Services */
 import { SystemService } from 'app/system/system.service';
+import { MatCard, MatCardContent, MatCardActions } from '@angular/material/card';
+import { LayoutDirective, LayoutAlignDirective, LayoutGapDirective } from '@ngbracket/ngx-layout/flex';
+import { MatFormField, MatLabel, MatError } from '@angular/material/form-field';
+import { MatInput } from '@angular/material/input';
+import { NgIf } from '@angular/common';
+import { MatButton } from '@angular/material/button';
 
 /**
  * Edit Amazon S3 Component.
  */
 @Component({
-  standalone: false,
-  selector: 'mifosx-edit-amazon-s3',
-  templateUrl: './edit-amazon-s3.component.html',
-  changeDetection: ChangeDetectionStrategy.Eager,
-  styleUrls: ['./edit-amazon-s3.component.scss']
+    selector: 'mifosx-edit-amazon-s3',
+    templateUrl: './edit-amazon-s3.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    styleUrls: ['./edit-amazon-s3.component.scss'],
+    imports: [MatCard, ReactiveFormsModule, MatCardContent, LayoutDirective, MatFormField, MatLabel, MatInput, NgIf, MatError, MatCardActions, LayoutAlignDirective, LayoutGapDirective, MatButton, RouterLink]
 })
 export class EditAmazonS3Component implements OnInit {
 
@@ -34,7 +40,7 @@ export class EditAmazonS3Component implements OnInit {
               private systemService: SystemService,
               private route: ActivatedRoute,
               private router: Router) {
-    this.route.data.subscribe((data: { amazonS3Configuration: any }) => {
+    this.route.data.subscribe((data: any) => {
       this.amazonS3ConfigurationData = data.amazonS3Configuration;
     });
   }

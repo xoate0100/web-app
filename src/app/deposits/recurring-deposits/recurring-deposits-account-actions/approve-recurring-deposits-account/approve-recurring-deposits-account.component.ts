@@ -1,22 +1,28 @@
 /** Angular Imports */
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { DatePipe } from '@angular/common';
-import { ActivatedRoute, Router } from '@angular/router';
+import { FormGroup, FormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
+import { DatePipe, NgIf } from '@angular/common';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 
 /** Custom Services */
 import { RecurringDepositsService } from '../../recurring-deposits.service';
 import { SettingsService } from 'app/settings/settings.service';
+import { MatCard, MatCardContent, MatCardActions } from '@angular/material/card';
+import { LayoutDirective, LayoutAlignDirective, LayoutGapDirective } from '@ngbracket/ngx-layout/flex';
+import { MatFormField, MatLabel, MatSuffix, MatError } from '@angular/material/form-field';
+import { MatInput } from '@angular/material/input';
+import { MatDatepickerInput, MatDatepickerToggle, MatDatepicker } from '@angular/material/datepicker';
+import { MatButton } from '@angular/material/button';
 
 /**
  * Approve Recurring Deposits Account Component
  */
 @Component({
-  standalone: false,
-  selector: 'mifosx-approve-recurring-deposits-account',
-  templateUrl: './approve-recurring-deposits-account.component.html',
-  changeDetection: ChangeDetectionStrategy.Eager,
-  styleUrls: ['./approve-recurring-deposits-account.component.scss']
+    selector: 'mifosx-approve-recurring-deposits-account',
+    templateUrl: './approve-recurring-deposits-account.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    styleUrls: ['./approve-recurring-deposits-account.component.scss'],
+    imports: [MatCard, ReactiveFormsModule, MatCardContent, LayoutDirective, MatFormField, MatLabel, MatInput, MatDatepickerInput, MatDatepickerToggle, MatSuffix, MatDatepicker, NgIf, MatError, MatCardActions, LayoutAlignDirective, LayoutGapDirective, MatButton, RouterLink]
 })
 export class ApproveRecurringDepositsAccountComponent implements OnInit {
 
@@ -43,7 +49,7 @@ export class ApproveRecurringDepositsAccountComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private settingsService: SettingsService) {
-    this.accountId = this.route.parent.snapshot.params['recurringDepositAccountId'];
+    this.accountId = this.route.parent!.snapshot.params['recurringDepositAccountId']!;
   }
 
   /**
@@ -73,7 +79,7 @@ export class ApproveRecurringDepositsAccountComponent implements OnInit {
     const dateFormat = this.settingsService.dateFormat;
     const prevApprovedOnDate: Date = this.approveRecurringDepositsAccountForm.value.approvedOnDate;
     this.approveRecurringDepositsAccountForm.patchValue({
-      approvedOnDate: this.datePipe.transform(prevApprovedOnDate, dateFormat),
+      approvedOnDate: this.datePipe.transform(prevApprovedOnDate as Date, dateFormat),
     });
     const data = {
       ...this.approveRecurringDepositsAccountForm.value,

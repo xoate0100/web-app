@@ -1,21 +1,29 @@
 /** Angular Imports */
 import { Component, OnInit, Inject, ChangeDetectionStrategy } from '@angular/core';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { DatePipe } from '@angular/common';
+import { MatDialogRef, MAT_DIALOG_DATA, MatDialogTitle, MatDialogActions, MatDialogClose } from '@angular/material/dialog';
+import { FormGroup, FormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
+import { DatePipe, NgIf, NgFor } from '@angular/common';
 
 /** Custom Services */
 import { SettingsService } from 'app/settings/settings.service';
+import { LayoutDirective, LayoutAlignDirective, LayoutGapDirective, FlexDirective } from '@ngbracket/ngx-layout/flex';
+import { MatFormField, MatLabel, MatError, MatSuffix } from '@angular/material/form-field';
+import { MatInput } from '@angular/material/input';
+import { MatCheckbox } from '@angular/material/checkbox';
+import { MatSelect } from '@angular/material/select';
+import { MatOption } from '@angular/material/autocomplete';
+import { MatDatepickerInput, MatDatepickerToggle, MatDatepicker } from '@angular/material/datepicker';
+import { MatButton } from '@angular/material/button';
 
 /**
  * Client Family Members Dialog
  */
 @Component({
-  standalone: false,
-  selector: 'mifosx-client-family-member-dialog',
-  templateUrl: './client-family-member-dialog.component.html',
-  changeDetection: ChangeDetectionStrategy.Eager,
-  styleUrls: ['./client-family-member-dialog.component.scss']
+    selector: 'mifosx-client-family-member-dialog',
+    templateUrl: './client-family-member-dialog.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    styleUrls: ['./client-family-member-dialog.component.scss'],
+    imports: [MatDialogTitle, ReactiveFormsModule, LayoutDirective, LayoutAlignDirective, LayoutGapDirective, MatFormField, FlexDirective, MatLabel, MatInput, NgIf, MatError, MatCheckbox, MatSelect, NgFor, MatOption, MatDatepickerInput, MatDatepickerToggle, MatSuffix, MatDatepicker, MatDialogActions, MatButton, MatDialogClose]
 })
 export class ClientFamilyMemberDialogComponent implements OnInit {
 
@@ -92,11 +100,11 @@ export class ClientFamilyMemberDialogComponent implements OnInit {
     };
     for (const key in familyMember) {
       if (familyMember[key] === '' || familyMember[key] === undefined) {
-        delete familyMember[key];
+        familyMember[key] = undefined;
       }
     }
     if (familyMember.dateOfBirth) {
-      familyMember.dateOfBirth = this.datePipe.transform(familyMember.dateOfBirth, dateFormat);
+      familyMember.dateOfBirth = this.datePipe.transform(familyMember.dateOfBirth as Date, dateFormat);
     }
     return familyMember;
   }

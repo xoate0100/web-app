@@ -5,7 +5,7 @@ import { DatePipe } from '@angular/common';
 /** Custom Modules */
 import { SharedModule } from 'app/shared/shared.module';
 import { PipesModule } from 'app/pipes/pipes.module';
-import { DirectivesModule } from 'app/directives/directives.module';
+
 import { FixedDepositsRoutingModule } from './fixed-deposits-routing.module';
 
 /** Custom Components */
@@ -48,7 +48,10 @@ import { EditFixedDepositAccountComponent } from './edit-fixed-deposit-account/e
  * All components related to fixed deposits functions should be declared here.
  */
 @NgModule({
-  declarations: [
+    imports: [
+    SharedModule,
+    PipesModule,
+    FixedDepositsRoutingModule,
     FixedDepositAccountViewComponent,
     TransactionsTabComponent,
     ChargesTabComponent,
@@ -81,13 +84,7 @@ import { EditFixedDepositAccountComponent } from './edit-fixed-deposit-account/e
     FixedDepositAccountPreviewStepComponent,
     FixedDepositAccountCurrencyStepComponent,
     EditFixedDepositAccountComponent
-  ],
-  imports: [
-    SharedModule,
-    PipesModule,
-    DirectivesModule,
-    FixedDepositsRoutingModule
-  ],
-  providers: [DatePipe]
+],
+    providers: [DatePipe]
 })
 export class FixedDepositsModule { }

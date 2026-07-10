@@ -18,7 +18,7 @@
 
 //   logout(): Observable<boolean> {
 //     this.credentials = null;
-//     return of(true);
+//     return true;
 //   }
 
 //   isAuthenticated(): boolean {

@@ -2,8 +2,8 @@
 import { Component, OnInit, ViewChild, ChangeDetectionStrategy } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
-import { MatSort } from '@angular/material/sort';
-import { MatTableDataSource, MatTable } from '@angular/material/table';
+import { MatSort, MatSortHeader } from '@angular/material/sort';
+import { MatTableDataSource, MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow } from '@angular/material/table';
 import { ActivatedRoute } from '@angular/router';
 
 /** Custom Services */
@@ -13,16 +13,20 @@ import { LoansService } from 'app/loans/loans.service';
 /** Dialog Components */
 import { LoanAccountLoadDocumentsDialogComponent } from 'app/loans/custom-dialog/loan-account-load-documents-dialog/loan-account-load-documents-dialog.component';
 import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.component';
+import { LayoutDirective, FlexDirective, LayoutAlignDirective } from '@ngbracket/ngx-layout/flex';
+import { NgIf } from '@angular/common';
+import { MatButton } from '@angular/material/button';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 
 /**
  * Overdue charges tab component
  */
 @Component({
-  standalone: false,
-  selector: 'mifosx-loan-documents-tab',
-  templateUrl: './loan-documents-tab.component.html',
-  changeDetection: ChangeDetectionStrategy.Eager,
-  styleUrls: ['./loan-documents-tab.component.scss']
+    selector: 'mifosx-loan-documents-tab',
+    templateUrl: './loan-documents-tab.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    styleUrls: ['./loan-documents-tab.component.scss'],
+    imports: [LayoutDirective, FlexDirective, LayoutAlignDirective, NgIf, MatButton, FaIconComponent, MatTable, MatSort, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatSortHeader, MatCellDef, MatCell, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow, MatPaginator]
 })
 export class LoanDocumentsTabComponent implements OnInit {
   @ViewChild('documentsTable') documentsTable: MatTable<Element>;
@@ -53,10 +57,10 @@ export class LoanDocumentsTabComponent implements OnInit {
   constructor(private route: ActivatedRoute,
     private loansService: LoansService,
     public dialog: MatDialog) {
-    this.route.data.subscribe((data: { loanDocuments: any }) => {
+    this.route.data.subscribe((data: any) => {
       this.getLoanDocumentsData(data.loanDocuments);
     });
-    this.route.parent.data.subscribe((data: { loanDetailsData: any }) => {
+    this.route.parent!.data.subscribe((data: any) => {
       this.loanDetailsData = data.loanDetailsData;
     });
   }

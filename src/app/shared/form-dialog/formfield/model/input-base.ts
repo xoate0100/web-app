@@ -5,7 +5,7 @@ export class InputBase extends FormfieldBase {
   controlType = 'input';
   type: string;
 
-  constructor(options: {} = {}) {
+  constructor(options: Record<string, any> = {}) {
     super(options);
     this.type = options['type'] || 'text';
   }

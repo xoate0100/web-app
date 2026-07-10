@@ -1,21 +1,29 @@
 /** Angular Imports */
 import { Component, OnInit, AfterViewInit, ChangeDetectionStrategy } from '@angular/core';
-import { MatTableDataSource } from '@angular/material/table';
-import { ActivatedRoute, Router } from '@angular/router';
-import { FormControl } from '@angular/forms';
+import { MatTableDataSource, MatTable, MatColumnDef, MatCellDef, MatCell, MatRowDef, MatRow } from '@angular/material/table';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { FormControl, ReactiveFormsModule } from '@angular/forms';
 
 /** Custom Services */
 import { ReportsService } from '../reports.service';
+import { MatCard } from '@angular/material/card';
+import { NgIf, NgFor } from '@angular/common';
+import { MatTabGroup, MatTab } from '@angular/material/tabs';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import { MatTooltip } from '@angular/material/tooltip';
+import { MatAutocompleteTrigger, MatAutocomplete, MatOption } from '@angular/material/autocomplete';
+import { LayoutDirective, LayoutAlignDirective, LayoutGapDirective } from '@ngbracket/ngx-layout/flex';
+import { MatButton } from '@angular/material/button';
 
 /**
  * XBRL Component
  */
 @Component({
-  standalone: false,
-  selector: 'mifosx-xbrl',
-  templateUrl: './xbrl.component.html',
-  changeDetection: ChangeDetectionStrategy.Eager,
-  styleUrls: ['./xbrl.component.scss']
+    selector: 'mifosx-xbrl',
+    templateUrl: './xbrl.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    styleUrls: ['./xbrl.component.scss'],
+    imports: [MatCard, NgIf, MatTabGroup, MatTab, MatTable, MatColumnDef, MatCellDef, MatCell, FaIconComponent, MatTooltip, ReactiveFormsModule, MatAutocompleteTrigger, MatRowDef, MatRow, LayoutDirective, LayoutAlignDirective, LayoutGapDirective, MatButton, RouterLink, MatAutocomplete, NgFor, MatOption]
 })
 export class XBRLComponent implements OnInit, AfterViewInit {
 
@@ -44,7 +52,7 @@ export class XBRLComponent implements OnInit, AfterViewInit {
   constructor(private route: ActivatedRoute,
               private router: Router,
               private reportService: ReportsService) {
-    this.route.data.subscribe(( data: { mixtaxonomy: any, mixmapping: any, glAccounts: any }) => {
+    this.route.data.subscribe((data: any) => {
       this.mixtaxonomyArray = data.mixtaxonomy;
       this.mixMappingJson = data.mixmapping.config || JSON.stringify({});
       this.glAccounts = data.glAccounts;
@@ -121,9 +129,9 @@ export class XBRLComponent implements OnInit, AfterViewInit {
    * @param {any} glAccount Gl Account data.
    * @returns {string} Gl Account name if valid otherwise undefined.
    */
-  displayGLAccount(glAccount?: any): string | undefined {
+  displayGLAccount(glAccount?: any): string {
     if (typeof(glAccount) === 'object') {
-     return glAccount ? glAccount.name + ' (' + glAccount.glCode + ')' : undefined;
+     return glAccount ? glAccount.name + ' (' + glAccount.glCode + ')' : '';
     } else {
       return glAccount;
     }

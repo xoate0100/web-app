@@ -43,10 +43,10 @@
       <th mat-header-cell *matHeaderCellDef> Actions </th>
       <td mat-cell *matCellDef="let ele">
         <span *ngIf="ele.actualDisbursementDate">
-          <i class="fa fa-check "></i>
+          <fa-icon icon="check"></fa-icon>
         </span>
         <button mat-raised-button color="primary" *ngIf="showEdit(ele)">
-          <i class="fa fa-pencil"></i>
+          <fa-icon icon="pencil"></fa-icon>
         </button>
       </td>
     </ng-container>

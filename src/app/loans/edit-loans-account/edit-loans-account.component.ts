@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild, ChangeDetectionStrategy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { DatePipe } from '@angular/common';
+import { DatePipe, NgIf } from '@angular/common';
 import { LoansService } from '../loans.service';
 import { LoansAccountDetailsStepComponent } from '../loans-account-stepper/loans-account-details-step/loans-account-details-step.component';
 import { LoansAccountTermsStepComponent } from '../loans-account-stepper/loans-account-terms-step/loans-account-terms-step.component';
@@ -8,16 +8,19 @@ import { LoansAccountChargesStepComponent } from '../loans-account-stepper/loans
 
 /** Custom Services */
 import { SettingsService } from 'app/settings/settings.service';
+import { MatStepper, MatStepperIcon, MatStep, MatStepLabel } from '@angular/material/stepper';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import { LoansAccountPreviewStepComponent } from '../loans-account-stepper/loans-account-preview-step/loans-account-preview-step.component';
 
 /**
  * Edit Loans
  */
 @Component({
-  standalone: false,
-  selector: 'mifosx-edit-loans-account',
-  templateUrl: './edit-loans-account.component.html',
-  changeDetection: ChangeDetectionStrategy.Eager,
-  styleUrls: ['./edit-loans-account.component.scss']
+    selector: 'mifosx-edit-loans-account',
+    templateUrl: './edit-loans-account.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    styleUrls: ['./edit-loans-account.component.scss'],
+    imports: [MatStepper, MatStepperIcon, FaIconComponent, MatStep, MatStepLabel, LoansAccountDetailsStepComponent, LoansAccountTermsStepComponent, LoansAccountChargesStepComponent, NgIf, LoansAccountPreviewStepComponent]
 })
 export class EditLoansAccountComponent implements OnInit {
 
@@ -47,10 +50,10 @@ export class EditLoansAccountComponent implements OnInit {
     private loansService: LoansService,
     private settingsService: SettingsService
   ) {
-    this.route.data.subscribe((data: { loansAccountAndTemplate: any }) => {
+    this.route.data.subscribe((data: any) => {
       this.loansAccountAndTemplate = data.loansAccountAndTemplate;
     });
-    this.loanId = this.route.parent.snapshot.params['loanId'];
+    this.loanId = this.route.parent!.snapshot.params['loanId']!;
   }
 
   ngOnInit() {
@@ -112,17 +115,17 @@ export class EditLoansAccountComponent implements OnInit {
       charges: this.loansAccount.charges.map((charge: any) => ({
         chargeId: charge.id,
         amount: charge.amount,
-        dueDate: charge.dueDate && this.datePipe.transform(charge.dueDate, dateFormat),
+        dueDate: charge.dueDate && this.datePipe.transform(charge.dueDate as Date, dateFormat),
       })),
       collateral: this.loansAccount.collateral.map((collateralEle: any) => ({
         type: collateralEle.type,
         value: collateralEle.value,
         description: collateralEle.description
       })),
-      interestChargedFromDate: this.datePipe.transform(this.loansAccount.interestChargedFromDate, dateFormat),
-      repaymentsStartingFromDate: this.datePipe.transform(this.loansAccount.repaymentsStartingFromDate, dateFormat),
-      submittedOnDate: this.datePipe.transform(this.loansAccount.submittedOnDate, dateFormat),
-      expectedDisbursementDate: this.datePipe.transform(this.loansAccount.expectedDisbursementDate, dateFormat),
+      interestChargedFromDate: this.datePipe.transform(this.loansAccount.interestChargedFromDate as Date, dateFormat),
+      repaymentsStartingFromDate: this.datePipe.transform(this.loansAccount.repaymentsStartingFromDate as Date, dateFormat),
+      submittedOnDate: this.datePipe.transform(this.loansAccount.submittedOnDate as Date, dateFormat),
+      expectedDisbursementDate: this.datePipe.transform(this.loansAccount.expectedDisbursementDate as Date, dateFormat),
       dateFormat,
       locale,
       loanType
@@ -130,22 +133,22 @@ export class EditLoansAccountComponent implements OnInit {
 
     if (loansAccountData.syncRepaymentsWithMeeting) {
       loansAccountData.calendarId = this.loansAccountProductTemplate.calendarOptions[0].id;
-      delete loansAccountData.syncRepaymentsWithMeeting;
+      delete (loansAccountData as any).syncRepaymentsWithMeeting;
     }
 
     if (loansAccountData.recalculationRestFrequencyDate) {
-      loansAccountData.recalculationRestFrequencyDate = this.datePipe.transform(this.loansAccount.recalculationRestFrequencyDate, dateFormat);
+      loansAccountData.recalculationRestFrequencyDate = this.datePipe.transform(this.loansAccount.recalculationRestFrequencyDate as Date, dateFormat);
     }
 
     if (loansAccountData.recalculationCompoundingFrequencyDate) {
-      loansAccountData.recalculationCompoundingFrequencyDate = this.datePipe.transform(this.loansAccount.recalculationCompoundingFrequencyDate, dateFormat);
+      loansAccountData.recalculationCompoundingFrequencyDate = this.datePipe.transform(this.loansAccount.recalculationCompoundingFrequencyDate as Date, dateFormat);
     }
 
     if (loansAccountData.interestCalculationPeriodType === 0) {
       loansAccountData.allowPartialPeriodInterestCalcualtion = false;
     }
     if (!(loansAccountData.isFloatingInterestRate === false)) {
-      delete loansAccountData.isFloatingInterestRate;
+      delete (loansAccountData as any).isFloatingInterestRate;
     }
 
     this.loansService.updateLoansAccount(this.loanId, loansAccountData).subscribe((response: any) => {

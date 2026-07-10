@@ -1,12 +1,24 @@
 import { Component, OnInit, Input, ChangeDetectionStrategy } from '@angular/core';
-import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, FormControl, Validators, ReactiveFormsModule } from '@angular/forms';
+import { LayoutDirective, LayoutGapDirective, LayoutAlignDirective, FlexDirective, FlexFillDirective } from '@ngbracket/ngx-layout/flex';
+import { MatFormField, MatLabel, MatError } from '@angular/material/form-field';
+import { MatInput } from '@angular/material/input';
+import { ShowHideDirective } from '@ngbracket/ngx-layout/extended';
+import { MatSelect } from '@angular/material/select';
+import { NgFor, NgIf } from '@angular/common';
+import { MatOption } from '@angular/material/autocomplete';
+import { MatCheckbox } from '@angular/material/checkbox';
+import { MatDivider } from '@angular/material/divider';
+import { MatButton } from '@angular/material/button';
+import { MatStepperPrevious, MatStepperNext } from '@angular/material/stepper';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 
 @Component({
-  standalone: false,
-  selector: 'mifosx-saving-product-settings-step',
-  templateUrl: './saving-product-settings-step.component.html',
-  changeDetection: ChangeDetectionStrategy.Eager,
-  styleUrls: ['./saving-product-settings-step.component.scss']
+    selector: 'mifosx-saving-product-settings-step',
+    templateUrl: './saving-product-settings-step.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    styleUrls: ['./saving-product-settings-step.component.scss'],
+    imports: [ReactiveFormsModule, LayoutDirective, LayoutGapDirective, LayoutAlignDirective, MatFormField, FlexDirective, MatLabel, MatInput, ShowHideDirective, MatSelect, NgFor, MatOption, MatCheckbox, NgIf, MatError, MatDivider, FlexFillDirective, MatButton, MatStepperPrevious, FaIconComponent, MatStepperNext]
 })
 export class SavingProductSettingsStepComponent implements OnInit {
 
@@ -63,7 +75,7 @@ export class SavingProductSettingsStepComponent implements OnInit {
   }
 
   setConditionalControls() {
-    this.savingProductSettingsForm.get('allowOverdraft').valueChanges
+    this.savingProductSettingsForm.get('allowOverdraft')!.valueChanges
       .subscribe((allowOverdraft: any) => {
         if (allowOverdraft) {
           this.savingProductSettingsForm.addControl('minOverdraftForInterestCalculation', new FormControl(''));
@@ -76,7 +88,7 @@ export class SavingProductSettingsStepComponent implements OnInit {
         }
       });
 
-    this.savingProductSettingsForm.get('withHoldTax').valueChanges
+    this.savingProductSettingsForm.get('withHoldTax')!.valueChanges
       .subscribe((withHoldTax: any) => {
         if (withHoldTax) {
           this.savingProductSettingsForm.addControl('taxGroupId', new FormControl('', Validators.required));
@@ -85,7 +97,7 @@ export class SavingProductSettingsStepComponent implements OnInit {
         }
       });
 
-    this.savingProductSettingsForm.get('isDormancyTrackingActive').valueChanges
+    this.savingProductSettingsForm.get('isDormancyTrackingActive')!.valueChanges
       .subscribe((isDormancyTrackingActive: any) => {
         if (isDormancyTrackingActive) {
           this.savingProductSettingsForm.addControl('daysToInactive', new FormControl('', Validators.required));

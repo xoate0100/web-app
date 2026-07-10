@@ -1,12 +1,12 @@
 import { Component, OnInit, Input, OnChanges, ViewChild, ChangeDetectionStrategy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { MatTable } from '@angular/material/table';
+import { MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow } from '@angular/material/table';
 import { MatDialog } from '@angular/material/dialog';
 import { FormfieldBase } from 'app/shared/form-dialog/formfield/model/formfield-base';
 import { InputBase } from 'app/shared/form-dialog/formfield/model/input-base';
 import { SelectBase } from 'app/shared/form-dialog/formfield/model/select-base';
 import { CheckboxBase } from 'app/shared/form-dialog/formfield/model/checkbox-base';
-import { DatePipe } from '@angular/common';
+import { DatePipe, NgIf, NgFor } from '@angular/common';
 
 /** Custom Components */
 import { FormDialogComponent } from 'app/shared/form-dialog/form-dialog.component';
@@ -15,13 +15,16 @@ import { DeleteDialogComponent } from '../../../../shared/delete-dialog/delete-d
 /** Custom Services */
 import { ClientsService } from '../../../clients.service';
 import { SettingsService } from 'app/settings/settings.service';
+import { LayoutDirective, LayoutAlignDirective } from '@ngbracket/ngx-layout/flex';
+import { MatButton } from '@angular/material/button';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 
 @Component({
-  standalone: false,
-  selector: 'mifosx-multi-row',
-  templateUrl: './multi-row.component.html',
-  changeDetection: ChangeDetectionStrategy.Eager,
-  styleUrls: ['./multi-row.component.scss']
+    selector: 'mifosx-multi-row',
+    templateUrl: './multi-row.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    styleUrls: ['./multi-row.component.scss'],
+    imports: [LayoutDirective, LayoutAlignDirective, MatButton, FaIconComponent, NgIf, MatTable, NgFor, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow]
 })
 export class MultiRowComponent implements OnInit, OnChanges {
   @ViewChild('dataTable', { static: true }) dataTableRef: MatTable<Element>;
@@ -37,7 +40,7 @@ export class MultiRowComponent implements OnInit, OnChanges {
     private clientsService: ClientsService,
     private dialog: MatDialog,
     private settingsService: SettingsService) {
-    this.clientId = this.route.parent.parent.snapshot.paramMap.get('clientId');
+    this.clientId = this.route.parent!.parent!.snapshot.paramMap.get('clientId')!;
   }
 
   ngOnInit() {

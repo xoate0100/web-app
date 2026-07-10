@@ -1,19 +1,23 @@
 /** Angular Imports */
 import { Component, OnInit, ViewChild, ChangeDetectionStrategy } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
-import { MatSort } from '@angular/material/sort';
-import { MatTableDataSource } from '@angular/material/table';
-import { ActivatedRoute } from '@angular/router';
+import { MatSort, MatSortHeader } from '@angular/material/sort';
+import { MatTableDataSource, MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow } from '@angular/material/table';
+import { ActivatedRoute, RouterLink } from '@angular/router';
+import { LayoutDirective, LayoutAlignDirective } from '@ngbracket/ngx-layout/flex';
+import { HasPermissionDirective } from '../../directives/has-permission/has-permission.directive';
+import { MatButton } from '@angular/material/button';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 
 /**
  * Financial activity mappings component.
  */
 @Component({
-  standalone: false,
-  selector: 'mifosx-financial-activity-mappings',
-  templateUrl: './financial-activity-mappings.component.html',
-  changeDetection: ChangeDetectionStrategy.Eager,
-  styleUrls: ['./financial-activity-mappings.component.scss']
+    selector: 'mifosx-financial-activity-mappings',
+    templateUrl: './financial-activity-mappings.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    styleUrls: ['./financial-activity-mappings.component.scss'],
+    imports: [LayoutDirective, LayoutAlignDirective, HasPermissionDirective, MatButton, RouterLink, FaIconComponent, MatTable, MatSort, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatSortHeader, MatCellDef, MatCell, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow, MatPaginator]
 })
 export class FinancialActivityMappingsComponent implements OnInit {
 
@@ -34,7 +38,7 @@ export class FinancialActivityMappingsComponent implements OnInit {
    * @param {ActivatedRoute} route Activated Route.
    */
   constructor(private route: ActivatedRoute) {
-    this.route.data.subscribe(( data: { financialActivityAccounts: any }) => {
+    this.route.data.subscribe((data: any) => {
       this.financialActivityAccountData = data.financialActivityAccounts;
     });
   }

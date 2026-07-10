@@ -1,12 +1,23 @@
 import { Component, OnInit, Input, ChangeDetectionStrategy } from '@angular/core';
-import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, FormControl, Validators, ReactiveFormsModule } from '@angular/forms';
+import { LayoutDirective, LayoutGapDirective, FlexDirective, LayoutAlignDirective } from '@ngbracket/ngx-layout/flex';
+import { MatCheckbox } from '@angular/material/checkbox';
+import { MatFormField, MatLabel, MatError } from '@angular/material/form-field';
+import { MatInput } from '@angular/material/input';
+import { MatSelect } from '@angular/material/select';
+import { NgFor, NgIf } from '@angular/common';
+import { MatOption } from '@angular/material/autocomplete';
+import { MatDivider } from '@angular/material/divider';
+import { MatButton } from '@angular/material/button';
+import { MatStepperPrevious, MatStepperNext } from '@angular/material/stepper';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 
 @Component({
-  standalone: false,
-  selector: 'mifosx-recurring-deposit-product-settings-step',
-  templateUrl: './recurring-deposit-product-settings-step.component.html',
-  changeDetection: ChangeDetectionStrategy.Eager,
-  styleUrls: ['./recurring-deposit-product-settings-step.component.scss']
+    selector: 'mifosx-recurring-deposit-product-settings-step',
+    templateUrl: './recurring-deposit-product-settings-step.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    styleUrls: ['./recurring-deposit-product-settings-step.component.scss'],
+    imports: [ReactiveFormsModule, LayoutDirective, LayoutGapDirective, MatCheckbox, FlexDirective, MatFormField, MatLabel, MatInput, MatSelect, NgFor, MatOption, MatError, MatDivider, NgIf, LayoutAlignDirective, MatButton, MatStepperPrevious, FaIconComponent, MatStepperNext]
 })
 export class RecurringDepositProductSettingsStepComponent implements OnInit {
 
@@ -72,7 +83,7 @@ export class RecurringDepositProductSettingsStepComponent implements OnInit {
   }
 
   setConditionalControls() {
-    this.recurringDepositProductSettingsForm.get('withHoldTax').valueChanges
+    this.recurringDepositProductSettingsForm.get('withHoldTax')!.valueChanges
       .subscribe((withHoldTax: any) => {
         if (withHoldTax) {
           this.recurringDepositProductSettingsForm.addControl('taxGroupId', new FormControl('', Validators.required));
@@ -86,7 +97,7 @@ export class RecurringDepositProductSettingsStepComponent implements OnInit {
     const recurringDepositProductSettings = this.recurringDepositProductSettingsForm.value;
     for (const key in recurringDepositProductSettings) {
       if (recurringDepositProductSettings[key] === '') {
-        delete recurringDepositProductSettings[key];
+        recurringDepositProductSettings[key] = undefined;
       }
     }
     return recurringDepositProductSettings;

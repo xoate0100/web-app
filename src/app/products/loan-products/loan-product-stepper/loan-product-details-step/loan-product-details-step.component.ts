@@ -1,13 +1,23 @@
 import { Component, OnInit, Input, ChangeDetectionStrategy } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { DatePipe } from '@angular/common';
+import { FormGroup, FormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
+import { DatePipe, NgFor } from '@angular/common';
+import { LayoutDirective, LayoutGapDirective, LayoutAlignDirective, FlexDirective } from '@ngbracket/ngx-layout/flex';
+import { MatFormField, MatLabel, MatError, MatSuffix } from '@angular/material/form-field';
+import { MatInput } from '@angular/material/input';
+import { MatSelect } from '@angular/material/select';
+import { MatOption } from '@angular/material/autocomplete';
+import { MatCheckbox } from '@angular/material/checkbox';
+import { MatDatepickerInput, MatDatepickerToggle, MatDatepicker } from '@angular/material/datepicker';
+import { MatButton } from '@angular/material/button';
+import { MatStepperPrevious, MatStepperNext } from '@angular/material/stepper';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 
 @Component({
-  standalone: false,
-  selector: 'mifosx-loan-product-details-step',
-  templateUrl: './loan-product-details-step.component.html',
-  changeDetection: ChangeDetectionStrategy.Eager,
-  styleUrls: ['./loan-product-details-step.component.scss']
+    selector: 'mifosx-loan-product-details-step',
+    templateUrl: './loan-product-details-step.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    styleUrls: ['./loan-product-details-step.component.scss'],
+    imports: [ReactiveFormsModule, LayoutDirective, LayoutGapDirective, LayoutAlignDirective, MatFormField, FlexDirective, MatLabel, MatInput, MatError, MatSelect, NgFor, MatOption, MatCheckbox, MatDatepickerInput, MatDatepickerToggle, MatSuffix, MatDatepicker, MatButton, MatStepperPrevious, FaIconComponent, MatStepperNext]
 })
 export class LoanProductDetailsStepComponent implements OnInit {
 
@@ -57,8 +67,8 @@ export class LoanProductDetailsStepComponent implements OnInit {
     // TODO: Update once language and date settings are setup
     const dateFormat = 'yyyy-MM-dd';
     this.loanProductDetailsForm.patchValue({
-      startDate: this.datePipe.transform(prevStartDate, dateFormat) || '',
-      closeDate: this.datePipe.transform(prevCloseDate, dateFormat) || ''
+      startDate: this.datePipe.transform(prevStartDate as Date, dateFormat) || '',
+      closeDate: this.datePipe.transform(prevCloseDate as Date, dateFormat) || ''
     });
     return this.loanProductDetailsForm.value;
   }

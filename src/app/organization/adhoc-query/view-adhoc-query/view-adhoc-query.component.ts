@@ -1,6 +1,6 @@
 /** Angular Imports */
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 
 /** Custom Services */
@@ -8,16 +8,22 @@ import { OrganizationService } from 'app/organization/organization.service';
 
 /** Custom Components */
 import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.component';
+import { LayoutDirective, LayoutAlignDirective, LayoutGapDirective, FlexDirective } from '@ngbracket/ngx-layout/flex';
+import { HasPermissionDirective } from '../../../directives/has-permission/has-permission.directive';
+import { MatButton } from '@angular/material/button';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import { MatCard, MatCardContent } from '@angular/material/card';
+import { NgIf } from '@angular/common';
 
 /**
  * View Adhoc Query Component.
  */
 @Component({
-  standalone: false,
-  selector: 'mifosx-view-adhoc-query',
-  templateUrl: './view-adhoc-query.component.html',
-  changeDetection: ChangeDetectionStrategy.Eager,
-  styleUrls: ['./view-adhoc-query.component.scss']
+    selector: 'mifosx-view-adhoc-query',
+    templateUrl: './view-adhoc-query.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    styleUrls: ['./view-adhoc-query.component.scss'],
+    imports: [LayoutDirective, LayoutAlignDirective, LayoutGapDirective, HasPermissionDirective, MatButton, RouterLink, FaIconComponent, MatCard, MatCardContent, FlexDirective, NgIf]
 })
 export class ViewAdhocQueryComponent implements OnInit {
 
@@ -35,7 +41,7 @@ export class ViewAdhocQueryComponent implements OnInit {
               private route: ActivatedRoute,
               private router: Router,
               private dialog: MatDialog) {
-    this.route.data.subscribe((data: { adhocQuery: any }) => {
+    this.route.data.subscribe((data: any) => {
       this.adhocQueryData = data.adhocQuery;
     });
   }

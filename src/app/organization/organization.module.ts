@@ -5,7 +5,7 @@ import { NgModule } from '@angular/core';
 import { SharedModule } from '../shared/shared.module';
 import { OrganizationRoutingModule } from './organization-routing.module';
 import { PipesModule } from 'app/pipes/pipes.module';
-import { DirectivesModule } from 'app/directives/directives.module';
+
 
 /** Custom Components */
 import { OrganizationComponent } from './organization.component';
@@ -76,13 +76,10 @@ import { CreateHolidayComponent } from './holidays/create-holiday/create-holiday
  * Organization components should be declared here.
  */
 @NgModule({
-  imports: [
+    imports: [
     SharedModule,
     PipesModule,
-    DirectivesModule,
-    OrganizationRoutingModule
-  ],
-  declarations: [
+    OrganizationRoutingModule,
     OrganizationComponent,
     LoanProvisioningCriteriaComponent,
     OfficesComponent,
@@ -143,7 +140,7 @@ import { CreateHolidayComponent } from './holidays/create-holiday/create-holiday
     EditLoanProvisioningCriteriaComponent,
     StandingInstructionsHistoryComponent,
     FundMappingComponent,
-    CreateHolidayComponent,
-  ]
+    CreateHolidayComponent
+]
 })
 export class OrganizationModule { }

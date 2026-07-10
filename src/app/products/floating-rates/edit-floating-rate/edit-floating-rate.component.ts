@@ -1,12 +1,12 @@
 /** Angular Imports */
 import { Component, OnInit, ViewChild, ChangeDetectionStrategy } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
-import { FormBuilder, FormGroup, Validators, FormArray } from '@angular/forms';
-import { DatePipe } from '@angular/common';
+import { Router, ActivatedRoute, RouterLink } from '@angular/router';
+import { FormBuilder, FormGroup, Validators, FormArray, ReactiveFormsModule } from '@angular/forms';
+import { DatePipe, NgIf } from '@angular/common';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
-import { MatSort } from '@angular/material/sort';
-import { MatTableDataSource } from '@angular/material/table';
+import { MatSort, MatSortHeader } from '@angular/material/sort';
+import { MatTableDataSource, MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow } from '@angular/material/table';
 
 /** Custom Services */
 import { ProductsService } from '../../products.service';
@@ -14,16 +14,25 @@ import { ProductsService } from '../../products.service';
 /** Custom Components */
 import { FloatingRatePeriodDialogComponent } from '../floating-rate-period-dialog/floating-rate-period-dialog.component';
 import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.component';
+import { MatCard, MatCardContent, MatCardActions } from '@angular/material/card';
+import { LayoutDirective, LayoutGapDirective, FlexDirective, LayoutAlignDirective } from '@ngbracket/ngx-layout/flex';
+import { MatFormField, MatLabel, MatError } from '@angular/material/form-field';
+import { MatInput } from '@angular/material/input';
+import { MatCheckbox } from '@angular/material/checkbox';
+import { MatDivider } from '@angular/material/divider';
+import { MatMiniFabButton, MatIconButton, MatButton } from '@angular/material/button';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import { MatTooltip } from '@angular/material/tooltip';
 
 /**
  * Edit Floating Rate Component.
  */
 @Component({
-  standalone: false,
-  selector: 'mifosx-edit-floating-rate',
-  templateUrl: './edit-floating-rate.component.html',
-  changeDetection: ChangeDetectionStrategy.Eager,
-  styleUrls: ['./edit-floating-rate.component.scss']
+    selector: 'mifosx-edit-floating-rate',
+    templateUrl: './edit-floating-rate.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    styleUrls: ['./edit-floating-rate.component.scss'],
+    imports: [MatCard, ReactiveFormsModule, MatCardContent, LayoutDirective, LayoutGapDirective, MatFormField, FlexDirective, MatLabel, MatInput, NgIf, MatError, MatCheckbox, MatDivider, MatMiniFabButton, FaIconComponent, MatTable, MatSort, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatSortHeader, MatCellDef, MatCell, MatTooltip, MatIconButton, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow, MatPaginator, MatCardActions, LayoutAlignDirective, MatButton, RouterLink, DatePipe]
 })
 export class EditFloatingRateComponent implements OnInit {
 
@@ -64,7 +73,7 @@ export class EditFloatingRateComponent implements OnInit {
               private route: ActivatedRoute,
               private datePipe: DatePipe,
               private dialog: MatDialog) {
-    this.route.data.subscribe((data: { floatingRate: any }) => {
+    this.route.data.subscribe((data: any) => {
       this.floatingRateData = data.floatingRate;
       this.floatingRatePeriodsData = data.floatingRate.ratePeriods ? data.floatingRate.ratePeriods : [];
     });
@@ -181,7 +190,7 @@ export class EditFloatingRateComponent implements OnInit {
       floatingRatePeriod.fromDate = this.datePipe.transform(floatingRatePeriod.fromDate, this.dateFormat);
     });
     this.floatingRateForm.value.ratePeriods = this.floatingRatePeriodsData.length > 0 ? this.floatingRatePeriodsData : undefined;
-    this.productsService.updateFloatingRate(this.route.snapshot.paramMap.get('id'), this.floatingRateForm.value)
+    this.productsService.updateFloatingRate(this.route.snapshot.paramMap.get('id')!, this.floatingRateForm.value)
       .subscribe((response: any) => {
         this.router.navigate(['../../', response.resourceId], { relativeTo: this.route });
       });

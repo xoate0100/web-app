@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, ChangeDetectionStrategy } from '@angular/core';
-import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
-import { DatePipe } from '@angular/common';
+import { FormGroup, FormBuilder, Validators, FormArray, AbstractControl, ReactiveFormsModule } from '@angular/forms';
+import { DatePipe, NgFor, NgIf, NgSwitch, NgSwitchCase } from '@angular/common';
 import { MatDialog } from '@angular/material/dialog';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 
@@ -11,20 +11,33 @@ import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.co
 import { FormfieldBase } from 'app/shared/form-dialog/formfield/model/formfield-base';
 import { SelectBase } from 'app/shared/form-dialog/formfield/model/select-base';
 import { InputBase } from 'app/shared/form-dialog/formfield/model/input-base';
+import { LayoutDirective, LayoutGapDirective, FlexDirective, LayoutAlignDirective, FlexFillDirective } from '@ngbracket/ngx-layout/flex';
+import { MatButton, MatIconButton } from '@angular/material/button';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import { MatDivider } from '@angular/material/divider';
+import { MatTooltip } from '@angular/material/tooltip';
+import { MatFormField, MatLabel, MatSuffix, MatError } from '@angular/material/form-field';
+import { MatInput } from '@angular/material/input';
+import { MatDatepickerInput, MatDatepickerToggle, MatDatepicker } from '@angular/material/datepicker';
+import { MatCheckbox } from '@angular/material/checkbox';
+import { MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow } from '@angular/material/table';
+import { MatCard } from '@angular/material/card';
+import { MatStepperPrevious, MatStepperNext } from '@angular/material/stepper';
+import { FindPipe } from '../../../../pipes/find.pipe';
 
 @Component({
-  standalone: false,
-  selector: 'mifosx-fixed-deposit-product-interest-rate-chart-step',
-  templateUrl: './fixed-deposit-product-interest-rate-chart-step.component.html',
-  styleUrls: ['./fixed-deposit-product-interest-rate-chart-step.component.scss'],
-  changeDetection: ChangeDetectionStrategy.Eager,
-  animations: [
-    trigger('expandChartSlab', [
-      state('collapsed', style({ height: '0px', minHeight: '0' })),
-      state('expanded', style({ height: '*' })),
-      transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)'))
-    ])
-  ]
+    selector: 'mifosx-fixed-deposit-product-interest-rate-chart-step',
+    templateUrl: './fixed-deposit-product-interest-rate-chart-step.component.html',
+    styleUrls: ['./fixed-deposit-product-interest-rate-chart-step.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
+    animations: [
+        trigger('expandChartSlab', [
+            state('collapsed', style({ height: '0px', minHeight: '0' })),
+            state('expanded', style({ height: '*' })),
+            transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)'))
+        ])
+    ],
+    imports: [ReactiveFormsModule, LayoutDirective, LayoutGapDirective, FlexDirective, LayoutAlignDirective, MatButton, FaIconComponent, NgFor, FlexFillDirective, MatDivider, MatIconButton, MatTooltip, MatFormField, MatLabel, MatInput, MatDatepickerInput, MatDatepickerToggle, MatSuffix, MatDatepicker, MatError, MatCheckbox, NgIf, MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatCard, NgSwitch, NgSwitchCase, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow, MatStepperPrevious, MatStepperNext, FindPipe]
 })
 export class FixedDepositProductInterestRateChartStepComponent implements OnInit {
 
@@ -86,7 +99,8 @@ export class FixedDepositProductInterestRateChartStepComponent implements OnInit
     this.getChartsDetailsData();
 
     // Iterates for every chart in charts
-    this.charts.controls.forEach((chartDetailControl: FormGroup, i: number) => {
+    this.charts.controls.forEach((control: AbstractControl, i: number) => {
+      const chartDetailControl = control as FormGroup;
 
       // Iterate for every chartSlab in chart
       this.chartsDetail[i].chartSlabs.forEach((chartSlabDetail: any, j: number) => {
@@ -105,7 +119,7 @@ export class FixedDepositProductInterestRateChartStepComponent implements OnInit
         formArray.push(chartSlabInfo);
 
         // Iterate for every slab in chartSlab
-        const chartIncentiveControl = chartDetailControl.controls['chartSlabs']['controls'][j];
+        const chartIncentiveControl = formArray.at(j) as FormGroup;
 
         // Iterate to input all the incentive for particular chart slab
         this.chartsDetail[i].chartSlabs[j].incentives.forEach((chartIncentiveDetail: any) => {
@@ -221,7 +235,7 @@ export class FixedDepositProductInterestRateChartStepComponent implements OnInit
 
   setConditionalControls(chartIndex: number) {
     this.chartSlabsDisplayedColumns[chartIndex] = ['period', 'amountRange', 'annualInterestRate', 'description', 'actions'];
-    this.charts.at(chartIndex).get('isPrimaryGroupingByAmount').valueChanges
+    this.charts.at(chartIndex)!.get('isPrimaryGroupingByAmount')!.valueChanges
       .subscribe((isPrimaryGroupingByAmount: boolean) => {
         this.chartSlabsDisplayedColumns[chartIndex] = isPrimaryGroupingByAmount ? ['amountRange', 'period'] : ['period', 'amountRange'];
         this.chartSlabsDisplayedColumns[chartIndex].push('annualInterestRate', 'description', 'actions');
@@ -229,7 +243,7 @@ export class FixedDepositProductInterestRateChartStepComponent implements OnInit
   }
 
   getIncentives(chartSlabs: FormArray, chartSlabIndex: number): FormArray {
-    return chartSlabs.at(chartSlabIndex).get('incentives') as FormArray;
+    return chartSlabs.at(chartSlabIndex)!.get('incentives') as FormArray;
   }
 
   addChartSlab(chartSlabs: FormArray) {
@@ -254,21 +268,21 @@ export class FixedDepositProductInterestRateChartStepComponent implements OnInit
   }
 
   editChartSlab(chartSlabs: FormArray, chartSlabIndex: number) {
-    const data = { ...this.getData('Slab', chartSlabs.at(chartSlabIndex).value), layout: { addButtonText: 'Edit' } };
+    const data = { ...this.getData('Slab', chartSlabs.at(chartSlabIndex)!.value), layout: { addButtonText: 'Edit' } };
     const dialogRef = this.dialog.open(FormDialogComponent, { data });
     dialogRef.afterClosed().subscribe((response: any) => {
       if (response.data) {
-        chartSlabs.at(chartSlabIndex).patchValue(response.data.value);
+        chartSlabs.at(chartSlabIndex)!.patchValue(response.data.value);
       }
     });
   }
 
   editIncentive(incentives: FormArray, incentiveIndex: number) {
-    const data = { ...this.getData('Incentive', incentives.at(incentiveIndex).value), layout: { addButtonText: 'Edit' } };
+    const data = { ...this.getData('Incentive', incentives.at(incentiveIndex)!.value), layout: { addButtonText: 'Edit' } };
     const dialogRef = this.dialog.open(DepositProductIncentiveFormDialogComponent, { data });
     dialogRef.afterClosed().subscribe((response: any) => {
       if (response.data) {
-        incentives.at(incentiveIndex).patchValue(response.data.value);
+        incentives.at(incentiveIndex)!.patchValue(response.data.value);
       }
     });
   }
@@ -358,10 +372,10 @@ export class FixedDepositProductInterestRateChartStepComponent implements OnInit
     for (const chart of fixedDepositProductInterestRateChart.charts) {
       chart.dateFormat = dateFormat;
       chart.locale = locale;
-      chart.fromDate = this.datePipe.transform(chart.fromDate, dateFormat) || '';
-      chart.endDate = this.datePipe.transform(chart.endDate, dateFormat) || '';
+      chart.fromDate = this.datePipe.transform(chart.fromDate as Date, dateFormat) || '';
+      chart.endDate = this.datePipe.transform(chart.endDate as Date, dateFormat) || '';
       if (chart.endDate === '') {
-        delete chart.endDate;
+        delete (chart as any).endDate;
       }
     }
     return fixedDepositProductInterestRateChart;

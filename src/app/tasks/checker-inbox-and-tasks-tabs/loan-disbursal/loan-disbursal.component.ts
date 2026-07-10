@@ -1,9 +1,9 @@
 /** Angular Imports */
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { SelectionModel } from '@angular/cdk/collections';
-import { DatePipe } from '@angular/common';
-import { MatTableDataSource } from '@angular/material/table';
+import { DatePipe, NgIf, DecimalPipe } from '@angular/common';
+import { MatTableDataSource, MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow } from '@angular/material/table';
 import { MatDialog } from '@angular/material/dialog';
 
 /** Dialog Imports */
@@ -12,13 +12,20 @@ import { ConfirmationDialogComponent } from 'app/shared/confirmation-dialog/conf
 /** Custom Services */
 import { TasksService } from '../../tasks.service';
 import { SettingsService } from 'app/settings/settings.service';
+import { LayoutDirective, LayoutAlignDirective, FlexDirective } from '@ngbracket/ngx-layout/flex';
+import { MatFormField } from '@angular/material/form-field';
+import { MatInput } from '@angular/material/input';
+import { HasPermissionDirective } from '../../../directives/has-permission/has-permission.directive';
+import { MatButton } from '@angular/material/button';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import { MatCheckbox } from '@angular/material/checkbox';
 
 @Component({
-  standalone: false,
-  selector: 'mifosx-loan-disbursal',
-  templateUrl: './loan-disbursal.component.html',
-  changeDetection: ChangeDetectionStrategy.Eager,
-  styleUrls: ['./loan-disbursal.component.scss']
+    selector: 'mifosx-loan-disbursal',
+    templateUrl: './loan-disbursal.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    styleUrls: ['./loan-disbursal.component.scss'],
+    imports: [NgIf, LayoutDirective, LayoutAlignDirective, FlexDirective, MatFormField, MatInput, HasPermissionDirective, MatButton, FaIconComponent, MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCheckbox, MatCellDef, MatCell, RouterLink, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow, DecimalPipe]
 })
 export class LoanDisbursalComponent {
 
@@ -47,13 +54,13 @@ export class LoanDisbursalComponent {
     private datePipe: DatePipe,
     private settingsService: SettingsService,
     private tasksService: TasksService) {
-    this.route.data.subscribe((data: { loansData: any }) => {
+    this.route.data.subscribe((data: any) => {
       this.loans = data.loansData.pageItems;
       this.loans = this.loans.filter((account: any) => {
         return (account.status.waitingForDisbursal === true);
       });
       this.dataSource = new MatTableDataSource(this.loans);
-      this.selection = new SelectionModel(true, []);
+      this.selection = new SelectionModel<any>(true, []);
     });
   }
 
@@ -92,7 +99,7 @@ export class LoanDisbursalComponent {
 
   bulkLoanDisbursal() {
     const dateFormat = this.settingsService.dateFormat;
-    const approvedOnDate = this.datePipe.transform(new Date(), dateFormat);
+    const approvedOnDate = this.datePipe.transform(new Date() as Date, dateFormat);
     const locale = this.settingsService.language.code;
     const formData = {
       dateFormat,
@@ -131,7 +138,7 @@ export class LoanDisbursalComponent {
         return (account.status.waitingForDisbursal === true);
       });
       this.dataSource = new MatTableDataSource(this.loans);
-      this.selection = new SelectionModel(true, []);
+      this.selection = new SelectionModel<any>(true, []);
     });
   }
 

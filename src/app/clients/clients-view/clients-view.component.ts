@@ -1,6 +1,6 @@
 /** Angular Imports */
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { DomSanitizer } from '@angular/platform-browser';
 import { MatDialog } from '@angular/material/dialog';
 
@@ -15,13 +15,24 @@ import { CaptureImageDialogComponent } from './custom-dialogs/capture-image-dial
 
 /** Custom Services */
 import { ClientsService } from '../clients.service';
+import { MatCard, MatCardHeader, MatCardTitleGroup, MatCardMdImage, MatCardTitle, MatCardSubtitle, MatCardActions, MatCardContent } from '@angular/material/card';
+import { LayoutDirective, LayoutAlignDirective } from '@ngbracket/ngx-layout/flex';
+import { HasPermissionDirective } from '../../directives/has-permission/has-permission.directive';
+import { MatButton } from '@angular/material/button';
+import { MatTooltip } from '@angular/material/tooltip';
+import { NgClass, NgFor, NgIf, DatePipe } from '@angular/common';
+import { ClassDirective } from '@ngbracket/ngx-layout/extended';
+import { MatMenuTrigger, MatMenu, MatMenuItem } from '@angular/material/menu';
+import { MatTabNav, MatTabLink } from '@angular/material/tabs';
+import { StatusLookupPipe } from '../../pipes/status-lookup.pipe';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 
 @Component({
-  standalone: false,
-  selector: 'mifosx-clients-view',
-  templateUrl: './clients-view.component.html',
-  changeDetection: ChangeDetectionStrategy.Eager,
-  styleUrls: ['./clients-view.component.scss']
+    selector: 'mifosx-clients-view',
+    templateUrl: './clients-view.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    styleUrls: ['./clients-view.component.scss'],
+    imports: [FaIconComponent, MatCard, MatCardHeader, LayoutDirective, MatCardTitleGroup, MatCardMdImage, LayoutAlignDirective, HasPermissionDirective, MatButton, MatTooltip, MatCardTitle, NgClass, ClassDirective, MatCardSubtitle, NgFor, NgIf, MatCardActions, RouterLink, MatMenuTrigger, MatMenu, MatMenuItem, MatCardContent, MatTabNav, MatTabLink, RouterLinkActive, RouterOutlet, DatePipe, StatusLookupPipe]
 })
 export class ClientsViewComponent implements OnInit {
 
@@ -35,11 +46,7 @@ export class ClientsViewComponent implements OnInit {
               private clientsService: ClientsService,
               private _sanitizer: DomSanitizer,
               public dialog: MatDialog) {
-    this.route.data.subscribe((data: {
-      clientViewData: any,
-      clientTemplateData: any,
-      clientDatatables: any
-    }) => {
+    this.route.data.subscribe((data: any) => {
       this.clientViewData = data.clientViewData;
       this.clientDatatables = data.clientDatatables;
       this.clientTemplateData = data.clientTemplateData;
@@ -181,7 +188,7 @@ export class ClientsViewComponent implements OnInit {
    */
   private uploadSignature() {
     const uploadSignatureDialogRef = this.dialog.open(UploadSignatureDialogComponent);
-    uploadSignatureDialogRef.afterClosed().subscribe((signature: File) => {
+    uploadSignatureDialogRef.afterClosed().subscribe((signature: any) => {
       if (signature) {
         this.clientsService.uploadClientSignatureImage(this.clientViewData.id, signature)
           .subscribe(() => {
@@ -232,7 +239,7 @@ export class ClientsViewComponent implements OnInit {
    */
   private uploadProfileImage() {
     const uploadImageDialogRef = this.dialog.open(UploadImageDialogComponent);
-    uploadImageDialogRef.afterClosed().subscribe((image: File) => {
+    uploadImageDialogRef.afterClosed().subscribe((image: any) => {
       if (image) {
         this.clientsService.uploadClientProfileImage(this.clientViewData.id, image)
           .subscribe(() => {

@@ -2,11 +2,11 @@
 import { Component, OnInit, ViewChild, ChangeDetectionStrategy } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
-import { MatSort } from '@angular/material/sort';
-import { MatTableDataSource } from '@angular/material/table';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
-import { DatePipe } from '@angular/common';
+import { MatSort, MatSortHeader } from '@angular/material/sort';
+import { MatTableDataSource, MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow } from '@angular/material/table';
+import { FormGroup, FormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { DatePipe, NgIf, NgFor } from '@angular/common';
 
 /** Services Import */
 import { CollectionsService } from '../collections.service';
@@ -18,16 +18,25 @@ import { FormDialogComponent } from 'app/shared/form-dialog/form-dialog.componen
 import { FormfieldBase } from 'app/shared/form-dialog/formfield/model/formfield-base';
 import { InputBase } from 'app/shared/form-dialog/formfield/model/input-base';
 import { SelectBase } from 'app/shared/form-dialog/formfield/model/select-base';
+import { MatCard, MatCardActions } from '@angular/material/card';
+import { LayoutDirective, LayoutGapDirective, LayoutAlignDirective, FlexDirective } from '@ngbracket/ngx-layout/flex';
+import { MatFormField, MatLabel, MatError, MatSuffix } from '@angular/material/form-field';
+import { MatSelect } from '@angular/material/select';
+import { MatOption } from '@angular/material/autocomplete';
+import { MatInput } from '@angular/material/input';
+import { MatDatepickerInput, MatDatepickerToggle, MatDatepicker } from '@angular/material/datepicker';
+import { MatButton } from '@angular/material/button';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 
 /**
  * Individual Collection Sheet
  */
 @Component({
-  standalone: false,
-  selector: 'mifosx-individual-collection-sheet',
-  templateUrl: './individual-collection-sheet.component.html',
-  changeDetection: ChangeDetectionStrategy.Eager,
-  styleUrls: ['./individual-collection-sheet.component.scss']
+    selector: 'mifosx-individual-collection-sheet',
+    templateUrl: './individual-collection-sheet.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    styleUrls: ['./individual-collection-sheet.component.scss'],
+    imports: [NgIf, MatCard, ReactiveFormsModule, LayoutDirective, LayoutGapDirective, LayoutAlignDirective, MatFormField, FlexDirective, MatLabel, MatSelect, NgFor, MatOption, MatError, MatInput, MatDatepickerInput, MatDatepickerToggle, MatSuffix, MatDatepicker, MatCardActions, MatButton, RouterLink, FaIconComponent, MatTable, MatSort, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatSortHeader, MatCellDef, MatCell, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow, MatPaginator]
 })
 export class IndividualCollectionSheetComponent implements OnInit {
 
@@ -52,7 +61,7 @@ export class IndividualCollectionSheetComponent implements OnInit {
   /** checks and stores the local storage values */
   Success: boolean;
   /** Bulk Disbursement Transactions Data */
-  bulkDisbursementTransactionsData = {};
+  bulkDisbursementTransactionsData: Record<string, any> = {};
   /** Bulk Repayment Transactions Data */
   bulkRepaymentTransactions: any[] = [];
   /** Bulk Savings Due Data */
@@ -91,7 +100,7 @@ export class IndividualCollectionSheetComponent implements OnInit {
     private datePipe: DatePipe,
     public dialog: MatDialog,
     private router: Router, ) {
-    this.route.data.subscribe((data: { officesData: any }) => {
+    this.route.data.subscribe((data: any) => {
       this.officesData = data.officesData;
     });
   }
@@ -121,7 +130,7 @@ export class IndividualCollectionSheetComponent implements OnInit {
    * Checks for the office id value change
    */
   buildDependencies() {
-    this.collectionSheetForm.get('officeId').valueChanges.subscribe((value: any) => {
+    this.collectionSheetForm.get('officeId')!.valueChanges.subscribe((value: any) => {
       this.collectionsService.getStaffs(value).subscribe((response: any) => {
         this.loanOfficerData = response;
       });
@@ -234,7 +243,7 @@ export class IndividualCollectionSheetComponent implements OnInit {
       if (response.data) {
         if (type === 'loans') {
           const totalDue = this.getLoanTotalDueAmount(selectedData);
-          const loanTransaction = {
+          const loanTransaction: Record<string, any> = {
             loanId: selectedData.loanId,
             transactionAmount: totalDue
           };
@@ -252,7 +261,7 @@ export class IndividualCollectionSheetComponent implements OnInit {
           if (isNaN(dueAmount)) {
             dueAmount = 0;
           }
-          const savingsTransaction = {
+          const savingsTransaction: Record<string, any> = {
             savingsId: selectedData.savingsId,
             transactionAmount: dueAmount,
             depositAccountType: selectedData.depositAccountType === 'Saving Deposit' ? 100 : (selectedData.depositAccountType === 'Recurring Deposit' ? 300 : 400)
@@ -282,12 +291,12 @@ export class IndividualCollectionSheetComponent implements OnInit {
     const dateFormat = 'dd MMMM yyyy';
     const collectionSheet = {
       ...this.collectionSheetForm.value,
-      'transactionDate': this.datePipe.transform(this.collectionSheetForm.value.transactionDate, dateFormat),
+      'transactionDate': this.datePipe.transform(this.collectionSheetForm.value.transactionDate as Date, dateFormat),
       dateFormat,
       locale
     };
     if (collectionSheet.staffId === '') {
-      delete collectionSheet.staffId;
+      delete (collectionSheet as any).staffId;
     }
     this.collectionsService.retrieveCollectionSheetData(collectionSheet).subscribe((response: any) => {
       if (response.clients.length > 0) {
@@ -313,8 +322,8 @@ export class IndividualCollectionSheetComponent implements OnInit {
     const finalSubmitData = {
       dateFormat,
       locale,
-      actualDisbursementDate: this.datePipe.transform(this.collectionSheetForm.value.transactionDate, dateFormat),
-      transactionDate: this.datePipe.transform(this.collectionSheetForm.value.transactionDate, dateFormat),
+      actualDisbursementDate: this.datePipe.transform(this.collectionSheetForm.value.transactionDate as Date, dateFormat),
+      transactionDate: this.datePipe.transform(this.collectionSheetForm.value.transactionDate as Date, dateFormat),
       bulkDisbursementTransactions: this.bulkDisbursementTransactionsData
     };
     this.collectionsService.executeSaveCollectionSheet(finalSubmitData).subscribe(() => {

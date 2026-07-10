@@ -1,6 +1,19 @@
 /** Angular Imports */
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { FormControl, ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { MatCard, MatCardHeader, MatCardContent, MatCardActions } from '@angular/material/card';
+import { MatRadioGroup, MatRadioButton } from '@angular/material/radio';
+import { LayoutDirective, LayoutGapDirective, LayoutAlignDirective, FlexDirective } from '@ngbracket/ngx-layout/flex';
+import { NgFor, NgIf } from '@angular/common';
+import { MatFormField, MatLabel, MatSuffix } from '@angular/material/form-field';
+import { MatSelect } from '@angular/material/select';
+import { MatOption } from '@angular/material/autocomplete';
+import { MatButton } from '@angular/material/button';
+import { RouterLink } from '@angular/router';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import { MatInput } from '@angular/material/input';
+import { ShowHideDirective } from '@ngbracket/ngx-layout/extended';
+import { MatDatepickerInput, MatDatepickerToggle, MatDatepicker } from '@angular/material/datepicker';
 
 /**
  * Create self service user component.
@@ -8,11 +21,11 @@ import { FormControl } from '@angular/forms';
  * TODO: Complete functionality once API is available.
  */
 @Component({
-  standalone: false,
-  selector: 'mifosx-create-user',
-  templateUrl: './create-user.component.html',
-  changeDetection: ChangeDetectionStrategy.Eager,
-  styleUrls: ['./create-user.component.scss']
+    selector: 'mifosx-create-user',
+    templateUrl: './create-user.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    styleUrls: ['./create-user.component.scss'],
+    imports: [MatCard, MatCardHeader, MatRadioGroup, LayoutDirective, LayoutGapDirective, ReactiveFormsModule, NgFor, MatRadioButton, NgIf, FormsModule, MatCardContent, MatFormField, MatLabel, MatSelect, MatOption, MatCardActions, LayoutAlignDirective, MatButton, RouterLink, FaIconComponent, FlexDirective, MatInput, ShowHideDirective, MatDatepickerInput, MatDatepickerToggle, MatSuffix, MatDatepicker]
 })
 export class CreateUserComponent implements OnInit {
 

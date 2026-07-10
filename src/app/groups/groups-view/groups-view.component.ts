@@ -1,6 +1,6 @@
 /** Angular Imports */
 import { Component, ChangeDetectionStrategy } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 
 /** Custom Dialogs */
@@ -9,16 +9,27 @@ import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.co
 
 /** Custom Services */
 import { GroupsService } from '../groups.service';
+import { MatCard, MatCardHeader, MatCardTitleGroup, MatCardMdImage, MatCardTitle, MatCardSubtitle, MatCardActions, MatCardContent } from '@angular/material/card';
+import { LayoutDirective, LayoutAlignDirective } from '@ngbracket/ngx-layout/flex';
+import { NgClass, NgIf, NgFor, LowerCasePipe, DatePipe } from '@angular/common';
+import { ClassDirective } from '@ngbracket/ngx-layout/extended';
+import { MatTooltip } from '@angular/material/tooltip';
+import { HasPermissionDirective } from '../../directives/has-permission/has-permission.directive';
+import { MatButton } from '@angular/material/button';
+import { MatMenuTrigger, MatMenu, MatMenuItem } from '@angular/material/menu';
+import { MatTabNav, MatTabLink } from '@angular/material/tabs';
+import { StatusLookupPipe } from '../../pipes/status-lookup.pipe';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 
 /**
  * Groups View Component.
  */
 @Component({
-  standalone: false,
-  selector: 'mifosx-groups-view',
-  templateUrl: './groups-view.component.html',
-  changeDetection: ChangeDetectionStrategy.Eager,
-  styleUrls: ['./groups-view.component.scss']
+    selector: 'mifosx-groups-view',
+    templateUrl: './groups-view.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    styleUrls: ['./groups-view.component.scss'],
+    imports: [FaIconComponent, MatCard, MatCardHeader, LayoutDirective, MatCardTitleGroup, MatCardMdImage, MatCardTitle, NgClass, ClassDirective, MatTooltip, MatCardSubtitle, NgIf, LayoutAlignDirective, MatCardActions, HasPermissionDirective, MatButton, MatMenuTrigger, MatMenu, MatMenuItem, RouterLink, MatCardContent, MatTabNav, MatTabLink, RouterLinkActive, NgFor, RouterOutlet, LowerCasePipe, DatePipe, StatusLookupPipe]
 })
 export class GroupsViewComponent {
 
@@ -38,7 +49,7 @@ export class GroupsViewComponent {
               private groupsService: GroupsService,
               private router: Router,
               public dialog: MatDialog) {
-    this.route.data.subscribe((data: { groupViewData: any, groupDatatables: any }) => {
+    this.route.data.subscribe((data: any) => {
       this.groupViewData = data.groupViewData;
       this.groupDatatables = data.groupDatatables;
     });

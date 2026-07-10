@@ -1,26 +1,33 @@
 /** Angular Imports */
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { MatTable } from '@angular/material/table';
+import { ActivatedRoute, RouterLink } from '@angular/router';
+import { MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow } from '@angular/material/table';
 import { MatDialog } from '@angular/material/dialog';
 import { trigger, state, transition, animate, style } from '@angular/animations';
+import { LayoutDirective, LayoutAlignDirective, LayoutGapDirective, FlexFillDirective, FlexDirective } from '@ngbracket/ngx-layout/flex';
+import { MatButton } from '@angular/material/button';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import { MatCard, MatCardContent } from '@angular/material/card';
+import { MatDivider } from '@angular/material/divider';
+import { NgIf, NgSwitch, NgSwitchCase, DecimalPipe, DatePipe } from '@angular/common';
+import { FindPipe } from '../../../pipes/find.pipe';
 
 /**
  * Fixed Deposit Product component.
  */
 @Component({
-  standalone: false,
-  selector: 'mifosx-view-fixed-deposit-product',
-  templateUrl: './view-fixed-deposit-product.component.html',
-  styleUrls: ['./view-fixed-deposit-product.component.scss'],
-  changeDetection: ChangeDetectionStrategy.Eager,
-  animations: [
-    trigger('expandChartSlab', [
-      state('collapsed', style({height: '0px', minHeight: '0'})),
-      state('expanded', style({height: '*'})),
-      transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)'))
-    ])
-  ]
+    selector: 'mifosx-view-fixed-deposit-product',
+    templateUrl: './view-fixed-deposit-product.component.html',
+    styleUrls: ['./view-fixed-deposit-product.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
+    animations: [
+        trigger('expandChartSlab', [
+            state('collapsed', style({ height: '0px', minHeight: '0' })),
+            state('expanded', style({ height: '*' })),
+            transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)'))
+        ])
+    ],
+    imports: [LayoutDirective, LayoutAlignDirective, LayoutGapDirective, MatButton, RouterLink, FaIconComponent, MatCard, MatCardContent, FlexFillDirective, MatDivider, FlexDirective, NgIf, MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, NgSwitch, NgSwitchCase, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow, DecimalPipe, DatePipe, FindPipe]
 })
 
 export class ViewFixedDepositProductComponent implements OnInit {
@@ -35,13 +42,14 @@ export class ViewFixedDepositProductComponent implements OnInit {
   chargesDisplayedColumns: string[] = ['name', 'type', 'amount', 'collectedon'];
   paymentFundSourceDisplayedColumns: string[] = ['paymentTypeId', 'fundSourceAccountId'];
   feesPenaltyIncomeDisplayedColumns: string[] = ['chargeId', 'incomeAccountId'];
+  expandChartSlabIndex: number | null = null;
 
   /**
    * Retrieves the fixed deposit product data from `resolve`.
    * @param {ActivatedRoute} route Activated Route.
    */
   constructor(private route: ActivatedRoute) {
-    this.route.data.subscribe((data: { fixedDepositProduct: any, fixedDepositProductsTemplate: any }) => {
+    this.route.data.subscribe((data: any) => {
       this.fixedDepositProductData = data.fixedDepositProduct;
       this.fixedDepositProductsTemplate = data.fixedDepositProductsTemplate;
     });

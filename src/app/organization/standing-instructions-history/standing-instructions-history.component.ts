@@ -1,25 +1,36 @@
 /** Angular Imports */
 import { Component, OnInit, ViewChild, ChangeDetectionStrategy } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
-import { MatSort } from '@angular/material/sort';
-import { MatTableDataSource, MatTable } from '@angular/material/table';
-import { FormGroup, FormBuilder, FormControl } from '@angular/forms';
-import { Router, ActivatedRoute } from '@angular/router';
-import { DatePipe } from '@angular/common';
+import { MatSort, MatSortHeader } from '@angular/material/sort';
+import { MatTableDataSource, MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow } from '@angular/material/table';
+import { FormGroup, FormBuilder, FormControl, ReactiveFormsModule } from '@angular/forms';
+import { Router, ActivatedRoute, RouterLink } from '@angular/router';
+import { DatePipe, NgIf, NgFor, DecimalPipe } from '@angular/common';
 
 /** Custom Services */
 import { OrganizationService } from '../organization.service';
 import { SettingsService } from 'app/settings/settings.service';
+import { MatCard, MatCardContent, MatCardActions } from '@angular/material/card';
+import { LayoutDirective, LayoutAlignDirective, LayoutGapDirective } from '@ngbracket/ngx-layout/flex';
+import { MatFormField, MatLabel, MatSuffix } from '@angular/material/form-field';
+import { MatInput } from '@angular/material/input';
+import { MatSelect } from '@angular/material/select';
+import { MatOption } from '@angular/material/autocomplete';
+import { MatDatepickerInput, MatDatepickerToggle, MatDatepicker } from '@angular/material/datepicker';
+import { MatButton } from '@angular/material/button';
+import { HasPermissionDirective } from '../../directives/has-permission/has-permission.directive';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import { MatTooltip } from '@angular/material/tooltip';
 
 /**
  * View Standing Instructions History Component.
  */
 @Component({
-  standalone: false,
-  selector: 'mifosx-standing-instructions-history',
-  templateUrl: './standing-instructions-history.component.html',
-  changeDetection: ChangeDetectionStrategy.Eager,
-  styleUrls: ['./standing-instructions-history.component.scss']
+    selector: 'mifosx-standing-instructions-history',
+    templateUrl: './standing-instructions-history.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    styleUrls: ['./standing-instructions-history.component.scss'],
+    imports: [NgIf, MatCard, ReactiveFormsModule, MatCardContent, LayoutDirective, MatFormField, MatLabel, MatInput, MatSelect, NgFor, MatOption, MatDatepickerInput, MatDatepickerToggle, MatSuffix, MatDatepicker, MatCardActions, LayoutAlignDirective, LayoutGapDirective, MatButton, RouterLink, HasPermissionDirective, FaIconComponent, MatTable, MatSort, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatSortHeader, MatCellDef, MatCell, MatTooltip, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow, MatPaginator, DecimalPipe]
 })
 export class StandingInstructionsHistoryComponent implements OnInit {
 
@@ -59,7 +70,7 @@ export class StandingInstructionsHistoryComponent implements OnInit {
               private router: Router,
               private route: ActivatedRoute,
               private datePipe: DatePipe) {
-    this.route.data.subscribe((data: { standingInstructionsTemplate: any }) => {
+    this.route.data.subscribe((data: any) => {
       this.standingInstructionsTemplate = data.standingInstructionsTemplate;
     });
   }
@@ -87,7 +98,7 @@ export class StandingInstructionsHistoryComponent implements OnInit {
    * Sets conditional child controls.
    */
   buildDependencies() {
-    this.instructionForm.get('fromAccountType').valueChanges.subscribe(() => {
+    this.instructionForm.get('fromAccountType')!.valueChanges.subscribe(() => {
       this.instructionForm.addControl('fromAccountId', new FormControl(''));
     });
   }
@@ -112,8 +123,8 @@ export class StandingInstructionsHistoryComponent implements OnInit {
     const instruction = this.instructionForm.value;
     instruction.locale = this.settingsService.language.code;
     instruction.dateFormat = dateFormat;
-    instruction.fromDate = this.datePipe.transform(instruction.fromDate, dateFormat);
-    instruction.toDate = this.datePipe.transform(instruction.toDate, dateFormat);
+    instruction.fromDate = this.datePipe.transform(instruction.fromDate as Date, dateFormat);
+    instruction.toDate = this.datePipe.transform(instruction.toDate as Date, dateFormat);
     this.organizationService.getStandingInstructions(instruction).subscribe((response: any) => {
       this.setInstructions(response.pageItems);
     });

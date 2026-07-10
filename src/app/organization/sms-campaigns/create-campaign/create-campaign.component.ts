@@ -1,7 +1,7 @@
 /** Angular Imports */
 import { Component, ViewChild, ChangeDetectionStrategy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { DatePipe } from '@angular/common';
+import { DatePipe, NgIf } from '@angular/common';
 
 /** Custom Components */
 import { SmsCampaignStepComponent } from '../sms-campaign-stepper/sms-campaign-step/sms-campaign-step.component';
@@ -10,16 +10,19 @@ import { CampaignMessageStepComponent } from '../sms-campaign-stepper/campaign-m
 /** Custom Services */
 import { OrganizationService } from 'app/organization/organization.service';
 import { SettingsService } from 'app/settings/settings.service';
+import { MatStepper, MatStepperIcon, MatStep, MatStepLabel } from '@angular/material/stepper';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import { CampaignPreviewStepComponent } from '../sms-campaign-stepper/campaign-preview-step/campaign-preview-step.component';
 
 /**
  * Create SMS Campaign Component
  */
 @Component({
-  standalone: false,
-  selector: 'mifosx-create-campaign',
-  templateUrl: './create-campaign.component.html',
-  changeDetection: ChangeDetectionStrategy.Eager,
-  styleUrls: ['./create-campaign.component.scss']
+    selector: 'mifosx-create-campaign',
+    templateUrl: './create-campaign.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    styleUrls: ['./create-campaign.component.scss'],
+    imports: [MatStepper, MatStepperIcon, FaIconComponent, MatStep, MatStepLabel, SmsCampaignStepComponent, CampaignMessageStepComponent, NgIf, CampaignPreviewStepComponent]
 })
 export class CreateCampaignComponent {
 
@@ -46,7 +49,7 @@ export class CreateCampaignComponent {
               private organizationService: OrganizationService,
               private settingsService: SettingsService,
               private datePipe: DatePipe) {
-    this.route.data.subscribe((data: { smsCampaignTemplate: any }) => {
+    this.route.data.subscribe((data: any) => {
       this.smsCampaignTemplate = data.smsCampaignTemplate;
     });
   }
@@ -87,7 +90,7 @@ export class CreateCampaignComponent {
     const smsCampaign = {
       ...this.smsCampaign,
       campaignType: this.smsCampaign.isNotification ? 2 : 1,
-      submittedOnDate: this.datePipe.transform(new Date(), dateFormat),
+      submittedOnDate: this.datePipe.transform(new Date() as Date, dateFormat),
       dateTimeFormat,
       dateFormat,
       locale

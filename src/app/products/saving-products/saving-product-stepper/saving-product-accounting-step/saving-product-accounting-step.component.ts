@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, ChangeDetectionStrategy } from '@angular/core';
-import { FormGroup, FormBuilder, FormArray, Validators, FormControl } from '@angular/forms';
+import { FormGroup, FormBuilder, FormArray, Validators, FormControl, ReactiveFormsModule } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 
 import { FormDialogComponent } from 'app/shared/form-dialog/form-dialog.component';
@@ -7,13 +7,26 @@ import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.co
 
 import { FormfieldBase } from 'app/shared/form-dialog/formfield/model/formfield-base';
 import { SelectBase } from 'app/shared/form-dialog/formfield/model/select-base';
+import { LayoutDirective, LayoutGapDirective, FlexDirective, FlexFillDirective, LayoutAlignDirective } from '@ngbracket/ngx-layout/flex';
+import { MatRadioGroup, MatRadioButton } from '@angular/material/radio';
+import { NgFor, NgIf } from '@angular/common';
+import { MatDivider } from '@angular/material/divider';
+import { MatFormField, MatLabel, MatError } from '@angular/material/form-field';
+import { MatSelect } from '@angular/material/select';
+import { MatOption } from '@angular/material/autocomplete';
+import { MatCheckbox } from '@angular/material/checkbox';
+import { MatButton, MatIconButton } from '@angular/material/button';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import { MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow } from '@angular/material/table';
+import { MatStepperPrevious, MatStepperNext } from '@angular/material/stepper';
+import { FindPipe } from '../../../../pipes/find.pipe';
 
 @Component({
-  standalone: false,
-  selector: 'mifosx-saving-product-accounting-step',
-  templateUrl: './saving-product-accounting-step.component.html',
-  changeDetection: ChangeDetectionStrategy.Eager,
-  styleUrls: ['./saving-product-accounting-step.component.scss']
+    selector: 'mifosx-saving-product-accounting-step',
+    templateUrl: './saving-product-accounting-step.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    styleUrls: ['./saving-product-accounting-step.component.scss'],
+    imports: [ReactiveFormsModule, LayoutDirective, LayoutGapDirective, MatRadioGroup, FlexDirective, NgFor, MatRadioButton, MatDivider, NgIf, FlexFillDirective, MatFormField, MatLabel, MatSelect, MatOption, MatError, MatCheckbox, MatButton, FaIconComponent, MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatIconButton, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow, LayoutAlignDirective, MatStepperPrevious, MatStepperNext, FindPipe]
 })
 export class SavingProductAccountingStepComponent implements OnInit {
 
@@ -89,7 +102,7 @@ export class SavingProductAccountingStepComponent implements OnInit {
   }
 
   setConditionalControls() {
-    this.savingProductAccountingForm.get('accountingRule').valueChanges
+    this.savingProductAccountingForm.get('accountingRule')!.valueChanges
       .subscribe((accountingRule: any) => {
         if (accountingRule === 2) {
           this.savingProductAccountingForm.addControl('savingsReferenceAccountId', new FormControl('', Validators.required));
@@ -116,7 +129,7 @@ export class SavingProductAccountingStepComponent implements OnInit {
               }
             });
 
-          this.savingProductAccountingForm.get('advancedAccountingRules').valueChanges
+          this.savingProductAccountingForm.get('advancedAccountingRules')!.valueChanges
             .subscribe((advancedAccountingRules: boolean) => {
               if (advancedAccountingRules) {
                 this.savingProductAccountingForm.addControl('paymentChannelToFundSourceMappings', this.formBuilder.array([]));
@@ -174,11 +187,11 @@ export class SavingProductAccountingStepComponent implements OnInit {
   }
 
   edit(formType: string, formArray: FormArray, index: number) {
-    const data = { ...this.getData(formType, formArray.at(index).value), layout: { addButtonText: 'Edit' } };
+    const data = { ...this.getData(formType, formArray.at(index)!.value), layout: { addButtonText: 'Edit' } };
     const dialogRef = this.dialog.open(FormDialogComponent, { data });
     dialogRef.afterClosed().subscribe((response: any) => {
       if (response.data) {
-        formArray.at(index).patchValue(response.data.value);
+        formArray.at(index)!.patchValue(response.data.value);
         this.setSavingProductAccountingFormDirty();
       }
     });

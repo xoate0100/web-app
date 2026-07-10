@@ -1,16 +1,25 @@
 /** Angular Imports */
 import { Component, OnInit, ViewChild, ChangeDetectionStrategy } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, RouterLink } from '@angular/router';
+import { NgIf, NgClass, DatePipe } from '@angular/common';
+import { LayoutDirective, LayoutGapDirective } from '@ngbracket/ngx-layout/flex';
+import { MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow } from '@angular/material/table';
+import { MatSort } from '@angular/material/sort';
+import { MatTooltip } from '@angular/material/tooltip';
+import { ClassDirective } from '@ngbracket/ngx-layout/extended';
+import { MatButton } from '@angular/material/button';
+import { StatusLookupPipe } from '../../../pipes/status-lookup.pipe';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 
 /**
  * Create Center General Tab Component
  */
 @Component({
-  standalone: false,
-  selector: 'mifosx-general-tab',
-  templateUrl: './general-tab.component.html',
-  changeDetection: ChangeDetectionStrategy.Eager,
-  styleUrls: ['./general-tab.component.scss']
+    selector: 'mifosx-general-tab',
+    templateUrl: './general-tab.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    styleUrls: ['./general-tab.component.scss'],
+    imports: [FaIconComponent, NgIf, LayoutDirective, LayoutGapDirective, MatTable, MatSort, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatTooltip, NgClass, ClassDirective, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow, RouterLink, MatButton, DatePipe, StatusLookupPipe]
 })
 export class GeneralTabComponent implements OnInit {
 
@@ -32,11 +41,7 @@ export class GeneralTabComponent implements OnInit {
    * @param {ActivatedRoute} route Activated Route.
    */
   constructor(private route: ActivatedRoute) {
-    this.route.data.subscribe((data: {
-      centerSummaryData: any,
-      centerViewData: any,
-      savingsAccountData: any
-    }) => {
+    this.route.data.subscribe((data: any) => {
       this.centerSummaryData = data.centerSummaryData[0];
       this.centerViewData = data.centerViewData;
       this.savingsAccountData = data.savingsAccountData.savingsAccounts;

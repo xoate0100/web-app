@@ -1,15 +1,24 @@
 /** Angular Imports */
 import { Component, Output, EventEmitter, Input, ChangeDetectionStrategy } from '@angular/core';
+import { LayoutDirective, FlexFillDirective, FlexDirective, LayoutAlignDirective, LayoutGapDirective } from '@ngbracket/ngx-layout/flex';
+import { MatDivider } from '@angular/material/divider';
+import { NgIf, NgFor, DatePipe } from '@angular/common';
+import { MatAccordion, MatExpansionPanel, MatExpansionPanelHeader, MatExpansionPanelTitle, MatExpansionPanelDescription } from '@angular/material/expansion';
+import { MatButton } from '@angular/material/button';
+import { MatStepperPrevious } from '@angular/material/stepper';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import { RouterLink } from '@angular/router';
+import { FindPipe } from '../../../pipes/find.pipe';
 
 /**
  * Client Preview Step Component
  */
 @Component({
-  standalone: false,
-  selector: 'mifosx-client-preview-step',
-  templateUrl: './client-preview-step.component.html',
-  changeDetection: ChangeDetectionStrategy.Eager,
-  styleUrls: ['./client-preview-step.component.scss']
+    selector: 'mifosx-client-preview-step',
+    templateUrl: './client-preview-step.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    styleUrls: ['./client-preview-step.component.scss'],
+    imports: [LayoutDirective, FlexFillDirective, MatDivider, FlexDirective, NgIf, MatAccordion, NgFor, MatExpansionPanel, MatExpansionPanelHeader, MatExpansionPanelTitle, MatExpansionPanelDescription, LayoutAlignDirective, LayoutGapDirective, MatButton, MatStepperPrevious, FaIconComponent, RouterLink, DatePipe, FindPipe]
 })
 export class ClientPreviewStepComponent {
 

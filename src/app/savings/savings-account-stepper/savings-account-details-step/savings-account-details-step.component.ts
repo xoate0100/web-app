@@ -1,19 +1,29 @@
 /** Angular Imports */
 import { Component, OnInit, Input, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
 
 /** Custom Services */
 import { SavingsService } from 'app/savings/savings.service';
+import { LayoutDirective, LayoutGapDirective, FlexDirective, LayoutAlignDirective } from '@ngbracket/ngx-layout/flex';
+import { MatFormField, MatLabel, MatError, MatSuffix } from '@angular/material/form-field';
+import { MatSelect } from '@angular/material/select';
+import { NgFor } from '@angular/common';
+import { MatOption } from '@angular/material/autocomplete';
+import { MatInput } from '@angular/material/input';
+import { MatDatepickerInput, MatDatepickerToggle, MatDatepicker } from '@angular/material/datepicker';
+import { MatButton } from '@angular/material/button';
+import { MatStepperPrevious, MatStepperNext } from '@angular/material/stepper';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 
 /**
  * Savings Account Details Step
  */
 @Component({
-  standalone: false,
-  selector: 'mifosx-savings-account-details-step',
-  templateUrl: './savings-account-details-step.component.html',
-  changeDetection: ChangeDetectionStrategy.Eager,
-  styleUrls: ['./savings-account-details-step.component.scss']
+    selector: 'mifosx-savings-account-details-step',
+    templateUrl: './savings-account-details-step.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    styleUrls: ['./savings-account-details-step.component.scss'],
+    imports: [ReactiveFormsModule, LayoutDirective, LayoutGapDirective, MatFormField, FlexDirective, MatLabel, MatSelect, NgFor, MatOption, MatError, MatInput, MatDatepickerInput, MatDatepickerToggle, MatSuffix, MatDatepicker, LayoutAlignDirective, MatButton, MatStepperPrevious, FaIconComponent, MatStepperNext]
 })
 export class SavingsAccountDetailsStepComponent implements OnInit {
 
@@ -77,16 +87,16 @@ export class SavingsAccountDetailsStepComponent implements OnInit {
    */
   buildDependencies() {
     const entityId = this.savingsAccountTemplate.clientId || this.savingsAccountTemplate.groupId;
-    this.savingsAccountDetailsForm.get('productId').valueChanges.subscribe((productId: string) => {
+    this.savingsAccountDetailsForm.get('productId')!.valueChanges.subscribe((productId: string) => {
       this.savingsService.getSavingsAccountTemplate(entityId, productId, this.savingsAccountTemplate.groupId ? true : false)
       .subscribe((response: any) => {
         this.savingsAccountProductTemplate.emit(response);
         this.fieldOfficerData = response.fieldOfficerOptions;
         if (!this.isFieldOfficerPatched && this.savingsAccountTemplate.fieldOfficerId) {
-          this.savingsAccountDetailsForm.get('fieldOfficerId').patchValue(this.savingsAccountTemplate.fieldOfficerId);
+          this.savingsAccountDetailsForm.get('fieldOfficerId')!.patchValue(this.savingsAccountTemplate.fieldOfficerId);
           this.isFieldOfficerPatched = true;
         } else {
-          this.savingsAccountDetailsForm.get('fieldOfficerId').patchValue('');
+          this.savingsAccountDetailsForm.get('fieldOfficerId')!.patchValue('');
         }
       });
     });

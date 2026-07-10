@@ -1,23 +1,36 @@
 /** Angular Imports */
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
-import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
-import { Router, ActivatedRoute } from '@angular/router';
-import { DatePipe } from '@angular/common';
+import { FormGroup, FormBuilder, FormControl, Validators, ReactiveFormsModule } from '@angular/forms';
+import { Router, ActivatedRoute, RouterLink } from '@angular/router';
+import { DatePipe, NgIf, NgFor } from '@angular/common';
 
 /** Custom Services */
 import { GroupsService } from 'app/groups/groups.service';
 import { CentersService } from '../centers.service';
 import { SettingsService } from 'app/settings/settings.service';
+import { MatCard, MatCardContent, MatCardActions } from '@angular/material/card';
+import { LayoutDirective, LayoutAlignDirective, LayoutGapDirective } from '@ngbracket/ngx-layout/flex';
+import { MatFormField, MatLabel, MatError, MatSuffix } from '@angular/material/form-field';
+import { MatInput } from '@angular/material/input';
+import { MatSelect } from '@angular/material/select';
+import { MatOption } from '@angular/material/autocomplete';
+import { MatCheckbox } from '@angular/material/checkbox';
+import { MatDatepickerInput, MatDatepickerToggle, MatDatepicker } from '@angular/material/datepicker';
+import { MatIconButton, MatButton } from '@angular/material/button';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import { MatNavList, MatListSubheaderCssMatStyler } from '@angular/material/list';
+import { MatLine } from '@angular/material/grid-list';
+import { HasPermissionDirective } from '../../directives/has-permission/has-permission.directive';
 
 /**
  * Create Center component.
  */
 @Component({
-  standalone: false,
-  selector: 'mifosx-create-center',
-  templateUrl: './create-center.component.html',
-  changeDetection: ChangeDetectionStrategy.Eager,
-  styleUrls: ['./create-center.component.scss']
+    selector: 'mifosx-create-center',
+    templateUrl: './create-center.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    styleUrls: ['./create-center.component.scss'],
+    imports: [MatCard, ReactiveFormsModule, MatCardContent, LayoutDirective, MatFormField, MatLabel, MatInput, NgIf, MatError, MatSelect, NgFor, MatOption, MatCheckbox, MatDatepickerInput, MatDatepickerToggle, MatSuffix, MatDatepicker, MatIconButton, FaIconComponent, MatNavList, MatListSubheaderCssMatStyler, MatLine, MatCardActions, LayoutAlignDirective, LayoutGapDirective, MatButton, RouterLink, HasPermissionDirective]
 })
 export class CreateCenterComponent implements OnInit {
 
@@ -55,7 +68,7 @@ export class CreateCenterComponent implements OnInit {
               private settingsService: SettingsService,
               private groupService: GroupsService,
               private datePipe: DatePipe) {
-    this.route.data.subscribe( (data: { offices: any }) => {
+    this.route.data.subscribe((data: any) => {
       this.officeData = data.offices;
     });
   }
@@ -87,7 +100,7 @@ export class CreateCenterComponent implements OnInit {
    * Adds form control Activation Date if active.
    */
   buildDependencies() {
-    this.centerForm.get('officeId').valueChanges.subscribe( (option: any) => {
+    this.centerForm.get('officeId')!.valueChanges.subscribe( (option: any) => {
       this.groupService.getGroupsByOfficeId(option).subscribe( (data: any) => {
         this.groupsData = data;
         if (!this.groupsData.length) {
@@ -99,13 +112,13 @@ export class CreateCenterComponent implements OnInit {
       this.centerService.getStaff(option).subscribe( (data: any) => {
         this.staffData = data['staffOptions'];
         if (this.staffData === undefined) {
-          this.centerForm.controls['staffId'].disable();
+          this.centerForm.controls['staffId']!.disable();
         } else {
-          this.centerForm.controls['staffId'].enable();
+          this.centerForm.controls['staffId']!.enable();
         }
       });
     });
-    this.centerForm.get('active').valueChanges.subscribe( (bool: boolean) => {
+    this.centerForm.get('active')!.valueChanges.subscribe( (bool: boolean) => {
       if (bool) {
         this.centerForm.addControl('activationDate', new FormControl('', Validators.required));
       } else {
@@ -140,8 +153,8 @@ export class CreateCenterComponent implements OnInit {
       // TODO: Update once language and date settings are setup
       const dateFormat = this.settingsService.dateFormat;
       this.centerForm.patchValue({
-        submittedOnDate: this.datePipe.transform(prevSubmittedOnDate, dateFormat),
-        activationDate: this.datePipe.transform(prevActivationDate, dateFormat)
+        submittedOnDate: this.datePipe.transform(prevSubmittedOnDate as Date, dateFormat),
+        activationDate: this.datePipe.transform(prevActivationDate as Date, dateFormat)
       });
       const center = this.centerForm.value;
       center.locale = this.settingsService.language.code;

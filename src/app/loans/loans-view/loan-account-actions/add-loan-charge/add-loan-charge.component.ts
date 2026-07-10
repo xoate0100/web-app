@@ -1,22 +1,31 @@
 /** Angular Imports */
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
-import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
-import { Router, ActivatedRoute } from '@angular/router';
-import { DatePipe } from '@angular/common';
+import { FormGroup, FormBuilder, Validators, FormControl, ReactiveFormsModule } from '@angular/forms';
+import { Router, ActivatedRoute, RouterLink } from '@angular/router';
+import { DatePipe, NgFor, NgIf } from '@angular/common';
 
 /** Custom Services */
 import { LoansService } from '../../../loans.service';
 import { SettingsService } from 'app/settings/settings.service';
+import { MatCard, MatCardContent, MatCardActions } from '@angular/material/card';
+import { LayoutDirective, LayoutGapDirective, LayoutAlignDirective } from '@ngbracket/ngx-layout/flex';
+import { MatFormField, MatLabel, MatError, MatSuffix } from '@angular/material/form-field';
+import { MatSelect } from '@angular/material/select';
+import { MatOption } from '@angular/material/autocomplete';
+import { MatInput } from '@angular/material/input';
+import { MatDatepickerInput, MatDatepickerToggle, MatDatepicker } from '@angular/material/datepicker';
+import { MatButton } from '@angular/material/button';
+import { HasPermissionDirective } from '../../../../directives/has-permission/has-permission.directive';
 
 /**
  * Create Add Loan Charge component.
  */
 @Component({
-  standalone: false,
-  selector: 'mifosx-add-loan-charge',
-  templateUrl: './add-loan-charge.component.html',
-  changeDetection: ChangeDetectionStrategy.Eager,
-  styleUrls: ['./add-loan-charge.component.scss']
+    selector: 'mifosx-add-loan-charge',
+    templateUrl: './add-loan-charge.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    styleUrls: ['./add-loan-charge.component.scss'],
+    imports: [MatCard, ReactiveFormsModule, MatCardContent, LayoutDirective, MatFormField, MatLabel, MatSelect, NgFor, MatOption, NgIf, MatError, MatInput, MatDatepickerInput, MatDatepickerToggle, MatSuffix, MatDatepicker, MatCardActions, LayoutGapDirective, LayoutAlignDirective, MatButton, RouterLink, HasPermissionDirective]
 })
 export class AddLoanChargeComponent implements OnInit {
 
@@ -59,10 +68,10 @@ export class AddLoanChargeComponent implements OnInit {
               private datePipe: DatePipe,
               private loansService: LoansService,
               private settingsService: SettingsService) {
-    this.route.data.subscribe((data: { actionButtonData: any }) => {
+    this.route.data.subscribe((data: any) => {
       this.loanChargeOptions = data.actionButtonData.chargeOptions;
     });
-    this.loanId = this.route.parent.snapshot.params['loanId'];
+    this.loanId = this.route.parent!.snapshot.params['loanId']!;
   }
 
   /**
@@ -74,6 +83,9 @@ export class AddLoanChargeComponent implements OnInit {
       const chargeDetails = this.loanChargeOptions.find(option => {
         return option.id === chargeId;
       });
+      if (!chargeDetails) {
+        return;
+      }
       if (chargeDetails.chargeTimeType.id === 2) {
         this.loanChargeForm.addControl('dueDate', new FormControl('', Validators.required));
       } else {
@@ -104,7 +116,7 @@ export class AddLoanChargeComponent implements OnInit {
     // TODO: Update once language and date settings are setup
     const dateFormat = this.settingsService.dateFormat;
     this.loanChargeForm.patchValue({
-      dueDate: this.datePipe.transform(prevDueDate, dateFormat)
+      dueDate: this.datePipe.transform(prevDueDate as Date, dateFormat)
     });
     const loanCharge = this.loanChargeForm.value;
     loanCharge.locale = this.settingsService.language.code;

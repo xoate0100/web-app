@@ -9,7 +9,7 @@ import { Observable } from 'rxjs';
 import { environment } from '../../../environments/environment';
 
 /** Http request options headers. */
-const httpOptions = {
+const httpOptions: { headers: Record<string, string> } = {
   headers: {
     'Fineract-Platform-TenantId': environment.fineractPlatformTenantId
   }

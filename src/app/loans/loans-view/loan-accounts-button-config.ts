@@ -31,22 +31,22 @@ export class LoansAccountButtonConfiguration {
                 this.buttonsArray = [
                     {
                         name: 'Add Loan Charge',
-                        icon: 'fa fa-plus',
+                        icon: 'plus',
                         taskPermissionName: 'CREATE_LOANCHARGE',
                     },
                     {
                         name: 'Foreclosure',
-                        icon: 'icon-dollar',
+                        icon: 'dollar-sign',
                         taskPermissionName: 'FORECLOSURE_LOAN',
                     },
                     {
                         name: 'Make Repayment',
-                        icon: 'fa fa-dollar',
+                        icon: 'dollar-sign',
                         taskPermissionName: 'REPAYMENT_LOAN',
                     },
                     {
                         name: 'Undo Disbursal',
-                        icon: 'fa fa-undo',
+                        icon: 'undo',
                         taskPermissionName: 'DISBURSALUNDO_LOAN',
                     },
                 ];
@@ -55,22 +55,22 @@ export class LoansAccountButtonConfiguration {
                 this.buttonsArray = [
                     {
                         name: 'Add Loan Charge',
-                        icon: 'fa fa-plus',
+                        icon: 'plus',
                         taskPermissionName: 'CREATE_LOANCHARGE',
                     },
                     {
                         name: 'Approve',
-                        icon: 'fa fa-check',
+                        icon: 'check',
                         taskPermissionName: 'APPROVE_LOAN',
                     },
                     {
                         name: 'Modify Application',
-                        icon: 'fa fa-pincel-square-o',
+                        icon: 'pen',
                         taskPermissionName: 'UPDATE_LOAN',
                     },
                     {
                         name: 'Reject',
-                        icon: 'fa fa-times',
+                        icon: 'times',
                         taskPermissionName: 'REJECT_LOAN',
                     },
                 ];
@@ -79,17 +79,17 @@ export class LoansAccountButtonConfiguration {
                 this.buttonsArray = [
                     {
                         name: 'Disburse',
-                        icon: 'fa fa-flag',
+                        icon: 'flag',
                         taskPermissionName: 'DISBURSE_LOAN',
                     },
                     {
                         name: 'Disburse to Savings',
-                        icon: 'fa fa-flag',
+                        icon: 'flag',
                         taskPermissionName: 'DISBURSETOSAVINGS_LOAN',
                     },
                     {
                         name: 'Undo Approval',
-                        icon: 'fa fa-undo',
+                        icon: 'undo',
                         taskPermissionName: 'APPROVALUNDO_LOAN',
                     },
                 ];
@@ -98,7 +98,7 @@ export class LoansAccountButtonConfiguration {
                 this.buttonsArray = [
                     {
                         name: 'Transfer Funds',
-                        icon: 'fa fa-exchange',
+                        icon: 'right-left',
                         taskPermissionName: 'CREATE_ACCOUNTTRANSFER',
                     },
                 ];
@@ -107,7 +107,7 @@ export class LoansAccountButtonConfiguration {
                 this.buttonsArray = [
                     {
                         name: 'Recovery Payment',
-                        icon: 'fa fa-briefcase',
+                        icon: 'briefcase',
                         taskPermissionName: 'RECOVERYPAYMENT_LOAN',
                     },
                 ];

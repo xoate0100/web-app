@@ -1,20 +1,29 @@
 /** Angular Imports */
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
-import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
-import { Router, ActivatedRoute } from '@angular/router';
+import { FormGroup, FormBuilder, Validators, FormControl, ReactiveFormsModule } from '@angular/forms';
+import { Router, ActivatedRoute, RouterLink } from '@angular/router';
 
 /** Custom Services */
 import { ProductsService } from '../../products.service';
+import { MatCard, MatCardContent, MatCardActions } from '@angular/material/card';
+import { LayoutDirective, LayoutAlignDirective, LayoutGapDirective } from '@ngbracket/ngx-layout/flex';
+import { MatFormField, MatLabel, MatError } from '@angular/material/form-field';
+import { MatInput } from '@angular/material/input';
+import { NgIf, NgFor } from '@angular/common';
+import { MatSelect } from '@angular/material/select';
+import { MatOption } from '@angular/material/autocomplete';
+import { MatButton } from '@angular/material/button';
+import { HasPermissionDirective } from '../../../directives/has-permission/has-permission.directive';
 
 /**
  * Edit Product mix component.
  */
 @Component({
-  standalone: false,
-  selector: 'mifosx-edit-product-mix',
-  templateUrl: './edit-product-mix.component.html',
-  changeDetection: ChangeDetectionStrategy.Eager,
-  styleUrls: ['./edit-product-mix.component.scss']
+    selector: 'mifosx-edit-product-mix',
+    templateUrl: './edit-product-mix.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    styleUrls: ['./edit-product-mix.component.scss'],
+    imports: [MatCard, ReactiveFormsModule, MatCardContent, LayoutDirective, MatFormField, MatLabel, MatInput, NgIf, MatSelect, NgFor, MatOption, MatError, MatCardActions, LayoutAlignDirective, LayoutGapDirective, MatButton, RouterLink, HasPermissionDirective]
 })
 export class EditProductMixComponent implements OnInit {
 
@@ -38,7 +47,7 @@ export class EditProductMixComponent implements OnInit {
     private productsService: ProductsService,
     private route: ActivatedRoute,
     private router: Router) {
-    this.route.data.subscribe((data: { productMix: any }) => {
+    this.route.data.subscribe((data: any) => {
       this.productMixData = data.productMix;
     });
   }
@@ -67,7 +76,7 @@ export class EditProductMixComponent implements OnInit {
   setFormData() {
     const restrictedProductsData: {}[] = this.productMixData.restrictedProducts;
     this.productData = [...restrictedProductsData, ...this.productMixData.allowedProducts];
-    this.productMixForm.get('restrictedProducts').setValue([...restrictedProductsData.map((restrictedProduct: any) => restrictedProduct.id)]);
+    this.productMixForm.get('restrictedProducts')!.setValue([...restrictedProductsData.map((restrictedProduct: any) => restrictedProduct.id)]);
   }
 
   /**

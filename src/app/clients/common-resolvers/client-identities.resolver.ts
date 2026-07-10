@@ -23,7 +23,7 @@ export class ClientIdentitiesResolver implements Resolve<Object> {
      * @returns {Observable<any>}
      */
     resolve(route: ActivatedRouteSnapshot): Observable<any> {
-        const clientId = route.parent.paramMap.get('clientId');
+        const clientId = route.parent!.paramMap.get('clientId')!;
         let identitiesData: any;
         return this.clientsService.getClientIdentifiers(clientId).pipe(map((identities: any) => {
             identitiesData = identities;

@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, ChangeDetectionStrategy } from '@angular/core';
-import { DatePipe } from '@angular/common';
+import { DatePipe, NgIf } from '@angular/common';
 import { FormGroup, FormBuilder, FormArray } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 
@@ -9,13 +9,18 @@ import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.co
 import { FormfieldBase } from 'app/shared/form-dialog/formfield/model/formfield-base';
 import { DatepickerBase } from 'app/shared/form-dialog/formfield/model/datepicker-base';
 import { InputBase } from 'app/shared/form-dialog/formfield/model/input-base';
+import { LayoutDirective, LayoutGapDirective, FlexDirective, LayoutAlignDirective } from '@ngbracket/ngx-layout/flex';
+import { MatButton, MatIconButton } from '@angular/material/button';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import { MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow } from '@angular/material/table';
+import { MatStepperPrevious, MatStepperNext } from '@angular/material/stepper';
 
 @Component({
-  standalone: false,
-  selector: 'mifosx-share-product-market-price-step',
-  templateUrl: './share-product-market-price-step.component.html',
-  changeDetection: ChangeDetectionStrategy.Eager,
-  styleUrls: ['./share-product-market-price-step.component.scss']
+    selector: 'mifosx-share-product-market-price-step',
+    templateUrl: './share-product-market-price-step.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    styleUrls: ['./share-product-market-price-step.component.scss'],
+    imports: [LayoutDirective, LayoutGapDirective, FlexDirective, MatButton, FaIconComponent, NgIf, MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatIconButton, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow, LayoutAlignDirective, MatStepperPrevious, MatStepperNext, DatePipe]
 })
 export class ShareProductMarketPriceStepComponent implements OnInit {
 
@@ -65,11 +70,11 @@ export class ShareProductMarketPriceStepComponent implements OnInit {
   }
 
   editMarketPricePeriod(index: number) {
-    const data = { ...this.getData(this.marketPricePeriods.at(index).value), layout: { addButtonText: 'Edit' } };
+    const data = { ...this.getData(this.marketPricePeriods.at(index)!.value), layout: { addButtonText: 'Edit' } };
     const addMarketPricePeriodDialogRef = this.dialog.open(FormDialogComponent, { data });
     addMarketPricePeriodDialogRef.afterClosed().subscribe((response: any) => {
       if (response.data) {
-        this.marketPricePeriods.at(index).patchValue(response.data.value);
+        this.marketPricePeriods.at(index)!.patchValue(response.data.value);
         this.setShareProductMarketPriceFormDirty();
       }
     });
@@ -120,7 +125,7 @@ export class ShareProductMarketPriceStepComponent implements OnInit {
     for (const marketPricePeriod of this.marketPricePeriods.value) {
       marketPricePeriods.push({
         ...marketPricePeriod,
-        fromDate: this.datePipe.transform(marketPricePeriod.fromDate, dateFormat),
+        fromDate: this.datePipe.transform(marketPricePeriod.fromDate as Date, dateFormat),
         dateFormat,
         locale: 'en'
       });

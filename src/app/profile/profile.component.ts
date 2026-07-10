@@ -1,23 +1,27 @@
 /** Angular Imports */
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { MatTableDataSource } from '@angular/material/table';
-import { Router } from '@angular/router';
+import { MatTableDataSource, MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow } from '@angular/material/table';
+import { Router, RouterLink } from '@angular/router';
 
 /** Custom Services */
 import { AuthenticationService } from 'app/core/authentication/authentication.service';
 import { ChangePasswordDialogComponent } from 'app/shared/change-password-dialog/change-password-dialog.component';
 import { UserService } from 'app/self-service/users/user.service';
+import { LayoutDirective, LayoutAlignDirective, LayoutGapDirective, FlexDirective } from '@ngbracket/ngx-layout/flex';
+import { MatButton } from '@angular/material/button';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import { MatCard } from '@angular/material/card';
 
 /**
  * Profile Component.
  */
 @Component({
-  standalone: false,
-  selector: 'mifosx-profile',
-  templateUrl: './profile.component.html',
-  changeDetection: ChangeDetectionStrategy.Eager,
-  styleUrls: ['./profile.component.scss']
+    selector: 'mifosx-profile',
+    templateUrl: './profile.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    styleUrls: ['./profile.component.scss'],
+    imports: [LayoutDirective, LayoutAlignDirective, LayoutGapDirective, MatButton, RouterLink, FaIconComponent, MatCard, FlexDirective, MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow]
 })
 export class ProfileComponent implements OnInit {
 
@@ -41,7 +45,7 @@ export class ProfileComponent implements OnInit {
               private userService: UserService,
               private router: Router,
               public dialog: MatDialog) {
-    this.profileData = authenticationService.getCredentials();
+    this.profileData = authenticationService.getCredentials()!;
   }
 
   ngOnInit() {

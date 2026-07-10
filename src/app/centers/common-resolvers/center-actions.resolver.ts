@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Resolve, ActivatedRouteSnapshot } from '@angular/router';
 
 /** rxjs Imports */
-import { Observable } from 'rxjs';
+import {Observable, of} from 'rxjs';
 
 /** Custom Services */
 import { CentersService } from '../centers.service';
@@ -25,8 +25,8 @@ export class CenterActionsResolver implements Resolve<Object> {
    * @returns {Observable<any>}
    */
   resolve(route: ActivatedRouteSnapshot): Observable<any> {
-    const actionName = route.paramMap.get('name');
-    const centerId = route.paramMap.get('centerId') || route.parent.parent.paramMap.get('centerId');
+    const actionName = route.paramMap.get('name')!;
+    const centerId = route.paramMap.get('centerId')! || route.parent!.parent!.paramMap.get('centerId')!;
     switch (actionName) {
       case 'Assign Staff':
         return this.centersService.getGroupStaffData(centerId);
@@ -38,12 +38,12 @@ export class CenterActionsResolver implements Resolve<Object> {
         return this.centersService.getCalendarTemplate(centerId);
       case 'Edit Meeting':
       case 'Edit Meeting Schedule':
-        const calendarId = route.queryParamMap.get('calendarId');
+        const calendarId = route.queryParamMap.get('calendarId')!;
         return this.centersService.getCalendarAndTemplate(centerId, calendarId);
       case 'Staff Assignment History':
         return this.centersService.getStaffAssignmentHistoryData('Staff Assignment History', centerId, 'default', 'en');
       default:
-        return undefined;
+        return of(null);
     }
   }
 

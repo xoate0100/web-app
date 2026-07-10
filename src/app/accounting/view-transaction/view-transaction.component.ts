@@ -3,8 +3,8 @@ import { Component, OnInit, ViewChild, ChangeDetectionStrategy } from '@angular/
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
-import { MatSort } from '@angular/material/sort';
-import { MatTableDataSource } from '@angular/material/table';
+import { MatSort, MatSortHeader } from '@angular/material/sort';
+import { MatTableDataSource, MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow } from '@angular/material/table';
 
 /** Custom Services */
 import { AccountingService } from '../accounting.service';
@@ -12,16 +12,22 @@ import { AccountingService } from '../accounting.service';
 /** Custom Components */
 import { RevertTransactionComponent } from '../revert-transaction/revert-transaction.component';
 import { ViewJournalEntryComponent } from '../view-journal-entry/view-journal-entry.component';
+import { NgIf } from '@angular/common';
+import { LayoutDirective, LayoutAlignDirective, FlexDirective } from '@ngbracket/ngx-layout/flex';
+import { HasPermissionDirective } from '../../directives/has-permission/has-permission.directive';
+import { MatButton } from '@angular/material/button';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import { MatCard, MatCardContent } from '@angular/material/card';
 
 /**
  * View transaction component.
  */
 @Component({
-  standalone: false,
-  selector: 'mifosx-view-transaction',
-  templateUrl: './view-transaction.component.html',
-  changeDetection: ChangeDetectionStrategy.Eager,
-  styleUrls: ['./view-transaction.component.scss']
+    selector: 'mifosx-view-transaction',
+    templateUrl: './view-transaction.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    styleUrls: ['./view-transaction.component.scss'],
+    imports: [NgIf, LayoutDirective, LayoutAlignDirective, HasPermissionDirective, MatButton, FaIconComponent, MatCard, MatCardContent, FlexDirective, MatTable, MatSort, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatSortHeader, MatCellDef, MatCell, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow, MatPaginator]
 })
 export class ViewTransactionComponent implements OnInit {
 
@@ -56,7 +62,7 @@ export class ViewTransactionComponent implements OnInit {
    * Retrieves the transaction data from `resolve` and sets the transaction table.
    */
   ngOnInit() {
-    this.route.data.subscribe((data: { transaction: any }) => {
+    this.route.data.subscribe((data: any) => {
       this.transaction = data.transaction;
       this.transactionId = data.transaction.pageItems[0].transactionId;
       this.setTransaction();

@@ -27,15 +27,15 @@ export class MakeAccountTransferTemplateResolver implements Resolve<Object> {
      * @returns {Observable<any>}
      */
     resolve(route: ActivatedRouteSnapshot): Observable<any> {
-        const accountType = route.queryParamMap.get('accountType');
+        const accountType = route.queryParamMap.get('accountType')!;
         switch (accountType) {
             case 'fromloans':
                 this.accountTypeId = '1';
-                this.id = route.queryParamMap.get('loanId');
+                this.id = route.queryParamMap.get('loanId')!;
                 break;
             case 'fromsavings':
                 this.accountTypeId = '2';
-                this.id = route.queryParamMap.get('savingsId');
+                this.id = route.queryParamMap.get('savingsId')!;
                 break;
             default:
                 this.accountTypeId = '0';

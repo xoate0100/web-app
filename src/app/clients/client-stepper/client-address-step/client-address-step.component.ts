@@ -10,16 +10,24 @@ import { SelectBase } from 'app/shared/form-dialog/formfield/model/select-base';
 /** Custom Dialogs */
 import { FormDialogComponent } from 'app/shared/form-dialog/form-dialog.component';
 import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.component';
+import { LayoutDirective, LayoutAlignDirective, LayoutGapDirective } from '@ngbracket/ngx-layout/flex';
+import { MatButton } from '@angular/material/button';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import { MatAccordion, MatExpansionPanel, MatExpansionPanelHeader, MatExpansionPanelTitle, MatExpansionPanelDescription } from '@angular/material/expansion';
+import { NgFor, NgIf } from '@angular/common';
+import { MatDivider } from '@angular/material/divider';
+import { MatSlideToggle } from '@angular/material/slide-toggle';
+import { MatStepperPrevious, MatStepperNext } from '@angular/material/stepper';
 
 /**
  * Client Address Step Component
  */
 @Component({
-  standalone: false,
-  selector: 'mifosx-client-address-step',
-  templateUrl: './client-address-step.component.html',
-  changeDetection: ChangeDetectionStrategy.Eager,
-  styleUrls: ['./client-address-step.component.scss']
+    selector: 'mifosx-client-address-step',
+    templateUrl: './client-address-step.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    styleUrls: ['./client-address-step.component.scss'],
+    imports: [LayoutDirective, LayoutAlignDirective, MatButton, FaIconComponent, MatAccordion, NgFor, MatExpansionPanel, MatExpansionPanelHeader, MatExpansionPanelTitle, MatExpansionPanelDescription, MatDivider, MatSlideToggle, NgIf, LayoutGapDirective, MatStepperPrevious, MatStepperNext]
 })
 export class ClientAddressStepComponent {
 
@@ -51,7 +59,7 @@ export class ClientAddressStepComponent {
         addressData.isActive = false;
         for (const key in addressData) {
           if (addressData[key] === '' || addressData[key] === undefined) {
-            delete addressData[key];
+            addressData[key] = undefined;
           }
         }
         this.clientAddressData.push(addressData);
@@ -77,7 +85,7 @@ export class ClientAddressStepComponent {
         addressData.isActive = address.isActive;
         for (const key in addressData) {
           if (addressData[key] === '' || addressData[key] === undefined) {
-            delete addressData[key];
+            addressData[key] = undefined;
           }
         }
         this.clientAddressData[index] = addressData;
@@ -130,7 +138,7 @@ export class ClientAddressStepComponent {
    * @param {any} address Address
    */
   getAddressFormFields(address?: any) {
-    let formfields: FormfieldBase[] = [];
+    let formfields: (FormfieldBase | null)[] = [];
     formfields.push(this.isFieldEnabled('addressType') ? new SelectBase({
       controlName: 'addressTypeId',
       label: 'Address Type',
@@ -210,7 +218,7 @@ export class ClientAddressStepComponent {
       type: 'text',
       order: 11
     }) : null);
-    formfields = formfields.filter(field => field !== null);
+    formfields = formfields.filter((f): f is FormfieldBase => f !== null);
     return formfields;
   }
 

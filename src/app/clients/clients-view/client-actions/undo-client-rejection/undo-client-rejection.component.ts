@@ -1,22 +1,28 @@
 /** Angular Imports */
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { DatePipe } from '@angular/common';
-import { ActivatedRoute, Router } from '@angular/router';
+import { FormGroup, FormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
+import { DatePipe, NgIf } from '@angular/common';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 
 /** Custom Services */
 import { ClientsService } from 'app/clients/clients.service';
 import { SettingsService } from 'app/settings/settings.service';
+import { MatCard, MatCardContent, MatCardActions } from '@angular/material/card';
+import { MatFormField, MatLabel, MatSuffix, MatError } from '@angular/material/form-field';
+import { FlexDirective, LayoutDirective, LayoutAlignDirective, LayoutGapDirective } from '@ngbracket/ngx-layout/flex';
+import { MatInput } from '@angular/material/input';
+import { MatDatepickerInput, MatDatepickerToggle, MatDatepicker } from '@angular/material/datepicker';
+import { MatButton } from '@angular/material/button';
 
 /**
  * Undo Client Rejection Component
  */
 @Component({
-  standalone: false,
-  selector: 'mifosx-undo-client-rejection',
-  templateUrl: './undo-client-rejection.component.html',
-  changeDetection: ChangeDetectionStrategy.Eager,
-  styleUrls: ['./undo-client-rejection.component.scss']
+    selector: 'mifosx-undo-client-rejection',
+    templateUrl: './undo-client-rejection.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    styleUrls: ['./undo-client-rejection.component.scss'],
+    imports: [MatCard, ReactiveFormsModule, MatCardContent, MatFormField, FlexDirective, MatLabel, MatInput, MatDatepickerInput, MatDatepickerToggle, MatSuffix, MatDatepicker, NgIf, MatError, MatCardActions, LayoutDirective, LayoutAlignDirective, LayoutGapDirective, MatButton, RouterLink]
 })
 export class UndoClientRejectionComponent implements OnInit {
 
@@ -42,7 +48,7 @@ export class UndoClientRejectionComponent implements OnInit {
               private route: ActivatedRoute,
               private router: Router,
               private settingsService: SettingsService) {
-    this.clientId = this.route.parent.snapshot.params['clientId'];
+    this.clientId = this.route.parent!.snapshot.params['clientId']!;
   }
 
   /**
@@ -71,7 +77,7 @@ export class UndoClientRejectionComponent implements OnInit {
     const dateFormat = this.settingsService.dateFormat;
     const prevReopenedDate: Date = this.undoClientRejectionForm.value.reopenedDate;
     this.undoClientRejectionForm.patchValue({
-      reopenedDate: this.datePipe.transform(prevReopenedDate, dateFormat),
+      reopenedDate: this.datePipe.transform(prevReopenedDate as Date, dateFormat),
     });
     const data = {
       ...this.undoClientRejectionForm.value,

@@ -1,10 +1,10 @@
 /** Angular Imports */
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { SelectionModel } from '@angular/cdk/collections';
-import { FormBuilder, FormGroup } from '@angular/forms';
-import { DatePipe } from '@angular/common';
-import { MatTableDataSource } from '@angular/material/table';
+import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { DatePipe, NgIf, NgFor } from '@angular/common';
+import { MatTableDataSource, MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow } from '@angular/material/table';
 import { MatDialog } from '@angular/material/dialog';
 
 /** Custom Services */
@@ -13,13 +13,22 @@ import { SettingsService } from 'app/settings/settings.service';
 
 /** Dialog Components */
 import { ConfirmationDialogComponent } from 'app/shared/confirmation-dialog/confirmation-dialog.component';
+import { LayoutDirective, LayoutAlignDirective, FlexDirective, LayoutGapDirective } from '@ngbracket/ngx-layout/flex';
+import { MatFormField, MatLabel, MatSuffix } from '@angular/material/form-field';
+import { MatInput } from '@angular/material/input';
+import { MatButton } from '@angular/material/button';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import { MatDatepickerInput, MatDatepickerToggle, MatDatepicker } from '@angular/material/datepicker';
+import { MatSelect } from '@angular/material/select';
+import { MatOption } from '@angular/material/autocomplete';
+import { MatCheckbox } from '@angular/material/checkbox';
 
 @Component({
-  standalone: false,
-  selector: 'mifosx-checker-inbox',
-  templateUrl: './checker-inbox.component.html',
-  changeDetection: ChangeDetectionStrategy.Eager,
-  styleUrls: ['./checker-inbox.component.scss']
+    selector: 'mifosx-checker-inbox',
+    templateUrl: './checker-inbox.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    styleUrls: ['./checker-inbox.component.scss'],
+    imports: [NgIf, LayoutDirective, LayoutAlignDirective, FlexDirective, MatFormField, MatInput, LayoutGapDirective, MatButton, FaIconComponent, ReactiveFormsModule, MatLabel, MatDatepickerInput, MatDatepickerToggle, MatSuffix, MatDatepicker, MatSelect, NgFor, MatOption, MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCheckbox, MatCellDef, MatCell, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow, RouterLink, DatePipe]
 })
 export class CheckerInboxComponent implements OnInit {
 
@@ -61,14 +70,14 @@ export class CheckerInboxComponent implements OnInit {
     private tasksService: TasksService,
     private settingsService: SettingsService,
     private formBuilder: FormBuilder) {
-    this.route.data.subscribe((data: { makerCheckerResource: any, makerCheckerTemplate: any }) => {
+    this.route.data.subscribe((data: any) => {
       this.searchData = data.makerCheckerResource;
       if (this.searchData.length > 0) {
         this.checkerData = true;
       }
       this.makerCheckerTemplate = data.makerCheckerTemplate;
       this.dataSource = new MatTableDataSource(this.searchData);
-      this.selection = new SelectionModel(true, []);
+      this.selection = new SelectionModel<any>(true, []);
     });
   }
 
@@ -93,8 +102,8 @@ export class CheckerInboxComponent implements OnInit {
     const dateFormat = this.settingsService.dateFormat;
     const makerCheckerSearchParams = {
       ...this.makerCheckerSearchForm.value,
-      makerDateTimeFrom: this.datePipe.transform(this.makerCheckerSearchForm.value.makerDateTimeFrom, dateFormat),
-      makerDateTimeto: this.datePipe.transform(this.makerCheckerSearchForm.value.makerDateTimeto, dateFormat)
+      makerDateTimeFrom: this.datePipe.transform(this.makerCheckerSearchForm.value.makerDateTimeFrom as Date, dateFormat),
+      makerDateTimeto: this.datePipe.transform(this.makerCheckerSearchForm.value.makerDateTimeto as Date, dateFormat)
     };
     this.tasksService.getMakerCheckerData(makerCheckerSearchParams).subscribe((response: any) => {
       this.searchData = response;
@@ -104,7 +113,7 @@ export class CheckerInboxComponent implements OnInit {
         this.noSearchedData = false;
       }
       this.dataSource = new MatTableDataSource(this.searchData);
-      this.selection = new SelectionModel(true, []);
+      this.selection = new SelectionModel<any>(true, []);
     });
   }
 

@@ -25,7 +25,7 @@ export class GroupViewResolver implements Resolve<Object> {
    * @returns {Observable<any>}
    */
   resolve(route: ActivatedRouteSnapshot): Observable<any> {
-    const groupId = route.paramMap.get('groupId');
+    const groupId = route.paramMap.get('groupId')!;
     return this.groupsService.getGroupData(groupId);
   }
 

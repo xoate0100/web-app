@@ -24,7 +24,7 @@ export class GetCheckerInboxDetailResolver implements Resolve<Object> {
      * @returns {Observable<any>}
      */
     resolve(route: ActivatedRouteSnapshot): Observable<any> {
-        const checkerId = route.paramMap.get('id');
+        const checkerId = route.paramMap.get('id')!;
         return this.tasksService.getCheckerInboxDetail(checkerId);
     }
 

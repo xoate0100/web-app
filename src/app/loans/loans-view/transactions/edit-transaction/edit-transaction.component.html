@@ -41,27 +41,27 @@
           </button>
         </div>
 
-        <mat-form-field *ngIf="editTransactionForm.controls['accountNumber']">
+        <mat-form-field *ngIf="editTransactionForm.get('accountNumber')!">
           <mat-label>Account Number</mat-label>
           <input type="number" formControlName="accountNumber" matInput />
         </mat-form-field>
 
-        <mat-form-field *ngIf="editTransactionForm.controls['checkNumber']">
+        <mat-form-field *ngIf="editTransactionForm.get('checkNumber')!">
           <mat-label>Cheque</mat-label>
           <input type="number" formControlName="checkNumber" matInput />
         </mat-form-field>
 
-        <mat-form-field *ngIf="editTransactionForm.controls['routingCode']">
+        <mat-form-field *ngIf="editTransactionForm.get('routingCode')!">
           <mat-label>Routing Code</mat-label>
           <input formControlName="routingCode" matInput />
         </mat-form-field>
 
-        <mat-form-field *ngIf="editTransactionForm.controls['receiptNumber']">
+        <mat-form-field *ngIf="editTransactionForm.get('receiptNumber')!">
           <mat-label>Receipt Number</mat-label>
           <input formControlName="receiptNumber" matInput />
         </mat-form-field>
 
-        <mat-form-field *ngIf="editTransactionForm.controls['bankNumber']">
+        <mat-form-field *ngIf="editTransactionForm.get('bankNumber')!">
           <mat-label>Bank</mat-label>
           <input formControlName="bankNumber" matInput />
         </mat-form-field>

@@ -6,9 +6,11 @@
     "types": []
   },
   "angularCompilerOptions": {
-    "fullTemplateTypeCheck": false,
+    "fullTemplateTypeCheck": true,
     "preserveWhitespaces": true,
-    "strictTemplates": false
+    "strictTemplates": true,
+    "strictInjectionParameters": true,
+    "strictInputAccessModifiers": true
   },
   "files": [
     "main.ts",

@@ -52,7 +52,7 @@
 
         <mifosx-loan-product-settings-step
           [loanProductsTemplate]="loanProductAndTemplate"
-          [isLinkedToFloatingInterestRates]="loanProductTermsForm.get('isLinkedToFloatingInterestRates')"
+          [isLinkedToFloatingInterestRates]="$any(loanProductTermsForm.get('isLinkedToFloatingInterestRates'))"
         >
         </mifosx-loan-product-settings-step>
 
@@ -64,8 +64,8 @@
 
         <mifosx-loan-product-charges-step
           [loanProductsTemplate]="loanProductAndTemplate"
-          [currencyCode]="loanProductCurrencyForm.get('currencyCode')"
-          [multiDisburseLoan]="loanProductSettingsForm.get('multiDisburseLoan')"
+          [currencyCode]="$any(loanProductCurrencyForm.get('currencyCode'))"
+          [multiDisburseLoan]="$any(loanProductSettingsForm.get('multiDisburseLoan'))"
         >
         </mifosx-loan-product-charges-step>
 

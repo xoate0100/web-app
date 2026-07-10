@@ -1,22 +1,31 @@
 /** Angular Imports */
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
-import { DatePipe } from '@angular/common';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { FormBuilder, FormGroup, Validators, FormControl, ReactiveFormsModule } from '@angular/forms';
+import { DatePipe, NgIf, NgFor } from '@angular/common';
 
 /** Custom Services */
 import { AccountTransfersService } from '../account-transfers.service';
 import { SettingsService } from 'app/settings/settings.service';
+import { MatCard, MatCardContent, MatCardActions } from '@angular/material/card';
+import { LayoutDirective, LayoutGapDirective, FlexDirective, LayoutAlignDirective } from '@ngbracket/ngx-layout/flex';
+import { MatFormField, MatLabel, MatError, MatSuffix } from '@angular/material/form-field';
+import { MatInput } from '@angular/material/input';
+import { MatSelect } from '@angular/material/select';
+import { MatOption } from '@angular/material/autocomplete';
+import { MatDatepickerInput, MatDatepickerToggle, MatDatepicker } from '@angular/material/datepicker';
+import { MatButton } from '@angular/material/button';
+import { HasPermissionDirective } from '../../directives/has-permission/has-permission.directive';
 
 /**
  * Create Standing Instructions
  */
 @Component({
-  standalone: false,
-  selector: 'mifosx-create-standing-instructions',
-  templateUrl: './create-standing-instructions.component.html',
-  changeDetection: ChangeDetectionStrategy.Eager,
-  styleUrls: ['./create-standing-instructions.component.scss']
+    selector: 'mifosx-create-standing-instructions',
+    templateUrl: './create-standing-instructions.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    styleUrls: ['./create-standing-instructions.component.scss'],
+    imports: [MatCard, ReactiveFormsModule, MatCardContent, LayoutDirective, LayoutGapDirective, MatFormField, FlexDirective, MatLabel, MatInput, NgIf, MatError, MatSelect, NgFor, MatOption, MatDatepickerInput, MatDatepickerToggle, MatSuffix, MatDatepicker, MatCardActions, LayoutAlignDirective, MatButton, RouterLink, HasPermissionDirective]
 })
 export class CreateStandingInstructionsComponent implements OnInit {
 
@@ -80,7 +89,7 @@ export class CreateStandingInstructionsComponent implements OnInit {
     private accountTransfersService: AccountTransfersService,
     private settingsService: SettingsService,
     private datePipe: DatePipe) {
-    this.route.data.subscribe((data: { standingIntructionsTemplate: any }) => {
+    this.route.data.subscribe((data: any) => {
       this.standingIntructionsTemplate = data.standingIntructionsTemplate;
       this.setParams();
       this.setOptions();
@@ -89,9 +98,9 @@ export class CreateStandingInstructionsComponent implements OnInit {
 
   /** Sets the value from the URL */
   setParams() {
-    this.officeId = this.route.snapshot.queryParams['officeId'];
-    this.accountType = this.route.snapshot.queryParams['accountType'];
-    this.clientId = this.route.parent.snapshot.params['clientId'];
+    this.officeId = this.route.snapshot.queryParams['officeId']!;
+    this.accountType = this.route.snapshot.queryParams['accountType']!;
+    this.clientId = this.route.parent!.snapshot.params['clientId']!;
     switch (this.accountType) {
       case 'fromloans':
         this.accountTypeId = '1';
@@ -164,15 +173,15 @@ export class CreateStandingInstructionsComponent implements OnInit {
    * Changes the value on change of destination value
    */
   buildDependencies() {
-    this.createStandingInstructionsForm.get('destination').valueChanges.subscribe((destination: any) => {
+    this.createStandingInstructionsForm.get('destination')!.valueChanges.subscribe((destination: any) => {
       if (destination === 1) {
         this.allowclientedit = false;
         this.createStandingInstructionsForm.patchValue({
           'toOfficeId': this.officeId,
           'toClientId': this.clientId
         });
-        this.createStandingInstructionsForm.controls['toOfficeId'].disable();
-        this.createStandingInstructionsForm.controls['toClientId'].disable();
+        this.createStandingInstructionsForm.controls['toOfficeId']!.disable();
+        this.createStandingInstructionsForm.controls['toClientId']!.disable();
         this.changeEvent();
       } else {
         this.allowclientedit = true;
@@ -180,8 +189,8 @@ export class CreateStandingInstructionsComponent implements OnInit {
           'toOfficeId': '',
           'toClientId': ''
         });
-        this.createStandingInstructionsForm.controls['toOfficeId'].enable();
-        this.createStandingInstructionsForm.controls['toClientId'].enable();
+        this.createStandingInstructionsForm.controls['toOfficeId']!.enable();
+        this.createStandingInstructionsForm.controls['toClientId']!.enable();
       }
     });
 
@@ -199,12 +208,12 @@ export class CreateStandingInstructionsComponent implements OnInit {
   /** Refine Object
    * Removes the object param with null or '' values
    */
-  refineObject(dataObj: Object) {
+  refineObject(dataObj: Record<string, any>) {
     const propNames = Object.getOwnPropertyNames(dataObj);
     for (let i = 0; i < propNames.length; i++) {
       const propName = propNames[i];
       if (dataObj[propName] === null || dataObj[propName] === undefined || dataObj[propName] === '') {
-        delete dataObj[propName];
+        dataObj[propName] = undefined;
       }
     }
     return dataObj;
@@ -223,12 +232,12 @@ export class CreateStandingInstructionsComponent implements OnInit {
       monthDayFormat: 'dd MMMM',
       fromClientId: this.clientId,
       fromOfficeId: this.officeId,
-      validFrom: this.datePipe.transform(this.createStandingInstructionsForm.value.validFrom, dateFormat),
-      validTill: this.datePipe.transform(this.createStandingInstructionsForm.value.validTill, dateFormat),
+      validFrom: this.datePipe.transform(this.createStandingInstructionsForm.value.validFrom as Date, dateFormat),
+      validTill: this.datePipe.transform(this.createStandingInstructionsForm.value.validTill as Date, dateFormat),
       recurrenceOnMonthDay: this.datePipe.transform(this.createStandingInstructionsForm.value.recurrenceOnMonthDay, 'dd MMMM'),
     };
-    delete standingInstructionData['destination'];
-    delete standingInstructionData['applicant'];
+    delete (standingInstructionData as any)['destination'];
+    delete (standingInstructionData as any)['applicant'];
     this.accountTransfersService.createStandingInstructions(standingInstructionData).subscribe((response: any) => {
       this.router.navigate(['../../'], { relativeTo: this.route });
     });

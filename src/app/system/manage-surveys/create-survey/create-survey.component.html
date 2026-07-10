@@ -44,7 +44,7 @@
 
             <div fxFlexFill fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px" *ngIf="!questionDatas.length">
               <button type="button" mat-raised-button [routerLink]="['../']">Cancel</button>
-              <button type="button" mat-raised-button color="primary" [disabled]="!(this.surveyForm.get('key').valid && this.surveyForm.get('name').valid && this.surveyForm.get('countryCode').valid)" (click)="addQuestion()">
+              <button type="button" mat-raised-button color="primary" [disabled]="!($any(surveyForm.get('key'))?.valid && $any(surveyForm.get('name'))?.valid && $any(surveyForm.get('countryCode'))?.valid)" (click)="addQuestion()">
                 Proceed
               </button>
             </div>
@@ -74,7 +74,7 @@
               <mat-form-field fxFlex="48%">
                 <mat-label>Key</mat-label>
                 <input matInput maxlength="32" required formControlName="key">
-                <mat-error *ngIf="question.controls.key.hasError('required')">
+                <mat-error *ngIf="$any(question).controls.key.hasError('required')">
                   Key is <strong>required</strong>
                 </mat-error>
               </mat-form-field>
@@ -82,7 +82,7 @@
               <mat-form-field fxFlex="48">
                 <mat-label>Text</mat-label>
                 <input matInput maxlength="255" required formControlName="text">
-                <mat-error *ngIf="question.controls.text.hasError('required')">
+                <mat-error *ngIf="$any(question).controls.text.hasError('required')">
                   Text is <strong>required</strong>
                 </mat-error>
               </mat-form-field>
@@ -111,7 +111,7 @@
                     <mat-form-field fxFlex="43%">
                       <mat-label>Text</mat-label>
                       <input matInput required formControlName="text">
-                      <mat-error *ngIf="response.controls.text.hasError('required')">
+                      <mat-error *ngIf="$any(response).controls.text.hasError('required')">
                         Text is <strong>required</strong>
                       </mat-error>
                     </mat-form-field>
@@ -119,10 +119,10 @@
                     <mat-form-field fxFlex="43%">
                       <mat-label>Value</mat-label>
                       <input matInput required formControlName="value">
-                      <mat-error *ngIf="response.controls.value.hasError('required')">
+                      <mat-error *ngIf="$any(response).controls.value.hasError('required')">
                         Value is <strong>required</strong>
                       </mat-error>
-                      <mat-error *ngIf="response.controls.value.hasError('pattern')">
+                      <mat-error *ngIf="$any(response).controls.value.hasError('pattern')">
                         Value <strong>must be an integer between -9999 and 9999</strong>
                       </mat-error>
                     </mat-form-field>

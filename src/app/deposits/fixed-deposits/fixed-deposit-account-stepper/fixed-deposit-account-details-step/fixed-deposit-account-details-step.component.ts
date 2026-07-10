@@ -1,19 +1,29 @@
 /** Angular Imports */
 import { Component, OnInit, Input, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
 
 /** Custom Services */
 import { FixedDepositsService } from '../../fixed-deposits.service';
+import { LayoutDirective, LayoutGapDirective, FlexDirective, LayoutAlignDirective } from '@ngbracket/ngx-layout/flex';
+import { MatFormField, MatLabel, MatError, MatSuffix } from '@angular/material/form-field';
+import { MatSelect } from '@angular/material/select';
+import { NgFor } from '@angular/common';
+import { MatOption } from '@angular/material/autocomplete';
+import { MatInput } from '@angular/material/input';
+import { MatDatepickerInput, MatDatepickerToggle, MatDatepicker } from '@angular/material/datepicker';
+import { MatButton } from '@angular/material/button';
+import { MatStepperPrevious, MatStepperNext } from '@angular/material/stepper';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 
 /**
  * Fixed Deposits Account Details Step
  */
 @Component({
-  standalone: false,
-  selector: 'mifosx-fixed-deposit-account-details-step',
-  templateUrl: './fixed-deposit-account-details-step.component.html',
-  changeDetection: ChangeDetectionStrategy.Eager,
-  styleUrls: ['./fixed-deposit-account-details-step.component.scss']
+    selector: 'mifosx-fixed-deposit-account-details-step',
+    templateUrl: './fixed-deposit-account-details-step.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    styleUrls: ['./fixed-deposit-account-details-step.component.scss'],
+    imports: [ReactiveFormsModule, LayoutDirective, LayoutGapDirective, MatFormField, FlexDirective, MatLabel, MatSelect, NgFor, MatOption, MatError, MatInput, MatDatepickerInput, MatDatepickerToggle, MatSuffix, MatDatepicker, LayoutAlignDirective, MatButton, MatStepperPrevious, FaIconComponent, MatStepperNext]
 })
 export class FixedDepositAccountDetailsStepComponent implements OnInit {
 
@@ -75,15 +85,15 @@ export class FixedDepositAccountDetailsStepComponent implements OnInit {
    */
   buildDependencies() {
     const clientId = this.fixedDepositsAccountTemplate.clientId;
-    this.fixedDepositAccountDetailsForm.get('productId').valueChanges.subscribe((productId: string) => {
+    this.fixedDepositAccountDetailsForm.get('productId')!.valueChanges.subscribe((productId: string) => {
       this.fixedDepositsService.getFixedDepositsAccountTemplate(clientId, productId).subscribe((response: any) => {
         this.fixedDepositsAccountProductTemplate.emit(response);
         this.fieldOfficerData = response.fieldOfficerOptions;
         if (!this.isFieldOfficerPatched && this.fixedDepositsAccountTemplate.fieldOfficerId) {
-          this.fixedDepositAccountDetailsForm.get('fieldOfficerId').patchValue(this.fixedDepositsAccountTemplate.fieldOfficerId);
+          this.fixedDepositAccountDetailsForm.get('fieldOfficerId')!.patchValue(this.fixedDepositsAccountTemplate.fieldOfficerId);
           this.isFieldOfficerPatched = true;
         } else {
-          this.fixedDepositAccountDetailsForm.get('fieldOfficerId').patchValue('');
+          this.fixedDepositAccountDetailsForm.get('fieldOfficerId')!.patchValue('');
         }
       });
     });
@@ -96,7 +106,7 @@ export class FixedDepositAccountDetailsStepComponent implements OnInit {
     const fixedDepositAccountDetails = this.fixedDepositAccountDetailsForm.value;
     for (const key in fixedDepositAccountDetails) {
       if (fixedDepositAccountDetails[key] === '') {
-        delete fixedDepositAccountDetails[key];
+        fixedDepositAccountDetails[key] = undefined;
       }
     }
     return fixedDepositAccountDetails;

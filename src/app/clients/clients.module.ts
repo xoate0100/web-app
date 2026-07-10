@@ -6,7 +6,7 @@ import { DatePipe } from '@angular/common';
 import { ClientsRoutingModule } from './clients-routing.module';
 import { SharedModule } from 'app/shared/shared.module';
 import { PipesModule } from '../pipes/pipes.module';
-import { DirectivesModule } from '../directives/directives.module';
+
 
 /** Custom Components */
 import { ClientsComponent } from './clients.component';
@@ -66,13 +66,10 @@ import { CreateSelfServiceUserComponent } from './clients-view/client-actions/cr
  * All components related to Clients should be declared here.
  */
 @NgModule({
-  imports: [
+    imports: [
     SharedModule,
     ClientsRoutingModule,
     PipesModule,
-    DirectivesModule
-  ],
-  declarations: [
     ClientsComponent,
     ClientsViewComponent,
     GeneralTabComponent,
@@ -122,8 +119,7 @@ import { CreateSelfServiceUserComponent } from './clients-view/client-actions/cr
     ClientFamilyMemberDialogComponent,
     CaptureImageDialogComponent,
     CreateSelfServiceUserComponent
-  ],
-  providers: [DatePipe]
-
+],
+    providers: [DatePipe]
 })
 export class ClientsModule { }

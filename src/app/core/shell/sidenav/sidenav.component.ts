@@ -1,7 +1,7 @@
 /** Angular Imports */
 import { Component, OnInit, Input, ChangeDetectionStrategy } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 
 /** Custom Components */
 import { KeyboardShortcutsDialogComponent } from 'app/shared/keyboard-shortcuts-dialog/keyboard-shortcuts-dialog.component';
@@ -11,16 +11,26 @@ import { AuthenticationService } from '../../authentication/authentication.servi
 
 /** Custom Imports */
 import { frequentActivities } from './frequent-activities';
+import { NgClass, NgFor } from '@angular/common';
+import { ClassDirective } from '@ngbracket/ngx-layout/extended';
+import { LayoutDirective } from '@ngbracket/ngx-layout/flex';
+import { MatIconButton, MatButton } from '@angular/material/button';
+import { MatTooltip } from '@angular/material/tooltip';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import { MatDivider } from '@angular/material/divider';
+import { MatNavList, MatListItem } from '@angular/material/list';
+import { MatIcon } from '@angular/material/icon';
+import { MatLine } from '@angular/material/grid-list';
 
 /**
  * Sidenav component.
  */
 @Component({
-  standalone: false,
-  selector: 'mifosx-sidenav',
-  templateUrl: './sidenav.component.html',
-  changeDetection: ChangeDetectionStrategy.Eager,
-  styleUrls: ['./sidenav.component.scss']
+    selector: 'mifosx-sidenav',
+    templateUrl: './sidenav.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    styleUrls: ['./sidenav.component.scss'],
+    imports: [NgClass, ClassDirective, LayoutDirective, RouterLink, MatIconButton, MatTooltip, FaIconComponent, MatDivider, NgFor, MatButton, MatNavList, MatListItem, MatIcon, MatLine]
 })
 export class SidenavComponent implements OnInit {
 
@@ -44,14 +54,14 @@ export class SidenavComponent implements OnInit {
   constructor(private router: Router,
               public dialog: MatDialog,
               private authenticationService: AuthenticationService) {
-    this.userActivity = JSON.parse(localStorage.getItem('mifosXLocation'));
+    this.userActivity = JSON.parse(localStorage.getItem('mifosXLocation') ?? 'null');
   }
 
   /**
    * Sets the username of the authenticated user.
    */
   ngOnInit() {
-    const credentials = this.authenticationService.getCredentials();
+    const credentials = this.authenticationService.getCredentials()!;
     this.username = credentials.username;
     this.setMappedAcitivites();
   }

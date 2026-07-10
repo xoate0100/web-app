@@ -1,18 +1,25 @@
 /** Angular Imports */
 import { Component, OnInit, Input, ViewChild, ChangeDetectionStrategy } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
-import { MatSort } from '@angular/material/sort';
-import { MatTableDataSource } from '@angular/material/table';
+import { MatSort, MatSortHeader } from '@angular/material/sort';
+import { MatTableDataSource, MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow } from '@angular/material/table';
 
 /** Custom Pipes */
 import { AccountsFilterPipe } from '../../pipes/accounts-filter.pipe';
+import { LayoutDirective, LayoutAlignDirective, FlexDirective } from '@ngbracket/ngx-layout/flex';
+import { MatFormField, MatLabel } from '@angular/material/form-field';
+import { MatInput } from '@angular/material/input';
+import { MatButton } from '@angular/material/button';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import { MatTooltip } from '@angular/material/tooltip';
+import { StatusLookupPipe } from '../../pipes/status-lookup.pipe';
 
 @Component({
-  standalone: false,
-  selector: 'mifosx-share-account-table',
-  templateUrl: './share-account-table.component.html',
-  changeDetection: ChangeDetectionStrategy.Eager,
-  styleUrls: ['./share-account-table.component.scss']
+    selector: 'mifosx-share-account-table',
+    templateUrl: './share-account-table.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    styleUrls: ['./share-account-table.component.scss'],
+    imports: [LayoutDirective, LayoutAlignDirective, MatFormField, FlexDirective, MatLabel, MatInput, MatButton, MatTable, MatSort, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatSortHeader, MatCellDef, MatCell, FaIconComponent, MatTooltip, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow, MatPaginator, StatusLookupPipe]
 })
 export class ShareAccountTableComponent implements OnInit {
 

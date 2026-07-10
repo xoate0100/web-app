@@ -1,20 +1,28 @@
 /** Angular Imports */
 import { Component, ChangeDetectionStrategy } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 
 /** Custom Services */
 import { ClientsService } from '../../../clients.service';
 import { AuthenticationService } from '../../../../core/authentication/authentication.service';
+import { LayoutDirective, FlexDirective } from '@ngbracket/ngx-layout/flex';
+import { MatLabel } from '@angular/material/form-field';
+import { MatSelect } from '@angular/material/select';
+import { NgFor, NgIf } from '@angular/common';
+import { MatOption } from '@angular/material/autocomplete';
+import { MatRadioGroup, MatRadioButton } from '@angular/material/radio';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { MatButton } from '@angular/material/button';
 
 /**
  * Take Survey Component
  */
 @Component({
-  standalone: false,
-  selector: 'mifosx-take-survey',
-  templateUrl: './take-survey.component.html',
-  changeDetection: ChangeDetectionStrategy.Eager,
-  styleUrls: ['./take-survey.component.scss']
+    selector: 'mifosx-take-survey',
+    templateUrl: './take-survey.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    styleUrls: ['./take-survey.component.scss'],
+    imports: [LayoutDirective, MatLabel, MatSelect, NgFor, MatOption, NgIf, FlexDirective, MatRadioGroup, ReactiveFormsModule, FormsModule, MatRadioButton, MatButton, RouterLink]
 })
 export class TakeSurveyComponent {
 
@@ -50,13 +58,13 @@ export class TakeSurveyComponent {
               private clientsService: ClientsService,
               private router: Router,
               private authenticationService: AuthenticationService) {
-    this.route.data.subscribe((data: { clientActionData: any }) => {
+    this.route.data.subscribe((data: any) => {
       this.allSurveyData = data.clientActionData;
-      this.clientId = this.route.parent.parent.snapshot.paramMap.get('clientId');
+      this.clientId = this.route.parent!.parent!.snapshot.paramMap.get('clientId')!;
     });
     /** Retrieves User ID */
-    const savedCredentials = this.authenticationService.getCredentials();
-    this.userId = savedCredentials.userId;
+    const savedCredentials = this.authenticationService.getCredentials()!;
+    this.userId = savedCredentials!.userId;
   }
 
   // TODO: document the function
@@ -73,7 +81,7 @@ export class TakeSurveyComponent {
 
   // TODO: document the function
   groupBy(array: any, func: any) {
-    const groups = {};
+    const groups: Record<string, any[]> = {};
     array.forEach((ele: any) => {
       const group = JSON.stringify(func(ele));
       groups[group] = groups[group] || [];

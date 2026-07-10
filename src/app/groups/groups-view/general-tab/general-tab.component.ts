@@ -1,16 +1,25 @@
 /** Angular Imports */
 import { Component, ChangeDetectionStrategy } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, RouterLink } from '@angular/router';
+import { LayoutDirective, LayoutGapDirective, LayoutAlignDirective } from '@ngbracket/ngx-layout/flex';
+import { NgIf, NgClass, DatePipe } from '@angular/common';
+import { MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow } from '@angular/material/table';
+import { ClassDirective } from '@ngbracket/ngx-layout/extended';
+import { MatTooltip } from '@angular/material/tooltip';
+import { MatButton } from '@angular/material/button';
+import { StatusLookupPipe } from '../../../pipes/status-lookup.pipe';
+import { AccountsFilterPipe } from '../../../pipes/accounts-filter.pipe';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 
 /**
  * Groups View General Tab Component.
  */
 @Component({
-  standalone: false,
-  selector: 'mifosx-general-tab',
-  templateUrl: './general-tab.component.html',
-  changeDetection: ChangeDetectionStrategy.Eager,
-  styleUrls: ['./general-tab.component.scss']
+    selector: 'mifosx-general-tab',
+    templateUrl: './general-tab.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    styleUrls: ['./general-tab.component.scss'],
+    imports: [FaIconComponent, LayoutDirective, LayoutGapDirective, NgIf, MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, NgClass, ClassDirective, MatTooltip, MatButton, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow, RouterLink, LayoutAlignDirective, DatePipe, StatusLookupPipe, AccountsFilterPipe]
 })
 export class GeneralTabComponent {
 
@@ -44,13 +53,13 @@ export class GeneralTabComponent {
    * @param {ActivatedRoute} route Activated Route.
    */
   constructor(private route: ActivatedRoute) {
-    this.route.data.subscribe((data: { groupAccountsData: any, groupClientMembers: any, groupSummary: any }) => {
+    this.route.data.subscribe((data: any) => {
       this.groupAccountData = data.groupAccountsData;
       this.savingAccounts = data.groupAccountsData.savingsAccounts;
       this.loanAccounts = data.groupAccountsData.loanAccounts;
       this.groupSummary = data.groupSummary[0];
     });
-    this.route.parent.data.subscribe((data: { groupViewData: any }) => {
+    this.route.parent!.data.subscribe((data: any) => {
       this.groupClientMembers = data.groupViewData.clientMembers;
     });
   }

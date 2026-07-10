@@ -10,13 +10,17 @@ import { ShareProductChargesStepComponent } from '../share-product-stepper/share
 import { ShareProductAccountingStepComponent } from '../share-product-stepper/share-product-accounting-step/share-product-accounting-step.component';
 
 import { ProductsService } from 'app/products/products.service';
+import { MatStepper, MatStepperIcon, MatStep, MatStepLabel } from '@angular/material/stepper';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import { NgIf } from '@angular/common';
+import { ShareProductPreviewStepComponent } from '../share-product-stepper/share-product-preview-step/share-product-preview-step.component';
 
 @Component({
-  standalone: false,
-  selector: 'mifosx-create-share-product',
-  templateUrl: './create-share-product.component.html',
-  changeDetection: ChangeDetectionStrategy.Eager,
-  styleUrls: ['./create-share-product.component.scss']
+    selector: 'mifosx-create-share-product',
+    templateUrl: './create-share-product.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    styleUrls: ['./create-share-product.component.scss'],
+    imports: [MatStepper, MatStepperIcon, FaIconComponent, MatStep, MatStepLabel, ShareProductDetailsStepComponent, ShareProductCurrencyStepComponent, ShareProductTermsStepComponent, ShareProductSettingsStepComponent, ShareProductMarketPriceStepComponent, ShareProductChargesStepComponent, ShareProductAccountingStepComponent, NgIf, ShareProductPreviewStepComponent]
 })
 export class CreateShareProductComponent implements OnInit {
 
@@ -34,7 +38,7 @@ export class CreateShareProductComponent implements OnInit {
   constructor(private route: ActivatedRoute,
               private productsService: ProductsService,
               private router: Router) {
-    this.route.data.subscribe((data: { shareProductsTemplate: any }) => {
+    this.route.data.subscribe((data: any) => {
       this.shareProductsTemplate = data.shareProductsTemplate;
     });
   }

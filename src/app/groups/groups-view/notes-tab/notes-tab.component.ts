@@ -1,7 +1,7 @@
 /** Angular Imports */
 import { Component, OnInit, ViewChild, ChangeDetectionStrategy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 
 /** Custom Services */
@@ -15,16 +15,25 @@ import { FormDialogComponent } from 'app/shared/form-dialog/form-dialog.componen
 /** Custom Models */
 import { FormfieldBase } from 'app/shared/form-dialog/formfield/model/formfield-base';
 import { InputBase } from 'app/shared/form-dialog/formfield/model/input-base';
+import { LayoutDirective, LayoutAlignDirective, LayoutGapDirective, FlexDirective } from '@ngbracket/ngx-layout/flex';
+import { MatFormField } from '@angular/material/form-field';
+import { MatInput } from '@angular/material/input';
+import { HasPermissionDirective } from '../../../directives/has-permission/has-permission.directive';
+import { MatButton } from '@angular/material/button';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import { MatList, MatListItem } from '@angular/material/list';
+import { NgFor, DatePipe } from '@angular/common';
+import { MatLine } from '@angular/material/grid-list';
 
 /**
  * Groups Notes Tab Component.
  */
 @Component({
-  standalone: false,
-  selector: 'mifosx-notes-tab',
-  templateUrl: './notes-tab.component.html',
-  changeDetection: ChangeDetectionStrategy.Eager,
-  styleUrls: ['./notes-tab.component.scss']
+    selector: 'mifosx-notes-tab',
+    templateUrl: './notes-tab.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    styleUrls: ['./notes-tab.component.scss'],
+    imports: [ReactiveFormsModule, LayoutDirective, LayoutAlignDirective, LayoutGapDirective, MatFormField, FlexDirective, MatInput, HasPermissionDirective, MatButton, FaIconComponent, MatList, NgFor, MatListItem, MatLine, DatePipe]
 })
 export class NotesTabComponent implements OnInit {
 
@@ -53,10 +62,10 @@ export class NotesTabComponent implements OnInit {
               private authenticationService: AuthenticationService,
               private groupsService: GroupsService,
               public dialog: MatDialog) {
-    const savedCredentials = this.authenticationService.getCredentials();
-    this.username = savedCredentials.username;
-    this.groupId = this.route.parent.snapshot.params['groupId'];
-    this.route.data.subscribe((data: { groupNotes: any }) => {
+    const savedCredentials = this.authenticationService.getCredentials()!;
+    this.username = savedCredentials!.username;
+    this.groupId = this.route.parent!.snapshot.params['groupId']!;
+    this.route.data.subscribe((data: any) => {
       this.groupNotes = data.groupNotes;
     });
   }

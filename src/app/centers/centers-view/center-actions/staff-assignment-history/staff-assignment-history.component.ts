@@ -1,20 +1,23 @@
 /** Angular Imports */
 import { Component, OnInit, Input, ChangeDetectionStrategy } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, RouterLink } from '@angular/router';
 
 /** Custom Services */
 import { CentersService } from '../../../centers.service';
+import { MatCard } from '@angular/material/card';
+import { MatButton } from '@angular/material/button';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 
 /**
  * Staff Assignment History Component
  */
 @Component({
-  standalone: false,
-  selector: 'mifosx-staff-assignment-history',
-  templateUrl: './staff-assignment-history.component.html',
-  changeDetection: ChangeDetectionStrategy.Eager,
-  styleUrls: ['./staff-assignment-history.component.scss']
+    selector: 'mifosx-staff-assignment-history',
+    templateUrl: './staff-assignment-history.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    styleUrls: ['./staff-assignment-history.component.scss'],
+    imports: [MatCard, MatButton, RouterLink, FaIconComponent]
 })
 export class StaffAssignmentHistoryComponent implements OnInit {
 
@@ -28,7 +31,7 @@ export class StaffAssignmentHistoryComponent implements OnInit {
    */
   constructor(private sanitizer: DomSanitizer,
     private route: ActivatedRoute) {
-    this.route.data.subscribe((data: { centersActionData: any }) => {
+    this.route.data.subscribe((data: any) => {
       this.staffAssignmentHistoryData = data.centersActionData;
     });
   }

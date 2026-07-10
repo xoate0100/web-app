@@ -6,21 +6,28 @@ import { MatDialog } from '@angular/material/dialog';
 
 /** Custom Services */
 import { LoansService } from 'app/loans/loans.service';
-import { DatePipe } from '@angular/common';
+import { DatePipe, NgIf, DecimalPipe } from '@angular/common';
 
 /** Dialog Components */
 import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.component';
 import { LoansAccountViewGuarantorDetailsDialogComponent } from 'app/loans/custom-dialog/loans-account-view-guarantor-details-dialog/loans-account-view-guarantor-details-dialog.component';
+import { MatCard } from '@angular/material/card';
+import { LayoutDirective, LayoutGapDirective, FlexDirective, FlexFillDirective, LayoutAlignDirective } from '@ngbracket/ngx-layout/flex';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import { MatButton } from '@angular/material/button';
+import { MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow } from '@angular/material/table';
+import { HasPermissionDirective } from '../../../../directives/has-permission/has-permission.directive';
+import { AccountsFilterPipe } from '../../../../pipes/accounts-filter.pipe';
 
 /**
  * View Guarantors Action
  */
 @Component({
-  standalone: false,
-  selector: 'mifosx-view-guarantors',
-  templateUrl: './view-guarantors.component.html',
-  changeDetection: ChangeDetectionStrategy.Eager,
-  styleUrls: ['./view-guarantors.component.scss']
+    selector: 'mifosx-view-guarantors',
+    templateUrl: './view-guarantors.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    styleUrls: ['./view-guarantors.component.scss'],
+    imports: [MatCard, LayoutDirective, LayoutGapDirective, FlexDirective, NgIf, FaIconComponent, FlexFillDirective, LayoutAlignDirective, MatButton, MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, HasPermissionDirective, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow, DecimalPipe, AccountsFilterPipe]
 })
 export class ViewGuarantorsComponent implements OnInit {
 
@@ -40,7 +47,7 @@ export class ViewGuarantorsComponent implements OnInit {
               public loansService: LoansService,
               private route: ActivatedRoute,
               private router: Router) {
-    this.loanId = this.route.parent.snapshot.params['loanId'];
+    this.loanId = this.route.parent!.snapshot.params['loanId']!;
   }
 
   ngOnInit() {

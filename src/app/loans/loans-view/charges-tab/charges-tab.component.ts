@@ -1,11 +1,11 @@
 /** Angular Imports */
 import { Component, OnInit, ViewChild, ChangeDetectionStrategy } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
-import { MatSort } from '@angular/material/sort';
-import { MatTableDataSource, MatTable } from '@angular/material/table';
-import { DatePipe } from '@angular/common';
+import { MatSort, MatSortHeader } from '@angular/material/sort';
+import { MatTableDataSource, MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow } from '@angular/material/table';
+import { DatePipe, NgIf, DecimalPipe } from '@angular/common';
 
 /** Custom Services */
 import { LoansService } from 'app/loans/loans.service';
@@ -20,13 +20,16 @@ import { ConfirmationDialogComponent } from 'app/shared/confirmation-dialog/conf
 import { FormfieldBase } from 'app/shared/form-dialog/formfield/model/formfield-base';
 import { InputBase } from 'app/shared/form-dialog/formfield/model/input-base';
 import { DatepickerBase } from 'app/shared/form-dialog/formfield/model/datepicker-base';
+import { MatButton } from '@angular/material/button';
+import { MatTooltip } from '@angular/material/tooltip';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 
 @Component({
-  standalone: false,
-  selector: 'mifosx-charges-tab',
-  templateUrl: './charges-tab.component.html',
-  changeDetection: ChangeDetectionStrategy.Eager,
-  styleUrls: ['./charges-tab.component.scss']
+    selector: 'mifosx-charges-tab',
+    templateUrl: './charges-tab.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    styleUrls: ['./charges-tab.component.scss'],
+    imports: [FaIconComponent, MatTable, MatSort, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatSortHeader, MatCellDef, MatCell, NgIf, MatButton, MatTooltip, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow, RouterLink, MatPaginator, DecimalPipe, DatePipe]
 })
 export class ChargesTabComponent implements OnInit {
 
@@ -57,7 +60,7 @@ export class ChargesTabComponent implements OnInit {
               private router: Router,
               public dialog: MatDialog,
               private settingsService: SettingsService) {
-    this.route.parent.data.subscribe(( data: { loanDetailsData: any }) => {
+    this.route.parent!.data.subscribe((data: any) => {
       this.loanDetails = data.loanDetailsData;
     });
   }
@@ -113,7 +116,7 @@ export class ChargesTabComponent implements OnInit {
         const dateFormat = this.settingsService.dateFormat;
         const dataObject = {
           ...response.data.value,
-          dueDate: this.datePipe.transform(response.data.value.dueDate, dateFormat),
+          dueDate: this.datePipe.transform(response.data.value.dueDate as Date, dateFormat),
           dateFormat,
           locale
         };

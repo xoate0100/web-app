@@ -1,16 +1,29 @@
 /** Angular Imports */
 import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { NgIf } from '@angular/common';
+import { ApproveSavingsAccountComponent } from './approve-savings-account/approve-savings-account.component';
+import { RejectSavingsAccountComponent } from './reject-savings-account/reject-savings-account.component';
+import { ActivateSavingsAccountComponent } from './activate-savings-account/activate-savings-account.component';
+import { UndoApprovalSavingsAccountComponent } from './undo-approval-savings-account/undo-approval-savings-account.component';
+import { PostInterestAsOnSavingsAccountComponent } from './post-interest-as-on-savings-account/post-interest-as-on-savings-account.component';
+import { SavingsAccountAssignStaffComponent } from './savings-account-assign-staff/savings-account-assign-staff.component';
+import { SavingsAccountUnassignStaffComponent } from './savings-account-unassign-staff/savings-account-unassign-staff.component';
+import { WithdrawByClientSavingsAccountComponent } from './withdraw-by-client-savings-account/withdraw-by-client-savings-account.component';
+import { AddChargeSavingsAccountComponent } from './add-charge-savings-account/add-charge-savings-account.component';
+import { SavingsAccountTransactionsComponent } from './savings-account-transactions/savings-account-transactions.component';
+import { CloseSavingsAccountComponent } from './close-savings-account/close-savings-account.component';
+import { ApplyAnnualFeesSavingsAccountComponent } from './apply-annual-fees-savings-account/apply-annual-fees-savings-account.component';
 
 /**
  * Savings account actions component.
  */
 @Component({
-  standalone: false,
-  selector: 'mifosx-saving-account-actions',
-  templateUrl: './saving-account-actions.component.html',
-  changeDetection: ChangeDetectionStrategy.Eager,
-  styleUrls: ['./saving-account-actions.component.scss']
+    selector: 'mifosx-saving-account-actions',
+    templateUrl: './saving-account-actions.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    styleUrls: ['./saving-account-actions.component.scss'],
+    imports: [NgIf, ApproveSavingsAccountComponent, RejectSavingsAccountComponent, ActivateSavingsAccountComponent, UndoApprovalSavingsAccountComponent, PostInterestAsOnSavingsAccountComponent, SavingsAccountAssignStaffComponent, SavingsAccountUnassignStaffComponent, WithdrawByClientSavingsAccountComponent, AddChargeSavingsAccountComponent, SavingsAccountTransactionsComponent, CloseSavingsAccountComponent, ApplyAnnualFeesSavingsAccountComponent]
 })
 export class SavingAccountActionsComponent {
 
@@ -49,8 +62,8 @@ export class SavingAccountActionsComponent {
    * @param {ActivatedRoute} route Activated Route
    */
   constructor(private route: ActivatedRoute) {
-    const name = this.route.snapshot.params['name'];
-    this.actions[name] = true;
+    const name = this.route.snapshot.params['name']!;
+    (this.actions as Record<string, boolean>)[name] = true;
   }
 
 }

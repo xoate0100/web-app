@@ -1,6 +1,6 @@
 /** Angular Imports */
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 
 /** Custom Services */
@@ -8,16 +8,24 @@ import { HomeService } from '../../home.service';
 
 /** Charting Imports */
 import { createChart } from 'app/shared/chart-setup';
+import { MatCard, MatCardHeader, MatCardContent } from '@angular/material/card';
+import { FlexDirective, LayoutAlignDirective } from '@ngbracket/ngx-layout/flex';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import { MatFormField, MatLabel } from '@angular/material/form-field';
+import { MatSelect } from '@angular/material/select';
+import { NgFor, NgStyle, NgIf } from '@angular/common';
+import { MatOption } from '@angular/material/autocomplete';
+import { StyleDirective } from '@ngbracket/ngx-layout/extended';
 
 /**
  * Amount Collected Pie Chart Component
  */
 @Component({
-  standalone: false,
-  selector: 'mifosx-amount-collected-pie',
-  templateUrl: './amount-collected-pie.component.html',
-  changeDetection: ChangeDetectionStrategy.Eager,
-  styleUrls: ['./amount-collected-pie.component.scss']
+    selector: 'mifosx-amount-collected-pie',
+    templateUrl: './amount-collected-pie.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    styleUrls: ['./amount-collected-pie.component.scss'],
+    imports: [MatCard, MatCardHeader, FlexDirective, FaIconComponent, MatFormField, MatLabel, MatSelect, ReactiveFormsModule, NgFor, MatOption, MatCardContent, NgStyle, StyleDirective, NgIf, LayoutAlignDirective]
 })
 export class AmountCollectedPieComponent implements OnInit {
 
@@ -39,7 +47,7 @@ export class AmountCollectedPieComponent implements OnInit {
    */
   constructor(private homeService: HomeService,
               private route: ActivatedRoute) {
-    this.route.data.subscribe( (data: { offices: any }) => {
+    this.route.data.subscribe((data: any) => {
       this.officeData = data.offices;
     });
   }

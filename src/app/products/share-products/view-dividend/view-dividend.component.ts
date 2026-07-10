@@ -1,16 +1,23 @@
 import { Component, OnInit, ViewChild, ChangeDetectionStrategy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatPaginator } from '@angular/material/paginator';
-import { MatSort } from '@angular/material/sort';
-import { MatTableDataSource } from '@angular/material/table';
+import { MatSort, MatSortHeader } from '@angular/material/sort';
+import { MatTableDataSource, MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow } from '@angular/material/table';
 import { ProductsService } from 'app/products/products.service';
+import { NgIf } from '@angular/common';
+import { LayoutDirective, LayoutAlignDirective, LayoutGapDirective, FlexDirective } from '@ngbracket/ngx-layout/flex';
+import { HasPermissionDirective } from '../../../directives/has-permission/has-permission.directive';
+import { MatButton } from '@angular/material/button';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import { MatFormField, MatLabel } from '@angular/material/form-field';
+import { MatInput } from '@angular/material/input';
 
 @Component({
-  standalone: false,
-  selector: 'mifosx-view-dividend',
-  templateUrl: './view-dividend.component.html',
-  changeDetection: ChangeDetectionStrategy.Eager,
-  styleUrls: ['./view-dividend.component.scss']
+    selector: 'mifosx-view-dividend',
+    templateUrl: './view-dividend.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    styleUrls: ['./view-dividend.component.scss'],
+    imports: [NgIf, LayoutDirective, LayoutAlignDirective, LayoutGapDirective, HasPermissionDirective, MatButton, FaIconComponent, MatFormField, FlexDirective, MatLabel, MatInput, MatTable, MatSort, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatSortHeader, MatCellDef, MatCell, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow, MatPaginator]
 })
 export class ViewDividendComponent implements OnInit {
 
@@ -26,10 +33,10 @@ export class ViewDividendComponent implements OnInit {
   constructor(private route: ActivatedRoute,
               private productsService: ProductsService,
               private router: Router) {
-    this.route.data.subscribe((data: { dividendData: any }) => {
+    this.route.data.subscribe((data: any) => {
       this.dividendData = data.dividendData;
     });
-    this.status = this.route.snapshot.queryParams['status'];
+    this.status = this.route.snapshot.queryParams['status']!;
     if (this.status && (this.status === 'Dividend Approved' || this.status === 'Dividend Posted')) {
       this.isdividendPosted = true;
     }
@@ -42,8 +49,8 @@ export class ViewDividendComponent implements OnInit {
   }
 
   postDividends() {
-    const shareProductId = this.route.parent.parent.snapshot.paramMap.get('id');
-    const dividendId = this.route.snapshot.paramMap.get('dividendId');
+    const shareProductId = this.route.parent!.parent!.snapshot.paramMap.get('id')!;
+    const dividendId = this.route.snapshot.paramMap.get('dividendId')!;
     this.productsService.approveDividend(shareProductId, dividendId, { productId: shareProductId, dividendId: dividendId}).subscribe(() => {
       this.router.navigate(['../'], { relativeTo: this.route });
     });

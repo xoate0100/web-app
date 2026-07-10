@@ -1,20 +1,31 @@
 /** Angular Imports */
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
-import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
-import { Router, ActivatedRoute } from '@angular/router';
+import { FormGroup, FormBuilder, Validators, FormArray, ReactiveFormsModule } from '@angular/forms';
+import { Router, ActivatedRoute, RouterLink } from '@angular/router';
 
 /** Custom Services */
 import { AccountingService } from '../accounting.service';
+import { MatCard, MatCardContent, MatCardActions } from '@angular/material/card';
+import { LayoutDirective, LayoutGapDirective, FlexDirective, FlexFillDirective, LayoutAlignDirective } from '@ngbracket/ngx-layout/flex';
+import { MatFormField, MatLabel, MatError, MatSuffix } from '@angular/material/form-field';
+import { MatSelect } from '@angular/material/select';
+import { NgFor, NgIf } from '@angular/common';
+import { MatOption } from '@angular/material/autocomplete';
+import { MatInput } from '@angular/material/input';
+import { MatIconButton, MatButton } from '@angular/material/button';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import { MatDatepickerInput, MatDatepickerToggle, MatDatepicker } from '@angular/material/datepicker';
+import { HasPermissionDirective } from '../../directives/has-permission/has-permission.directive';
 
 /**
  * Create Journal Entry component.
  */
 @Component({
-  standalone: false,
-  selector: 'mifosx-create-journal-entry',
-  templateUrl: './create-journal-entry.component.html',
-  changeDetection: ChangeDetectionStrategy.Eager,
-  styleUrls: ['./create-journal-entry.component.scss']
+    selector: 'mifosx-create-journal-entry',
+    templateUrl: './create-journal-entry.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    styleUrls: ['./create-journal-entry.component.scss'],
+    imports: [MatCard, ReactiveFormsModule, MatCardContent, LayoutDirective, LayoutGapDirective, MatFormField, FlexDirective, MatLabel, MatSelect, NgFor, MatOption, NgIf, MatError, FlexFillDirective, MatInput, MatIconButton, FaIconComponent, MatDatepickerInput, MatDatepickerToggle, MatSuffix, MatDatepicker, MatCardActions, LayoutAlignDirective, MatButton, RouterLink, HasPermissionDirective]
 })
 export class CreateJournalEntryComponent implements OnInit {
 
@@ -44,12 +55,7 @@ export class CreateJournalEntryComponent implements OnInit {
               private accountingService: AccountingService,
               private route: ActivatedRoute,
               private router: Router) {
-    this.route.data.subscribe((data: {
-        offices: any,
-        currencies: any,
-        paymentTypes: any,
-        glAccounts: any
-      }) => {
+    this.route.data.subscribe((data: any) => {
         this.officeData = data.offices;
         this.currencyData = data.currencies.selectedCurrencyOptions;
         this.paymentTypeData = data.paymentTypes;

@@ -1,14 +1,17 @@
 /** Angular Imports */
 import { Component, OnInit, Inject, ChangeDetectionStrategy } from '@angular/core';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { MatDialogRef, MAT_DIALOG_DATA, MatDialogTitle, MatDialogActions, MatDialogClose } from '@angular/material/dialog';
+import { FormGroup, FormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
+import { MatFormField } from '@angular/material/form-field';
+import { MatInput } from '@angular/material/input';
+import { MatButton } from '@angular/material/button';
 
 @Component({
-  standalone: false,
-  selector: 'mifosx-edit-notes-dialog',
-  templateUrl: './edit-notes-dialog.component.html',
-  changeDetection: ChangeDetectionStrategy.Eager,
-  styleUrls: ['./edit-notes-dialog.component.scss']
+    selector: 'mifosx-edit-notes-dialog',
+    templateUrl: './edit-notes-dialog.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    styleUrls: ['./edit-notes-dialog.component.scss'],
+    imports: [MatDialogTitle, ReactiveFormsModule, MatFormField, MatInput, MatDialogActions, MatButton, MatDialogClose]
 })
 export class EditNotesDialogComponent implements OnInit {
   noteForm: FormGroup;

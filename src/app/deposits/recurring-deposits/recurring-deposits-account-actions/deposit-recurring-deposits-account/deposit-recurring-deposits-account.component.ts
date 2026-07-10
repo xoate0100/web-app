@@ -1,22 +1,31 @@
 /** Angular Imports */
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { DatePipe } from '@angular/common';
-import { ActivatedRoute, Router } from '@angular/router';
+import { FormGroup, FormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
+import { DatePipe, NgIf, NgFor } from '@angular/common';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 
 /** Custom Services */
 import { RecurringDepositsService } from '../../recurring-deposits.service';
 import { SettingsService } from 'app/settings/settings.service';
+import { MatCard, MatCardContent, MatCardActions } from '@angular/material/card';
+import { LayoutDirective, FlexFillDirective, FlexDirective, LayoutAlignDirective, LayoutGapDirective } from '@ngbracket/ngx-layout/flex';
+import { MatFormField, MatLabel, MatSuffix, MatError } from '@angular/material/form-field';
+import { MatInput } from '@angular/material/input';
+import { MatDatepickerInput, MatDatepickerToggle, MatDatepicker } from '@angular/material/datepicker';
+import { MatSelect } from '@angular/material/select';
+import { MatOption } from '@angular/material/autocomplete';
+import { MatButton } from '@angular/material/button';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 
 /**
  * Deposits Recurring Deposits Account Component
  */
 @Component({
-  standalone: false,
-  selector: 'mifosx-deposit-recurring-deposits-account',
-  templateUrl: './deposit-recurring-deposits-account.component.html',
-  changeDetection: ChangeDetectionStrategy.Eager,
-  styleUrls: ['./deposit-recurring-deposits-account.component.scss']
+    selector: 'mifosx-deposit-recurring-deposits-account',
+    templateUrl: './deposit-recurring-deposits-account.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    styleUrls: ['./deposit-recurring-deposits-account.component.scss'],
+    imports: [FaIconComponent, MatCard, ReactiveFormsModule, MatCardContent, LayoutDirective, MatFormField, MatLabel, MatInput, MatDatepickerInput, MatDatepickerToggle, MatSuffix, MatDatepicker, NgIf, MatError, MatSelect, NgFor, MatOption, FlexFillDirective, FlexDirective, MatButton, MatCardActions, LayoutAlignDirective, LayoutGapDirective, RouterLink]
 })
 export class DepositRecurringDepositsAccountComponent implements OnInit {
 
@@ -53,7 +62,7 @@ export class DepositRecurringDepositsAccountComponent implements OnInit {
     private recurringDepositsService: RecurringDepositsService,
     private settingsService: SettingsService
   ) {
-    this.route.data.subscribe((data: { recurringDepositsAccountActionData: any }) => {
+    this.route.data.subscribe((data: any) => {
       this.transactionAmount = data.recurringDepositsAccountActionData.amount;
       this.paymentTypes = data.recurringDepositsAccountActionData.paymentTypeOptions;
       if (data.recurringDepositsAccountActionData.outstandingChargeAmount && data.recurringDepositsAccountActionData.outstandingChargeAmount > 0) {
@@ -61,7 +70,7 @@ export class DepositRecurringDepositsAccountComponent implements OnInit {
         this.transactionAmount = this.transactionAmount + this.outstandingChargeAmount;
       }
     });
-    this.accountId = this.route.parent.snapshot.params['recurringDepositAccountId'];
+    this.accountId = this.route.parent!.snapshot.params['recurringDepositAccountId']!;
   }
 
   ngOnInit() {
@@ -100,7 +109,7 @@ export class DepositRecurringDepositsAccountComponent implements OnInit {
     const dateFormat = this.settingsService.dateFormat;
     const locale = this.settingsService.language.code;
     this.depositRecurringDepositForm.patchValue({
-      transactionDate: this.datePipe.transform(transactionDate, dateFormat)
+      transactionDate: this.datePipe.transform(transactionDate as Date, dateFormat)
     });
     const data = {
       ...this.depositRecurringDepositForm.value,

@@ -9,16 +9,20 @@ import { ChartData } from '../../common-models/chart-data.model';
 
 /** Charting Imports */
 import { createChart } from 'app/shared/chart-setup';
+import { LayoutAlignDirective } from '@ngbracket/ngx-layout/flex';
+import { MatButtonToggleGroup, MatButtonToggle } from '@angular/material/button-toggle';
+import { NgStyle } from '@angular/common';
+import { StyleDirective } from '@ngbracket/ngx-layout/extended';
 
 /**
  * Chart Component
  */
 @Component({
-  standalone: false,
-  selector: 'mifosx-chart',
-  templateUrl: './chart.component.html',
-  changeDetection: ChangeDetectionStrategy.Eager,
-  styleUrls: ['./chart.component.scss' ]
+    selector: 'mifosx-chart',
+    templateUrl: './chart.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    styleUrls: ['./chart.component.scss'],
+    imports: [LayoutAlignDirective, MatButtonToggleGroup, MatButtonToggle, NgStyle, StyleDirective]
 })
 export class ChartComponent implements OnChanges {
 
@@ -46,7 +50,7 @@ export class ChartComponent implements OnChanges {
 
   getRunReportData() {
     this.reportsService.getChartRunReportData(this.dataObject.report.name, this.dataObject.formData)
-    .subscribe((response: ChartData) => {
+    .subscribe((response: any) => {
       this.inputData = response;
       this.setPieChart(this.inputData);
       this.hideOutput = false;

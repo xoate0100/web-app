@@ -5,7 +5,7 @@ import { DatePipe } from '@angular/common';
 import { SharedModule } from 'app/shared/shared.module';
 import { PipesModule } from '../pipes/pipes.module';
 import { TasksRoutingModule } from './tasks-routing.module';
-import { DirectivesModule } from '../directives/directives.module';
+
 
 /** Custom Components */
 import { CheckerInboxAndTasksComponent } from './checker-inbox-and-tasks/checker-inbox-and-tasks.component';
@@ -20,13 +20,10 @@ import { ViewCheckerInboxComponent } from './view-checker-inbox/view-checker-inb
  * Tasks Module
  */
 @NgModule({
-  imports: [
+    imports: [
     SharedModule,
     TasksRoutingModule,
-    DirectivesModule,
-    PipesModule
-  ],
-  declarations: [
+    PipesModule,
     CheckerInboxAndTasksComponent,
     CheckerInboxComponent,
     ClientApprovalComponent,
@@ -34,7 +31,7 @@ import { ViewCheckerInboxComponent } from './view-checker-inbox/view-checker-inb
     LoanDisbursalComponent,
     RescheduleLoanComponent,
     ViewCheckerInboxComponent
-  ],
-  providers: [DatePipe]
+],
+    providers: [DatePipe]
 })
 export class TasksModule { }

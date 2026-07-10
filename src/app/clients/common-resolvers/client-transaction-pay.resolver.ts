@@ -24,8 +24,8 @@ export class ClientTransactionPayResolver implements Resolve<Object> {
      * @returns {Observable<any>}
      */
     resolve(route: ActivatedRouteSnapshot): Observable<any> {
-        const clientId = route.parent.parent.parent.paramMap.get('clientId');
-        const chargeId = route.paramMap.get('chargeId');
+        const clientId = route.parent!.parent!.parent!.paramMap.get('clientId')!;
+        const chargeId = route.paramMap.get('chargeId')!;
       return this.clientsService.getClientTransactionPay(clientId, chargeId);
     }
 

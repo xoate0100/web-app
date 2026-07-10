@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Resolve, ActivatedRouteSnapshot } from '@angular/router';
 
 /** rxjs Imports */
-import { Observable } from 'rxjs';
+import {Observable, of} from 'rxjs';
 
 /** Custom Services */
 import { SavingsService } from 'app/savings/savings.service';
@@ -28,8 +28,8 @@ export class RecurringDepositsAccountActionsResolver implements Resolve<Object> 
    * @returns {Observable<any>}
    */
   resolve(route: ActivatedRouteSnapshot): Observable<any> {
-    const actionName = route.paramMap.get('name');
-    const recurringDepositAccountId = route.paramMap.get('recurringDepositAccountId') || route.parent.parent.paramMap.get('recurringDepositAccountId');
+    const actionName = route.paramMap.get('name')!;
+    const recurringDepositAccountId = route.paramMap.get('recurringDepositAccountId')! || route.parent!.parent!.paramMap.get('recurringDepositAccountId')!;
     switch (actionName) {
       case 'Add Charge':
         return this.savingsService.getSavingsChargeTemplateResource(recurringDepositAccountId);
@@ -38,7 +38,7 @@ export class RecurringDepositsAccountActionsResolver implements Resolve<Object> 
       case 'Deposit':
         return this.recurringDepositsService.getRecurringDepositAccountTransactionTemplateResource(recurringDepositAccountId, 'deposit');
       default:
-        return undefined;
+        return of(null);
     }
   }
 

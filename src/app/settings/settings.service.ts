@@ -50,21 +50,21 @@ export class SettingsService {
    * Returns date format setting.
    */
   get dateFormat() {
-    return JSON.parse(localStorage.getItem('mifosXDateFormat'));
+    return JSON.parse(localStorage.getItem('mifosXDateFormat') ?? 'null');
   }
 
   /**
    * Returns language setting
    */
   get language() {
-    return JSON.parse(localStorage.getItem('mifosXLanguage'));
+    return JSON.parse(localStorage.getItem('mifosXLanguage') ?? 'null');
   }
 
   /**
    * Returns list of default server
    */
   get servers() {
-    return JSON.parse(localStorage.getItem('mifosXServers'));
+    return JSON.parse(localStorage.getItem('mifosXServers') ?? 'null');
   }
 
   /**

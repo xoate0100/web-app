@@ -1,6 +1,6 @@
 /** Angular Imports */
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 
 /** Custom Services */
@@ -8,16 +8,22 @@ import { SystemService } from 'app/system/system.service';
 
 /** Custom Components */
 import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.component';
+import { LayoutDirective, LayoutAlignDirective, LayoutGapDirective, FlexDirective } from '@ngbracket/ngx-layout/flex';
+import { HasPermissionDirective } from '../../../directives/has-permission/has-permission.directive';
+import { MatButton } from '@angular/material/button';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import { NgIf } from '@angular/common';
+import { MatCard, MatCardTitle, MatCardContent } from '@angular/material/card';
 
 /**
  * View Report Component.
  */
 @Component({
-  standalone: false,
-  selector: 'mifosx-view-report',
-  templateUrl: './view-report.component.html',
-  changeDetection: ChangeDetectionStrategy.Eager,
-  styleUrls: ['./view-report.component.scss']
+    selector: 'mifosx-view-report',
+    templateUrl: './view-report.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    styleUrls: ['./view-report.component.scss'],
+    imports: [LayoutDirective, LayoutAlignDirective, LayoutGapDirective, HasPermissionDirective, MatButton, RouterLink, FaIconComponent, NgIf, MatCard, MatCardTitle, MatCardContent, FlexDirective]
 })
 export class ViewReportComponent implements OnInit {
 
@@ -35,7 +41,7 @@ export class ViewReportComponent implements OnInit {
               private systemService: SystemService,
               private dialog: MatDialog,
               private router: Router) {
-    this.route.data.subscribe((data: { report: any }) => {
+    this.route.data.subscribe((data: any) => {
       this.reportData = data.report;
     });
   }

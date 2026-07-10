@@ -3,7 +3,7 @@ import { Component, OnInit, Input, EventEmitter, Output, ChangeDetectionStrategy
 import { MatDialog } from '@angular/material/dialog';
 import { MatSidenav } from '@angular/material/sidenav';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 
 /** rxjs Imports */
 import { Observable } from 'rxjs';
@@ -11,16 +11,30 @@ import { map } from 'rxjs/operators';
 
 /** Custom Services */
 import { AuthenticationService } from '../../authentication/authentication.service';
+import { MatToolbar } from '@angular/material/toolbar';
+import { LayoutDirective, FlexDirective } from '@ngbracket/ngx-layout/flex';
+import { NgIf } from '@angular/common';
+import { MatIconButton } from '@angular/material/button';
+import { MatTooltip } from '@angular/material/tooltip';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import { ShowHideDirective } from '@ngbracket/ngx-layout/extended';
+import { MatTabNav, MatTabLink } from '@angular/material/tabs';
+import { MatMenuTrigger, MatMenu, MatMenuItem } from '@angular/material/menu';
+import { SearchToolComponent } from '../../../shared/search-tool/search-tool.component';
+import { LanguageSelectorComponent } from '../../../shared/language-selector/language-selector.component';
+import { ThemePickerComponent } from '../../../shared/theme-picker/theme-picker.component';
+import { NotificationsTrayComponent } from '../../../shared/notifications-tray/notifications-tray.component';
+import { MatIcon } from '@angular/material/icon';
 
 /**
  * Toolbar component.
  */
 @Component({
-  standalone: false,
-  selector: 'mifosx-toolbar',
-  templateUrl: './toolbar.component.html',
-  changeDetection: ChangeDetectionStrategy.Eager,
-  styleUrls: ['./toolbar.component.scss']
+    selector: 'mifosx-toolbar',
+    templateUrl: './toolbar.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    styleUrls: ['./toolbar.component.scss'],
+    imports: [MatToolbar, LayoutDirective, NgIf, MatIconButton, MatTooltip, FaIconComponent, ShowHideDirective, MatTabNav, MatTabLink, MatMenuTrigger, RouterLink, FlexDirective, SearchToolComponent, LanguageSelectorComponent, ThemePickerComponent, NotificationsTrayComponent, MatMenu, MatMenuItem, MatIcon]
 })
 export class ToolbarComponent implements OnInit {
 

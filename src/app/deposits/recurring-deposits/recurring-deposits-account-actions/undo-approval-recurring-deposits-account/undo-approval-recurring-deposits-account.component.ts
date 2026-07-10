@@ -1,20 +1,25 @@
 /** Angular Imports */
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
-import { FormGroup, FormBuilder } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { FormGroup, FormBuilder, ReactiveFormsModule } from '@angular/forms';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 
 /** Custom Services */
 import { RecurringDepositsService } from '../../recurring-deposits.service';
+import { MatCard, MatCardContent, MatCardActions } from '@angular/material/card';
+import { MatFormField, MatLabel } from '@angular/material/form-field';
+import { FlexDirective, LayoutDirective, LayoutAlignDirective, LayoutGapDirective } from '@ngbracket/ngx-layout/flex';
+import { MatInput } from '@angular/material/input';
+import { MatButton } from '@angular/material/button';
 
 /**
  * Undo Approval Recurring Deposits Account Component
  */
 @Component({
-  standalone: false,
-  selector: 'mifosx-undo-approval-recurring-deposits-account',
-  templateUrl: './undo-approval-recurring-deposits-account.component.html',
-  changeDetection: ChangeDetectionStrategy.Eager,
-  styleUrls: ['./undo-approval-recurring-deposits-account.component.scss']
+    selector: 'mifosx-undo-approval-recurring-deposits-account',
+    templateUrl: './undo-approval-recurring-deposits-account.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    styleUrls: ['./undo-approval-recurring-deposits-account.component.scss'],
+    imports: [MatCard, ReactiveFormsModule, MatCardContent, MatFormField, FlexDirective, MatLabel, MatInput, MatCardActions, LayoutDirective, LayoutAlignDirective, LayoutGapDirective, MatButton, RouterLink]
 })
 export class UndoApprovalRecurringDepositsAccountComponent implements OnInit {
 
@@ -33,7 +38,7 @@ export class UndoApprovalRecurringDepositsAccountComponent implements OnInit {
     private recurringDepositsService: RecurringDepositsService,
     private route: ActivatedRoute,
     private router: Router) {
-    this.accountId = this.route.parent.snapshot.params['recurringDepositAccountId'];
+    this.accountId = this.route.parent!.snapshot.params['recurringDepositAccountId']!;
   }
 
   /**

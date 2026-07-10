@@ -1,26 +1,35 @@
 /** Angular Imports */
 import { Component, OnInit, ViewChild, AfterViewInit, ChangeDetectionStrategy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { FormControl } from '@angular/forms';
+import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { MatPaginator } from '@angular/material/paginator';
-import { MatSort } from '@angular/material/sort';
-import { MatTableDataSource } from '@angular/material/table';
+import { MatSort, MatSortHeader } from '@angular/material/sort';
+import { MatTableDataSource, MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow } from '@angular/material/table';
 
 /** rxjs Imports */
 import { startWith, map, debounceTime, distinctUntilChanged, tap } from 'rxjs/operators';
 
 /** Custom Services */
 import { AccountingService } from '../../accounting.service';
+import { NgIf, NgFor, AsyncPipe } from '@angular/common';
+import { LayoutDirective, LayoutAlignDirective, LayoutGapDirective, FlexDirective } from '@ngbracket/ngx-layout/flex';
+import { HasPermissionDirective } from '../../../directives/has-permission/has-permission.directive';
+import { MatButton } from '@angular/material/button';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import { MatCard, MatCardContent } from '@angular/material/card';
+import { MatFormField, MatLabel } from '@angular/material/form-field';
+import { MatInput } from '@angular/material/input';
+import { MatAutocompleteTrigger, MatAutocomplete, MatOption } from '@angular/material/autocomplete';
 
 /**
  * View provisioning entry component.
  */
 @Component({
-  standalone: false,
-  selector: 'mifosx-view-provisioning-entry',
-  templateUrl: './view-provisioning-entry.component.html',
-  changeDetection: ChangeDetectionStrategy.Eager,
-  styleUrls: ['./view-provisioning-entry.component.scss']
+    selector: 'mifosx-view-provisioning-entry',
+    templateUrl: './view-provisioning-entry.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    styleUrls: ['./view-provisioning-entry.component.scss'],
+    imports: [NgIf, LayoutDirective, LayoutAlignDirective, LayoutGapDirective, HasPermissionDirective, MatButton, FaIconComponent, MatCard, MatCardContent, FlexDirective, MatFormField, MatLabel, MatInput, ReactiveFormsModule, MatAutocompleteTrigger, MatAutocomplete, NgFor, MatOption, MatTable, MatSort, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatSortHeader, MatCellDef, MatCell, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow, MatPaginator, AsyncPipe]
 })
 export class ViewProvisioningEntryComponent implements OnInit, AfterViewInit {
 
@@ -74,13 +83,7 @@ export class ViewProvisioningEntryComponent implements OnInit, AfterViewInit {
   constructor(private accountingService: AccountingService,
               private route: ActivatedRoute,
               private router: Router) {
-    this.route.data.subscribe((data: {
-        provisioningEntry: any,
-        provisioningEntryEntries: any,
-        offices: any,
-        loanProducts: any,
-        provisiningCategories: any
-      }) => {
+    this.route.data.subscribe((data: any) => {
         this.provisioningEntryId = data.provisioningEntry.id;
         this.provisioningEntry = data.provisioningEntry;
         this.provisioningEntryEntries = data.provisioningEntryEntries;

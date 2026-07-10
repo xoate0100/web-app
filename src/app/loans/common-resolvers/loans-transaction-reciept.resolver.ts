@@ -25,7 +25,7 @@ export class LoansTransactionRecieptResolver implements Resolve<Object> {
    * @returns {Observable<any>}
    */
   resolve(route: ActivatedRouteSnapshot): Observable<any> {
-    const transactionId = route.paramMap.get('id');
+    const transactionId = route.paramMap.get('id')!;
     const data = {
       'output-type':	'PDF',
       R_transactionId:	transactionId

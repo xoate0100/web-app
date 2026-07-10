@@ -1,22 +1,30 @@
 /** Angular Imports */
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
-import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
-import { Router, ActivatedRoute } from '@angular/router';
-import { DatePipe } from '@angular/common';
+import { FormGroup, FormBuilder, FormControl, Validators, ReactiveFormsModule } from '@angular/forms';
+import { Router, ActivatedRoute, RouterLink } from '@angular/router';
+import { DatePipe, NgIf, NgFor } from '@angular/common';
 
 /** Custom Services */
 import { GroupsService } from '../groups.service';
 import { SettingsService } from 'app/settings/settings.service';
+import { MatCard, MatCardContent, MatCardActions } from '@angular/material/card';
+import { LayoutDirective, LayoutAlignDirective, LayoutGapDirective } from '@ngbracket/ngx-layout/flex';
+import { MatFormField, MatLabel, MatError, MatSuffix } from '@angular/material/form-field';
+import { MatInput } from '@angular/material/input';
+import { MatSelect } from '@angular/material/select';
+import { MatOption } from '@angular/material/autocomplete';
+import { MatDatepickerInput, MatDatepickerToggle, MatDatepicker } from '@angular/material/datepicker';
+import { MatButton } from '@angular/material/button';
 
 /**
  * Edit Group component.
  */
 @Component({
-  standalone: false,
-  selector: 'mifosx-edit-group',
-  templateUrl: './edit-group.component.html',
-  changeDetection: ChangeDetectionStrategy.Eager,
-  styleUrls: ['./edit-group.component.scss']
+    selector: 'mifosx-edit-group',
+    templateUrl: './edit-group.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    styleUrls: ['./edit-group.component.scss'],
+    imports: [MatCard, ReactiveFormsModule, MatCardContent, LayoutDirective, MatFormField, MatLabel, MatInput, NgIf, MatError, MatSelect, NgFor, MatOption, MatDatepickerInput, MatDatepickerToggle, MatSuffix, MatDatepicker, MatCardActions, LayoutAlignDirective, LayoutGapDirective, MatButton, RouterLink]
 })
 export class EditGroupComponent implements OnInit {
 
@@ -48,7 +56,7 @@ export class EditGroupComponent implements OnInit {
               private groupService: GroupsService,
               private datePipe: DatePipe,
               private settingsService: SettingsService) {
-    this.route.data.subscribe( (data: { groupAndTemplateData: any, groupViewData: any } ) => {
+    this.route.data.subscribe((data: any) => {
       this.staffData = data.groupAndTemplateData.staffOptions;
       this.groupData = data.groupAndTemplateData;
       this.submittedOnDate = data.groupViewData.timeline.submittedOnDate && new Date(data.groupViewData.timeline.submittedOnDate);
@@ -87,7 +95,7 @@ export class EditGroupComponent implements OnInit {
   buildDependencies() {
     if (this.groupData.active) {
       this.editGroupForm.addControl('activationDate', new FormControl('', Validators.required));
-      this.editGroupForm.get('activationDate').patchValue(this.groupData.activationDate && new Date(this.groupData.activationDate));
+      this.editGroupForm.get('activationDate')!.patchValue(this.groupData.activationDate && new Date(this.groupData.activationDate));
     } else {
       this.editGroupForm.removeControl('activationDate');
     }
@@ -103,8 +111,8 @@ export class EditGroupComponent implements OnInit {
     // TODO: Update once language and date settings are setup
     const dateFormat = this.settingsService.dateFormat;
     this.editGroupForm.patchValue({
-      submittedOnDate: this.datePipe.transform(submittedOnDate, dateFormat),
-      activationDate: activationDate && this.datePipe.transform(activationDate, dateFormat)
+      submittedOnDate: this.datePipe.transform(submittedOnDate as Date, dateFormat),
+      activationDate: activationDate && this.datePipe.transform(activationDate as Date, dateFormat)
     });
     const group = this.editGroupForm.value;
     group.locale = this.settingsService.language.code;

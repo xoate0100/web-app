@@ -10,13 +10,17 @@ import { RecurringDepositProductChargesStepComponent } from '../recurring-deposi
 import { RecurringDepositProductAccountingStepComponent } from '../recurring-deposit-product-stepper/recurring-deposit-product-accounting-step/recurring-deposit-product-accounting-step.component';
 
 import { ProductsService } from 'app/products/products.service';
+import { MatStepper, MatStepperIcon, MatStep, MatStepLabel } from '@angular/material/stepper';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import { NgIf } from '@angular/common';
+import { RecurringDepositProductPreviewStepComponent } from '../recurring-deposit-product-stepper/recurring-deposit-product-preview-step/recurring-deposit-product-preview-step.component';
 
 @Component({
-  standalone: false,
-  selector: 'mifosx-create-recurring-deposit-product',
-  templateUrl: './create-recurring-deposit-product.component.html',
-  changeDetection: ChangeDetectionStrategy.Eager,
-  styleUrls: ['./create-recurring-deposit-product.component.scss']
+    selector: 'mifosx-create-recurring-deposit-product',
+    templateUrl: './create-recurring-deposit-product.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    styleUrls: ['./create-recurring-deposit-product.component.scss'],
+    imports: [MatStepper, MatStepperIcon, FaIconComponent, MatStep, MatStepLabel, RecurringDepositProductDetailsStepComponent, RecurringDepositProductCurrencyStepComponent, RecurringDepositProductTermsStepComponent, RecurringDepositProductSettingsStepComponent, RecurringDepositProductInterestRateChartStepComponent, RecurringDepositProductChargesStepComponent, RecurringDepositProductAccountingStepComponent, NgIf, RecurringDepositProductPreviewStepComponent]
 })
 export class CreateRecurringDepositProductComponent implements OnInit {
 
@@ -34,7 +38,7 @@ export class CreateRecurringDepositProductComponent implements OnInit {
   constructor(private route: ActivatedRoute,
     private productsService: ProductsService,
     private router: Router) {
-    this.route.data.subscribe((data: { recurringDepositProductsTemplate: any }) => {
+    this.route.data.subscribe((data: any) => {
       this.recurringDepositProductsTemplate = data.recurringDepositProductsTemplate;
     });
   }
@@ -99,7 +103,7 @@ export class CreateRecurringDepositProductComponent implements OnInit {
     if (!recurringDepositProduct.description) {
       recurringDepositProduct.description = '';
     }
-    delete recurringDepositProduct.advancedAccountingRules;
+    delete (recurringDepositProduct as any).advancedAccountingRules;
     this.productsService.createRecurringDepositProduct(recurringDepositProduct)
       .subscribe((response: any) => {
         this.router.navigate(['../', response.resourceId], { relativeTo: this.route });

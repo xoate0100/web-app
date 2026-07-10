@@ -9,21 +9,30 @@ import { FormDialogComponent } from 'app/shared/form-dialog/form-dialog.componen
 import { LoansAccountAddCollateralDialogComponent } from 'app/loans/custom-dialog/loans-account-add-collateral-dialog/loans-account-add-collateral-dialog.component';
 
 /** Custom Services */
-import { DatePipe } from '@angular/common';
+import { DatePipe, NgFor, NgIf, DecimalPipe } from '@angular/common';
 import { DatepickerBase } from 'app/shared/form-dialog/formfield/model/datepicker-base';
 import { FormfieldBase } from 'app/shared/form-dialog/formfield/model/formfield-base';
 import { InputBase } from 'app/shared/form-dialog/formfield/model/input-base';
 import { SettingsService } from 'app/settings/settings.service';
+import { LayoutDirective, LayoutGapDirective, FlexDirective, FlexAlignDirective, LayoutAlignDirective } from '@ngbracket/ngx-layout/flex';
+import { MatFormField, MatLabel } from '@angular/material/form-field';
+import { MatSelect } from '@angular/material/select';
+import { MatOption } from '@angular/material/autocomplete';
+import { MatButton, MatIconButton } from '@angular/material/button';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import { MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow } from '@angular/material/table';
+import { MatDivider } from '@angular/material/divider';
+import { MatStepperPrevious, MatStepperNext } from '@angular/material/stepper';
 
 /**
  * Recurring Deposit Account Charges Step
  */
 @Component({
-  standalone: false,
-  selector: 'mifosx-loans-account-charges-step',
-  templateUrl: './loans-account-charges-step.component.html',
-  changeDetection: ChangeDetectionStrategy.Eager,
-  styleUrls: ['./loans-account-charges-step.component.scss']
+    selector: 'mifosx-loans-account-charges-step',
+    templateUrl: './loans-account-charges-step.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    styleUrls: ['./loans-account-charges-step.component.scss'],
+    imports: [LayoutDirective, LayoutGapDirective, MatFormField, FlexDirective, MatLabel, MatSelect, NgFor, MatOption, FlexAlignDirective, MatButton, FaIconComponent, MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatIconButton, NgIf, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow, MatDivider, LayoutAlignDirective, MatStepperPrevious, MatStepperNext, DecimalPipe, DatePipe]
 })
 export class LoansAccountChargesStepComponent implements OnInit, OnChanges {
 
@@ -145,7 +154,7 @@ export class LoansAccountChargesStepComponent implements OnInit, OnChanges {
       if (response.data) {
         let newCharge: any;
         const dateFormat = this.settingsService.dateFormat;
-        const date = this.datePipe.transform(response.data.value.date, dateFormat);
+        const date = this.datePipe.transform(response.data.value.date as Date, dateFormat);
         switch (charge.chargeTimeType.value) {
           case 'Specified due date':
           case 'Weekly Fee':

@@ -1,21 +1,27 @@
 /** Angular Imports */
 import { Component, OnInit, Input, ChangeDetectionStrategy } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { DatePipe } from '@angular/common';
-import { ActivatedRoute, Router } from '@angular/router';
+import { FormGroup, FormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
+import { DatePipe, NgIf } from '@angular/common';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 
 /** Custom Services */
 import { SharesService } from 'app/shares/shares.service';
+import { MatCard, MatCardContent, MatCardActions } from '@angular/material/card';
+import { LayoutDirective, LayoutAlignDirective, LayoutGapDirective } from '@ngbracket/ngx-layout/flex';
+import { MatFormField, MatLabel, MatSuffix, MatError } from '@angular/material/form-field';
+import { MatInput } from '@angular/material/input';
+import { MatDatepickerInput, MatDatepickerToggle, MatDatepicker } from '@angular/material/datepicker';
+import { MatButton } from '@angular/material/button';
 
 /**
  * Redeem Shares Component
  */
 @Component({
-  standalone: false,
-  selector: 'mifosx-redeem-shares',
-  templateUrl: './redeem-shares.component.html',
-  changeDetection: ChangeDetectionStrategy.Eager,
-  styleUrls: ['./redeem-shares.component.scss']
+    selector: 'mifosx-redeem-shares',
+    templateUrl: './redeem-shares.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    styleUrls: ['./redeem-shares.component.scss'],
+    imports: [MatCard, ReactiveFormsModule, MatCardContent, LayoutDirective, MatFormField, MatLabel, MatInput, MatDatepickerInput, MatDatepickerToggle, MatSuffix, MatDatepicker, NgIf, MatError, MatCardActions, LayoutAlignDirective, LayoutGapDirective, MatButton, RouterLink]
 })
 export class RedeemSharesComponent implements OnInit {
 
@@ -43,8 +49,8 @@ export class RedeemSharesComponent implements OnInit {
               private datePipe: DatePipe,
               private route: ActivatedRoute,
               private router: Router) {
-    this.accountId = this.route.parent.snapshot.params['shareAccountId'];
-    this.route.data.subscribe((data: { shareAccountActionData: any }) => {
+    this.accountId = this.route.parent!.snapshot.params['shareAccountId']!;
+    this.route.data.subscribe((data: any) => {
       this.sharesAccountData = data.shareAccountActionData;
     });
   }
@@ -56,7 +62,7 @@ export class RedeemSharesComponent implements OnInit {
    */
   ngOnInit() {
     this.createRedeemSharesAccountForm();
-    this.redeemSharesForm.get('unitPrice').patchValue(this.sharesAccountData.currentMarketPrice || '');
+    this.redeemSharesForm.get('unitPrice')!.patchValue(this.sharesAccountData.currentMarketPrice || '');
   }
 
   /**
@@ -80,11 +86,11 @@ export class RedeemSharesComponent implements OnInit {
     const dateFormat = 'dd MMMM yyyy';
     const prevRequestedDate: Date = this.redeemSharesForm.value.requestedDate;
     this.redeemSharesForm.patchValue({
-      requestedDate: this.datePipe.transform(prevRequestedDate, dateFormat),
+      requestedDate: this.datePipe.transform(prevRequestedDate as Date, dateFormat),
     });
     const data = {
       ...this.redeemSharesForm.value,
-      unitPrice: this.redeemSharesForm.get('unitPrice').value,
+      unitPrice: this.redeemSharesForm.get('unitPrice')!.value,
       dateFormat,
       locale
     };

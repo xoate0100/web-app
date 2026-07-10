@@ -27,9 +27,9 @@ export class StandingInstructionsTemplateResolver implements Resolve<Object> {
      * @returns {Observable<any>}
      */
     resolve(route: ActivatedRouteSnapshot): Observable<any> {
-        const officeId = route.queryParamMap.get('officeId');
-        const accountType = route.queryParamMap.get('accountType');
-        const clientId = route.parent.paramMap.get('clientId');
+        const officeId = route.queryParamMap.get('officeId')!;
+        const accountType = route.queryParamMap.get('accountType')!;
+        const clientId = route.parent!.paramMap.get('clientId')!;
         switch (accountType) {
             case 'fromloans':
                 this.accountTypeId = '1';

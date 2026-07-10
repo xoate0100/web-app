@@ -1,9 +1,9 @@
 /** Angular Imports */
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { DatePipe } from '@angular/common';
-import { ActivatedRoute, Router } from '@angular/router';
-import { FormControl } from '@angular/forms';
+import { DatePipe, NgFor, NgSwitch, NgSwitchCase } from '@angular/common';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { FormControl, ReactiveFormsModule } from '@angular/forms';
 
 /** Custom Services */
 import { GroupsService } from 'app/groups/groups.service';
@@ -15,16 +15,26 @@ import { FormDialogComponent } from 'app/shared/form-dialog/form-dialog.componen
 /** Custom Models */
 import { FormfieldBase } from 'app/shared/form-dialog/formfield/model/formfield-base';
 import { SelectBase } from 'app/shared/form-dialog/formfield/model/select-base';
+import { MatCard, MatCardActions } from '@angular/material/card';
+import { LayoutDirective, LayoutGapDirective, FlexDirective, LayoutAlignDirective } from '@ngbracket/ngx-layout/flex';
+import { MatFormField, MatLabel, MatHint } from '@angular/material/form-field';
+import { MatSelect } from '@angular/material/select';
+import { MatOption } from '@angular/material/autocomplete';
+import { MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow } from '@angular/material/table';
+import { MatIconButton, MatButton } from '@angular/material/button';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import { HasPermissionDirective } from '../../../../directives/has-permission/has-permission.directive';
+import { FindPipe } from '../../../../pipes/find.pipe';
 
 /**
  * Group Attendance component.
  */
 @Component({
-  standalone: false,
-  selector: 'mifosx-group-attendance',
-  templateUrl: './group-attendance.component.html',
-  changeDetection: ChangeDetectionStrategy.Eager,
-  styleUrls: ['./group-attendance.component.scss']
+    selector: 'mifosx-group-attendance',
+    templateUrl: './group-attendance.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    styleUrls: ['./group-attendance.component.scss'],
+    imports: [MatCard, LayoutDirective, LayoutGapDirective, MatFormField, FlexDirective, MatLabel, MatSelect, ReactiveFormsModule, NgFor, MatOption, MatHint, MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, NgSwitch, NgSwitchCase, MatIconButton, FaIconComponent, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow, MatCardActions, LayoutAlignDirective, MatButton, RouterLink, HasPermissionDirective, DatePipe, FindPipe]
 })
 export class GroupAttendanceComponent implements OnInit {
 
@@ -58,7 +68,7 @@ export class GroupAttendanceComponent implements OnInit {
               private groupsService: GroupsService,
               public dialog: MatDialog,
               private settingsService: SettingsService) {
-    this.route.data.subscribe(( data: { groupActionData: any }) => {
+    this.route.data.subscribe((data: any) => {
       this.groupData = data.groupActionData;
       this.membersData = data.groupActionData.clientMembers;
     });
@@ -121,7 +131,7 @@ export class GroupAttendanceComponent implements OnInit {
     const locale = this.settingsService.language.code;
     const dateFormat = this.settingsService.dateFormat;
     const prevMeetingDate: Date = new Date(this.meetingDate.value);
-    this.meetingDate.patchValue(this.datePipe.transform(prevMeetingDate, dateFormat));
+    this.meetingDate.patchValue(this.datePipe.transform(prevMeetingDate as Date, dateFormat));
     const data = {
       meetingDate: this.meetingDate.value,
       calendarId: this.groupData.collectionMeetingCalendar.id,

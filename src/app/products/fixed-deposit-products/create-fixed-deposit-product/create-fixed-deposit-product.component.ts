@@ -10,13 +10,17 @@ import { FixedDepositProductChargesStepComponent } from '../fixed-deposit-produc
 import { FixedDepositProductAccountingStepComponent } from '../fixed-deposit-product-stepper/fixed-deposit-product-accounting-step/fixed-deposit-product-accounting-step.component';
 
 import { ProductsService } from 'app/products/products.service';
+import { MatStepper, MatStepperIcon, MatStep, MatStepLabel } from '@angular/material/stepper';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import { NgIf } from '@angular/common';
+import { FixedDepositProductPreviewStepComponent } from '../fixed-deposit-product-stepper/fixed-deposit-product-preview-step/fixed-deposit-product-preview-step.component';
 
 @Component({
-  standalone: false,
-  selector: 'mifosx-create-fixed-deposit-product',
-  templateUrl: './create-fixed-deposit-product.component.html',
-  changeDetection: ChangeDetectionStrategy.Eager,
-  styleUrls: ['./create-fixed-deposit-product.component.scss']
+    selector: 'mifosx-create-fixed-deposit-product',
+    templateUrl: './create-fixed-deposit-product.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    styleUrls: ['./create-fixed-deposit-product.component.scss'],
+    imports: [MatStepper, MatStepperIcon, FaIconComponent, MatStep, MatStepLabel, FixedDepositProductDetailsStepComponent, FixedDepositProductCurrencyStepComponent, FixedDepositProductTermsStepComponent, FixedDepositProductSettingsStepComponent, FixedDepositProductInterestRateChartStepComponent, FixedDepositProductChargesStepComponent, FixedDepositProductAccountingStepComponent, NgIf, FixedDepositProductPreviewStepComponent]
 })
 export class CreateFixedDepositProductComponent implements OnInit {
 
@@ -34,7 +38,7 @@ export class CreateFixedDepositProductComponent implements OnInit {
   constructor(private route: ActivatedRoute,
               private productsService: ProductsService,
               private router: Router) {
-    this.route.data.subscribe((data: { fixedDepositProductsTemplate: any }) => {
+    this.route.data.subscribe((data: any) => {
       this.fixedDepositProductsTemplate = data.fixedDepositProductsTemplate;
     });
   }
@@ -96,7 +100,7 @@ export class CreateFixedDepositProductComponent implements OnInit {
       charges: this.fixedDepositProduct.charges.map((charge: any) => ({ id: charge.id })),
       locale: 'en' // locale required for depositAmount
     };
-    delete fixedDepositProduct.advancedAccountingRules;
+    delete (fixedDepositProduct as any).advancedAccountingRules;
     this.productsService.createFixedDepositProduct(fixedDepositProduct)
       .subscribe((response: any) => {
         this.router.navigate(['../', response.resourceId], { relativeTo: this.route });

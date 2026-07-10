@@ -1,20 +1,30 @@
 /** Angular Imports */
 import { Component, OnInit, Input, ChangeDetectionStrategy } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
-import { DatePipe } from '@angular/common';
+import { FormBuilder, FormGroup, Validators, FormControl, ReactiveFormsModule } from '@angular/forms';
+import { DatePipe, NgFor, NgIf } from '@angular/common';
 
 /** Custom Services */
 import { SettingsService } from 'app/settings/settings.service';
+import { LayoutDirective, LayoutGapDirective, FlexDirective, LayoutAlignDirective } from '@ngbracket/ngx-layout/flex';
+import { MatFormField, MatLabel, MatError, MatSuffix } from '@angular/material/form-field';
+import { MatSelect } from '@angular/material/select';
+import { MatOption } from '@angular/material/autocomplete';
+import { MatInput } from '@angular/material/input';
+import { MatDatepickerInput, MatDatepickerToggle, MatDatepicker } from '@angular/material/datepicker';
+import { MatCheckbox } from '@angular/material/checkbox';
+import { MatButton } from '@angular/material/button';
+import { MatStepperPrevious, MatStepperNext } from '@angular/material/stepper';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 
 /**
  * Create Client Component
  */
 @Component({
-  standalone: false,
-  selector: 'mifosx-client-general-step',
-  templateUrl: './client-general-step.component.html',
-  changeDetection: ChangeDetectionStrategy.Eager,
-  styleUrls: ['./client-general-step.component.scss']
+    selector: 'mifosx-client-general-step',
+    templateUrl: './client-general-step.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    styleUrls: ['./client-general-step.component.scss'],
+    imports: [ReactiveFormsModule, LayoutDirective, LayoutGapDirective, MatFormField, FlexDirective, MatLabel, MatSelect, NgFor, MatOption, NgIf, MatError, MatInput, MatDatepickerInput, MatDatepickerToggle, MatSuffix, MatDatepicker, MatCheckbox, LayoutAlignDirective, MatButton, MatStepperPrevious, FaIconComponent, MatStepperNext]
 })
 export class ClientGeneralStepComponent implements OnInit {
 
@@ -104,7 +114,7 @@ export class ClientGeneralStepComponent implements OnInit {
    * Adds controls conditionally.
    */
   buildDependencies() {
-    this.createClientForm.get('legalFormId').valueChanges.subscribe((legalFormId: any) => {
+    this.createClientForm.get('legalFormId')!.valueChanges.subscribe((legalFormId: any) => {
       if (legalFormId === 1) {
         this.createClientForm.removeControl('fullname');
         this.createClientForm.removeControl('clientNonPersonDetails');
@@ -125,15 +135,15 @@ export class ClientGeneralStepComponent implements OnInit {
         }));
       }
     });
-    this.createClientForm.get('legalFormId').patchValue(1);
-    this.createClientForm.get('active').valueChanges.subscribe((active: boolean) => {
+    this.createClientForm.get('legalFormId')!.patchValue(1);
+    this.createClientForm.get('active')!.valueChanges.subscribe((active: boolean) => {
       if (active) {
         this.createClientForm.addControl('activationDate', new FormControl('', Validators.required));
       } else {
         this.createClientForm.removeControl('activationDate');
       }
     });
-    this.createClientForm.get('addSavings').valueChanges.subscribe((active: boolean) => {
+    this.createClientForm.get('addSavings')!.valueChanges.subscribe((active: boolean) => {
       if (active) {
         this.createClientForm.addControl('savingsProductId', new FormControl('', Validators.required));
       } else {
@@ -152,23 +162,23 @@ export class ClientGeneralStepComponent implements OnInit {
     // TODO: Update once language and date settings are setup
     for (const key in generalDetails) {
       if (generalDetails[key] === '' || key === 'addSavings') {
-        delete generalDetails[key];
+        generalDetails[key] = undefined;
       }
     }
     if (generalDetails.submittedOnDate) {
-      generalDetails.submittedOnDate = this.datePipe.transform(generalDetails.submittedOnDate, dateFormat);
+      generalDetails.submittedOnDate = this.datePipe.transform(generalDetails.submittedOnDate as Date, dateFormat);
     }
     if (generalDetails.activationDate) {
-      generalDetails.activationDate = this.datePipe.transform(generalDetails.activationDate, dateFormat);
+      generalDetails.activationDate = this.datePipe.transform(generalDetails.activationDate as Date, dateFormat);
     }
     if (generalDetails.dateOfBirth) {
-      generalDetails.dateOfBirth = this.datePipe.transform(generalDetails.dateOfBirth, dateFormat);
+      generalDetails.dateOfBirth = this.datePipe.transform(generalDetails.dateOfBirth as Date, dateFormat);
     }
 
     if (generalDetails.clientNonPersonDetails && generalDetails.clientNonPersonDetails.incorpValidityTillDate) {
       generalDetails.clientNonPersonDetails = {
         ...generalDetails.clientNonPersonDetails,
-        incorpValidityTillDate: this.datePipe.transform(generalDetails.dateOfBirth, dateFormat),
+        incorpValidityTillDate: this.datePipe.transform(generalDetails.dateOfBirth as Date, dateFormat),
         dateFormat,
         locale
       };

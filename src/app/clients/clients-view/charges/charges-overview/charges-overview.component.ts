@@ -2,18 +2,22 @@
 import { Component, OnInit, ViewChild, ChangeDetectionStrategy } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
-import { MatTableDataSource } from '@angular/material/table';
+import { MatTableDataSource, MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow } from '@angular/material/table';
 import { ActivatedRoute } from '@angular/router';
+import { NgClass, DatePipe } from '@angular/common';
+import { ClassDirective } from '@ngbracket/ngx-layout/extended';
+import { StatusLookupPipe } from '../../../../pipes/status-lookup.pipe';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 
 /**
  * Client Charge Overview component.
  */
 @Component({
-  standalone: false,
-  selector: 'mifosx-charges-overview',
-  templateUrl: './charges-overview.component.html',
-  changeDetection: ChangeDetectionStrategy.Eager,
-  styleUrls: ['./charges-overview.component.scss']
+    selector: 'mifosx-charges-overview',
+    templateUrl: './charges-overview.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    styleUrls: ['./charges-overview.component.scss'],
+    imports: [FaIconComponent, MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, NgClass, ClassDirective, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow, MatPaginator, DatePipe, StatusLookupPipe]
 })
 export class ChargesOverviewComponent implements OnInit {
 
@@ -34,7 +38,7 @@ export class ChargesOverviewComponent implements OnInit {
    */
   constructor(private route: ActivatedRoute,
               public dialog: MatDialog) {
-      this.route.data.subscribe((data: { clientChargesData: any }) => {
+      this.route.data.subscribe((data: any) => {
         this.chargeOverviewData = data.clientChargesData;
     });
   }

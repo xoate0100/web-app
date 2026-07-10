@@ -1,10 +1,10 @@
 /** Angular Imports */
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { SelectionModel } from '@angular/cdk/collections';
 import * as _ from 'lodash';
-import { DatePipe } from '@angular/common';
-import { MatTableDataSource } from '@angular/material/table';
+import { DatePipe, NgIf, NgFor, KeyValuePipe } from '@angular/common';
+import { MatTableDataSource, MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow } from '@angular/material/table';
 import { MatDialog } from '@angular/material/dialog';
 
 /** Dialog Imports */
@@ -15,13 +15,21 @@ import { DatepickerBase } from 'app/shared/form-dialog/formfield/model/datepicke
 /** Custom Services */
 import { TasksService } from '../../tasks.service';
 import { SettingsService } from 'app/settings/settings.service';
+import { LayoutDirective, LayoutAlignDirective, FlexDirective } from '@ngbracket/ngx-layout/flex';
+import { MatFormField } from '@angular/material/form-field';
+import { MatInput } from '@angular/material/input';
+import { HasPermissionDirective } from '../../../directives/has-permission/has-permission.directive';
+import { MatButton } from '@angular/material/button';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import { MatCheckbox } from '@angular/material/checkbox';
+import { AccountsFilterPipe } from '../../../pipes/accounts-filter.pipe';
 
 @Component({
-  standalone: false,
-  selector: 'mifosx-client-approval',
-  templateUrl: './client-approval.component.html',
-  changeDetection: ChangeDetectionStrategy.Eager,
-  styleUrls: ['./client-approval.component.scss']
+    selector: 'mifosx-client-approval',
+    templateUrl: './client-approval.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    styleUrls: ['./client-approval.component.scss'],
+    imports: [NgIf, LayoutDirective, LayoutAlignDirective, FlexDirective, MatFormField, MatInput, HasPermissionDirective, MatButton, FaIconComponent, NgFor, MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCheckbox, MatCellDef, MatCell, RouterLink, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow, KeyValuePipe, AccountsFilterPipe]
 })
 export class ClientApprovalComponent {
 
@@ -53,13 +61,13 @@ export class ClientApprovalComponent {
     private router: Router,
     private settingsService: SettingsService,
     private tasksService: TasksService) {
-    this.route.data.subscribe((data: { groupedClientData: any }) => {
+    this.route.data.subscribe((data: any) => {
       this.groupedClients = _.groupBy(data.groupedClientData.pageItems, 'officeName');
       if (Object.keys(this.groupedClients).length) {
         this.showData = true;
       }
       this.dataSource = new MatTableDataSource(data.groupedClientData.pageItems);
-      this.selection = new SelectionModel(true, []);
+      this.selection = new SelectionModel<any>(true, []);
     });
   }
 
@@ -114,7 +122,7 @@ export class ClientApprovalComponent {
 
   bulkClientApproval(submittedData: any) {
     const dateFormat = this.settingsService.dateFormat;
-    const activationDate = this.datePipe.transform(submittedData.value.actDate, dateFormat);
+    const activationDate = this.datePipe.transform(submittedData.value.actDate as Date, dateFormat);
     const locale = this.settingsService.language.code;
     const formData = {
       dateFormat,

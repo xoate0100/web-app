@@ -1,10 +1,10 @@
 /** Angular Imports */
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { SelectionModel } from '@angular/cdk/collections';
-import { DatePipe } from '@angular/common';
+import { DatePipe, NgIf } from '@angular/common';
 import * as _ from 'lodash';
-import { MatTableDataSource } from '@angular/material/table';
+import { MatTableDataSource, MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow } from '@angular/material/table';
 import { MatDialog } from '@angular/material/dialog';
 
 /** Dialog Imports */
@@ -13,13 +13,20 @@ import { ConfirmationDialogComponent } from 'app/shared/confirmation-dialog/conf
 /** Custom Services */
 import { TasksService } from '../../tasks.service';
 import { SettingsService } from 'app/settings/settings.service';
+import { LayoutDirective, LayoutAlignDirective, FlexDirective } from '@ngbracket/ngx-layout/flex';
+import { MatFormField } from '@angular/material/form-field';
+import { MatInput } from '@angular/material/input';
+import { HasPermissionDirective } from '../../../directives/has-permission/has-permission.directive';
+import { MatButton } from '@angular/material/button';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import { MatCheckbox } from '@angular/material/checkbox';
 
 @Component({
-  standalone: false,
-  selector: 'mifosx-reschedule-loan',
-  templateUrl: './reschedule-loan.component.html',
-  changeDetection: ChangeDetectionStrategy.Eager,
-  styleUrls: ['./reschedule-loan.component.scss']
+    selector: 'mifosx-reschedule-loan',
+    templateUrl: './reschedule-loan.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    styleUrls: ['./reschedule-loan.component.scss'],
+    imports: [NgIf, LayoutDirective, LayoutAlignDirective, FlexDirective, MatFormField, MatInput, HasPermissionDirective, MatButton, FaIconComponent, MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCheckbox, MatCellDef, MatCell, RouterLink, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow, DatePipe]
 })
 export class RescheduleLoanComponent implements OnInit {
 
@@ -49,10 +56,10 @@ export class RescheduleLoanComponent implements OnInit {
     private router: Router,
     private settingsService: SettingsService,
     private tasksService: TasksService) {
-    this.route.data.subscribe((data: { recheduleLoansData: any }) => {
+    this.route.data.subscribe((data: any) => {
       this.loans = data.recheduleLoansData;
       this.dataSource = new MatTableDataSource(this.loans);
-      this.selection = new SelectionModel(true, []);
+      this.selection = new SelectionModel<any>(true, []);
     });
   }
 
@@ -94,7 +101,7 @@ export class RescheduleLoanComponent implements OnInit {
 
   bulkLoanRescheduleApproval() {
     const dateFormat = this.settingsService.dateFormat;
-    const approvedOnDate = this.datePipe.transform(new Date(), dateFormat);
+    const approvedOnDate = this.datePipe.transform(new Date() as Date, dateFormat);
     const locale = this.settingsService.language.code;
     const formData = {
       dateFormat,

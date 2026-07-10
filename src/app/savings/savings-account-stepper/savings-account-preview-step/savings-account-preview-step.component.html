@@ -30,17 +30,17 @@
 
   <div fxFlexFill>
     <span fxFlex="40%">Currency</span>
-    <span fxFlex="60%">{{ savingsAccountTermsForm.get('currencyCode').value  }}</span>
+    <span fxFlex="60%">{{ $any(savingsAccountTermsForm.get('currencyCode')).value  }}</span>
   </div>
 
   <div fxFlexFill>
     <span fxFlex="40%">Decimal Places</span>
-    <span fxFlex="60%">{{ savingsAccountTermsForm.get('decimal').value }}</span>
+    <span fxFlex="60%">{{ $any(savingsAccountTermsForm.get('decimal')).value }}</span>
   </div>
 
   <div fxFlexFill>
     <span fxFlex="40%">Currency in multiples of</span>
-    <span fxFlex="60%">{{ savingsAccountTermsForm.get('currencyMultiple').value }}</span>
+    <span fxFlex="60%">{{ $any(savingsAccountTermsForm.get('currencyMultiple')).value }}</span>
   </div>
 
   <div fxFlexFill>

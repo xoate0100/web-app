@@ -1,11 +1,11 @@
 /** Angular Imports */
 import { Component, OnInit, ViewChild, ChangeDetectionStrategy } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
-import { MatSort } from '@angular/material/sort';
-import { MatTableDataSource } from '@angular/material/table';
+import { MatSort, MatSortHeader } from '@angular/material/sort';
+import { MatTableDataSource, MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow } from '@angular/material/table';
 
 /** Custom Services */
 import { SystemService } from '../../system.service';
@@ -16,16 +16,26 @@ import { appTableData } from '../app-table-data';
 /** Custom Components */
 import { ColumnDialogComponent } from '../column-dialog/column-dialog.component';
 import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.component';
+import { MatCard, MatCardContent, MatCardActions } from '@angular/material/card';
+import { LayoutDirective, LayoutGapDirective, FlexDirective, LayoutAlignDirective } from '@ngbracket/ngx-layout/flex';
+import { MatFormField, MatLabel, MatError } from '@angular/material/form-field';
+import { MatInput } from '@angular/material/input';
+import { MatSelect } from '@angular/material/select';
+import { NgFor, NgIf } from '@angular/common';
+import { MatOption } from '@angular/material/autocomplete';
+import { MatButton, MatIconButton } from '@angular/material/button';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import { HasPermissionDirective } from '../../../directives/has-permission/has-permission.directive';
 
 /**
  * Edit Data Table Component.
  */
 @Component({
-  standalone: false,
-  selector: 'mifosx-edit-data-table',
-  templateUrl: './edit-data-table.component.html',
-  changeDetection: ChangeDetectionStrategy.Eager,
-  styleUrls: ['./edit-data-table.component.scss']
+    selector: 'mifosx-edit-data-table',
+    templateUrl: './edit-data-table.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    styleUrls: ['./edit-data-table.component.scss'],
+    imports: [MatCard, ReactiveFormsModule, MatCardContent, LayoutDirective, LayoutGapDirective, MatFormField, FlexDirective, MatLabel, MatInput, MatSelect, NgFor, MatOption, NgIf, MatError, MatButton, FaIconComponent, MatTable, MatSort, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatSortHeader, MatCellDef, MatCell, MatIconButton, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow, MatPaginator, MatCardActions, LayoutAlignDirective, RouterLink, HasPermissionDirective]
 })
 export class EditDataTableComponent implements OnInit {
 
@@ -44,17 +54,17 @@ export class EditDataTableComponent implements OnInit {
     apptableName: string,
     dropColumns?: { name: string }[],
     changeColumns: { name: string, newName?: string, code?: string, newCode?: string, mandatory: boolean, length?: number }[],
-    addColumns?: { name?: string, type?: string, code?: string, mandatory?: boolean, length?: number }[]
+    addColumns: { name?: string, type?: string, code?: string, mandatory?: boolean, length?: number }[]
   } = { apptableName: '', changeColumns: [], addColumns: [], dropColumns: [] };
   /** Data passed to dialog. */
   dataForDialog: {
-    columnName: string,
-    columnDisplayType: string,
-    isColumnPrimaryKey: boolean,
-    columnLength: string,
-    columnCode: string,
-    columnCodes: any,
-    type: string
+    columnName?: string,
+    columnDisplayType?: string,
+    isColumnPrimaryKey?: boolean,
+    columnLength?: string,
+    columnCode?: string,
+    columnCodes?: any,
+    type?: string
   } = {
       columnName: undefined,
       columnDisplayType: undefined,
@@ -86,7 +96,7 @@ export class EditDataTableComponent implements OnInit {
               private route: ActivatedRoute,
               private router: Router,
               private dialog: MatDialog) {
-    this.route.data.subscribe((data: { dataTable: any, columnCodes: any }) => {
+    this.route.data.subscribe((data: any) => {
       this.dataTableData = data.dataTable;
       this.columnData = this.dataTableData.columnHeaderData;
       this.dataForDialog.columnCodes = data.columnCodes;
@@ -255,11 +265,14 @@ export class EditDataTableComponent implements OnInit {
         this.columnData.splice(this.columnData.indexOf(column), 1);
         this.dataSource.connect().next(this.columnData);
         if (column.type === 'existing') {
+          if (!this.dataTableChangesData.dropColumns) {
+            this.dataTableChangesData.dropColumns = [];
+          }
           this.dataTableChangesData.dropColumns.push({
             name: column.columnName
           });
         } else if (column.type === 'new') {
-          this.dataTableChangesData.addColumns.splice(this.dataTableChangesData.addColumns
+          this.dataTableChangesData.addColumns!.splice(this.dataTableChangesData.addColumns!
             .findIndex(newColumn => newColumn.name === column.columnName
                                     && newColumn.type === column.columnDisplayType
                                     && newColumn.mandatory === column.isColumnPrimaryKey), 1);
@@ -292,16 +305,17 @@ export class EditDataTableComponent implements OnInit {
    * if successful redirects to view updated data table.
    */
   submit() {
-    if (!this.dataTableChangesData.addColumns || this.dataTableChangesData.addColumns.length === 0) {
-      this.dataTableChangesData.addColumns = undefined;
+    const payload: any = { ...this.dataTableChangesData };
+    if (!payload.addColumns?.length) {
+      delete payload.addColumns;
     }
-    if (!this.dataTableChangesData.changeColumns || this.dataTableChangesData.changeColumns.length === 0) {
-      this.dataTableChangesData.changeColumns = undefined;
+    if (!payload.changeColumns?.length) {
+      delete payload.changeColumns;
     }
-    if (!this.dataTableChangesData.dropColumns || this.dataTableChangesData.dropColumns.length === 0) {
-      this.dataTableChangesData.dropColumns = undefined;
+    if (!payload.dropColumns?.length) {
+      delete payload.dropColumns;
     }
-    this.systemService.updateDataTable(this.dataTableChangesData, this.dataTableData.registeredTableName)
+    this.systemService.updateDataTable(payload, this.dataTableData.registeredTableName)
       .subscribe((response: any) => {
         this.router.navigate(['../'], { relativeTo: this.route });
       });

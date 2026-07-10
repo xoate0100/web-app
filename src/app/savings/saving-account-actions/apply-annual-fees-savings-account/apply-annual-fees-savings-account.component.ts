@@ -1,22 +1,28 @@
 /** Angular Imports */
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { DatePipe } from '@angular/common';
-import { ActivatedRoute, Router } from '@angular/router';
+import { FormGroup, FormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
+import { DatePipe, NgIf } from '@angular/common';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 
 /** Custom Services */
 import { SavingsService } from 'app/savings/savings.service';
 import { SettingsService } from 'app/settings/settings.service';
+import { MatCard, MatCardContent, MatCardActions } from '@angular/material/card';
+import { LayoutDirective, LayoutAlignDirective, LayoutGapDirective } from '@ngbracket/ngx-layout/flex';
+import { MatFormField, MatLabel, MatSuffix, MatError } from '@angular/material/form-field';
+import { MatInput } from '@angular/material/input';
+import { MatDatepickerInput, MatDatepickerToggle, MatDatepicker } from '@angular/material/datepicker';
+import { MatButton } from '@angular/material/button';
 
 /**
  * Apply Annual Fees Component
  */
 @Component({
-  standalone: false,
-  selector: 'mifosx-apply-annual-fees-savings-account',
-  templateUrl: './apply-annual-fees-savings-account.component.html',
-  changeDetection: ChangeDetectionStrategy.Eager,
-  styleUrls: ['./apply-annual-fees-savings-account.component.scss']
+    selector: 'mifosx-apply-annual-fees-savings-account',
+    templateUrl: './apply-annual-fees-savings-account.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    styleUrls: ['./apply-annual-fees-savings-account.component.scss'],
+    imports: [MatCard, ReactiveFormsModule, MatCardContent, LayoutDirective, MatFormField, MatLabel, MatInput, MatDatepickerInput, MatDatepickerToggle, MatSuffix, MatDatepicker, NgIf, MatError, MatCardActions, LayoutAlignDirective, LayoutGapDirective, MatButton, RouterLink]
 })
 export class ApplyAnnualFeesSavingsAccountComponent implements OnInit {
 
@@ -47,8 +53,8 @@ export class ApplyAnnualFeesSavingsAccountComponent implements OnInit {
               private route: ActivatedRoute,
               private router: Router,
               private settingsService: SettingsService) {
-    this.accountId = this.route.parent.snapshot.params['savingAccountId'];
-    this.route.data.subscribe((data: { savingsAccountActionData: any }) => {
+    this.accountId = this.route.parent!.snapshot.params['savingAccountId']!;
+    this.route.data.subscribe((data: any) => {
       this.savingsAccountData = data.savingsAccountActionData;
     });
   }
@@ -79,7 +85,7 @@ export class ApplyAnnualFeesSavingsAccountComponent implements OnInit {
       charges.forEach((charge: any) => {
         if (charge.name === 'Annual fee - INR') {
           this.chargeId = charge.id;
-          this.applyAnnualFeesForm.get('amount').patchValue(charge.amount);
+          this.applyAnnualFeesForm.get('amount')!.patchValue(charge.amount);
         }
       });
   }
@@ -94,7 +100,7 @@ export class ApplyAnnualFeesSavingsAccountComponent implements OnInit {
     const dateFormat = this.settingsService.dateFormat;
     const prevApprovedOnDate: Date = this.applyAnnualFeesForm.value.dueDate;
     this.applyAnnualFeesForm.patchValue({
-      dueDate: this.datePipe.transform(prevApprovedOnDate, dateFormat),
+      dueDate: this.datePipe.transform(prevApprovedOnDate as Date, dateFormat),
     });
     const data = {
       ...this.applyAnnualFeesForm.value,

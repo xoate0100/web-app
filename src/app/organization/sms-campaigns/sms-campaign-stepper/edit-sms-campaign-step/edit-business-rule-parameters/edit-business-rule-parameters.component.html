@@ -10,12 +10,12 @@
 
       <ng-container  *ngFor="let param of paramData" [ngSwitch]="param.displayType">
 
-        <ng-container *ngIf="ReportForm.controls[param.name]">
+        <ng-container *ngIf="ReportForm.get(param.name)!">
 
           <mat-form-field fxFlex="48%" *ngSwitchCase="'text'">
             <mat-label>{{param.label}}</mat-label>
             <input matInput required [formControlName]="param.name">
-            <mat-error *ngIf="ReportForm.controls[param.name].hasError('required')">
+            <mat-error *ngIf="ReportForm.get(param.name)!.hasError('required')">
               {{param.label}} is <strong>required</strong>
             </mat-error>
           </mat-form-field>
@@ -26,7 +26,7 @@
               [formControlName]="param.name">
             <mat-datepicker-toggle matSuffix [for]="runReportDatePicker"></mat-datepicker-toggle>
             <mat-datepicker #runReportDatePicker></mat-datepicker>
-            <mat-error *ngIf="ReportForm.controls[param.name].hasError('required')">
+            <mat-error *ngIf="ReportForm.get(param.name)!.hasError('required')">
               {{param.label}} is <strong>required</strong>
             </mat-error>
           </mat-form-field>
@@ -38,7 +38,7 @@
                 {{option.name}}
               </mat-option>
             </mat-select>
-            <mat-error *ngIf="ReportForm.controls[param.name].hasError('required')">
+            <mat-error *ngIf="ReportForm.get(param.name)!.hasError('required')">
               {{param.label}} is <strong>required</strong>
             </mat-error>
           </mat-form-field>

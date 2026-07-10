@@ -2,7 +2,7 @@
 import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
-import { DatePipe } from '@angular/common';
+import { DatePipe, NgIf } from '@angular/common';
 
 /** Custom Services */
 import { SavingsService } from 'app/savings/savings.service';
@@ -18,16 +18,21 @@ import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.co
 import { FormfieldBase } from 'app/shared/form-dialog/formfield/model/formfield-base';
 import { InputBase } from 'app/shared/form-dialog/formfield/model/input-base';
 import { DatepickerBase } from 'app/shared/form-dialog/formfield/model/datepicker-base';
+import { LayoutDirective, LayoutAlignDirective, LayoutGapDirective, FlexDirective } from '@ngbracket/ngx-layout/flex';
+import { HasPermissionDirective } from '../../../directives/has-permission/has-permission.directive';
+import { MatButton } from '@angular/material/button';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import { MatCard, MatCardContent } from '@angular/material/card';
 
 /**
  * View Charge Component.
  */
 @Component({
-  standalone: false,
-  selector: 'mifosx-view-charge',
-  templateUrl: './view-charge.component.html',
-  changeDetection: ChangeDetectionStrategy.Eager,
-  styleUrls: ['./view-charge.component.scss']
+    selector: 'mifosx-view-charge',
+    templateUrl: './view-charge.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    styleUrls: ['./view-charge.component.scss'],
+    imports: [NgIf, LayoutDirective, LayoutAlignDirective, LayoutGapDirective, HasPermissionDirective, MatButton, FaIconComponent, MatCard, MatCardContent, FlexDirective, DatePipe]
 })
 export class ViewChargeComponent {
 
@@ -51,10 +56,10 @@ export class ViewChargeComponent {
               private router: Router,
               public dialog: MatDialog,
               private settingsService: SettingsService) {
-    this.route.data.subscribe((data: { savingsAccountCharge: any }) => {
+    this.route.data.subscribe((data: any) => {
       this.chargeData = data.savingsAccountCharge;
     });
-    this.route.data.subscribe((data: { savingsAccountData: any }) => {
+    this.route.data.subscribe((data: any) => {
       this.savingsAccountData = data.savingsAccountData;
     });
   }
@@ -91,7 +96,7 @@ export class ViewChargeComponent {
         const dateFormat = this.settingsService.dateFormat;
         const dataObject = {
           ...response.data.value,
-          dueDate: this.datePipe.transform(response.data.value.dueDate, dateFormat),
+          dueDate: this.datePipe.transform(response.data.value.dueDate as Date, dateFormat),
           dateFormat,
           locale
         };

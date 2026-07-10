@@ -1,6 +1,6 @@
 /** Angular Imports */
 import { Component, OnInit, AfterViewInit, ChangeDetectionStrategy } from '@angular/core';
-import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, FormControl, Validators, ReactiveFormsModule } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 
 /** Custom Dialogs */
@@ -10,16 +10,26 @@ import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.co
 import { GroupsService } from 'app/groups/groups.service';
 import { ClientsService } from 'app/clients/clients.service';
 import { MatDialog } from '@angular/material/dialog';
+import { LayoutDirective, LayoutGapDirective, FlexDirective } from '@ngbracket/ngx-layout/flex';
+import { MatCard } from '@angular/material/card';
+import { MatFormField, MatLabel } from '@angular/material/form-field';
+import { MatInput } from '@angular/material/input';
+import { MatAutocompleteTrigger, MatAutocomplete, MatOption } from '@angular/material/autocomplete';
+import { NgFor, NgIf } from '@angular/common';
+import { MatIconButton } from '@angular/material/button';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import { MatListSubheaderCssMatStyler, MatNavList } from '@angular/material/list';
+import { MatLine } from '@angular/material/grid-list';
 
 /**
  * Manage Group Members Component
  */
 @Component({
-  standalone: false,
-  selector: 'mifosx-manage-group-members',
-  templateUrl: './manage-group-members.component.html',
-  changeDetection: ChangeDetectionStrategy.Eager,
-  styleUrls: ['./manage-group-members.component.scss']
+    selector: 'mifosx-manage-group-members',
+    templateUrl: './manage-group-members.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    styleUrls: ['./manage-group-members.component.scss'],
+    imports: [LayoutDirective, LayoutGapDirective, MatCard, FlexDirective, MatFormField, MatLabel, MatInput, ReactiveFormsModule, MatAutocompleteTrigger, MatAutocomplete, NgFor, MatOption, MatIconButton, FaIconComponent, MatListSubheaderCssMatStyler, NgIf, MatNavList, MatLine]
 })
 export class ManageGroupMembersComponent implements AfterViewInit {
 
@@ -43,7 +53,7 @@ export class ManageGroupMembersComponent implements AfterViewInit {
               private groupsService: GroupsService,
               private clientsService: ClientsService,
               public dialog: MatDialog) {
-    this.route.data.subscribe((data: { groupActionData: any }) => {
+    this.route.data.subscribe((data: any) => {
       this.groupData = data.groupActionData;
       this.clientMembers = data.groupActionData.clientMembers;
     });
@@ -96,8 +106,8 @@ export class ManageGroupMembersComponent implements AfterViewInit {
    * @param {any} client Client data.
    * @returns {string} Client name if valid otherwise undefined.
    */
-  displayClient(client: any): string | undefined {
-    return client ? client.displayName : undefined;
+  displayClient(client: any): string {
+    return client ? client.displayName : '';
   }
 
 }

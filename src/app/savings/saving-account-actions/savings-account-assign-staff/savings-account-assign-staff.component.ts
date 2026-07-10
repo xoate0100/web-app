@@ -1,22 +1,30 @@
 /** Angular Imports */
 import { Component, OnInit, Input, ChangeDetectionStrategy } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { DatePipe } from '@angular/common';
-import { ActivatedRoute, Router } from '@angular/router';
+import { FormGroup, FormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
+import { DatePipe, NgFor, NgIf } from '@angular/common';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 
 /** Custom Services */
 import { SavingsService } from 'app/savings/savings.service';
 import { SettingsService } from 'app/settings/settings.service';
+import { MatCard, MatCardContent, MatCardActions } from '@angular/material/card';
+import { LayoutDirective, FlexDirective, LayoutAlignDirective, LayoutGapDirective } from '@ngbracket/ngx-layout/flex';
+import { MatFormField, MatLabel, MatSuffix, MatError } from '@angular/material/form-field';
+import { MatSelect } from '@angular/material/select';
+import { MatOption } from '@angular/material/autocomplete';
+import { MatInput } from '@angular/material/input';
+import { MatDatepickerInput, MatDatepickerToggle, MatDatepicker } from '@angular/material/datepicker';
+import { MatButton } from '@angular/material/button';
 
 /**
  * Savings Account Assign Staff Component
  */
 @Component({
-  standalone: false,
-  selector: 'mifosx-savings-account-assign-staff',
-  templateUrl: './savings-account-assign-staff.component.html',
-  changeDetection: ChangeDetectionStrategy.Eager,
-  styleUrls: ['./savings-account-assign-staff.component.scss']
+    selector: 'mifosx-savings-account-assign-staff',
+    templateUrl: './savings-account-assign-staff.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    styleUrls: ['./savings-account-assign-staff.component.scss'],
+    imports: [MatCard, ReactiveFormsModule, MatCardContent, LayoutDirective, MatFormField, FlexDirective, MatLabel, MatSelect, NgFor, MatOption, MatInput, MatDatepickerInput, MatDatepickerToggle, MatSuffix, MatDatepicker, NgIf, MatError, MatCardActions, LayoutAlignDirective, LayoutGapDirective, MatButton, RouterLink]
 })
 export class SavingsAccountAssignStaffComponent implements OnInit {
 
@@ -47,8 +55,8 @@ export class SavingsAccountAssignStaffComponent implements OnInit {
               private route: ActivatedRoute,
               private router: Router,
               private settingsService: SettingsService) {
-    this.accountId = this.route.parent.snapshot.params['savingAccountId'];
-    this.route.data.subscribe((data: { savingsAccountActionData: any }) => {
+    this.accountId = this.route.parent!.snapshot.params['savingAccountId']!;
+    this.route.data.subscribe((data: any) => {
       this.savingsAccountData = data.savingsAccountActionData;
     });
   }
@@ -81,7 +89,7 @@ export class SavingsAccountAssignStaffComponent implements OnInit {
     const dateFormat = this.settingsService.dateFormat;
     const prevAssignmentDate: Date = this.savingsAssignStaffForm.value.assignmentDate;
     this.savingsAssignStaffForm.patchValue({
-      assignmentDate: this.datePipe.transform(prevAssignmentDate, dateFormat),
+      assignmentDate: this.datePipe.transform(prevAssignmentDate as Date, dateFormat),
     });
     const data = {
       ...this.savingsAssignStaffForm.value,

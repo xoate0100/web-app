@@ -9,13 +9,17 @@ import { SavingProductChargesStepComponent } from '../saving-product-stepper/sav
 import { SavingProductAccountingStepComponent } from '../saving-product-stepper/saving-product-accounting-step/saving-product-accounting-step.component';
 
 import { ProductsService } from 'app/products/products.service';
+import { MatStepper, MatStepperIcon, MatStep, MatStepLabel } from '@angular/material/stepper';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import { NgIf } from '@angular/common';
+import { SavingProductPreviewStepComponent } from '../saving-product-stepper/saving-product-preview-step/saving-product-preview-step.component';
 
 @Component({
-  standalone: false,
-  selector: 'mifosx-edit-saving-product',
-  templateUrl: './edit-saving-product.component.html',
-  changeDetection: ChangeDetectionStrategy.Eager,
-  styleUrls: ['./edit-saving-product.component.scss']
+    selector: 'mifosx-edit-saving-product',
+    templateUrl: './edit-saving-product.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    styleUrls: ['./edit-saving-product.component.scss'],
+    imports: [MatStepper, MatStepperIcon, FaIconComponent, MatStep, MatStepLabel, SavingProductDetailsStepComponent, SavingProductCurrencyStepComponent, SavingProductTermsStepComponent, SavingProductSettingsStepComponent, SavingProductChargesStepComponent, SavingProductAccountingStepComponent, NgIf, SavingProductPreviewStepComponent]
 })
 export class EditSavingProductComponent implements OnInit {
 
@@ -32,7 +36,7 @@ export class EditSavingProductComponent implements OnInit {
   constructor(private route: ActivatedRoute,
               private productsService: ProductsService,
               private router: Router) {
-    this.route.data.subscribe((data: { savingProductAndTemplate: any }) => {
+    this.route.data.subscribe((data: any) => {
       this.savingProductAndTemplate = data.savingProductAndTemplate;
     });
   }
@@ -96,7 +100,7 @@ export class EditSavingProductComponent implements OnInit {
       charges: this.savingProduct.charges.map((charge: any) => ({ id: charge.id })),
       locale: 'en' // locale required for nominalAnnualInterestRate
     };
-    delete savingProduct.advancedAccountingRules;
+    delete (savingProduct as any).advancedAccountingRules;
     this.productsService.updateSavingProduct(this.savingProductAndTemplate.id, savingProduct)
       .subscribe((response: any) => {
         this.router.navigate(['../../', response.resourceId], { relativeTo: this.route });

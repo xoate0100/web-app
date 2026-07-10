@@ -1,8 +1,8 @@
 /** Angular Imports */
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { DatePipe } from '@angular/common';
+import { ActivatedRoute, RouterLink } from '@angular/router';
+import { FormControl, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
+import { DatePipe, NgIf, NgFor, NgSwitch, NgSwitchCase } from '@angular/common';
 
 /** Custom Services */
 import { ReportsService } from '../reports.service';
@@ -11,16 +11,28 @@ import { SettingsService } from 'app/settings/settings.service';
 /** Custom Models */
 import { ReportParameter } from '../common-models/report-parameter.model';
 import { SelectOption } from '../common-models/select-option.model';
+import { MatCard, MatCardContent, MatCardActions } from '@angular/material/card';
+import { LayoutDirective, FlexDirective, LayoutAlignDirective, LayoutGapDirective } from '@ngbracket/ngx-layout/flex';
+import { MatFormField, MatLabel, MatError, MatSuffix } from '@angular/material/form-field';
+import { MatInput } from '@angular/material/input';
+import { MatDatepickerInput, MatDatepickerToggle, MatDatepicker } from '@angular/material/datepicker';
+import { MatSelect } from '@angular/material/select';
+import { MatOption } from '@angular/material/autocomplete';
+import { MatButton } from '@angular/material/button';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import { TableAndSmsComponent } from './table-and-sms/table-and-sms.component';
+import { ChartComponent } from './chart/chart.component';
+import { PentahoComponent } from './pentaho/pentaho.component';
 
 /**
  * Run report component.
  */
 @Component({
-  standalone: false,
-  selector: 'mifosx-run-report',
-  templateUrl: './run-report.component.html',
-  changeDetection: ChangeDetectionStrategy.Eager,
-  styleUrls: ['./run-report.component.scss']
+    selector: 'mifosx-run-report',
+    templateUrl: './run-report.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    styleUrls: ['./run-report.component.scss'],
+    imports: [NgIf, MatCard, ReactiveFormsModule, MatCardContent, LayoutDirective, NgFor, NgSwitch, NgSwitchCase, MatFormField, FlexDirective, MatLabel, MatInput, MatError, MatDatepickerInput, MatDatepickerToggle, MatSuffix, MatDatepicker, MatSelect, MatOption, MatCardActions, LayoutAlignDirective, LayoutGapDirective, MatButton, RouterLink, FaIconComponent, TableAndSmsComponent, ChartComponent, PentahoComponent]
 })
 export class RunReportComponent implements OnInit {
 
@@ -65,12 +77,12 @@ export class RunReportComponent implements OnInit {
               private reportsService: ReportsService,
                private settingsService: SettingsService,
               private datePipe: DatePipe) {
-    this.report.name = this.route.snapshot.params['name'];
-    this.route.queryParams.subscribe((queryParams: { type: any, id: any }) => {
+    this.report.name = this.route.snapshot.params['name']!;
+    this.route.queryParams.subscribe((queryParams: any) => {
       this.report.type = queryParams.type;
       this.report.id = queryParams.id;
     });
-    this.route.data.subscribe((data: { reportParameters: ReportParameter[] }) => {
+    this.route.data.subscribe((data: any) => {
       this.paramData = data.reportParameters;
     });
   }
@@ -96,7 +108,7 @@ export class RunReportComponent implements OnInit {
           }
         } else { // Child Parameter
           const parent: ReportParameter = this.paramData
-            .find((entry: any) => entry.name === param.parentParameterName);
+            .find((entry: any) => entry.name === param.parentParameterName)!;
           parent.childParameters.push(param);
           this.updateParentParameters(parent);
         }
@@ -130,7 +142,7 @@ export class RunReportComponent implements OnInit {
     this.reportsService.getPentahoParams(this.report.id).subscribe((data: any) => {
       data.forEach((entry: any) => {
         const param: ReportParameter = this.paramData
-         .find((_entry: any) => _entry.name === entry.parameterName);
+         .find((_entry: any) => _entry.name === entry.parameterName)!;
         param.pentahoName = `R_${entry.reportParameterName}`;
       });
     });
@@ -141,7 +153,7 @@ export class RunReportComponent implements OnInit {
    */
   setChildControls() {
     this.parentParameters.forEach((param: ReportParameter) => {
-      this.reportForm.get(param.name).valueChanges.subscribe((option: any) => {
+      this.reportForm.get(param.name)!.valueChanges.subscribe((option: any) => {
         param.childParameters.forEach((child: ReportParameter) => {
           if (child.displayType === 'none') {
             this.reportForm.addControl(child.name, new FormControl(child.defaultVal));
@@ -184,18 +196,18 @@ export class RunReportComponent implements OnInit {
         continue;
       }
       const param: ReportParameter = this.paramData
-        .find((_entry: any) => _entry.name === key);
+        .find((_entry: any) => _entry.name === key)!;
       newKey = this.report.type === 'Pentaho' ? param.pentahoName : param.inputName;
       switch (param.displayType) {
         case 'text':
           formattedResponse[newKey] = value;
           break;
         case 'select':
-          formattedResponse[newKey] = value['id'];
+          formattedResponse[newKey] = (value as any)['id'];
           break;
         case 'date':
           const dateFormat = this.settingsService.dateFormat;
-          formattedResponse[newKey] = this.datePipe.transform(value as string | number | Date, dateFormat);
+          formattedResponse[newKey] = this.datePipe.transform(value as string | number | Date as Date, dateFormat);
           break;
         case 'none':
           formattedResponse[newKey] = value;

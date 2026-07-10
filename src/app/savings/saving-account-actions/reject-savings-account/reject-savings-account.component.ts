@@ -1,22 +1,28 @@
 /** Angular Imports */
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { DatePipe } from '@angular/common';
-import { ActivatedRoute, Router } from '@angular/router';
+import { FormGroup, FormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
+import { DatePipe, NgIf } from '@angular/common';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 
 /** Custom Services */
 import { SavingsService } from 'app/savings/savings.service';
 import { SettingsService } from 'app/settings/settings.service';
+import { MatCard, MatCardContent, MatCardActions } from '@angular/material/card';
+import { LayoutDirective, LayoutAlignDirective, LayoutGapDirective } from '@ngbracket/ngx-layout/flex';
+import { MatFormField, MatLabel, MatSuffix, MatError } from '@angular/material/form-field';
+import { MatInput } from '@angular/material/input';
+import { MatDatepickerInput, MatDatepickerToggle, MatDatepicker } from '@angular/material/datepicker';
+import { MatButton } from '@angular/material/button';
 
 /**
  * Reject Savings Account Component
  */
 @Component({
-  standalone: false,
-  selector: 'mifosx-reject-savings-account',
-  templateUrl: './reject-savings-account.component.html',
-  changeDetection: ChangeDetectionStrategy.Eager,
-  styleUrls: ['./reject-savings-account.component.scss']
+    selector: 'mifosx-reject-savings-account',
+    templateUrl: './reject-savings-account.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    styleUrls: ['./reject-savings-account.component.scss'],
+    imports: [MatCard, ReactiveFormsModule, MatCardContent, LayoutDirective, MatFormField, MatLabel, MatInput, MatDatepickerInput, MatDatepickerToggle, MatSuffix, MatDatepicker, NgIf, MatError, MatCardActions, LayoutAlignDirective, LayoutGapDirective, MatButton, RouterLink]
 })
 export class RejectSavingsAccountComponent implements OnInit {
 
@@ -43,7 +49,7 @@ export class RejectSavingsAccountComponent implements OnInit {
               private route: ActivatedRoute,
               private router: Router,
               private settingsService: SettingsService) {
-    this.accountId = this.route.parent.snapshot.params['savingAccountId'];
+    this.accountId = this.route.parent!.snapshot.params['savingAccountId']!;
   }
 
   /**
@@ -73,7 +79,7 @@ export class RejectSavingsAccountComponent implements OnInit {
     const dateFormat = this.settingsService.dateFormat;
     const prevRejectedOnDate: Date = this.rejectSavingsAccountForm.value.rejectedOnDate;
     this.rejectSavingsAccountForm.patchValue({
-      rejectedOnDate: this.datePipe.transform(prevRejectedOnDate, dateFormat),
+      rejectedOnDate: this.datePipe.transform(prevRejectedOnDate as Date, dateFormat),
     });
     const data = {
       ...this.rejectSavingsAccountForm.value,

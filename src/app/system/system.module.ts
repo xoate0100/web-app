@@ -5,7 +5,7 @@ import { NgModule } from '@angular/core';
 import { SharedModule } from '../shared/shared.module';
 import { SystemRoutingModule } from './system-routing.module';
 import { PipesModule } from '../pipes/pipes.module';
-import { DirectivesModule } from '../directives/directives.module';
+
 
 /** Component Imports */
 import { CodesComponent } from './codes/codes.component';
@@ -62,13 +62,10 @@ import { EditSchedulerJobComponent } from './manage-scheduler-jobs/edit-schedule
 import { ConfigureMakerCheckerTasksComponent } from './configure-maker-checker-tasks/configure-maker-checker-tasks.component';
 
 @NgModule({
-  imports: [
+    imports: [
     SystemRoutingModule,
     SharedModule,
     PipesModule,
-    DirectivesModule
-  ],
-  declarations: [
     SystemComponent,
     CodesComponent,
     ViewCodeComponent,
@@ -120,6 +117,6 @@ import { ConfigureMakerCheckerTasksComponent } from './configure-maker-checker-t
     EditSchedulerJobComponent,
     ViewHistorySchedulerJobComponent,
     ViewSurveyComponent
-  ],
+],
 })
 export class SystemModule { }

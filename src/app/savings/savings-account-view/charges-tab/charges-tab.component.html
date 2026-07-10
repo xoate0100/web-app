@@ -70,26 +70,26 @@
           <span *ngIf="savingsAccountData.status.value === 'Submitted and pending approval'">
             <button class="account-action-button" mat-raised-button color="primary" matTooltip="Edit Charge"
               *mifosxHasPermission="'UPDATE_SAVINGSACCOUNTCHARGE'" (click)="routeEdit($event); editCharge(charge)">
-              <i class="fa fa-pencil"></i>
+              <fa-icon icon="pencil"></fa-icon>
             </button>
             <button class="account-action-button" mat-raised-button color="warn" matTooltip="Delete Charge"
               *mifosxHasPermission="'DELETE_SAVINGSACCOUNTCHARGE'" (click)="routeEdit($event); deleteCharge(charge.id)">
-              <i class="fa fa-trash"></i>
+              <fa-icon icon="trash"></fa-icon>
             </button>
           </span>
           <span *ngIf="savingsAccountData.status.value === 'Active' && charge.amountOutstanding !== 0">
             <button class="account-action-button" mat-raised-button color="primary" matTooltip="Pay Charge"
               *mifosxHasPermission="'PAY_SAVINGSACCOUNTCHARGE'" (click)="routeEdit($event); payCharge(charge.id)">
-              <i class="fa fa-dollar"></i>
+              <fa-icon icon="dollar-sign"></fa-icon>
             </button>
             <button class="account-action-button" mat-raised-button color="primary" matTooltip="Waive Charge"
               *mifosxHasPermission="'WAIVE_SAVINGSACCOUNTCHARGE'" (click)="routeEdit($event); waiveCharge(charge.id)">
-              <i class="fa fa-flag"></i>
+              <fa-icon icon="flag"></fa-icon>
             </button>
             <ng-container *ngIf="isRecurringCharge(charge)">
               <button class="account-action-button" mat-raised-button color="primary" matTooltip="Inactivate Charge"
                 *mifosxHasPermission="'INACTIVATE_SAVINGSACCOUNTCHARGE'" (click)="routeEdit($event); inactivateCharge(charge.id)">
-                <i class="fa fa-ban"></i>
+                <fa-icon icon="ban"></fa-icon>
               </button>
             </ng-container>
           </span>

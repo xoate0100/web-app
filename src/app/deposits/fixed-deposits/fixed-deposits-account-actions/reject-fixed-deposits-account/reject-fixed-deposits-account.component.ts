@@ -1,21 +1,27 @@
 /** Angular Imports */
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { DatePipe } from '@angular/common';
-import { ActivatedRoute, Router } from '@angular/router';
+import { FormGroup, FormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
+import { DatePipe, NgIf } from '@angular/common';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 
 /** Custom Services */
 import { FixedDepositsService } from 'app/deposits/fixed-deposits/fixed-deposits.service';
+import { MatCard, MatCardContent, MatCardActions } from '@angular/material/card';
+import { LayoutDirective, LayoutAlignDirective, LayoutGapDirective } from '@ngbracket/ngx-layout/flex';
+import { MatFormField, MatLabel, MatSuffix, MatError } from '@angular/material/form-field';
+import { MatInput } from '@angular/material/input';
+import { MatDatepickerInput, MatDatepickerToggle, MatDatepicker } from '@angular/material/datepicker';
+import { MatButton } from '@angular/material/button';
 
 /**
  * Reject Fixed Deposits Account Component
  */
 @Component({
-  standalone: false,
-  selector: 'mifosx-reject-fixed-deposits-account',
-  templateUrl: './reject-fixed-deposits-account.component.html',
-  changeDetection: ChangeDetectionStrategy.Eager,
-  styleUrls: ['./reject-fixed-deposits-account.component.scss']
+    selector: 'mifosx-reject-fixed-deposits-account',
+    templateUrl: './reject-fixed-deposits-account.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    styleUrls: ['./reject-fixed-deposits-account.component.scss'],
+    imports: [MatCard, ReactiveFormsModule, MatCardContent, LayoutDirective, MatFormField, MatLabel, MatInput, MatDatepickerInput, MatDatepickerToggle, MatSuffix, MatDatepicker, NgIf, MatError, MatCardActions, LayoutAlignDirective, LayoutGapDirective, MatButton, RouterLink]
 })
 export class RejectFixedDepositsAccountComponent implements OnInit {
 
@@ -40,7 +46,7 @@ export class RejectFixedDepositsAccountComponent implements OnInit {
               private datePipe: DatePipe,
               private route: ActivatedRoute,
               private router: Router) {
-    this.accountId = this.route.parent.snapshot.params['fixedDepositAccountId'];
+    this.accountId = this.route.parent!.snapshot.params['fixedDepositAccountId']!;
   }
 
   /**
@@ -70,7 +76,7 @@ export class RejectFixedDepositsAccountComponent implements OnInit {
     const dateFormat = 'dd MMMM yyyy';
     const prevRejectedOnDate: Date = this.rejectFixedDepositsAccountForm.value.rejectedOnDate;
     this.rejectFixedDepositsAccountForm.patchValue({
-      rejectedOnDate: this.datePipe.transform(prevRejectedOnDate, dateFormat),
+      rejectedOnDate: this.datePipe.transform(prevRejectedOnDate as Date, dateFormat),
     });
     const data = {
       ...this.rejectFixedDepositsAccountForm.value,

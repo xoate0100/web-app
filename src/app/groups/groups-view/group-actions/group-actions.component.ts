@@ -1,16 +1,26 @@
 /** Angular Imports */
 import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { NgIf } from '@angular/common';
+import { GroupAssignStaffComponent } from './group-assign-staff/group-assign-staff.component';
+import { CloseGroupComponent } from './close-group/close-group.component';
+import { ActivateGroupComponent } from './activate-group/activate-group.component';
+import { AttachGroupMeetingComponent } from './attach-group-meeting/attach-group-meeting.component';
+import { GroupAttendanceComponent } from './group-attendance/group-attendance.component';
+import { ManageGroupMembersComponent } from './manage-group-members/manage-group-members.component';
+import { EditGroupMeetingComponent } from './edit-group-meeting/edit-group-meeting.component';
+import { EditGroupMeetingScheduleComponent } from './edit-group-meeting-schedule/edit-group-meeting-schedule.component';
+import { GroupTransferClientsComponent } from './group-transfer-clients/group-transfer-clients.component';
 
 /**
  * Group actions component.
  */
 @Component({
-  standalone: false,
-  selector: 'mifosx-group-actions',
-  templateUrl: './group-actions.component.html',
-  changeDetection: ChangeDetectionStrategy.Eager,
-  styleUrls: ['./group-actions.component.scss']
+    selector: 'mifosx-group-actions',
+    templateUrl: './group-actions.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    styleUrls: ['./group-actions.component.scss'],
+    imports: [NgIf, GroupAssignStaffComponent, CloseGroupComponent, ActivateGroupComponent, AttachGroupMeetingComponent, GroupAttendanceComponent, ManageGroupMembersComponent, EditGroupMeetingComponent, EditGroupMeetingScheduleComponent, GroupTransferClientsComponent]
 })
 export class GroupActionsComponent {
 
@@ -44,8 +54,8 @@ export class GroupActionsComponent {
   constructor(private route: ActivatedRoute,
               private router: Router) {
     this.router.routeReuseStrategy.shouldReuseRoute = () => false;
-    const name = this.route.snapshot.params['name'];
-    this.actions[name] = true;
+    const name = this.route.snapshot.params['name']!;
+    (this.actions as Record<string, boolean>)[name] = true;
   }
 
 }

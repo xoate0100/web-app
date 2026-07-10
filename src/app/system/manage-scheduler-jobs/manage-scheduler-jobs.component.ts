@@ -1,23 +1,31 @@
 /** Angular Imports */
 import { Component, OnInit, ViewChild, ChangeDetectionStrategy } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
-import { MatSort } from '@angular/material/sort';
-import { MatTableDataSource } from '@angular/material/table';
-import { ActivatedRoute } from '@angular/router';
+import { MatSort, MatSortHeader } from '@angular/material/sort';
+import { MatTableDataSource, MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow } from '@angular/material/table';
+import { ActivatedRoute, RouterLink } from '@angular/router';
 import { SelectionModel } from '@angular/cdk/collections';
 
 /** rxjs Imports */
 import { of } from 'rxjs';
+import { LayoutDirective, LayoutGapDirective, FlexDirective } from '@ngbracket/ngx-layout/flex';
+import { MatButton, MatIconButton } from '@angular/material/button';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import { MatFormField, MatLabel } from '@angular/material/form-field';
+import { MatInput } from '@angular/material/input';
+import { MatCheckbox } from '@angular/material/checkbox';
+import { NgIf } from '@angular/common';
+import { MatTooltip } from '@angular/material/tooltip';
 
 /**
  * Manage scheduler jobs component.
  */
 @Component({
-  standalone: false,
-  selector: 'mifosx-manage-scheduler-jobs',
-  templateUrl: './manage-scheduler-jobs.component.html',
-  changeDetection: ChangeDetectionStrategy.Eager,
-  styleUrls: ['./manage-scheduler-jobs.component.scss']
+    selector: 'mifosx-manage-scheduler-jobs',
+    templateUrl: './manage-scheduler-jobs.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    styleUrls: ['./manage-scheduler-jobs.component.scss'],
+    imports: [LayoutDirective, LayoutGapDirective, MatButton, FaIconComponent, MatFormField, FlexDirective, MatLabel, MatInput, MatTable, MatSort, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCheckbox, MatCellDef, MatCell, MatSortHeader, NgIf, MatTooltip, MatIconButton, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow, RouterLink, MatPaginator]
 })
 export class ManageSchedulerJobsComponent implements OnInit {
 
@@ -42,7 +50,7 @@ export class ManageSchedulerJobsComponent implements OnInit {
    * @param {ActivatedRoute} route Activated Route.
    */
   constructor(private route: ActivatedRoute) {
-    this.route.data.subscribe((data: { jobsScheduler: any }) => {
+    this.route.data.subscribe((data: any) => {
       this.jobData = data.jobsScheduler[0];
       this.schedulerData = data.jobsScheduler[1];
     });

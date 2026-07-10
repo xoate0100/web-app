@@ -1,13 +1,21 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import {FormControl} from '@angular/forms';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { FormControl, ReactiveFormsModule } from '@angular/forms';
+import { NgIf, NgClass, DecimalPipe, DatePipe } from '@angular/common';
+import { LayoutDirective, LayoutAlignDirective, LayoutGapDirective } from '@ngbracket/ngx-layout/flex';
+import { MatCheckbox } from '@angular/material/checkbox';
+import { MatButton } from '@angular/material/button';
+import { MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow } from '@angular/material/table';
+import { ClassDirective } from '@ngbracket/ngx-layout/extended';
+import { MatTooltip } from '@angular/material/tooltip';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 
 @Component({
-  standalone: false,
-  selector: 'mifosx-transactions-tab',
-  templateUrl: './transactions-tab.component.html',
-  changeDetection: ChangeDetectionStrategy.Eager,
-  styleUrls: ['./transactions-tab.component.scss']
+    selector: 'mifosx-transactions-tab',
+    templateUrl: './transactions-tab.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    styleUrls: ['./transactions-tab.component.scss'],
+    imports: [FaIconComponent, NgIf, LayoutDirective, LayoutAlignDirective, LayoutGapDirective, MatCheckbox, ReactiveFormsModule, MatButton, RouterLink, MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, NgClass, ClassDirective, MatTooltip, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow, DecimalPipe, DatePipe]
 })
 export class TransactionsTabComponent implements OnInit {
 
@@ -30,7 +38,7 @@ export class TransactionsTabComponent implements OnInit {
    */
   constructor(private route: ActivatedRoute,
               private router: Router) {
-    this.route.parent.parent.data.subscribe((data: { loanDetailsData: any }) => {
+    this.route.parent!.parent!.data.subscribe((data: any) => {
       this.transactions = data.loanDetailsData.transactions;
       this.tempTransaction = data.loanDetailsData.transactions;
       this.status = data.loanDetailsData.status.value;

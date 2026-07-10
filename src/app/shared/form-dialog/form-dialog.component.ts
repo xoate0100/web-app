@@ -1,19 +1,24 @@
 import { Component, OnInit, Inject, ChangeDetectionStrategy } from '@angular/core';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { FormGroup } from '@angular/forms';
+import { MatDialogRef, MAT_DIALOG_DATA, MatDialogTitle, MatDialogContent, MatDialogActions, MatDialogClose } from '@angular/material/dialog';
+import { FormGroup, ReactiveFormsModule } from '@angular/forms';
 
 import { FormfieldBase } from './formfield/model/formfield-base';
 
 import { FormGroupService } from './form-group.service';
+import { CdkScrollable } from '@angular/cdk/scrolling';
+import { LayoutDirective, LayoutGapDirective, FlexDirective, FlexFillDirective, LayoutAlignDirective } from '@ngbracket/ngx-layout/flex';
+import { NgFor } from '@angular/common';
+import { FormfieldComponent } from './formfield/formfield.component';
+import { MatButton } from '@angular/material/button';
 
 const layoutGap = 2;
 
 @Component({
-  standalone: false,
-  selector: 'mifosx-form-dialog',
-  templateUrl: './form-dialog.component.html',
-  changeDetection: ChangeDetectionStrategy.Eager,
-  styleUrls: ['./form-dialog.component.scss']
+    selector: 'mifosx-form-dialog',
+    templateUrl: './form-dialog.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    styleUrls: ['./form-dialog.component.scss'],
+    imports: [MatDialogTitle, CdkScrollable, MatDialogContent, LayoutDirective, LayoutGapDirective, ReactiveFormsModule, NgFor, FlexDirective, FormfieldComponent, FlexFillDirective, MatDialogActions, LayoutAlignDirective, MatButton, MatDialogClose]
 })
 export class FormDialogComponent implements OnInit {
 
@@ -44,11 +49,11 @@ export class FormDialogComponent implements OnInit {
     this.pristine = data.pristine !== undefined ? data.pristine : true;
     this.layout = { ...this.layout, ...data.layout };
     this.layout.gap = this.layout.columns > 1 ? layoutGap : 0;
-    this.layout.flex = (this.layout.flex / this.layout.columns) - this.layout.gap;
+    this.layout.flex = ((this.layout.flex ?? 100) / this.layout.columns) - (this.layout.gap ?? 0);
   }
 
   ngOnInit() {
-    this.dialogRef.updateSize(`${this.layout.columnWidth * this.layout.columns}px`);
+    this.dialogRef.updateSize(`${(this.layout.columnWidth ?? 400) * this.layout.columns}px`);
     this.form = this.formGroupService.createFormGroup(this.formfields);
     if (!this.pristine) {
       this.form.markAsDirty();

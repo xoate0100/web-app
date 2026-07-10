@@ -1,15 +1,25 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
 import * as _ from 'lodash';
 import { SystemService } from '../system.service';
+import { LayoutDirective, LayoutAlignDirective, LayoutGapDirective, FlexDirective } from '@ngbracket/ngx-layout/flex';
+import { HasPermissionDirective } from '../../directives/has-permission/has-permission.directive';
+import { MatButton } from '@angular/material/button';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import { MatCard, MatCardActions } from '@angular/material/card';
+import { MatList, MatListItem } from '@angular/material/list';
+import { NgFor, NgClass, NgIf } from '@angular/common';
+import { ClassDirective } from '@ngbracket/ngx-layout/extended';
+import { MatDivider } from '@angular/material/divider';
+import { MatCheckbox } from '@angular/material/checkbox';
 
 @Component({
-  standalone: false,
-  selector: 'mifosx-configure-maker-checker-tasks',
-  templateUrl: './configure-maker-checker-tasks.component.html',
-  changeDetection: ChangeDetectionStrategy.Eager,
-  styleUrls: ['./configure-maker-checker-tasks.component.scss']
+    selector: 'mifosx-configure-maker-checker-tasks',
+    templateUrl: './configure-maker-checker-tasks.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    styleUrls: ['./configure-maker-checker-tasks.component.scss'],
+    imports: [LayoutDirective, LayoutAlignDirective, LayoutGapDirective, HasPermissionDirective, MatButton, FaIconComponent, MatCard, FlexDirective, MatList, NgFor, MatListItem, NgClass, ClassDirective, MatDivider, ReactiveFormsModule, MatCheckbox, NgIf, MatCardActions]
 })
 export class ConfigureMakerCheckerTasksComponent implements OnInit {
 
@@ -26,16 +36,14 @@ export class ConfigureMakerCheckerTasksComponent implements OnInit {
   backupform: FormGroup;
 
   permissions: {
-    permissions: { code: string, id: number }[]
+    permissions: { code: string, id: string, selected?: boolean }[]
   };
-  tempPermissionUIData: {
-    permissions: { code: string }[]
-  }[];
+  tempPermissionUIData: Record<string, { permissions: { code: string; id: string; selected?: boolean }[] }> = {};
 
   constructor(private route: ActivatedRoute,
     private systemService: SystemService,
     private formBuilder: FormBuilder, ) {
-    this.route.data.subscribe((data: { permissions: any }) => {
+    this.route.data.subscribe((data: any) => {
       this.permissionsData = data.permissions;
     });
   }
@@ -67,9 +75,7 @@ export class ConfigureMakerCheckerTasksComponent implements OnInit {
   }
 
   setMakerCheckerTask() {
-    this.tempPermissionUIData = [{
-      permissions: []
-    }];
+    this.tempPermissionUIData = {};
     for (const i in this.permissionsData) {
       if (this.permissionsData[i]) {
         if (this.permissionsData[i].grouping !== this.currentGrouping) {
@@ -90,7 +96,7 @@ export class ConfigureMakerCheckerTasksComponent implements OnInit {
   }
 
 
-  permissionName = function (name: any) {
+  permissionName(name: any): string {
     name = name || '';
     // replace '_' with ' '
     name = name.replace(/_/g, ' ');
@@ -99,9 +105,9 @@ export class ConfigureMakerCheckerTasksComponent implements OnInit {
       name = name.replace(/READ/g, 'View');
     }
     return name;
-  };
+  }
 
-  formatName = function (stringVal: string) {
+  formatName(stringVal: string): string {
     stringVal = stringVal || '';
     if (stringVal.indexOf('portfolio_') > -1) {
       stringVal = stringVal.replace('portfolio_', '');
@@ -112,7 +118,7 @@ export class ConfigureMakerCheckerTasksComponent implements OnInit {
     }
     stringVal = stringVal.charAt(0).toUpperCase() + stringVal.slice(1);
     return stringVal;
-  };
+  }
 
   /**
    * Backups the valued
@@ -146,8 +152,8 @@ export class ConfigureMakerCheckerTasksComponent implements OnInit {
   }
 
   submit() {
-    const value = this.formGroup.get('roster').value;
-    const data = {};
+    const value = this.formGroup.get('roster')!.value;
+    const data: Record<string, any> = {};
     const permissionData = {
       permissions: {}
     };

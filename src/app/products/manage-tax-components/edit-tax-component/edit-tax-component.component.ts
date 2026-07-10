@@ -1,21 +1,28 @@
 /** Angular Imports */
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { Router, ActivatedRoute } from '@angular/router';
-import { DatePipe } from '@angular/common';
+import { FormGroup, FormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
+import { Router, ActivatedRoute, RouterLink } from '@angular/router';
+import { DatePipe, NgIf } from '@angular/common';
 
 /** Custom Services */
 import { ProductsService } from '../../products.service';
+import { MatCard, MatCardContent, MatCardActions } from '@angular/material/card';
+import { LayoutDirective, LayoutAlignDirective, LayoutGapDirective } from '@ngbracket/ngx-layout/flex';
+import { MatFormField, MatLabel, MatError, MatSuffix } from '@angular/material/form-field';
+import { MatInput } from '@angular/material/input';
+import { MatDatepickerInput, MatDatepickerToggle, MatDatepicker } from '@angular/material/datepicker';
+import { MatButton } from '@angular/material/button';
+import { HasPermissionDirective } from '../../../directives/has-permission/has-permission.directive';
 
 /**
  * Edit tax component.
  */
 @Component({
-  standalone: false,
-  selector: 'mifosx-edit-tax-component',
-  templateUrl: './edit-tax-component.component.html',
-  changeDetection: ChangeDetectionStrategy.Eager,
-  styleUrls: ['./edit-tax-component.component.scss']
+    selector: 'mifosx-edit-tax-component',
+    templateUrl: './edit-tax-component.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    styleUrls: ['./edit-tax-component.component.scss'],
+    imports: [MatCard, ReactiveFormsModule, MatCardContent, LayoutDirective, MatFormField, MatLabel, MatInput, NgIf, MatError, MatDatepickerInput, MatDatepickerToggle, MatSuffix, MatDatepicker, MatCardActions, LayoutAlignDirective, LayoutGapDirective, MatButton, RouterLink, HasPermissionDirective]
 })
 export class EditTaxComponentComponent implements OnInit {
 
@@ -39,7 +46,7 @@ export class EditTaxComponentComponent implements OnInit {
               private route: ActivatedRoute,
               private router: Router,
               private datePipe: DatePipe) {
-    this.route.data.subscribe((data: { taxComponent: any }) => {
+    this.route.data.subscribe((data: any) => {
       this.taxComponentData = data.taxComponent;
     });
   }
@@ -73,7 +80,7 @@ export class EditTaxComponentComponent implements OnInit {
     // TODO: Update once language and date settings are setup
     const dateFormat = 'yyyy-MM-dd';
     this.taxComponentForm.patchValue({
-      startDate: this.datePipe.transform(prevStartDate, dateFormat)
+      startDate: this.datePipe.transform(prevStartDate as Date, dateFormat)
     });
     const taxComponent = this.taxComponentForm.value;
     taxComponent.locale = 'en';

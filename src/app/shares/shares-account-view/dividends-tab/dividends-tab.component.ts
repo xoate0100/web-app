@@ -1,17 +1,18 @@
 /** Angular Imports */
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
-import { MatTableDataSource } from '@angular/material/table';
+import { MatTableDataSource, MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow } from '@angular/material/table';
 import { ActivatedRoute } from '@angular/router';
+import { DatePipe } from '@angular/common';
 
 /**
  * Dividends Tab Component.
  */
 @Component({
-  standalone: false,
-  selector: 'mifosx-dividends-tab',
-  templateUrl: './dividends-tab.component.html',
-  changeDetection: ChangeDetectionStrategy.Eager,
-  styleUrls: ['./dividends-tab.component.scss']
+    selector: 'mifosx-dividends-tab',
+    templateUrl: './dividends-tab.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    styleUrls: ['./dividends-tab.component.scss'],
+    imports: [MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow, DatePipe]
 })
 export class DividendsTabComponent implements OnInit {
 
@@ -34,7 +35,7 @@ export class DividendsTabComponent implements OnInit {
    * @param {ActivatedRoute} route Activated Route.
    */
   constructor(private route: ActivatedRoute) {
-    this.route.parent.data.subscribe((data: { sharesAccountData: any }) => {
+    this.route.parent!.data.subscribe((data: any) => {
       this.shareAccountData = data.sharesAccountData;
       this.dividendsData = this.shareAccountData.dividends;
     });

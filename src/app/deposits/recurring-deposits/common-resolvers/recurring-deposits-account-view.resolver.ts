@@ -25,7 +25,7 @@ export class RecurringDepositsAccountViewResolver implements Resolve<Object> {
    * @returns {Observable<any>}
    */
   resolve(route: ActivatedRouteSnapshot): Observable<any> {
-    const recurringDepositAccountId = route.paramMap.get('recurringDepositAccountId');
+    const recurringDepositAccountId = route.paramMap.get('recurringDepositAccountId')!;
     return this.recurringDepositsService.getRecurringDepositsAccountData(recurringDepositAccountId);
   }
 

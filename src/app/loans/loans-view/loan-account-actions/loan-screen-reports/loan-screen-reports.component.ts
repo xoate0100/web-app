@@ -1,21 +1,29 @@
 /** Angular Imports */
 import { Component, OnInit, Renderer2, ViewChild, ElementRef, SecurityContext, Input, ChangeDetectionStrategy } from '@angular/core';
-import { FormGroup, FormBuilder } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { FormGroup, FormBuilder, ReactiveFormsModule } from '@angular/forms';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 
 /** Custom Services */
 import { LoansService } from 'app/loans/loans.service';
 import { DomSanitizer } from '@angular/platform-browser';
+import { MatCard, MatCardContent, MatCardActions } from '@angular/material/card';
+import { MatFormField, MatLabel, MatError } from '@angular/material/form-field';
+import { FlexDirective, LayoutDirective, LayoutAlignDirective, LayoutGapDirective } from '@ngbracket/ngx-layout/flex';
+import { MatSelect } from '@angular/material/select';
+import { NgFor, NgIf } from '@angular/common';
+import { MatOption } from '@angular/material/autocomplete';
+import { MatButton } from '@angular/material/button';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 
 /**
  * Loans Screen Reports Component.
  */
 @Component({
-  standalone: false,
-  selector: 'mifosx-loan-screen-reports',
-  templateUrl: './loan-screen-reports.component.html',
-  changeDetection: ChangeDetectionStrategy.Eager,
-  styleUrls: ['./loan-screen-reports.component.scss']
+    selector: 'mifosx-loan-screen-reports',
+    templateUrl: './loan-screen-reports.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    styleUrls: ['./loan-screen-reports.component.scss'],
+    imports: [MatCard, ReactiveFormsModule, MatCardContent, MatFormField, FlexDirective, MatLabel, MatSelect, NgFor, MatOption, NgIf, MatError, MatCardActions, LayoutDirective, LayoutAlignDirective, LayoutGapDirective, MatButton, RouterLink, FaIconComponent]
 })
 export class LoanScreenReportsComponent implements OnInit {
 
@@ -45,7 +53,7 @@ export class LoanScreenReportsComponent implements OnInit {
     private route: ActivatedRoute,
     private sanitizer: DomSanitizer,
     private renderer: Renderer2) {
-    this.loanId = this.route.parent.snapshot.params['loanId'];
+    this.loanId = this.route.parent!.snapshot.params['loanId']!;
   }
 
   /**
@@ -70,19 +78,19 @@ export class LoanScreenReportsComponent implements OnInit {
    */
   print() {
     const templateWindow = window.open('', 'Screen Report', 'height=400,width=600');
-    templateWindow.document.write('<html><head>');
-    templateWindow.document.write('</head><body>');
-    templateWindow.document.write(this.template);
-    templateWindow.document.write('</body></html>');
-    templateWindow.print();
-    templateWindow.close();
+    templateWindow!.document.write('<html><head>');
+    templateWindow!.document.write('</head><body>');
+    templateWindow!.document.write(this.template);
+    templateWindow!.document.write('</body></html>');
+    templateWindow!.print();
+    templateWindow!.close();
   }
 
   /**
    * Submits the form and generates screen report for the loan.
    */
   generate() {
-    const templateId = this.loanScreenReportForm.get('templateId').value;
+    const templateId = this.loanScreenReportForm.get('templateId')!.value;
     this.loansService.getTemplateData(templateId, this.loanId).subscribe((response: any) => {
       this.template = this.sanitizer.sanitize(SecurityContext.HTML, response);
       this.renderer.setProperty(this.screenReportRef.nativeElement, 'innerHTML', this.template);

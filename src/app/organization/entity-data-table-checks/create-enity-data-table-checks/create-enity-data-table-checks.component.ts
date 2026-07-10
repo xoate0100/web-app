@@ -1,20 +1,27 @@
 /** Angular Imports. */
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { FormBuilder, FormGroup, Validators, FormControl, ReactiveFormsModule } from '@angular/forms';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 
 /** Custom Services. */
 import { OrganizationService } from 'app/organization/organization.service';
+import { MatCard, MatCardContent, MatCardActions } from '@angular/material/card';
+import { LayoutDirective, LayoutAlignDirective, LayoutGapDirective } from '@ngbracket/ngx-layout/flex';
+import { MatFormField, MatLabel, MatError } from '@angular/material/form-field';
+import { MatSelect } from '@angular/material/select';
+import { NgFor, NgIf } from '@angular/common';
+import { MatOption } from '@angular/material/autocomplete';
+import { MatButton } from '@angular/material/button';
 
 /**
  * Create Entity Data Table Checks component.
  */
 @Component({
-  standalone: false,
-  selector: 'mifosx-create-enity-data-table-checks',
-  templateUrl: './create-enity-data-table-checks.component.html',
-  changeDetection: ChangeDetectionStrategy.Eager,
-  styleUrls: ['./create-enity-data-table-checks.component.scss']
+    selector: 'mifosx-create-enity-data-table-checks',
+    templateUrl: './create-enity-data-table-checks.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    styleUrls: ['./create-enity-data-table-checks.component.scss'],
+    imports: [MatCard, ReactiveFormsModule, MatCardContent, LayoutDirective, MatFormField, MatLabel, MatSelect, NgFor, MatOption, NgIf, MatError, MatCardActions, LayoutAlignDirective, LayoutGapDirective, MatButton, RouterLink]
 })
 export class CreateEnityDataTableChecksComponent implements OnInit {
 
@@ -42,7 +49,7 @@ export class CreateEnityDataTableChecksComponent implements OnInit {
               private route: ActivatedRoute,
               private organizationService: OrganizationService,
               private router: Router) {
-    this.route.data.subscribe((data: {dataTableEntity: any}) => {
+    this.route.data.subscribe((data: any) => {
       this.createEntityData = data.dataTableEntity;
       this.entityTypes = [
         { name: 'Client', value: this.createEntityData.entities[0] },
@@ -74,7 +81,7 @@ export class CreateEnityDataTableChecksComponent implements OnInit {
    * @param entity Selected Entity.
    */
   getEntityType() {
-    this.createEntityForm.get('entity').valueChanges.subscribe((option: any) => {
+    this.createEntityForm.get('entity')!.valueChanges.subscribe((option: any) => {
       switch (option) {
         case 'm_client': {
           this.entityType = 'm_client';

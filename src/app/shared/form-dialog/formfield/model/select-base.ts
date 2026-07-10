@@ -9,7 +9,7 @@ export class SelectBase extends FormfieldBase {
     data: {}[]
   };
 
-  constructor(options: {} = {}) {
+  constructor(options: Record<string, any> = {}) {
     super(options);
     this.options = options['options'];
   }

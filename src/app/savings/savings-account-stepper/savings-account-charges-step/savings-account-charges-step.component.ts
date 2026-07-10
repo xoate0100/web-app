@@ -2,7 +2,7 @@
 import { Component, OnInit, OnChanges, Input, ChangeDetectionStrategy } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { FormControl } from '@angular/forms';
-import { DatePipe } from '@angular/common';
+import { DatePipe, NgFor, NgIf } from '@angular/common';
 
 /** Custom Dialogs */
 import { FormDialogComponent } from 'app/shared/form-dialog/form-dialog.component';
@@ -11,16 +11,25 @@ import { FormDialogComponent } from 'app/shared/form-dialog/form-dialog.componen
 import { FormfieldBase } from 'app/shared/form-dialog/formfield/model/formfield-base';
 import { InputBase } from 'app/shared/form-dialog/formfield/model/input-base';
 import { DatepickerBase } from 'app/shared/form-dialog/formfield/model/datepicker-base';
+import { LayoutDirective, LayoutGapDirective, FlexDirective, FlexAlignDirective, LayoutAlignDirective } from '@ngbracket/ngx-layout/flex';
+import { MatFormField, MatLabel } from '@angular/material/form-field';
+import { MatSelect } from '@angular/material/select';
+import { MatOption } from '@angular/material/autocomplete';
+import { MatButton, MatIconButton } from '@angular/material/button';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import { MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow } from '@angular/material/table';
+import { MatStepperPrevious, MatStepperNext } from '@angular/material/stepper';
+import { ChargesFilterPipe } from '../../../pipes/charges-filter.pipe';
 
 /**
  * Savings Account Charges Step
  */
 @Component({
-  standalone: false,
-  selector: 'mifosx-savings-account-charges-step',
-  templateUrl: './savings-account-charges-step.component.html',
-  changeDetection: ChangeDetectionStrategy.Eager,
-  styleUrls: ['./savings-account-charges-step.component.scss']
+    selector: 'mifosx-savings-account-charges-step',
+    templateUrl: './savings-account-charges-step.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    styleUrls: ['./savings-account-charges-step.component.scss'],
+    imports: [LayoutDirective, LayoutGapDirective, MatFormField, FlexDirective, MatLabel, MatSelect, NgFor, MatOption, FlexAlignDirective, MatButton, FaIconComponent, MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatIconButton, NgIf, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow, LayoutAlignDirective, MatStepperPrevious, MatStepperNext, DatePipe, ChargesFilterPipe]
 })
 export class SavingsAccountChargesStepComponent implements OnInit, OnChanges {
 
@@ -129,7 +138,7 @@ export class SavingsAccountChargesStepComponent implements OnInit, OnChanges {
       if (response.data) {
         let newCharge: any;
         const dateFormat = 'dd MMMM yyyy';
-        const date = this.datePipe.transform(response.data.value.date, dateFormat);
+        const date = this.datePipe.transform(response.data.value.date as Date, dateFormat);
         switch (charge.chargeTimeType.value) {
           case 'Specified due date':
           case 'Weekly Fee':

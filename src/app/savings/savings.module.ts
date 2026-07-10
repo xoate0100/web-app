@@ -6,7 +6,7 @@ import { DatePipe } from '@angular/common';
 import { SavingsRoutingModule } from './savings-routing.module';
 import { SharedModule } from 'app/shared/shared.module';
 import { PipesModule } from '../pipes/pipes.module';
-import { DirectivesModule } from '../directives/directives.module';
+
 
 /** Custom Components */
 import { SavingAccountActionsComponent } from './saving-account-actions/saving-account-actions.component';
@@ -54,13 +54,10 @@ import { ApplyAnnualFeesSavingsAccountComponent } from './saving-account-actions
  * All components related to Savings functions should be declared here.
  */
 @NgModule({
-  imports: [
+    imports: [
     SharedModule,
     PipesModule,
-    DirectivesModule,
-    SavingsRoutingModule
-  ],
-  declarations: [
+    SavingsRoutingModule,
     SavingAccountActionsComponent,
     SavingsAccountTransactionsComponent,
     TransactionsTabComponent,
@@ -98,7 +95,7 @@ import { ApplyAnnualFeesSavingsAccountComponent } from './saving-account-actions
     ExportTransactionsComponent,
     EditTransactionComponent,
     ApplyAnnualFeesSavingsAccountComponent
-  ],
-  providers: [DatePipe]
+],
+    providers: [DatePipe]
 })
 export class SavingsModule {}

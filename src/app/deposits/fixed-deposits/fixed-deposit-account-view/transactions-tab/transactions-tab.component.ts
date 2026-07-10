@@ -1,17 +1,19 @@
 /** Angular Imports */
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
-import { MatTableDataSource } from '@angular/material/table';
+import { MatTableDataSource, MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow } from '@angular/material/table';
 import { ActivatedRoute, Router } from '@angular/router';
+import { LayoutAlignDirective } from '@ngbracket/ngx-layout/flex';
+import { DatePipe } from '@angular/common';
 
 /**
  * Transactions Tab Component.
  */
 @Component({
-  standalone: false,
-  selector: 'mifosx-transactions-tab',
-  templateUrl: './transactions-tab.component.html',
-  changeDetection: ChangeDetectionStrategy.Eager,
-  styleUrls: ['./transactions-tab.component.scss']
+    selector: 'mifosx-transactions-tab',
+    templateUrl: './transactions-tab.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    styleUrls: ['./transactions-tab.component.scss'],
+    imports: [LayoutAlignDirective, MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow, DatePipe]
 })
 export class TransactionsTabComponent implements OnInit {
 
@@ -31,7 +33,7 @@ export class TransactionsTabComponent implements OnInit {
    */
   constructor(private route: ActivatedRoute,
               private router: Router) {
-    this.route.parent.data.subscribe((data: { fixedDepositsAccountData: any }) => {
+    this.route.parent!.data.subscribe((data: any) => {
       this.transactionsData = data.fixedDepositsAccountData.transactions;
       this.status = data.fixedDepositsAccountData.status.value;
     });

@@ -1,11 +1,20 @@
 /** Angular Imports */
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
-import { FormGroup, FormBuilder, FormArray, FormControl } from '@angular/forms';
-import { Router, ActivatedRoute } from '@angular/router';
+import { FormGroup, FormBuilder, FormArray, FormControl, ReactiveFormsModule } from '@angular/forms';
+import { Router, ActivatedRoute, RouterLink } from '@angular/router';
 
 /** Custom Services */
 import { OrganizationService } from '../organization.service';
 import { SettingsService } from 'app/settings/settings.service';
+import { MatCard, MatCardContent, MatCardActions } from '@angular/material/card';
+import { LayoutDirective, FlexDirective, LayoutAlignDirective, LayoutGapDirective } from '@ngbracket/ngx-layout/flex';
+import { MatLabel, MatFormField } from '@angular/material/form-field';
+import { NgFor } from '@angular/common';
+import { MatCheckbox } from '@angular/material/checkbox';
+import { MatSelect } from '@angular/material/select';
+import { MatOption } from '@angular/material/autocomplete';
+import { MatButton } from '@angular/material/button';
+import { HasPermissionDirective } from '../../directives/has-permission/has-permission.directive';
 
 /** Recurrence default value. */
 const recurrenceDefaultValue = 'FREQ=WEEKLY;INTERVAL=1;BYDAY=';
@@ -14,11 +23,11 @@ const recurrenceDefaultValue = 'FREQ=WEEKLY;INTERVAL=1;BYDAY=';
  * Working days component.
  */
 @Component({
-  standalone: false,
-  selector: 'mifosx-working-days',
-  templateUrl: './working-days.component.html',
-  changeDetection: ChangeDetectionStrategy.Eager,
-  styleUrls: ['./working-days.component.scss']
+    selector: 'mifosx-working-days',
+    templateUrl: './working-days.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    styleUrls: ['./working-days.component.scss'],
+    imports: [MatCard, ReactiveFormsModule, MatCardContent, LayoutDirective, MatLabel, FlexDirective, NgFor, MatCheckbox, MatFormField, MatSelect, MatOption, MatCardActions, LayoutAlignDirective, LayoutGapDirective, MatButton, RouterLink, HasPermissionDirective]
 })
 export class WorkingDaysComponent implements OnInit {
 
@@ -52,7 +61,7 @@ export class WorkingDaysComponent implements OnInit {
               private organizationService: OrganizationService,
               private settingsService: SettingsService,
               private router: Router) {
-    this.route.data.subscribe((data: { workingDays: any }) => {
+    this.route.data.subscribe((data: any) => {
       this.workingDaysData = data.workingDays;
     });
   }

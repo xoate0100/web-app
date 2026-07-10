@@ -20,20 +20,18 @@ import { ClientTrendsBarComponent } from './dashboard/client-trends-bar/client-t
  * Home and dashboard components should be declared here.
  */
 @NgModule({
-  imports: [
-    SharedModule,
-    PipesModule,
-    HomeRoutingModule
-  ],
-  declarations: [
-    HomeComponent,
-    DashboardComponent,
-    AmountCollectedPieComponent,
-    AmountDisbursedPieComponent,
-    ClientTrendsBarComponent
-  ],
-  providers: [
-    DatePipe
-  ]
+    imports: [
+        SharedModule,
+        PipesModule,
+        HomeRoutingModule,
+        HomeComponent,
+        DashboardComponent,
+        AmountCollectedPieComponent,
+        AmountDisbursedPieComponent,
+        ClientTrendsBarComponent
+    ],
+    providers: [
+        DatePipe
+    ]
 })
 export class HomeModule { }

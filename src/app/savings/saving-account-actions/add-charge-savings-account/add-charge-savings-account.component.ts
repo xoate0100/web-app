@@ -1,21 +1,29 @@
 /** Angular Imports */
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
-import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
-import { Router, ActivatedRoute } from '@angular/router';
-import { DatePipe } from '@angular/common';
+import { FormGroup, FormBuilder, Validators, FormControl, ReactiveFormsModule } from '@angular/forms';
+import { Router, ActivatedRoute, RouterLink } from '@angular/router';
+import { DatePipe, NgFor, NgIf } from '@angular/common';
 
 /** Custom Services */
 import { SavingsService } from '../../savings.service';
+import { MatCard, MatCardContent, MatCardActions } from '@angular/material/card';
+import { LayoutDirective, LayoutGapDirective, LayoutAlignDirective } from '@ngbracket/ngx-layout/flex';
+import { MatFormField, MatLabel, MatError, MatSuffix } from '@angular/material/form-field';
+import { MatSelect } from '@angular/material/select';
+import { MatOption } from '@angular/material/autocomplete';
+import { MatInput } from '@angular/material/input';
+import { MatDatepickerInput, MatDatepickerToggle, MatDatepicker } from '@angular/material/datepicker';
+import { MatButton } from '@angular/material/button';
 
 /**
  * Add Savings Charge component.
  */
 @Component({
-  standalone: false,
-  selector: 'mifosx-add-charge-savings-account',
-  templateUrl: './add-charge-savings-account.component.html',
-  changeDetection: ChangeDetectionStrategy.Eager,
-  styleUrls: ['./add-charge-savings-account.component.scss']
+    selector: 'mifosx-add-charge-savings-account',
+    templateUrl: './add-charge-savings-account.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    styleUrls: ['./add-charge-savings-account.component.scss'],
+    imports: [MatCard, ReactiveFormsModule, MatCardContent, LayoutDirective, MatFormField, MatLabel, MatSelect, NgFor, MatOption, NgIf, MatError, MatInput, MatDatepickerInput, MatDatepickerToggle, MatSuffix, MatDatepicker, MatCardActions, LayoutGapDirective, LayoutAlignDirective, MatButton, RouterLink]
 })
 export class AddChargeSavingsAccountComponent implements OnInit {
 
@@ -47,10 +55,10 @@ export class AddChargeSavingsAccountComponent implements OnInit {
     private datePipe: DatePipe,
     private savingsService: SavingsService
   ) {
-    this.route.data.subscribe((data: { savingsAccountActionData: any }) => {
+    this.route.data.subscribe((data: any) => {
       this.savingsChargeOptions = data.savingsAccountActionData.chargeOptions;
     });
-    this.savingAccountId = this.route.parent.snapshot.params['savingAccountId'];
+    this.savingAccountId = this.route.parent!.snapshot.params['savingAccountId']!;
   }
 
   /**
@@ -130,7 +138,7 @@ export class AddChargeSavingsAccountComponent implements OnInit {
         savingsCharge.dateFormat = dateFormat;
         if (savingsCharge.dueDate) {
           const prevDate = this.savingsChargeForm.value.dueDate;
-          savingsCharge.dueDate = this.datePipe.transform(prevDate, dateFormat);
+          savingsCharge.dueDate = this.datePipe.transform(prevDate as Date, dateFormat);
         }
       }
     }

@@ -95,6 +95,11 @@ import {
   faFolderOpen,
   faIdBadge,
   faAddressCard,
+  faCamera,
+  faCircleArrowRight,
+  faListCheck,
+  faPowerOff,
+  faRightLeft,
   faKeyboard
 } from '@fortawesome/free-solid-svg-icons';
 
@@ -201,7 +206,12 @@ export class IconsModule {
       faFolderOpen,
       faIdBadge,
       faAddressCard,
-      faKeyboard
+      faKeyboard,
+      faCamera,
+      faCircleArrowRight,
+      faListCheck,
+      faPowerOff,
+      faRightLeft
     );
   }
 

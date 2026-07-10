@@ -12,17 +12,21 @@ import { ClientAddressStepComponent } from '../client-stepper/client-address-ste
 
 /** Custom Services */
 import { SettingsService } from 'app/settings/settings.service';
+import { MatStepper, MatStepperIcon, MatStep, MatStepLabel } from '@angular/material/stepper';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import { NgIf } from '@angular/common';
+import { ClientPreviewStepComponent } from '../client-stepper/client-preview-step/client-preview-step.component';
 
 
 /**
  * Create Client Component.
  */
 @Component({
-  standalone: false,
-  selector: 'mifosx-create-client',
-  templateUrl: './create-client.component.html',
-  changeDetection: ChangeDetectionStrategy.Eager,
-  styleUrls: ['./create-client.component.scss']
+    selector: 'mifosx-create-client',
+    templateUrl: './create-client.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    styleUrls: ['./create-client.component.scss'],
+    imports: [MatStepper, MatStepperIcon, FaIconComponent, MatStep, MatStepLabel, ClientGeneralStepComponent, ClientFamilyMembersStepComponent, ClientAddressStepComponent, NgIf, ClientPreviewStepComponent]
 })
 export class CreateClientComponent {
 
@@ -49,7 +53,7 @@ export class CreateClientComponent {
               private router: Router,
               private clientsService: ClientsService,
               private settingsService: SettingsService) {
-    this.route.data.subscribe((data: { clientTemplate: any, clientAddressFieldConfig: any }) => {
+    this.route.data.subscribe((data: any) => {
       this.clientTemplate = data.clientTemplate;
       this.clientAddressFieldConfig = data.clientAddressFieldConfig;
     });

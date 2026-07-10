@@ -1,6 +1,6 @@
 /** Angular Imports */
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
 
 /** rxjs Imports */
 import { finalize } from 'rxjs/operators';
@@ -10,16 +10,24 @@ import { AuthenticationService } from '../../core/authentication/authentication.
 
 /** Custom Validators */
 import { confirmPasswordValidator } from './confirm-password.validator';
+import { MatDivider } from '@angular/material/divider';
+import { LayoutDirective, FlexAlignDirective } from '@ngbracket/ngx-layout/flex';
+import { MatFormField, MatPrefix, MatLabel, MatSuffix, MatError } from '@angular/material/form-field';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import { MatInput } from '@angular/material/input';
+import { NgIf } from '@angular/common';
+import { MatButton, MatIconButton } from '@angular/material/button';
+import { MatProgressSpinner } from '@angular/material/progress-spinner';
 
 /**
  * Reset password component.
  */
 @Component({
-  standalone: false,
-  selector: 'mifosx-reset-password',
-  templateUrl: './reset-password.component.html',
-  changeDetection: ChangeDetectionStrategy.Eager,
-  styleUrls: ['./reset-password.component.scss']
+    selector: 'mifosx-reset-password',
+    templateUrl: './reset-password.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    styleUrls: ['./reset-password.component.scss'],
+    imports: [MatDivider, ReactiveFormsModule, LayoutDirective, MatFormField, FlexAlignDirective, MatPrefix, FaIconComponent, MatLabel, MatInput, NgIf, MatButton, MatIconButton, MatSuffix, MatError, MatProgressSpinner]
 })
 export class ResetPasswordComponent implements OnInit {
 

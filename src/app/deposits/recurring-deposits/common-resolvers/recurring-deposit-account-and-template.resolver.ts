@@ -25,7 +25,7 @@ export class RecurringDepositsAccountAndTemplateResolver implements Resolve<Obje
      * @returns {Observable<any>}
      */
     resolve(route: ActivatedRouteSnapshot): Observable<any> {
-        const recurringDepositAccountId = route.paramMap.get('recurringDepositAccountId');
+        const recurringDepositAccountId = route.paramMap.get('recurringDepositAccountId')!;
         return this.recurringDepositsService.getRecurringDepositsAccountAndTemplate(recurringDepositAccountId);
     }
 

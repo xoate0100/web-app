@@ -1,20 +1,30 @@
 /** Angular Imports */
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { Router, ActivatedRoute } from '@angular/router';
+import { FormGroup, FormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
+import { Router, ActivatedRoute, RouterLink } from '@angular/router';
 
 /** Custom Services */
 import { AccountingService } from '../../accounting.service';
+import { MatCard, MatCardContent, MatCardActions } from '@angular/material/card';
+import { LayoutDirective, LayoutGapDirective, FlexDirective, LayoutAlignDirective } from '@ngbracket/ngx-layout/flex';
+import { MatFormField, MatLabel, MatError } from '@angular/material/form-field';
+import { MatSelect } from '@angular/material/select';
+import { NgFor, NgIf } from '@angular/common';
+import { MatOption } from '@angular/material/autocomplete';
+import { MatInput } from '@angular/material/input';
+import { MatCheckbox } from '@angular/material/checkbox';
+import { MatButton } from '@angular/material/button';
+import { HasPermissionDirective } from '../../../directives/has-permission/has-permission.directive';
 
 /**
  * Create gl account component.
  */
 @Component({
-  standalone: false,
-  selector: 'mifosx-create-gl-account',
-  templateUrl: './create-gl-account.component.html',
-  changeDetection: ChangeDetectionStrategy.Eager,
-  styleUrls: ['./create-gl-account.component.scss']
+    selector: 'mifosx-create-gl-account',
+    templateUrl: './create-gl-account.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    styleUrls: ['./create-gl-account.component.scss'],
+    imports: [MatCard, ReactiveFormsModule, MatCardContent, LayoutDirective, LayoutGapDirective, MatFormField, FlexDirective, MatLabel, MatSelect, NgFor, MatOption, NgIf, MatError, MatInput, MatCheckbox, MatCardActions, LayoutAlignDirective, MatButton, RouterLink, HasPermissionDirective]
 })
 export class CreateGlAccountComponent implements OnInit {
 
@@ -56,7 +66,7 @@ export class CreateGlAccountComponent implements OnInit {
       }
     });
 
-    this.route.data.subscribe((data: { chartOfAccountsTemplate: any }) => {
+    this.route.data.subscribe((data: any) => {
       this.chartOfAccountsData = data.chartOfAccountsTemplate;
       this.accountTypeData = data.chartOfAccountsTemplate.accountTypeOptions;
       this.accountUsageData = data.chartOfAccountsTemplate.usageOptions;
@@ -91,7 +101,7 @@ export class CreateGlAccountComponent implements OnInit {
    * Sets gl account form for selected account type.
    */
   setGLAccountForm() {
-    this.glAccountForm.get('type').valueChanges.subscribe(accountTypeId => {
+    this.glAccountForm.get('type')!.valueChanges.subscribe(accountTypeId => {
       switch (accountTypeId) {
         case 1: this.parentData = this.chartOfAccountsData.assetHeaderAccountOptions;
                 this.tagData = this.chartOfAccountsData.allowedAssetsTagOptions;
@@ -111,7 +121,7 @@ export class CreateGlAccountComponent implements OnInit {
       }
     });
 
-    this.glAccountForm.get('type').setValue(this.accountTypeId);
+    this.glAccountForm.get('type')!.setValue(this.accountTypeId);
   }
 
   /**

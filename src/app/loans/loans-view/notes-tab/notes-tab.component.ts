@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild, ChangeDetectionStrategy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
 
 /** Custom Components */
 import { DeleteDialogComponent } from '../../../shared/delete-dialog/delete-dialog.component';
@@ -10,13 +10,21 @@ import { FormDialogComponent } from 'app/shared/form-dialog/form-dialog.componen
 /** Custom Services */
 import { LoansService } from '../../loans.service';
 import { AuthenticationService } from '../../../core/authentication/authentication.service';
+import { LayoutDirective, LayoutAlignDirective, LayoutGapDirective, FlexDirective } from '@ngbracket/ngx-layout/flex';
+import { MatFormField } from '@angular/material/form-field';
+import { MatInput } from '@angular/material/input';
+import { MatButton } from '@angular/material/button';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import { MatList, MatListItem } from '@angular/material/list';
+import { NgFor, DatePipe } from '@angular/common';
+import { MatLine } from '@angular/material/grid-list';
 
 @Component({
-  standalone: false,
-  selector: 'mifosx-notes-tab',
-  templateUrl: './notes-tab.component.html',
-  changeDetection: ChangeDetectionStrategy.Eager,
-  styleUrls: ['./notes-tab.component.scss']
+    selector: 'mifosx-notes-tab',
+    templateUrl: './notes-tab.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    styleUrls: ['./notes-tab.component.scss'],
+    imports: [ReactiveFormsModule, LayoutDirective, LayoutAlignDirective, LayoutGapDirective, MatFormField, FlexDirective, MatInput, MatButton, FaIconComponent, MatList, NgFor, MatListItem, MatLine, DatePipe]
 })
 export class NotesTabComponent implements OnInit {
 
@@ -32,10 +40,10 @@ export class NotesTabComponent implements OnInit {
     private loansService: LoansService,
     private authenticationService: AuthenticationService,
     private dialog: MatDialog) {
-    const savedCredentials = this.authenticationService.getCredentials();
-    this.username = savedCredentials.username;
-    this.loanId = this.route.parent.snapshot.params['loanId'];
-    this.route.data.subscribe((data: { loanNotes: any }) => {
+    const savedCredentials = this.authenticationService.getCredentials()!;
+    this.username = savedCredentials!.username;
+    this.loanId = this.route.parent!.snapshot.params['loanId']!;
+    this.route.data.subscribe((data: any) => {
       this.loanNotes = data.loanNotes;
     });
   }

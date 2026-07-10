@@ -57,7 +57,7 @@
 
 //     it('should cache the request', () => {
 //       // Act
-//       http.get('/toto').subscribe(() => {
+//       http.get('/toto')!.subscribe(() => {
 //         // Assert
 //         const cachedData = httpCacheService.getCacheData('/toto');
 //         expect(cachedData).toBeDefined();
@@ -72,7 +72,7 @@
 //       httpCacheService.setCacheData('/toto', new HttpResponse({ body: 'cachedData' }));
 
 //       // Act
-//       http.get('/toto').subscribe(response => {
+//       http.get('/toto')!.subscribe(response => {
 //         // Assert
 //         expect(response).toEqual('cachedData');
 //       });
@@ -82,7 +82,7 @@
 
 //     it('should not cache the request in case of error', () => {
 //       // Act
-//       http.get('/toto').subscribe(() => {}, () => {
+//       http.get('/toto')!.subscribe(() => {}, () => {
 //         // Assert
 //         expect(httpCacheService.getCacheData('/toto')).toBeNull();
 //       });
@@ -123,7 +123,7 @@
 //       cacheInterceptor.configure({ update: true });
 
 //       // Act
-//       http.get('/toto').subscribe(response => {
+//       http.get('/toto')!.subscribe(response => {
 //         // Assert
 //         expect(response).toEqual('newData');
 

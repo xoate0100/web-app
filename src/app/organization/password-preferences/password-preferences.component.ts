@@ -1,20 +1,26 @@
 /** Angular Imports */
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
-import { FormGroup, FormBuilder } from '@angular/forms';
-import { Router, ActivatedRoute } from '@angular/router';
+import { FormGroup, FormBuilder, ReactiveFormsModule } from '@angular/forms';
+import { Router, ActivatedRoute, RouterLink } from '@angular/router';
 
 /** Custom Services */
 import { OrganizationService } from '../organization.service';
+import { MatCard, MatCardContent, MatCardActions } from '@angular/material/card';
+import { MatRadioGroup, MatRadioButton } from '@angular/material/radio';
+import { LayoutDirective, LayoutGapDirective, LayoutAlignDirective } from '@ngbracket/ngx-layout/flex';
+import { NgFor } from '@angular/common';
+import { MatButton } from '@angular/material/button';
+import { HasPermissionDirective } from '../../directives/has-permission/has-permission.directive';
 
 /**
  * Password preferences component.
  */
 @Component({
-  standalone: false,
-  selector: 'mifosx-password-preferences',
-  templateUrl: './password-preferences.component.html',
-  changeDetection: ChangeDetectionStrategy.Eager,
-  styleUrls: ['./password-preferences.component.scss']
+    selector: 'mifosx-password-preferences',
+    templateUrl: './password-preferences.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    styleUrls: ['./password-preferences.component.scss'],
+    imports: [MatCard, ReactiveFormsModule, MatCardContent, MatRadioGroup, LayoutDirective, LayoutGapDirective, NgFor, MatRadioButton, MatCardActions, LayoutAlignDirective, MatButton, RouterLink, HasPermissionDirective]
 })
 export class PasswordPreferencesComponent implements OnInit {
 
@@ -34,7 +40,7 @@ export class PasswordPreferencesComponent implements OnInit {
               private organizationService: OrganizationService,
               private route: ActivatedRoute,
               private router: Router) {
-    this.route.data.subscribe((data: { passwordPreferencesTemplate: any}) => {
+    this.route.data.subscribe((data: any) => {
       this.passwordPreferencesData = data.passwordPreferencesTemplate;
     });
   }
@@ -62,7 +68,7 @@ export class PasswordPreferencesComponent implements OnInit {
   setPasswordPreferencesForm() {
     for (const passwordPreference of this.passwordPreferencesData) {
       if (passwordPreference.active === true) {
-        this.passwordPreferencesForm.get('validationPolicyId').setValue(passwordPreference.id);
+        this.passwordPreferencesForm.get('validationPolicyId')!.setValue(passwordPreference.id);
       }
     }
   }

@@ -37,8 +37,8 @@ export class UserService {
           users.forEach((user: any) => {
             user.name = `${user.firstname} ${user.lastname}`;
             user.staff = user.staff ? `${user.staff.firstname} ${user.staff.lastname}` : '';
-            delete user.firstname;
-            delete user.lastname;
+            delete (user as any).firstname;
+            delete (user as any).lastname;
           });
           return users as User[];
         })

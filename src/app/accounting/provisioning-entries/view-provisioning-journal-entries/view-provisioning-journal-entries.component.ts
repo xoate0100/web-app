@@ -2,18 +2,22 @@
 import { Component, OnInit, ViewChild, ChangeDetectionStrategy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { MatPaginator } from '@angular/material/paginator';
-import { MatSort } from '@angular/material/sort';
-import { MatTableDataSource } from '@angular/material/table';
+import { MatSort, MatSortHeader } from '@angular/material/sort';
+import { MatTableDataSource, MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow } from '@angular/material/table';
+import { LayoutDirective, LayoutGapDirective, FlexDirective } from '@ngbracket/ngx-layout/flex';
+import { MatFormField, MatLabel } from '@angular/material/form-field';
+import { MatInput } from '@angular/material/input';
+import { NgIf } from '@angular/common';
 
 /**
  * View provisioning journal entries component.
  */
 @Component({
-  standalone: false,
-  selector: 'mifosx-view-provisioning-journal-entries',
-  templateUrl: './view-provisioning-journal-entries.component.html',
-  changeDetection: ChangeDetectionStrategy.Eager,
-  styleUrls: ['./view-provisioning-journal-entries.component.scss']
+    selector: 'mifosx-view-provisioning-journal-entries',
+    templateUrl: './view-provisioning-journal-entries.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    styleUrls: ['./view-provisioning-journal-entries.component.scss'],
+    imports: [LayoutDirective, LayoutGapDirective, MatFormField, FlexDirective, MatLabel, MatInput, MatTable, MatSort, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatSortHeader, MatCellDef, MatCell, NgIf, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow, MatPaginator]
 })
 export class ViewProvisioningJournalEntriesComponent implements OnInit {
 
@@ -34,7 +38,7 @@ export class ViewProvisioningJournalEntriesComponent implements OnInit {
    * @param {ActivatedRoute} route Activated Route.
    */
   constructor(private route: ActivatedRoute) {
-    this.route.data.subscribe((data: { provisioningJournalEntry: any }) => {
+    this.route.data.subscribe((data: any) => {
       this.provisioningJournalEntryData = data.provisioningJournalEntry.pageItems;
     });
   }

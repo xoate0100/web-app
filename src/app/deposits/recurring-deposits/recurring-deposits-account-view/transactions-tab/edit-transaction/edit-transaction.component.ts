@@ -1,22 +1,31 @@
 /** Angular Imports */
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
-import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
-import { Router, ActivatedRoute } from '@angular/router';
-import { DatePipe } from '@angular/common';
+import { FormGroup, FormBuilder, Validators, FormControl, ReactiveFormsModule } from '@angular/forms';
+import { Router, ActivatedRoute, RouterLink } from '@angular/router';
+import { DatePipe, NgIf, NgFor } from '@angular/common';
 
 /** Custom Services */
 import { RecurringDepositsService } from 'app/deposits/recurring-deposits/recurring-deposits.service';
 import { SettingsService } from 'app/settings/settings.service';
+import { MatCard, MatCardContent, MatCardActions } from '@angular/material/card';
+import { LayoutDirective, LayoutGapDirective, FlexAlignDirective, LayoutAlignDirective } from '@ngbracket/ngx-layout/flex';
+import { MatFormField, MatLabel, MatSuffix, MatError } from '@angular/material/form-field';
+import { MatInput } from '@angular/material/input';
+import { MatDatepickerInput, MatDatepickerToggle, MatDatepicker } from '@angular/material/datepicker';
+import { MatSelect } from '@angular/material/select';
+import { MatOption } from '@angular/material/autocomplete';
+import { MatMiniFabButton, MatButton } from '@angular/material/button';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 
 /**
  * Edit Transaction component.
  */
 @Component({
-  standalone: false,
-  selector: 'mifosx-edit-transaction',
-  templateUrl: './edit-transaction.component.html',
-  changeDetection: ChangeDetectionStrategy.Eager,
-  styleUrls: ['./edit-transaction.component.scss']
+    selector: 'mifosx-edit-transaction',
+    templateUrl: './edit-transaction.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    styleUrls: ['./edit-transaction.component.scss'],
+    imports: [MatCard, ReactiveFormsModule, MatCardContent, LayoutDirective, MatFormField, MatLabel, MatInput, MatDatepickerInput, MatDatepickerToggle, MatSuffix, MatDatepicker, NgIf, MatError, MatSelect, NgFor, MatOption, LayoutGapDirective, FlexAlignDirective, MatMiniFabButton, FaIconComponent, MatCardActions, LayoutAlignDirective, MatButton, RouterLink]
 })
 export class EditTransactionComponent implements OnInit {
 
@@ -56,11 +65,11 @@ export class EditTransactionComponent implements OnInit {
     private datePipe: DatePipe,
     private recurringDepositsService: RecurringDepositsService,
     private settingsService: SettingsService, ) {
-    this.route.data.subscribe((data: { recurringDepositsAccountTransactionTemplate: any }) => {
+    this.route.data.subscribe((data: any) => {
       this.transactionTemplateData = data.recurringDepositsAccountTransactionTemplate;
       this.paymentTypeOptions = this.transactionTemplateData.paymentTypeOptions;
     });
-    this.recurringDepositAccountId = this.route.parent.parent.snapshot.params['recurringDepositAccountId'];
+    this.recurringDepositAccountId = this.route.parent!.parent!.snapshot.params['recurringDepositAccountId']!;
   }
 
   /**
@@ -114,7 +123,7 @@ export class EditTransactionComponent implements OnInit {
     // TODO: Update once language and date settings are setup
     const dateFormat = this.settingsService.dateFormat;
     this.editTransactionForm.patchValue({
-      transactionDate: this.datePipe.transform(prevTransactionDate, dateFormat)
+      transactionDate: this.datePipe.transform(prevTransactionDate as Date, dateFormat)
     });
     const transactionData = this.editTransactionForm.value;
     transactionData.locale = this.settingsService.language.code;

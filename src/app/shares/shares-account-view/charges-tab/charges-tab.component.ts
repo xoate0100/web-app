@@ -1,17 +1,17 @@
 /** Angular Imports */
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
-import { MatTableDataSource } from '@angular/material/table';
+import { MatTableDataSource, MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow } from '@angular/material/table';
 import { ActivatedRoute } from '@angular/router';
 
 /**
  * Charges Tab Component
  */
 @Component({
-  standalone: false,
-  selector: 'mifosx-charges-tab',
-  templateUrl: './charges-tab.component.html',
-  changeDetection: ChangeDetectionStrategy.Eager,
-  styleUrls: ['./charges-tab.component.scss']
+    selector: 'mifosx-charges-tab',
+    templateUrl: './charges-tab.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    styleUrls: ['./charges-tab.component.scss'],
+    imports: [MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow]
 })
 export class ChargesTabComponent implements OnInit {
 
@@ -38,7 +38,7 @@ export class ChargesTabComponent implements OnInit {
    * @param {ActivatedRoute} route Activated Route.
    */
   constructor(private route: ActivatedRoute) {
-    this.route.parent.data.subscribe((data: { sharesAccountData: any }) => {
+    this.route.parent!.data.subscribe((data: any) => {
       this.sharesAccountData = data.sharesAccountData;
       this.chargesData = this.sharesAccountData.charges;
     });

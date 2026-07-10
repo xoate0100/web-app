@@ -5,7 +5,7 @@ import { NgModule } from '@angular/core';
 import { CentersRoutingModule } from './centers-routing.module';
 import { SharedModule } from 'app/shared/shared.module';
 import { PipesModule } from '../pipes/pipes.module';
-import { DirectivesModule } from '../directives/directives.module';
+
 
 /** Custom Components */
 import { CentersComponent } from './centers.component';
@@ -34,13 +34,10 @@ import { EditCenterComponent } from './edit-center/edit-center.component';
  * All components related to Centers should be declared here.
  */
 @NgModule({
-  imports: [
+    imports: [
     SharedModule,
     CentersRoutingModule,
     PipesModule,
-    DirectivesModule
-  ],
-  declarations: [
     CentersComponent,
     CreateCenterComponent,
     CentersViewComponent,
@@ -60,6 +57,6 @@ import { EditCenterComponent } from './edit-center/edit-center.component';
     ManageGroupsComponent,
     StaffAssignmentHistoryComponent,
     EditCenterComponent
-  ]
+]
 })
 export class CentersModule { }

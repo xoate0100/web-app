@@ -1,16 +1,23 @@
 /** Angular Imports */
 import { Component, OnInit, ViewChild, ChangeDetectionStrategy } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, RouterLink } from '@angular/router';
 import { SelectionModel } from '@angular/cdk/collections';
 import { MatPaginator } from '@angular/material/paginator';
-import { MatSort } from '@angular/material/sort';
-import { MatTableDataSource } from '@angular/material/table';
+import { MatSort, MatSortHeader } from '@angular/material/sort';
+import { MatTableDataSource, MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow } from '@angular/material/table';
 
 /** Custom Services */
 import { UserService } from './user.service';
 
 /** Custom Model */
 import { User } from './user.model';
+import { LayoutDirective, LayoutAlignDirective, LayoutGapDirective, FlexDirective } from '@ngbracket/ngx-layout/flex';
+import { MatButton } from '@angular/material/button';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import { MatFormField, MatLabel } from '@angular/material/form-field';
+import { MatInput } from '@angular/material/input';
+import { MatCheckbox } from '@angular/material/checkbox';
+import { MatTooltip } from '@angular/material/tooltip';
 
 /**
  * Self service users component.
@@ -18,11 +25,11 @@ import { User } from './user.model';
  * TODO: Complete functionality once API is available.
  */
 @Component({
-  standalone: false,
-  selector: 'mifosx-users',
-  templateUrl: './users.component.html',
-  changeDetection: ChangeDetectionStrategy.Eager,
-  styleUrls: ['./users.component.scss']
+    selector: 'mifosx-users',
+    templateUrl: './users.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    styleUrls: ['./users.component.scss'],
+    imports: [LayoutDirective, LayoutAlignDirective, LayoutGapDirective, MatButton, FaIconComponent, RouterLink, MatFormField, FlexDirective, MatLabel, MatInput, MatTable, MatSort, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCheckbox, MatCellDef, MatCell, MatSortHeader, MatTooltip, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow, MatPaginator]
 })
 export class UsersComponent implements OnInit {
 
@@ -45,7 +52,7 @@ export class UsersComponent implements OnInit {
    * @param {ActivatedRoute} route Activated Route.
    */
   constructor(private route: ActivatedRoute) {
-    this.route.data.subscribe((data: { users: User[] }) => {
+    this.route.data.subscribe((data: any) => {
       this.userData = data.users;
     });
   }

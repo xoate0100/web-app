@@ -1,22 +1,32 @@
 /** Angular Imports. */
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
-import { DatePipe } from '@angular/common';
+import { FormGroup, FormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { DatePipe, NgIf, NgFor } from '@angular/common';
 
 /** Custom Services. */
 import { OrganizationService } from 'app/organization/organization.service';
 import { SettingsService } from 'app/settings/settings.service';
+import { MatCard, MatCardContent, MatCardActions } from '@angular/material/card';
+import { LayoutDirective, LayoutGapDirective, FlexDirective, LayoutAlignDirective } from '@ngbracket/ngx-layout/flex';
+import { MatFormField, MatLabel, MatSuffix, MatError } from '@angular/material/form-field';
+import { MatInput } from '@angular/material/input';
+import { MatSelect } from '@angular/material/select';
+import { MatOption } from '@angular/material/autocomplete';
+import { MatDatepickerInput, MatDatepickerToggle, MatDatepicker } from '@angular/material/datepicker';
+import { MatCheckbox } from '@angular/material/checkbox';
+import { MatButton } from '@angular/material/button';
+import { HasPermissionDirective } from '../../../../directives/has-permission/has-permission.directive';
 
 /**
  * Edit Cashier component.
  */
 @Component({
-  standalone: false,
-  selector: 'mifosx-edit-cashier',
-  templateUrl: './edit-cashier.component.html',
-  changeDetection: ChangeDetectionStrategy.Eager,
-  styleUrls: ['./edit-cashier.component.scss']
+    selector: 'mifosx-edit-cashier',
+    templateUrl: './edit-cashier.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    styleUrls: ['./edit-cashier.component.scss'],
+    imports: [MatCard, ReactiveFormsModule, MatCardContent, LayoutDirective, LayoutGapDirective, MatFormField, FlexDirective, MatLabel, MatInput, NgIf, MatSelect, NgFor, MatOption, MatDatepickerInput, MatDatepickerToggle, MatSuffix, MatDatepicker, MatError, MatCheckbox, MatCardActions, LayoutAlignDirective, MatButton, RouterLink, HasPermissionDirective]
 })
 export class EditCashierComponent implements OnInit {
 
@@ -46,7 +56,7 @@ export class EditCashierComponent implements OnInit {
               private datePipe: DatePipe,
               private organizationService: OrganizationService,
               private settingsService: SettingsService ) {
-    this.route.data.subscribe((data: { cashier: any, cashierTemplate: any }) => {
+    this.route.data.subscribe((data: any) => {
       this.cashierData.data = data.cashier;
       this.cashierData.template = data.cashierTemplate;
       this.isStaffId = this.cashierData.template.staffOptions.some((element: any) => element.id === this.cashierData.data.staffId);
@@ -78,8 +88,8 @@ export class EditCashierComponent implements OnInit {
     const startDate = this.editCashierForm.value.startDate;
     const endDate = this.editCashierForm.value.endDate;
     this.editCashierForm.patchValue({
-      'startDate': this.datePipe.transform(startDate, dateFormat),
-      'endDate': this.datePipe.transform(endDate, dateFormat)
+      'startDate': this.datePipe.transform(startDate as Date, dateFormat),
+      'endDate': this.datePipe.transform(endDate as Date, dateFormat)
     });
     const editCashierForm = this.editCashierForm.value;
     editCashierForm.locale = this.settingsService.language.code;

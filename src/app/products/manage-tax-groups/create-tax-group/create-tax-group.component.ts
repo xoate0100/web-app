@@ -1,8 +1,8 @@
 /** Angular Imports */
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
-import { FormGroup, FormBuilder, Validators, FormControl, FormArray } from '@angular/forms';
-import { Router, ActivatedRoute } from '@angular/router';
-import { DatePipe } from '@angular/common';
+import { FormGroup, FormBuilder, Validators, FormControl, FormArray, ReactiveFormsModule } from '@angular/forms';
+import { Router, ActivatedRoute, RouterLink } from '@angular/router';
+import { DatePipe, NgIf } from '@angular/common';
 import { MatDialog } from '@angular/material/dialog';
 
 /** Custom Services */
@@ -14,16 +14,26 @@ import { SelectBase } from 'app/shared/form-dialog/formfield/model/select-base';
 import { DatepickerBase } from 'app/shared/form-dialog/formfield/model/datepicker-base';
 import { FormDialogComponent } from 'app/shared/form-dialog/form-dialog.component';
 import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.component';
+import { MatCard, MatCardContent, MatCardActions } from '@angular/material/card';
+import { LayoutDirective, LayoutGapDirective, FlexDirective, LayoutAlignDirective } from '@ngbracket/ngx-layout/flex';
+import { MatFormField, MatLabel, MatError } from '@angular/material/form-field';
+import { MatInput } from '@angular/material/input';
+import { MatButton, MatIconButton } from '@angular/material/button';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import { MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow } from '@angular/material/table';
+import { MatTooltip } from '@angular/material/tooltip';
+import { HasPermissionDirective } from '../../../directives/has-permission/has-permission.directive';
+import { FindPipe } from '../../../pipes/find.pipe';
 
 /**
  * Create Tax Group component.
  */
 @Component({
-  standalone: false,
-  selector: 'mifosx-create-tax-group',
-  templateUrl: './create-tax-group.component.html',
-  changeDetection: ChangeDetectionStrategy.Eager,
-  styleUrls: ['./create-tax-group.component.scss']
+    selector: 'mifosx-create-tax-group',
+    templateUrl: './create-tax-group.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    styleUrls: ['./create-tax-group.component.scss'],
+    imports: [MatCard, ReactiveFormsModule, MatCardContent, LayoutDirective, LayoutGapDirective, MatFormField, FlexDirective, MatLabel, MatInput, NgIf, MatError, LayoutAlignDirective, MatButton, FaIconComponent, MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatIconButton, MatTooltip, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow, MatCardActions, RouterLink, HasPermissionDirective, DatePipe, FindPipe]
 })
 export class CreateTaxGroupComponent implements OnInit {
 
@@ -57,7 +67,7 @@ export class CreateTaxGroupComponent implements OnInit {
     private router: Router,
     private datePipe: DatePipe,
     public dialog: MatDialog) {
-    this.route.data.subscribe((data: { taxGroupTemplate: any }) => {
+    this.route.data.subscribe((data: any) => {
       this.taxGroupTemplateData = data.taxGroupTemplate;
       this.taxComponentOptions = this.taxGroupTemplateData.taxComponents;
     });
@@ -174,7 +184,7 @@ export class CreateTaxGroupComponent implements OnInit {
       locale
     };
     for (const taxComponent of taxGroup.taxComponents) {
-      taxComponent.startDate = this.datePipe.transform(taxComponent.startDate, dateFormat) || '';
+      taxComponent.startDate = this.datePipe.transform(taxComponent.startDate as Date, dateFormat) || '';
     }
     this.productsService.createTaxGroup(taxGroup).subscribe((response: any) => {
       this.router.navigate(['../', response.resourceId], { relativeTo: this.route });

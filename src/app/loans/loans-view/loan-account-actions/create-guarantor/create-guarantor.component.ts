@@ -1,23 +1,33 @@
 /** Angular Imports */
 import { Component, OnInit, Input, AfterViewInit, ChangeDetectionStrategy } from '@angular/core';
-import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { FormGroup, FormBuilder, Validators, FormControl, ReactiveFormsModule } from '@angular/forms';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 
 /** Custom Services */
 import { LoansService } from 'app/loans/loans.service';
-import { DatePipe } from '@angular/common';
+import { DatePipe, NgIf, NgFor } from '@angular/common';
 import { ClientsService } from 'app/clients/clients.service';
 import { SettingsService } from 'app/settings/settings.service';
+import { MatCard, MatCardContent, MatCardActions } from '@angular/material/card';
+import { LayoutDirective, FlexDirective, LayoutAlignDirective, LayoutGapDirective } from '@ngbracket/ngx-layout/flex';
+import { MatCheckbox } from '@angular/material/checkbox';
+import { MatFormField, MatLabel, MatError, MatSuffix } from '@angular/material/form-field';
+import { MatInput } from '@angular/material/input';
+import { MatAutocompleteTrigger, MatAutocomplete, MatOption } from '@angular/material/autocomplete';
+import { MatSelect } from '@angular/material/select';
+import { MatDatepickerInput, MatDatepickerToggle, MatDatepicker } from '@angular/material/datepicker';
+import { MatButton } from '@angular/material/button';
+import { HasPermissionDirective } from '../../../../directives/has-permission/has-permission.directive';
 
 /**
  * Create Guarantor Action
  */
 @Component({
-  standalone: false,
-  selector: 'mifosx-create-guarantor',
-  templateUrl: './create-guarantor.component.html',
-  changeDetection: ChangeDetectionStrategy.Eager,
-  styleUrls: ['./create-guarantor.component.scss']
+    selector: 'mifosx-create-guarantor',
+    templateUrl: './create-guarantor.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    styleUrls: ['./create-guarantor.component.scss'],
+    imports: [MatCard, ReactiveFormsModule, MatCardContent, LayoutDirective, MatCheckbox, NgIf, MatFormField, FlexDirective, MatLabel, MatInput, MatAutocompleteTrigger, MatError, MatAutocomplete, NgFor, MatOption, MatSelect, MatDatepickerInput, MatDatepickerToggle, MatSuffix, MatDatepicker, MatCardActions, LayoutAlignDirective, LayoutGapDirective, MatButton, RouterLink, HasPermissionDirective]
 })
 export class CreateGuarantorComponent implements OnInit, AfterViewInit {
 
@@ -54,7 +64,7 @@ export class CreateGuarantorComponent implements OnInit, AfterViewInit {
     private datePipe: DatePipe,
     private clientsService: ClientsService,
     private settingsService: SettingsService) {
-    this.loanId = this.route.parent.snapshot.params['loanId'];
+    this.loanId = this.route.parent!.snapshot.params['loanId']!;
   }
 
   ngOnInit() {
@@ -86,7 +96,7 @@ export class CreateGuarantorComponent implements OnInit, AfterViewInit {
    * Add guarantor detail fields to the UI.
    */
   buildDependencies() {
-    this.newGuarantorForm.get('existingClient').valueChanges.subscribe(() => {
+    this.newGuarantorForm.get('existingClient')!.valueChanges.subscribe(() => {
       this.showClientDetailsForm = !this.showClientDetailsForm;
       if (this.showClientDetailsForm) {
         this.newGuarantorForm.addControl('firstname', new FormControl(''));
@@ -123,7 +133,7 @@ export class CreateGuarantorComponent implements OnInit, AfterViewInit {
    */
   ngAfterViewInit() {
     if (this.newGuarantorForm.value.existingClient) {
-      this.newGuarantorForm.get('name').valueChanges.subscribe((value: string) => {
+      this.newGuarantorForm.get('name')!.valueChanges.subscribe((value: any) => {
         if (value.length >= 2) {
           this.clientsService.getFilteredClients('displayName', 'ASC', true, value)
             .subscribe((data: any) => {
@@ -146,8 +156,8 @@ export class CreateGuarantorComponent implements OnInit, AfterViewInit {
    * @param {any} client Client data.
    * @returns {string} Client name if valid otherwise undefined.
    */
-  displayClient(client: any): string | undefined {
-    return client ? client.displayName : undefined;
+  displayClient(client: any): string {
+    return client ? client.displayName : '';
   }
 
   /** Submits the new guarantor details form */
@@ -166,12 +176,12 @@ export class CreateGuarantorComponent implements OnInit, AfterViewInit {
     if (this.newGuarantorForm.value.existingClient) {
       newGuarantorData['entityId'] = this.newGuarantorForm.controls.name.value.id;
     } else {
-      newGuarantorData['dob'] = this.datePipe.transform(prevdob, dateFormat),
+      newGuarantorData['dob'] = this.datePipe.transform(prevdob as Date, dateFormat),
       newGuarantorData['dateFormat'] = dateFormat;
     }
 
-    delete newGuarantorData.existingClient;
-    delete newGuarantorData.name;
+    delete (newGuarantorData as any).existingClient;
+    delete (newGuarantorData as any).name;
 
     this.loanService.createNewGuarantor(this.loanId, newGuarantorData)
       .subscribe((response: any) => {

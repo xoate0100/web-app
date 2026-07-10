@@ -1,22 +1,28 @@
 /** Angular Imports */
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
-import { FormBuilder, Validators } from '@angular/forms';
-import { DatePipe } from '@angular/common';
-import { ActivatedRoute } from '@angular/router';
+import { FormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
+import { DatePipe, NgIf } from '@angular/common';
+import { ActivatedRoute, RouterLink } from '@angular/router';
 
 /** Custom Services */
 import { ReportsService } from 'app/reports/reports.service';
+import { LayoutDirective, LayoutGapDirective, LayoutAlignDirective, FlexDirective } from '@ngbracket/ngx-layout/flex';
+import { MatFormField, MatLabel, MatSuffix, MatError } from '@angular/material/form-field';
+import { MatInput } from '@angular/material/input';
+import { MatDatepickerInput, MatDatepickerToggle, MatDatepicker } from '@angular/material/datepicker';
+import { MatButton } from '@angular/material/button';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 
 /**
  * Export Client Savings Transactions Component
  */
 @Component({
-  standalone: false,
-  selector: 'mifosx-export-transactions',
-  templateUrl: './export-transactions.component.html',
-  changeDetection: ChangeDetectionStrategy.Eager,
-  styleUrls: ['./export-transactions.component.scss']
+    selector: 'mifosx-export-transactions',
+    templateUrl: './export-transactions.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    styleUrls: ['./export-transactions.component.scss'],
+    imports: [ReactiveFormsModule, LayoutDirective, LayoutGapDirective, LayoutAlignDirective, MatFormField, FlexDirective, MatLabel, MatInput, MatDatepickerInput, MatDatepickerToggle, MatSuffix, MatDatepicker, MatError, MatButton, RouterLink, FaIconComponent, NgIf]
 })
 export class ExportTransactionsComponent implements OnInit {
 
@@ -46,7 +52,7 @@ export class ExportTransactionsComponent implements OnInit {
               private formBuilder: FormBuilder,
               private datePipe: DatePipe,
               private route: ActivatedRoute) {
-    this.route.parent.parent.data.subscribe((data: { savingsAccountData: any }) => {
+    this.route.parent!.parent!.data.subscribe((data: any) => {
       this.savingsAccountId = data.savingsAccountData.accountNo;
     });
   }

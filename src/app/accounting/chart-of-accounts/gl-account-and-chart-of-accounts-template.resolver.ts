@@ -25,7 +25,7 @@ export class GlAccountAndChartOfAccountsTemplateResolver implements Resolve<Obje
    * @returns {Observable<any>}
    */
   resolve(route: ActivatedRouteSnapshot): Observable<any> {
-    const id = route.paramMap.get('id');
+    const id = route.paramMap.get('id')!;
 
     return this.accountingService.getGlAccount(id, true).pipe(
       map((glAccountData: any) => {

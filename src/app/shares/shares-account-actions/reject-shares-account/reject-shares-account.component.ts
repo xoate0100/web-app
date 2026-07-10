@@ -1,21 +1,27 @@
 /** Angular Imports */
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { DatePipe } from '@angular/common';
-import { ActivatedRoute, Router } from '@angular/router';
+import { FormGroup, FormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
+import { DatePipe, NgIf } from '@angular/common';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 
 /** Custom Services */
 import { SharesService } from 'app/shares/shares.service';
+import { MatCard, MatCardContent, MatCardActions } from '@angular/material/card';
+import { LayoutDirective, LayoutAlignDirective, LayoutGapDirective } from '@ngbracket/ngx-layout/flex';
+import { MatFormField, MatLabel, MatSuffix, MatError } from '@angular/material/form-field';
+import { MatInput } from '@angular/material/input';
+import { MatDatepickerInput, MatDatepickerToggle, MatDatepicker } from '@angular/material/datepicker';
+import { MatButton } from '@angular/material/button';
 
 /**
  * Reject Shares Account Component
  */
 @Component({
-  standalone: false,
-  selector: 'mifosx-reject-shares-account',
-  templateUrl: './reject-shares-account.component.html',
-  changeDetection: ChangeDetectionStrategy.Eager,
-  styleUrls: ['./reject-shares-account.component.scss']
+    selector: 'mifosx-reject-shares-account',
+    templateUrl: './reject-shares-account.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    styleUrls: ['./reject-shares-account.component.scss'],
+    imports: [MatCard, ReactiveFormsModule, MatCardContent, LayoutDirective, MatFormField, MatLabel, MatInput, MatDatepickerInput, MatDatepickerToggle, MatSuffix, MatDatepicker, NgIf, MatError, MatCardActions, LayoutAlignDirective, LayoutGapDirective, MatButton, RouterLink]
 })
 export class RejectSharesAccountComponent implements OnInit {
 
@@ -40,7 +46,7 @@ export class RejectSharesAccountComponent implements OnInit {
               private datePipe: DatePipe,
               private route: ActivatedRoute,
               private router: Router) {
-    this.accountId = this.route.parent.snapshot.params['shareAccountId'];
+    this.accountId = this.route.parent!.snapshot.params['shareAccountId']!;
   }
 
   /**
@@ -70,7 +76,7 @@ export class RejectSharesAccountComponent implements OnInit {
     const dateFormat = 'dd MMMM yyyy';
     const prevRejectedDate: Date = this.rejectSharesAccountForm.value.rejectedDate;
     this.rejectSharesAccountForm.patchValue({
-      rejectedDate: this.datePipe.transform(prevRejectedDate, dateFormat),
+      rejectedDate: this.datePipe.transform(prevRejectedDate as Date, dateFormat),
     });
     const data = {
       ...this.rejectSharesAccountForm.value,

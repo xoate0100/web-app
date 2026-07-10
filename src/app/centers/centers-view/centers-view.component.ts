@@ -1,6 +1,6 @@
 /** Angular Imports */
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 
 /** Dialog Imports */
@@ -9,16 +9,27 @@ import { ConfirmationDialogComponent } from 'app/shared/confirmation-dialog/conf
 /** Custom Services */
 import { CentersService } from '../centers.service';
 import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.component';
+import { MatCard, MatCardHeader, MatCardTitleGroup, MatCardMdImage, MatCardTitle, MatCardSubtitle, MatCardActions, MatCardContent } from '@angular/material/card';
+import { LayoutDirective, FlexDirective, LayoutAlignDirective } from '@ngbracket/ngx-layout/flex';
+import { MatTooltip } from '@angular/material/tooltip';
+import { NgClass, NgIf, NgFor, LowerCasePipe, DatePipe } from '@angular/common';
+import { ClassDirective } from '@ngbracket/ngx-layout/extended';
+import { HasPermissionDirective } from '../../directives/has-permission/has-permission.directive';
+import { MatButton } from '@angular/material/button';
+import { MatMenuTrigger, MatMenu, MatMenuItem } from '@angular/material/menu';
+import { MatTabNav, MatTabLink } from '@angular/material/tabs';
+import { StatusLookupPipe } from '../../pipes/status-lookup.pipe';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 
 /**
  * Create Center View
  */
 @Component({
-  standalone: false,
-  selector: 'mifosx-centers-view',
-  templateUrl: './centers-view.component.html',
-  changeDetection: ChangeDetectionStrategy.Eager,
-  styleUrls: ['./centers-view.component.scss']
+    selector: 'mifosx-centers-view',
+    templateUrl: './centers-view.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    styleUrls: ['./centers-view.component.scss'],
+    imports: [FaIconComponent, MatCard, MatCardHeader, LayoutDirective, MatCardTitleGroup, MatCardMdImage, MatCardTitle, MatTooltip, NgClass, ClassDirective, MatCardSubtitle, FlexDirective, NgIf, LayoutAlignDirective, HasPermissionDirective, MatCardActions, MatButton, RouterLink, MatMenuTrigger, MatMenu, MatMenuItem, MatCardContent, MatTabNav, MatTabLink, RouterLinkActive, NgFor, RouterOutlet, LowerCasePipe, DatePipe, StatusLookupPipe]
 })
 export class CentersViewComponent implements OnInit {
 
@@ -37,10 +48,7 @@ export class CentersViewComponent implements OnInit {
               private router: Router,
               public dialog: MatDialog,
               public centersService: CentersService) {
-      this.route.data.subscribe((data: {
-        centerViewData: any,
-        centerDatatables: any
-      }) => {
+      this.route.data.subscribe((data: any) => {
         this.centerViewData = data.centerViewData;
         this.centerDatatables = data.centerDatatables;
       });

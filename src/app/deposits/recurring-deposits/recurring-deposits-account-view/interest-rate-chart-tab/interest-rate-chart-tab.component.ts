@@ -2,23 +2,29 @@
 import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { animate, state, style, transition, trigger } from '@angular/animations';
+import { LayoutAlignDirective, LayoutDirective, FlexFillDirective, FlexDirective } from '@ngbracket/ngx-layout/flex';
+import { MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow } from '@angular/material/table';
+import { MatButton } from '@angular/material/button';
+import { NgIf, NgSwitch, TitleCasePipe } from '@angular/common';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import { MatCard } from '@angular/material/card';
 
 /**
  * Interest Rate Chart Tab Component.
  */
 @Component({
-  standalone: false,
-  selector: 'mifosx-interest-rate-chart-tab',
-  templateUrl: './interest-rate-chart-tab.component.html',
-  styleUrls: ['./interest-rate-chart-tab.component.scss'],
-  changeDetection: ChangeDetectionStrategy.Eager,
-  animations: [
-    trigger('expandChartSlab', [
-      state('collapsed', style({ height: '0px', minHeight: '0' })),
-      state('expanded', style({ height: '*' })),
-      transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)'))
-    ])
-  ]
+    selector: 'mifosx-interest-rate-chart-tab',
+    templateUrl: './interest-rate-chart-tab.component.html',
+    styleUrls: ['./interest-rate-chart-tab.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
+    animations: [
+        trigger('expandChartSlab', [
+            state('collapsed', style({ height: '0px', minHeight: '0' })),
+            state('expanded', style({ height: '*' })),
+            transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)'))
+        ])
+    ],
+    imports: [LayoutAlignDirective, MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatButton, NgIf, FaIconComponent, LayoutDirective, FlexFillDirective, MatCard, FlexDirective, NgSwitch, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow, TitleCasePipe]
 })
 export class InterestRateChartTabComponent {
 
@@ -39,7 +45,7 @@ export class InterestRateChartTabComponent {
    * @param {ActivatedRoute} route Activated Route.
    */
   constructor(private route: ActivatedRoute) {
-    this.route.parent.data.subscribe((data: { recurringDepositsAccountData: any }) => {
+    this.route.parent!.data.subscribe((data: any) => {
       this.interestRateChartData = data.recurringDepositsAccountData.accountChart.chartSlabs;
     });
   }

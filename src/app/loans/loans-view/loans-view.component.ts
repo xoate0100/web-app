@@ -1,6 +1,6 @@
 /** Angular Imports */
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterLinkActive, RouterLink, RouterOutlet } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 
 /** Custom Services */
@@ -12,13 +12,24 @@ import { LoansAccountButtonConfiguration } from './loan-accounts-button-config';
 /** Dialog Components */
 import { ConfirmationDialogComponent } from '../../shared/confirmation-dialog/confirmation-dialog.component';
 import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.component';
+import { MatCard, MatCardHeader, MatCardTitleGroup, MatCardMdImage, MatCardTitle, MatCardActions, MatCardContent } from '@angular/material/card';
+import { LayoutDirective, FlexDirective } from '@ngbracket/ngx-layout/flex';
+import { MatTooltip } from '@angular/material/tooltip';
+import { NgClass, NgIf, NgFor, DecimalPipe } from '@angular/common';
+import { ClassDirective } from '@ngbracket/ngx-layout/extended';
+import { HasPermissionDirective } from '../../directives/has-permission/has-permission.directive';
+import { MatButton } from '@angular/material/button';
+import { MatMenuTrigger, MatMenu, MatMenuItem } from '@angular/material/menu';
+import { MatTabNav, MatTabLink } from '@angular/material/tabs';
+import { StatusLookupPipe } from '../../pipes/status-lookup.pipe';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 
 @Component({
-  standalone: false,
-  selector: 'mifosx-loans-view',
-  templateUrl: './loans-view.component.html',
-  changeDetection: ChangeDetectionStrategy.Eager,
-  styleUrls: ['./loans-view.component.scss']
+    selector: 'mifosx-loans-view',
+    templateUrl: './loans-view.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    styleUrls: ['./loans-view.component.scss'],
+    imports: [FaIconComponent, MatCard, MatCardHeader, LayoutDirective, MatCardTitleGroup, MatCardMdImage, MatTooltip, MatCardTitle, FlexDirective, NgClass, ClassDirective, NgIf, MatCardActions, NgFor, HasPermissionDirective, MatButton, MatMenuTrigger, MatMenu, MatMenuItem, MatCardContent, MatTabNav, MatTabLink, RouterLinkActive, RouterLink, RouterOutlet, DecimalPipe, StatusLookupPipe]
 })
 export class LoansViewComponent implements OnInit {
 
@@ -41,11 +52,11 @@ export class LoansViewComponent implements OnInit {
               private router: Router,
               public loansService: LoansService,
               public dialog: MatDialog) {
-    this.route.data.subscribe((data: { loanDetailsData: any, loanDatatables: any}) => {
+    this.route.data.subscribe((data: any) => {
       this.loanDetailsData = data.loanDetailsData;
       this.loanDatatables = data.loanDatatables;
     });
-    this.loanId = this.route.snapshot.params['loanId'];
+    this.loanId = this.route.snapshot.params['loanId']!;
     this.clientId = this.loanDetailsData.clientId;
   }
 
@@ -78,7 +89,7 @@ export class LoansViewComponent implements OnInit {
 
       this.buttonConfig.addButton({
         name: (this.loanDetailsData.loanOfficerName ? 'Change Loan Officer' : 'Assign Loan Officer'),
-        icon: 'fa fa-user',
+        icon: 'user',
         taskPermissionName: 'DISBURSE_LOAN'
       });
 
@@ -87,12 +98,12 @@ export class LoansViewComponent implements OnInit {
       if (this.loanDetailsData.canDisburse) {
         this.buttonConfig.addButton({
           name: 'Disburse',
-          icon: 'fa fa-flag',
+          icon: 'flag',
           taskPermissionName: 'DISBURSE_LOAN'
         });
         this.buttonConfig.addButton({
           name: 'Disburse To Savings',
-          icon: 'fa fa-flag',
+          icon: 'flag',
           taskPermissionName: 'DISBURSETOSAVINGS_LOAN'
         });
       }
@@ -102,7 +113,7 @@ export class LoansViewComponent implements OnInit {
       if (!this.loanDetailsData.loanOfficerName) {
         this.buttonConfig.addButton({
           name: 'Assign Loan Officer',
-          icon: 'fa fa-user',
+          icon: 'user',
           taskPermissionName: 'UPDATELOANOFFICER_LOAN'
         });
       }
@@ -110,7 +121,7 @@ export class LoansViewComponent implements OnInit {
       if (this.recalculateInterest) {
         this.buttonConfig.addButton({
           name: 'Prepay Loan',
-          icon: 'fa fa-money',
+          icon: 'money-bill',
           taskPermissionName: 'REPAYMENT_LOAN'
         });
       }

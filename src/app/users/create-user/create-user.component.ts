@@ -1,23 +1,32 @@
 /** Angular Imports */
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
-import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
-import { Router, ActivatedRoute } from '@angular/router';
+import { FormGroup, FormBuilder, FormControl, Validators, ReactiveFormsModule } from '@angular/forms';
+import { Router, ActivatedRoute, RouterLink } from '@angular/router';
 
 /** Custom Services */
 import { UsersService } from '../users.service';
 
 /** Custom Validators */
 import { confirmPasswordValidator } from '../../login/reset-password/confirm-password.validator';
+import { MatCard, MatCardContent, MatCardActions } from '@angular/material/card';
+import { LayoutDirective, LayoutGapDirective, FlexDirective, LayoutAlignDirective } from '@ngbracket/ngx-layout/flex';
+import { MatFormField, MatLabel, MatError } from '@angular/material/form-field';
+import { MatInput } from '@angular/material/input';
+import { NgIf, NgFor } from '@angular/common';
+import { MatCheckbox } from '@angular/material/checkbox';
+import { MatSelect } from '@angular/material/select';
+import { MatOption } from '@angular/material/autocomplete';
+import { MatButton } from '@angular/material/button';
 
 /**
  * Create user component.
  */
 @Component({
-  standalone: false,
-  selector: 'mifosx-create-user',
-  templateUrl: './create-user.component.html',
-  changeDetection: ChangeDetectionStrategy.Eager,
-  styleUrls: ['./create-user.component.scss']
+    selector: 'mifosx-create-user',
+    templateUrl: './create-user.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    styleUrls: ['./create-user.component.scss'],
+    imports: [MatCard, ReactiveFormsModule, MatCardContent, LayoutDirective, LayoutGapDirective, MatFormField, FlexDirective, MatLabel, MatInput, NgIf, MatError, MatCheckbox, MatSelect, NgFor, MatOption, MatCardActions, LayoutAlignDirective, MatButton, RouterLink]
 })
 export class CreateUserComponent implements OnInit {
 
@@ -41,9 +50,7 @@ export class CreateUserComponent implements OnInit {
               private usersService: UsersService,
               private route: ActivatedRoute,
               private router: Router) {
-    this.route.data.subscribe((data: {
-        usersTemplate: any
-      }) => {
+    this.route.data.subscribe((data: any) => {
         this.officesData = data.usersTemplate.allowedOffices;
         this.rolesData = data.usersTemplate.availableRoles;
       });
@@ -79,7 +86,7 @@ export class CreateUserComponent implements OnInit {
    * Sets the staff data each time the user selects a new office
    */
   setStaffData() {
-    this.userForm.get('officeId').valueChanges.subscribe((officeId: string) => {
+    this.userForm.get('officeId')!.valueChanges.subscribe((officeId: string) => {
       this.staffData = [];
       this.usersService.getStaff(officeId).subscribe((staff: any) => {
         this.staffData = staff;
@@ -91,17 +98,17 @@ export class CreateUserComponent implements OnInit {
    * Sets the conditional controls of the user form
    */
   setConditionalControls() {
-    this.userForm.get('sendPasswordToEmail').valueChanges.subscribe((sendPasswordToEmail: boolean) => {
+    this.userForm.get('sendPasswordToEmail')!.valueChanges.subscribe((sendPasswordToEmail: boolean) => {
       if (sendPasswordToEmail) {
         this.userForm.removeControl('password');
         this.userForm.removeControl('repeatPassword');
-        this.userForm.get('email').setValidators([Validators.required, Validators.email]);
+        this.userForm.get('email')!.setValidators([Validators.required, Validators.email]);
       } else {
         this.userForm.addControl('password', new FormControl('', Validators.required));
         this.userForm.addControl('repeatPassword', new FormControl('', Validators.required));
-        this.userForm.get('email').setValidators([Validators.email]);
+        this.userForm.get('email')!.setValidators([Validators.email]);
       }
-      this.userForm.get('email').updateValueAndValidity();
+      this.userForm.get('email')!.updateValueAndValidity();
     });
   }
 

@@ -1,16 +1,27 @@
 /** Angular Imports */
 import { Component, OnChanges, OnInit, Input, ChangeDetectionStrategy } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
+import { LayoutDirective, LayoutGapDirective, LayoutAlignDirective, FlexDirective } from '@ngbracket/ngx-layout/flex';
+import { MatFormField, MatLabel, MatError, MatSuffix } from '@angular/material/form-field';
+import { MatInput } from '@angular/material/input';
+import { MatSelect } from '@angular/material/select';
+import { NgFor } from '@angular/common';
+import { MatOption } from '@angular/material/autocomplete';
+import { MatDatepickerInput, MatDatepickerToggle, MatDatepicker } from '@angular/material/datepicker';
+import { MatCheckbox } from '@angular/material/checkbox';
+import { MatButton } from '@angular/material/button';
+import { MatStepperPrevious, MatStepperNext } from '@angular/material/stepper';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 
 /**
  * Shares Account Terms Step
  */
 @Component({
-  standalone: false,
-  selector: 'mifosx-shares-account-terms-step',
-  templateUrl: './shares-account-terms-step.component.html',
-  changeDetection: ChangeDetectionStrategy.Eager,
-  styleUrls: ['./shares-account-terms-step.component.scss']
+    selector: 'mifosx-shares-account-terms-step',
+    templateUrl: './shares-account-terms-step.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    styleUrls: ['./shares-account-terms-step.component.scss'],
+    imports: [ReactiveFormsModule, LayoutDirective, LayoutGapDirective, LayoutAlignDirective, MatFormField, FlexDirective, MatLabel, MatInput, MatError, MatSelect, NgFor, MatOption, MatDatepickerInput, MatDatepickerToggle, MatSuffix, MatDatepicker, MatCheckbox, MatButton, MatStepperPrevious, FaIconComponent, MatStepperNext]
 })
 export class SharesAccountTermsStepComponent implements OnChanges, OnInit {
 
@@ -53,7 +64,7 @@ export class SharesAccountTermsStepComponent implements OnChanges, OnInit {
       this.setOptions();
       if (this.sharesAccountTemplate) {
         if (!this.isSavingsPatched && this.sharesAccountTemplate.savingsAccountId) {
-          this.sharesAccountTermsForm.get('savingsAccountId').patchValue(this.sharesAccountTemplate.savingsAccountId);
+          this.sharesAccountTermsForm.get('savingsAccountId')!.patchValue(this.sharesAccountTemplate.savingsAccountId);
           this.isSavingsPatched = true;
         }
       }

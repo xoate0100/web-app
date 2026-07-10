@@ -1,22 +1,28 @@
 /** Angular Imports */
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { DatePipe } from '@angular/common';
-import { ActivatedRoute, Router } from '@angular/router';
+import { FormGroup, FormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
+import { DatePipe, NgIf } from '@angular/common';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 
 /** Custom Services */
 import { CentersService } from 'app/centers/centers.service';
 import { SettingsService } from 'app/settings/settings.service';
+import { MatCard, MatCardContent, MatCardActions } from '@angular/material/card';
+import { MatFormField, MatLabel, MatSuffix, MatError } from '@angular/material/form-field';
+import { FlexDirective, LayoutDirective, LayoutAlignDirective, LayoutGapDirective } from '@ngbracket/ngx-layout/flex';
+import { MatInput } from '@angular/material/input';
+import { MatDatepickerInput, MatDatepickerToggle, MatDatepicker } from '@angular/material/datepicker';
+import { MatButton } from '@angular/material/button';
 
 /**
  * Activate Center Component
  */
 @Component({
-  standalone: false,
-  selector: 'mifosx-activate-center',
-  templateUrl: './activate-center.component.html',
-  changeDetection: ChangeDetectionStrategy.Eager,
-  styleUrls: ['./activate-center.component.scss']
+    selector: 'mifosx-activate-center',
+    templateUrl: './activate-center.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    styleUrls: ['./activate-center.component.scss'],
+    imports: [MatCard, ReactiveFormsModule, MatCardContent, MatFormField, FlexDirective, MatLabel, MatInput, MatDatepickerInput, MatDatepickerToggle, MatSuffix, MatDatepicker, NgIf, MatError, MatCardActions, LayoutDirective, LayoutAlignDirective, LayoutGapDirective, MatButton, RouterLink]
 })
 export class ActivateCenterComponent implements OnInit {
 
@@ -43,7 +49,7 @@ export class ActivateCenterComponent implements OnInit {
               private datePipe: DatePipe,
               private route: ActivatedRoute,
               private router: Router) {
-    this.centerId = this.route.parent.snapshot.params['centerId'];
+    this.centerId = this.route.parent!.snapshot.params['centerId']!;
   }
 
   /**
@@ -72,7 +78,7 @@ export class ActivateCenterComponent implements OnInit {
     const dateFormat = this.settingsService.dateFormat;
     const prevactivationDate: Date = this.activateCenterForm.value.activationDate;
     this.activateCenterForm.patchValue({
-      activationDate: this.datePipe.transform(prevactivationDate, dateFormat),
+      activationDate: this.datePipe.transform(prevactivationDate as Date, dateFormat),
     });
     const data = {
       ...this.activateCenterForm.value,

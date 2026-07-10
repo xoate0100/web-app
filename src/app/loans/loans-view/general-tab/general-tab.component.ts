@@ -1,13 +1,16 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { MatTableDataSource } from '@angular/material/table';
+import { MatTableDataSource, MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow } from '@angular/material/table';
+import { NgIf, DecimalPipe, DatePipe } from '@angular/common';
+import { LayoutDirective, LayoutGapDirective, FlexFillDirective, FlexDirective } from '@ngbracket/ngx-layout/flex';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 
 @Component({
-  standalone: false,
-  selector: 'mifosx-general-tab',
-  templateUrl: './general-tab.component.html',
-  changeDetection: ChangeDetectionStrategy.Eager,
-  styleUrls: ['./general-tab.component.scss']
+    selector: 'mifosx-general-tab',
+    templateUrl: './general-tab.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    styleUrls: ['./general-tab.component.scss'],
+    imports: [FaIconComponent, NgIf, LayoutDirective, LayoutGapDirective, MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow, FlexFillDirective, FlexDirective, DecimalPipe, DatePipe]
 })
 export class GeneralTabComponent implements OnInit {
 
@@ -34,7 +37,7 @@ export class GeneralTabComponent implements OnInit {
   detailsDataSource: MatTableDataSource<any>;
 
   constructor(private route: ActivatedRoute) {
-    this.route.parent.data.subscribe((data: { loanDetailsData: any, }) => {
+    this.route.parent!.data.subscribe((data: any) => {
       this.loanDetails = data.loanDetailsData;
     });
   }
@@ -161,11 +164,11 @@ export class GeneralTabComponent implements OnInit {
     return true;
   }
 
-  showDisbursedAmountBasedOnStatus = function() {
+  showDisbursedAmountBasedOnStatus(): boolean {
     if (this.status === 'Submitted and pending approval' || this.status === 'Withdrawn by applicant' || this.status === 'Rejected' ||
         this.status === 'Approved') {
         return false;
     }
     return true;
-  };
+  }
 }

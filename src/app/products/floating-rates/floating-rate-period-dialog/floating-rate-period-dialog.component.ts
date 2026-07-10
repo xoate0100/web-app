@@ -1,17 +1,25 @@
 /** Angular Imports */
 import { Component, OnInit, Inject, ChangeDetectionStrategy } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { MAT_DIALOG_DATA, MatDialogRef, MatDialogTitle, MatDialogContent, MatDialogActions, MatDialogClose } from '@angular/material/dialog';
+import { FormGroup, FormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
+import { CdkScrollable } from '@angular/cdk/scrolling';
+import { LayoutDirective } from '@ngbracket/ngx-layout/flex';
+import { MatFormField, MatLabel, MatSuffix, MatError } from '@angular/material/form-field';
+import { MatInput } from '@angular/material/input';
+import { MatDatepickerInput, MatDatepickerToggle, MatDatepicker } from '@angular/material/datepicker';
+import { NgIf } from '@angular/common';
+import { MatCheckbox } from '@angular/material/checkbox';
+import { MatButton } from '@angular/material/button';
 
 /**
  * Floating Rate Period Dialog Component.
  */
 @Component({
-  standalone: false,
-  selector: 'mifosx-floating-rate-period-dialog',
-  templateUrl: './floating-rate-period-dialog.component.html',
-  changeDetection: ChangeDetectionStrategy.Eager,
-  styleUrls: ['./floating-rate-period-dialog.component.scss']
+    selector: 'mifosx-floating-rate-period-dialog',
+    templateUrl: './floating-rate-period-dialog.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    styleUrls: ['./floating-rate-period-dialog.component.scss'],
+    imports: [MatDialogTitle, CdkScrollable, MatDialogContent, ReactiveFormsModule, LayoutDirective, MatFormField, MatLabel, MatInput, MatDatepickerInput, MatDatepickerToggle, MatSuffix, MatDatepicker, NgIf, MatError, MatCheckbox, MatDialogActions, MatButton, MatDialogClose]
 })
 export class FloatingRatePeriodDialogComponent implements OnInit {
 

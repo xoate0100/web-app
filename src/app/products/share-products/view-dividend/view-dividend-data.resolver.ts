@@ -24,8 +24,8 @@ export class ViewDividendDataResolver implements Resolve<Object> {
    * @returns {Observable<any>}
    */
   resolve(route: ActivatedRouteSnapshot): Observable<any> {
-    const dividendId = route.paramMap.get('dividendId');
-    const shareProductId = route.parent.parent.paramMap.get('id');
+    const dividendId = route.paramMap.get('dividendId')!;
+    const shareProductId = route.parent!.parent!.paramMap.get('id')!;
     return this.productsService.getDividendData(shareProductId, dividendId);
   }
 

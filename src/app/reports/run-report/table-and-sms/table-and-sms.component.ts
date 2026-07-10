@@ -1,21 +1,23 @@
 /** Angular Imports */
 import { Component, Input, ViewChild, OnChanges, ChangeDetectionStrategy } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
-import { MatTableDataSource } from '@angular/material/table';
-import { DecimalPipe } from '@angular/common';
+import { MatTableDataSource, MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow } from '@angular/material/table';
+import { DecimalPipe, NgIf, NgFor } from '@angular/common';
 
 /** Custom Servies */
 import { ReportsService } from '../../reports.service';
+import { LayoutAlignDirective } from '@ngbracket/ngx-layout/flex';
+import { MatButton } from '@angular/material/button';
 
 /**
  * Table and SMS Component
  */
 @Component({
-  standalone: false,
-  selector: 'mifosx-table-and-sms',
-  templateUrl: './table-and-sms.component.html',
-  changeDetection: ChangeDetectionStrategy.Eager,
-  styleUrls: ['./table-and-sms.component.scss']
+    selector: 'mifosx-table-and-sms',
+    templateUrl: './table-and-sms.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    styleUrls: ['./table-and-sms.component.scss'],
+    imports: [NgIf, LayoutAlignDirective, MatButton, MatTable, NgFor, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow, MatPaginator]
 })
 export class TableAndSmsComponent implements OnChanges {
 

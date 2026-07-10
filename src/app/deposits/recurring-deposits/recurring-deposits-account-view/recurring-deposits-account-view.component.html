@@ -14,8 +14,8 @@
       <div class="mat-typography account-card-title">
         <mat-card-title>
           <h3>
-            <i class="fa fa-stop" [ngClass]="recurringDepositsAccountData.status.code | statusLookup"
-              [matTooltip]="recurringDepositsAccountData.status.value"></i>
+            <fa-icon icon="stop" [ngClass]="recurringDepositsAccountData.status.code | statusLookup"
+              [matTooltip]="recurringDepositsAccountData.status.value"></fa-icon>
             Account Name : {{recurringDepositsAccountData.depositProductName}}
           </h3>
         </mat-card-title>
@@ -40,7 +40,7 @@
 
       <ng-container *ngFor="let button of buttonConfig.singleButtons">
         <button mat-raised-button (click)="doAction(button.name)">
-          <i class="{{button.icon}}"></i> {{button.name}}</button>
+          <fa-icon [icon]="button.icon"></fa-icon> {{button.name}}</button>
       </ng-container>
 
       <ng-container *ngIf="buttonConfig.options.length">

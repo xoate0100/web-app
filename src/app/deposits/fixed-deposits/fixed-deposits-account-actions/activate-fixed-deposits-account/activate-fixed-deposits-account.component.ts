@@ -1,21 +1,27 @@
 /** Angular Imports */
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { DatePipe } from '@angular/common';
-import { ActivatedRoute, Router } from '@angular/router';
+import { FormGroup, FormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
+import { DatePipe, NgIf } from '@angular/common';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 
 /** Custom Services */
 import { SavingsService } from 'app/savings/savings.service';
+import { MatCard, MatCardContent, MatCardActions } from '@angular/material/card';
+import { MatFormField, MatLabel, MatSuffix, MatError } from '@angular/material/form-field';
+import { FlexDirective, LayoutDirective, LayoutAlignDirective, LayoutGapDirective } from '@ngbracket/ngx-layout/flex';
+import { MatInput } from '@angular/material/input';
+import { MatDatepickerInput, MatDatepickerToggle, MatDatepicker } from '@angular/material/datepicker';
+import { MatButton } from '@angular/material/button';
 
 /**
  * Activate Fixed Deposits Account Component
  */
 @Component({
-  standalone: false,
-  selector: 'mifosx-activate-fixed-deposits-account',
-  templateUrl: './activate-fixed-deposits-account.component.html',
-  changeDetection: ChangeDetectionStrategy.Eager,
-  styleUrls: ['./activate-fixed-deposits-account.component.scss']
+    selector: 'mifosx-activate-fixed-deposits-account',
+    templateUrl: './activate-fixed-deposits-account.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    styleUrls: ['./activate-fixed-deposits-account.component.scss'],
+    imports: [MatCard, ReactiveFormsModule, MatCardContent, MatFormField, FlexDirective, MatLabel, MatInput, MatDatepickerInput, MatDatepickerToggle, MatSuffix, MatDatepicker, NgIf, MatError, MatCardActions, LayoutDirective, LayoutAlignDirective, LayoutGapDirective, MatButton, RouterLink]
 })
 export class ActivateFixedDepositsAccountComponent implements OnInit {
 
@@ -41,7 +47,7 @@ export class ActivateFixedDepositsAccountComponent implements OnInit {
               private datePipe: DatePipe,
               private route: ActivatedRoute,
               private router: Router) {
-    this.accountId = this.route.parent.snapshot.params['fixedDepositAccountId'];
+    this.accountId = this.route.parent!.snapshot.params['fixedDepositAccountId']!;
   }
 
   /**
@@ -70,7 +76,7 @@ export class ActivateFixedDepositsAccountComponent implements OnInit {
     const dateFormat = 'dd MMMM yyyy';
     const prevActivatedOnDate: Date = this.activateFixedDepositsAccountForm.value.activatedOnDate;
     this.activateFixedDepositsAccountForm.patchValue({
-      activatedOnDate: this.datePipe.transform(prevActivatedOnDate, dateFormat),
+      activatedOnDate: this.datePipe.transform(prevActivatedOnDate as Date, dateFormat),
     });
     const data = {
       ...this.activateFixedDepositsAccountForm.value,

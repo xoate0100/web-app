@@ -1,22 +1,32 @@
 /** Angular Imports */
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
-import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
-import { DatePipe } from '@angular/common';
-import { ActivatedRoute, Router } from '@angular/router';
+import { FormGroup, FormBuilder, Validators, FormControl, ReactiveFormsModule } from '@angular/forms';
+import { DatePipe, NgIf, NgFor } from '@angular/common';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 
 /** Custom Services */
 import { GroupsService } from 'app/groups/groups.service';
 import { SettingsService } from 'app/settings/settings.service';
+import { MatCard, MatCardContent, MatCardActions } from '@angular/material/card';
+import { LayoutDirective, LayoutAlignDirective, LayoutGapDirective } from '@ngbracket/ngx-layout/flex';
+import { MatFormField, MatLabel, MatSuffix, MatError } from '@angular/material/form-field';
+import { MatInput } from '@angular/material/input';
+import { MatDatepickerInput, MatDatepickerToggle, MatDatepicker } from '@angular/material/datepicker';
+import { MatCheckbox } from '@angular/material/checkbox';
+import { MatSelect } from '@angular/material/select';
+import { MatOption } from '@angular/material/autocomplete';
+import { MatButton } from '@angular/material/button';
+import { HasPermissionDirective } from '../../../../directives/has-permission/has-permission.directive';
 
 /**
  * Group Meetings Component
  */
 @Component({
-  standalone: false,
-  selector: 'mifosx-attach-group-meeting',
-  templateUrl: './attach-group-meeting.component.html',
-  changeDetection: ChangeDetectionStrategy.Eager,
-  styleUrls: ['./attach-group-meeting.component.scss']
+    selector: 'mifosx-attach-group-meeting',
+    templateUrl: './attach-group-meeting.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    styleUrls: ['./attach-group-meeting.component.scss'],
+    imports: [MatCard, ReactiveFormsModule, MatCardContent, LayoutDirective, MatFormField, MatLabel, MatInput, MatDatepickerInput, MatDatepickerToggle, MatSuffix, MatDatepicker, NgIf, MatError, MatCheckbox, MatSelect, NgFor, MatOption, MatCardActions, LayoutAlignDirective, LayoutGapDirective, MatButton, RouterLink, HasPermissionDirective]
 })
 export class AttachGroupMeetingComponent implements OnInit {
 
@@ -52,12 +62,12 @@ export class AttachGroupMeetingComponent implements OnInit {
               private route: ActivatedRoute,
               private router: Router,
               private settingsService: SettingsService) {
-    this.route.data.subscribe((data: { groupActionData: any }) => {
+    this.route.data.subscribe((data: any) => {
       this.calendarTemplate = data.groupActionData;
       this.frequencyOptions = this.calendarTemplate.frequencyOptions;
       this.repeatsOnDays = this.calendarTemplate.repeatsOnDayOptions;
     });
-    this.groupId = this.route.parent.snapshot.params['groupId'];
+    this.groupId = this.route.parent!.snapshot.params['groupId']!;
   }
 
   ngOnInit() {
@@ -79,11 +89,11 @@ export class AttachGroupMeetingComponent implements OnInit {
    * Subscribes to value changes of controls.
    */
   buildDependencies() {
-    this.groupMeetingForm.get('repeating').valueChanges.subscribe((value: boolean) => {
+    this.groupMeetingForm.get('repeating')!.valueChanges.subscribe((value: boolean) => {
       if (value) {
         this.groupMeetingForm.addControl('frequency', new FormControl());
         this.groupMeetingForm.addControl('interval', new FormControl());
-        this.groupMeetingForm.get('frequency').valueChanges.subscribe((frequency: any) => {
+        this.groupMeetingForm.get('frequency')!.valueChanges.subscribe((frequency: any) => {
           this.groupMeetingForm.removeControl('repeatsOnDay');
           switch (frequency) {
             case 1: // Daily
@@ -123,7 +133,7 @@ export class AttachGroupMeetingComponent implements OnInit {
     const typeId = '1';
     const prevStartDate: Date = this.groupMeetingForm.value.startDate;
     this.groupMeetingForm.patchValue({
-      startDate: this.datePipe.transform(prevStartDate, dateFormat),
+      startDate: this.datePipe.transform(prevStartDate as Date, dateFormat),
     });
     const data = {
       ...this.groupMeetingForm.value,

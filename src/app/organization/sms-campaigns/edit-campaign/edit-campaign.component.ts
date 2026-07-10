@@ -9,16 +9,20 @@ import { SettingsService } from 'app/settings/settings.service';
 
 /** Custom Components */
 import { CampaignMessageStepComponent } from '../sms-campaign-stepper/campaign-message-step/campaign-message-step.component';
+import { MatStepper, MatStepperIcon, MatStep, MatStepLabel } from '@angular/material/stepper';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import { EditSmsCampaignStepComponent } from '../sms-campaign-stepper/edit-sms-campaign-step/edit-sms-campaign-step.component';
+import { CampaignPreviewStepComponent } from '../sms-campaign-stepper/campaign-preview-step/campaign-preview-step.component';
 
 /**
  * Edit Campaign Component
  */
 @Component({
-  standalone: false,
-  selector: 'mifosx-edit-campaign',
-  templateUrl: './edit-campaign.component.html',
-  changeDetection: ChangeDetectionStrategy.Eager,
-  styleUrls: ['./edit-campaign.component.scss']
+    selector: 'mifosx-edit-campaign',
+    templateUrl: './edit-campaign.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    styleUrls: ['./edit-campaign.component.scss'],
+    imports: [MatStepper, MatStepperIcon, FaIconComponent, MatStep, MatStepLabel, EditSmsCampaignStepComponent, CampaignMessageStepComponent, CampaignPreviewStepComponent]
 })
 export class EditCampaignComponent {
 
@@ -45,7 +49,7 @@ export class EditCampaignComponent {
               private datePipe: DatePipe,
               private organizationService: OrganizationService,
               private settingsService: SettingsService) {
-    this.route.data.subscribe((data: { smsCampaign: any, smsCampaignTemplate: any }) => {
+    this.route.data.subscribe((data: any) => {
       this.smsCampaignTemplate = data.smsCampaignTemplate;
       this.smsCampaign = data.smsCampaign;
       this.smsCampaign.editFlag = true;

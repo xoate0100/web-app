@@ -1,11 +1,18 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { MatCard } from '@angular/material/card';
+import { LayoutDirective, FlexDirective } from '@ngbracket/ngx-layout/flex';
+import { MatNavList, MatListItem } from '@angular/material/list';
+import { RouterLink } from '@angular/router';
+import { MatIcon } from '@angular/material/icon';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import { MatLine } from '@angular/material/grid-list';
 
 @Component({
-  standalone: false,
-  selector: 'mifosx-system',
-  templateUrl: './system.component.html',
-  changeDetection: ChangeDetectionStrategy.Eager,
-  styleUrls: ['./system.component.scss']
+    selector: 'mifosx-system',
+    templateUrl: './system.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    styleUrls: ['./system.component.scss'],
+    imports: [MatCard, LayoutDirective, FlexDirective, MatNavList, MatListItem, RouterLink, MatIcon, FaIconComponent, MatLine]
 })
 export class SystemComponent implements OnInit {
 

@@ -1,13 +1,13 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
-@Pipe({
-  standalone: false,
-  name: 'statusLookup'
-})
+@Pipe({ name: 'statusLookup' })
 export class StatusLookupPipe implements PipeTransform {
 
-  transform(status: string): string {
-    const cssClassNameLookup = {
+  transform(status: string | boolean): string {
+    if (typeof status === 'boolean') {
+      status = String(status);
+    }
+    const cssClassNameLookup: Record<string, string> = {
       'true': 'status-active',
       'false': 'status-deleted',
       'Active': 'status-active',
@@ -46,6 +46,6 @@ export class StatusLookupPipe implements PipeTransform {
       'smsCampaignStatus.closed': 'status-closed',
       'purchasedSharesStatusType.applied': 'status-pending'
     };
-    return cssClassNameLookup[status];
+    return cssClassNameLookup[status] ?? '';
   }
 }

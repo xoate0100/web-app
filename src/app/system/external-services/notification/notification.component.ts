@@ -1,18 +1,21 @@
 /** Angular Imports */
 import { Component, OnInit, ViewChild, ChangeDetectionStrategy } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { MatSort } from '@angular/material/sort';
-import { MatTableDataSource } from '@angular/material/table';
+import { ActivatedRoute, RouterLink } from '@angular/router';
+import { MatSort, MatSortHeader } from '@angular/material/sort';
+import { MatTableDataSource, MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow } from '@angular/material/table';
+import { LayoutDirective, LayoutAlignDirective, LayoutGapDirective } from '@ngbracket/ngx-layout/flex';
+import { MatButton } from '@angular/material/button';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 
 /**
  * Notification Configuration Component.
  */
 @Component({
-  standalone: false,
-  selector: 'mifosx-notification',
-  templateUrl: './notification.component.html',
-  changeDetection: ChangeDetectionStrategy.Eager,
-  styleUrls: ['./notification.component.scss']
+    selector: 'mifosx-notification',
+    templateUrl: './notification.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    styleUrls: ['./notification.component.scss'],
+    imports: [LayoutDirective, LayoutAlignDirective, LayoutGapDirective, MatButton, RouterLink, FaIconComponent, MatTable, MatSort, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatSortHeader, MatCellDef, MatCell, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow]
 })
 export class NotificationComponent implements OnInit {
 
@@ -31,7 +34,7 @@ export class NotificationComponent implements OnInit {
    * @param {ActivatedRoute} route Activated Route.
    */
   constructor(private route: ActivatedRoute) {
-    this.route.data.subscribe((data: { notificationConfiguration: any }) => {
+    this.route.data.subscribe((data: any) => {
       this.notificationConfigurationData = data.notificationConfiguration;
     });
   }

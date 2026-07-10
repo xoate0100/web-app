@@ -1,12 +1,23 @@
 import { Component, OnInit, Input, ChangeDetectionStrategy } from '@angular/core';
-import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, FormControl, Validators, ReactiveFormsModule } from '@angular/forms';
+import { LayoutDirective, LayoutGapDirective, FlexDirective, LayoutAlignDirective } from '@ngbracket/ngx-layout/flex';
+import { MatFormField, MatLabel, MatError } from '@angular/material/form-field';
+import { MatInput } from '@angular/material/input';
+import { MatSelect } from '@angular/material/select';
+import { NgFor, NgIf } from '@angular/common';
+import { MatOption } from '@angular/material/autocomplete';
+import { MatDivider } from '@angular/material/divider';
+import { MatCheckbox } from '@angular/material/checkbox';
+import { MatButton } from '@angular/material/button';
+import { MatStepperPrevious, MatStepperNext } from '@angular/material/stepper';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 
 @Component({
-  standalone: false,
-  selector: 'mifosx-fixed-deposit-product-settings-step',
-  templateUrl: './fixed-deposit-product-settings-step.component.html',
-  changeDetection: ChangeDetectionStrategy.Eager,
-  styleUrls: ['./fixed-deposit-product-settings-step.component.scss']
+    selector: 'mifosx-fixed-deposit-product-settings-step',
+    templateUrl: './fixed-deposit-product-settings-step.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    styleUrls: ['./fixed-deposit-product-settings-step.component.scss'],
+    imports: [ReactiveFormsModule, LayoutDirective, LayoutGapDirective, FlexDirective, MatFormField, MatLabel, MatInput, MatSelect, NgFor, MatOption, MatError, MatDivider, MatCheckbox, NgIf, LayoutAlignDirective, MatButton, MatStepperPrevious, FaIconComponent, MatStepperNext]
 })
 export class FixedDepositProductSettingsStepComponent implements OnInit {
 
@@ -69,7 +80,7 @@ export class FixedDepositProductSettingsStepComponent implements OnInit {
   }
 
   setConditionalControls() {
-    this.fixedDepositProductSettingsForm.get('withHoldTax').valueChanges
+    this.fixedDepositProductSettingsForm.get('withHoldTax')!.valueChanges
       .subscribe((withHoldTax: any) => {
         if (withHoldTax) {
           this.fixedDepositProductSettingsForm.addControl('taxGroupId', new FormControl('', Validators.required));
@@ -83,7 +94,7 @@ export class FixedDepositProductSettingsStepComponent implements OnInit {
     const fixedDepositProductSettings = this.fixedDepositProductSettingsForm.value;
     for (const key in fixedDepositProductSettings) {
       if (fixedDepositProductSettings[key] === '') {
-        delete fixedDepositProductSettings[key];
+        fixedDepositProductSettings[key] = undefined;
       }
     }
     return fixedDepositProductSettings;

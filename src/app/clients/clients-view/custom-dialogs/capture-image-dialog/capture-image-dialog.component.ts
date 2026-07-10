@@ -1,16 +1,21 @@
 /** Angular Imports */
 import { Component, ViewChild, ElementRef, AfterViewInit, Renderer2, OnDestroy, ChangeDetectionStrategy } from '@angular/core';
-import { MatDialogRef } from '@angular/material/dialog';
+import { MatDialogRef, MatDialogTitle, MatDialogActions, MatDialogClose } from '@angular/material/dialog';
+import { LayoutDirective, LayoutGapDirective, FlexDirective } from '@ngbracket/ngx-layout/flex';
+import { NgStyle, NgIf } from '@angular/common';
+import { StyleDirective } from '@ngbracket/ngx-layout/extended';
+import { MatButton } from '@angular/material/button';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 
 /**
  * Capture image dialog component
  */
 @Component({
-  standalone: false,
-  selector: 'mifosx-capture-image-dialog',
-  templateUrl: './capture-image-dialog.component.html',
-  changeDetection: ChangeDetectionStrategy.Eager,
-  styleUrls: ['./capture-image-dialog.component.scss']
+    selector: 'mifosx-capture-image-dialog',
+    templateUrl: './capture-image-dialog.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    styleUrls: ['./capture-image-dialog.component.scss'],
+    imports: [LayoutDirective, LayoutGapDirective, MatDialogTitle, NgStyle, StyleDirective, FlexDirective, NgIf, MatButton, FaIconComponent, MatDialogActions, MatDialogClose]
 })
 export class CaptureImageDialogComponent implements AfterViewInit, OnDestroy {
 

@@ -1,9 +1,9 @@
 /** Angular Imports */
 import { Component, OnInit, ViewChild, AfterViewInit, ChangeDetectionStrategy } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
-import { MatSort } from '@angular/material/sort';
-import { FormControl } from '@angular/forms';
-import { Router, ActivatedRoute } from '@angular/router';
+import { MatSort, MatSortHeader } from '@angular/material/sort';
+import { FormControl, ReactiveFormsModule } from '@angular/forms';
+import { Router, ActivatedRoute, RouterLink } from '@angular/router';
 
 /** rxjs Imports */
 import { merge } from 'rxjs';
@@ -14,16 +14,24 @@ import { AccountingService } from '../accounting.service';
 
 /** Custom Data Source */
 import { JournalEntriesDataSource } from './journal-entry.datasource';
+import { LayoutDirective, LayoutGapDirective, FlexDirective } from '@ngbracket/ngx-layout/flex';
+import { MatFormField, MatLabel, MatSuffix } from '@angular/material/form-field';
+import { MatInput } from '@angular/material/input';
+import { MatAutocompleteTrigger, MatOption, MatAutocomplete } from '@angular/material/autocomplete';
+import { MatSelect } from '@angular/material/select';
+import { NgFor, NgIf, AsyncPipe } from '@angular/common';
+import { MatDatepickerInput, MatDatepickerToggle, MatDatepicker } from '@angular/material/datepicker';
+import { MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow } from '@angular/material/table';
 
 /**
  * Search journal entry component.
  */
 @Component({
-  standalone: false,
-  selector: 'mifosx-search-journal-entry',
-  templateUrl: './search-journal-entry.component.html',
-  changeDetection: ChangeDetectionStrategy.Eager,
-  styleUrls: ['./search-journal-entry.component.scss']
+    selector: 'mifosx-search-journal-entry',
+    templateUrl: './search-journal-entry.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    styleUrls: ['./search-journal-entry.component.scss'],
+    imports: [LayoutDirective, LayoutGapDirective, MatFormField, FlexDirective, MatLabel, MatInput, ReactiveFormsModule, MatAutocompleteTrigger, MatSelect, NgFor, MatOption, MatDatepickerInput, MatDatepickerToggle, MatSuffix, MatDatepicker, MatAutocomplete, MatTable, MatSort, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatSortHeader, MatCellDef, MatCell, NgIf, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow, RouterLink, MatPaginator, AsyncPipe]
 })
 export class SearchJournalEntryComponent implements OnInit, AfterViewInit {
 
@@ -118,10 +126,7 @@ export class SearchJournalEntryComponent implements OnInit, AfterViewInit {
    */
   constructor(private accountingService: AccountingService,
               private route: ActivatedRoute) {
-    this.route.data.subscribe((data: {
-        offices: any,
-        glAccounts: any
-      }) => {
+    this.route.data.subscribe((data: any) => {
         this.officeData = data.offices;
         this.glAccountData = data.glAccounts;
       });
@@ -208,7 +213,7 @@ export class SearchJournalEntryComponent implements OnInit, AfterViewInit {
    */
   loadJournalEntriesPage() {
     if (!this.sort.direction) {
-      delete this.sort.active;
+      this.sort.active = '';
     }
     this.dataSource.getJournalEntries(this.filterJournalEntriesBy, this.sort.active, this.sort.direction, this.paginator.pageIndex, this.paginator.pageSize);
   }
@@ -230,8 +235,8 @@ export class SearchJournalEntryComponent implements OnInit, AfterViewInit {
    * @param {any} office Office data.
    * @returns {string} Office name if valid otherwise undefined.
    */
-  displayOfficeName(office?: any): string | undefined {
-    return office ? office.name : undefined;
+  displayOfficeName(office?: any): string {
+    return office ? office.name : '';
   }
 
   /**
@@ -239,8 +244,8 @@ export class SearchJournalEntryComponent implements OnInit, AfterViewInit {
    * @param {any} glAccount Gl Account data.
    * @returns {string} Gl Account name if valid otherwise undefined.
    */
-  displayGLAccount(glAccount?: any): string | undefined {
-    return glAccount ? glAccount.name + ' (' + glAccount.glCode + ')' : undefined;
+  displayGLAccount(glAccount?: any): string {
+    return glAccount ? glAccount.name + ' (' + glAccount.glCode + ')' : '';
   }
 
   /**

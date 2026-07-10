@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild, ChangeDetectionStrategy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { MatTable } from '@angular/material/table';
+import { MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow } from '@angular/material/table';
 import { MatDialog } from '@angular/material/dialog';
 
 /** Custom Services */
@@ -9,14 +9,17 @@ import { ClientsService } from '../../clients.service';
 /** Custom Components */
 import { UploadDocumentDialogComponent } from '../custom-dialogs/upload-document-dialog/upload-document-dialog.component';
 import { DeleteDialogComponent } from '../../../shared/delete-dialog/delete-dialog.component';
+import { HasPermissionDirective } from '../../../directives/has-permission/has-permission.directive';
+import { MatButton } from '@angular/material/button';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 
 
 @Component({
-  standalone: false,
-  selector: 'mifosx-documents-tab',
-  templateUrl: './documents-tab.component.html',
-  changeDetection: ChangeDetectionStrategy.Eager,
-  styleUrls: ['./documents-tab.component.scss']
+    selector: 'mifosx-documents-tab',
+    templateUrl: './documents-tab.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    styleUrls: ['./documents-tab.component.scss'],
+    imports: [HasPermissionDirective, MatButton, FaIconComponent, MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow]
 })
 export class DocumentsTabComponent implements OnInit {
   @ViewChild('documentsTable', { static: true }) documentsTable: MatTable<Element>;
@@ -28,12 +31,12 @@ export class DocumentsTabComponent implements OnInit {
   constructor(private route: ActivatedRoute,
     private clientService: ClientsService,
     public dialog: MatDialog) {
-    this.route.data.subscribe((data: { clientDocuments: any }) => {
+    this.route.data.subscribe((data: any) => {
       this.clientDocuments = data.clientDocuments;
       console.log(this.clientDocuments);
 
     });
-    this.clientId = this.route.parent.snapshot.paramMap.get('clientId');
+    this.clientId = this.route.parent!.snapshot.paramMap.get('clientId')!;
   }
 
   ngOnInit() {

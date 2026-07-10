@@ -1,8 +1,8 @@
 /** Angular Imports */
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterLinkActive, RouterLink, RouterOutlet } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
-import { DatePipe } from '@angular/common';
+import { DatePipe, NgClass, NgIf, NgFor, DecimalPipe } from '@angular/common';
 
 /** Custom Services */
 import { RecurringDepositsService } from '../recurring-deposits.service';
@@ -14,17 +14,27 @@ import { RecurringDepositsButtonsConfiguration } from './recurring-deposits-butt
 /** Custom Dialogs */
 import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.component';
 import { RecurringDepositConfirmationDialogComponent } from './custom-dialogs/recurring-deposit-confirmation-dialog/recurring-deposit-confirmation-dialog.component';
+import { MatCard, MatCardHeader, MatCardTitleGroup, MatCardMdImage, MatCardTitle, MatCardSubtitle, MatCardActions, MatCardContent } from '@angular/material/card';
+import { LayoutDirective, LayoutGapDirective, FlexDirective } from '@ngbracket/ngx-layout/flex';
+import { MatTooltip } from '@angular/material/tooltip';
+import { ClassDirective } from '@ngbracket/ngx-layout/extended';
+import { MatButton } from '@angular/material/button';
+import { MatMenuTrigger, MatMenu, MatMenuItem } from '@angular/material/menu';
+import { MatTabNav, MatTabLink } from '@angular/material/tabs';
+import { HasPermissionDirective } from '../../../directives/has-permission/has-permission.directive';
+import { StatusLookupPipe } from '../../../pipes/status-lookup.pipe';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 
 
 /**
  * RecurringDeposits Account View Component
  */
 @Component({
-  standalone: false,
-  selector: 'mifosx-recurring-deposits-account-view',
-  templateUrl: './recurring-deposits-account-view.component.html',
-  changeDetection: ChangeDetectionStrategy.Eager,
-  styleUrls: ['./recurring-deposits-account-view.component.scss']
+    selector: 'mifosx-recurring-deposits-account-view',
+    templateUrl: './recurring-deposits-account-view.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    styleUrls: ['./recurring-deposits-account-view.component.scss'],
+    imports: [FaIconComponent, MatCard, MatCardHeader, LayoutDirective, MatCardTitleGroup, MatCardMdImage, MatTooltip, MatCardTitle, NgClass, ClassDirective, MatCardSubtitle, NgIf, MatCardActions, NgFor, MatButton, MatMenuTrigger, MatMenu, MatMenuItem, MatCardContent, LayoutGapDirective, FlexDirective, MatTabNav, MatTabLink, RouterLinkActive, RouterLink, HasPermissionDirective, RouterOutlet, DecimalPipe, DatePipe, StatusLookupPipe]
 })
 export class RecurringDepositsAccountViewComponent implements OnInit {
 
@@ -50,7 +60,7 @@ export class RecurringDepositsAccountViewComponent implements OnInit {
               private recurringDepositsService: RecurringDepositsService,
               private savingsService: SavingsService,
               public dialog: MatDialog) {
-    this.route.data.subscribe((data: { recurringDepositsAccountData: any, savingsDatatables: any }) => {
+    this.route.data.subscribe((data: any) => {
       this.recurringDepositsAccountData = data.recurringDepositsAccountData;
       this.charges = this.recurringDepositsAccountData.charges;
       this.savingsDatatables = data.savingsDatatables;
@@ -103,7 +113,7 @@ export class RecurringDepositsAccountViewComponent implements OnInit {
       if (!this.isprematureAllowed) {
         this.buttonConfig.addButton({
           name: 'Close',
-          icon: 'fa fa-arrow-right'
+          icon: 'arrow-right'
         });
       }
 

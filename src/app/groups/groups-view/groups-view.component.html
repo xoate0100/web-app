@@ -14,7 +14,7 @@
       <div class="mat-typography group-card-title">
         <mat-card-title>
           <h3>
-            <i class="fa fa-stop" [ngClass]="groupViewData.status.code|statusLookup" [matTooltip]="groupViewData.status.value"></i>
+            <fa-icon icon="stop" [ngClass]="groupViewData.status.code|statusLookup" [matTooltip]="groupViewData.status.value"></fa-icon>
             Group Name : {{groupViewData.name}}
           </h3>
         </mat-card-title>
@@ -34,7 +34,7 @@
         <div *ngIf="groupViewData.collectionMeetingCalendar; else unassigned">
           <p>
              Next Meeting on: {{$safeNavigationMigration(groupViewData.collectionMeetingCalendar?.nextTenRecurringDates[0]) | date}}
-             <i class="fa fa-edit" *ngIf="editMeeting" (click)="doAction('Edit Meeting')"></i><br/>
+             <fa-icon icon="edit" *ngIf="editMeeting" (click)="doAction('Edit Meeting')"></fa-icon><br/>
              Meeting Frequency: {{$safeNavigationMigration(groupViewData.collectionMeetingCalendar?.frequency.value) | lowercase}}
           </p>
         </div>
@@ -42,7 +42,7 @@
           <div>
             <p>
               Next Meeting on: Unassigned
-              <i class="fa fa-calendar"></i><br/>
+              <fa-icon icon="calendar"></fa-icon><br/>
               Meeting Frequency: N/A
           </p>
         </div>
@@ -55,19 +55,19 @@
 
         <span *ngIf="!(groupViewData.status.value==='Active')">
           <button mat-raised-button  *mifosxHasPermission="'UPDATE_GROUP'" (click)="doAction('Activate')">
-            <i class="fa fa-check-sign"></i>Activate</button>
+            <fa-icon icon="check"></fa-icon>Activate</button>
         </span>
         <button mat-raised-button *mifosxHasPermission="'UPDATE_GROUP'" (click)="doAction('Edit')">
-          <i class="fa fa-edit"></i>Edit</button>
+          <fa-icon icon="edit"></fa-icon>Edit</button>
         <button mat-raised-button *mifosxHasPermission="'CREATE_CLIENT'">
-          <i class="fa fa-plus"></i>Add Clients</button>
+          <fa-icon icon="plus"></fa-icon>Add Clients</button>
         <button mat-raised-button *mifosxHasPermission="'ASSOCIATECLIENTS_GROUP'" (click)="doAction('Transfer Clients')">
-          <i class="fa fa-exchange"></i>Transfer Clients</button>
+          <fa-icon icon="right-left"></fa-icon>Transfer Clients</button>
         <button mat-raised-button *mifosxHasPermission="'TRANSFERCLIENTS_GROUP'" (click)="doAction('Manage Members')">
-          <i class="fa fa-user"></i>Manage Members</button>
+          <fa-icon icon="user"></fa-icon>Manage Members</button>
 
         <button mat-raised-button *ngIf="groupViewData.active" [matMenuTriggerFor]="AccountApplications">
-          <i class="fa fa-file"></i>Applications</button>
+          <fa-icon icon="file"></fa-icon>Applications</button>
         <mat-menu #AccountApplications="matMenu">
           <span *ngIf="groupViewData.clientMembers">
             <button mat-menu-item *mifosxHasPermission="'CREATE_LOAN'">Bulk JLG Loan Application</button></span>

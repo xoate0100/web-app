@@ -1,19 +1,29 @@
 /** Angular Imports */
 import { Component, OnInit, Input, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
 
 /** Custom Services */
 import { SharesService } from 'app/shares/shares.service';
+import { LayoutDirective, LayoutGapDirective, FlexDirective, LayoutAlignDirective } from '@ngbracket/ngx-layout/flex';
+import { MatFormField, MatLabel, MatError, MatSuffix } from '@angular/material/form-field';
+import { MatSelect } from '@angular/material/select';
+import { NgFor } from '@angular/common';
+import { MatOption } from '@angular/material/autocomplete';
+import { MatInput } from '@angular/material/input';
+import { MatDatepickerInput, MatDatepickerToggle, MatDatepicker } from '@angular/material/datepicker';
+import { MatButton } from '@angular/material/button';
+import { MatStepperPrevious, MatStepperNext } from '@angular/material/stepper';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 
 /**
  * Shares Account Details Step
  */
 @Component({
-  standalone: false,
-  selector: 'mifosx-shares-account-details-step',
-  templateUrl: './shares-account-details-step.component.html',
-  changeDetection: ChangeDetectionStrategy.Eager,
-  styleUrls: ['./shares-account-details-step.component.scss']
+    selector: 'mifosx-shares-account-details-step',
+    templateUrl: './shares-account-details-step.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    styleUrls: ['./shares-account-details-step.component.scss'],
+    imports: [ReactiveFormsModule, LayoutDirective, LayoutGapDirective, MatFormField, FlexDirective, MatLabel, MatSelect, NgFor, MatOption, MatError, MatInput, MatDatepickerInput, MatDatepickerToggle, MatSuffix, MatDatepicker, LayoutAlignDirective, MatButton, MatStepperPrevious, FaIconComponent, MatStepperNext]
 })
 export class SharesAccountDetailsStepComponent implements OnInit {
 
@@ -72,7 +82,7 @@ export class SharesAccountDetailsStepComponent implements OnInit {
    */
   buildDependencies() {
     const clientId = this.sharesAccountTemplate.clientId;
-    this.sharesAccountDetailsForm.get('productId').valueChanges.subscribe((productId: string) => {
+    this.sharesAccountDetailsForm.get('productId')!.valueChanges.subscribe((productId: string) => {
       this.sharesService.getSharesAccountTemplate(clientId, productId).subscribe((response: any) => {
         this.sharesAccountProductTemplate.emit(response);
       });

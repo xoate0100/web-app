@@ -1,22 +1,29 @@
 /** Angular Imports */
 import { Component, OnInit, Input, ChangeDetectionStrategy } from '@angular/core';
-import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { FormGroup, FormBuilder, Validators, FormControl, ReactiveFormsModule } from '@angular/forms';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 
 /** Custom Services */
 import { LoansService } from 'app/loans/loans.service';
-import { DatePipe } from '@angular/common';
+import { DatePipe, NgIf } from '@angular/common';
 import { SettingsService } from 'app/settings/settings.service';
+import { MatCard, MatCardContent, MatCardActions } from '@angular/material/card';
+import { LayoutDirective, LayoutAlignDirective, LayoutGapDirective } from '@ngbracket/ngx-layout/flex';
+import { MatFormField, MatLabel, MatSuffix, MatError } from '@angular/material/form-field';
+import { MatInput } from '@angular/material/input';
+import { MatDatepickerInput, MatDatepickerToggle, MatDatepicker } from '@angular/material/datepicker';
+import { MatButton } from '@angular/material/button';
+import { HasPermissionDirective } from '../../../../directives/has-permission/has-permission.directive';
 
 /**
  * Withdrawn By Applicant Loan Form
  */
 @Component({
-  standalone: false,
-  selector: 'mifosx-withdrawn-by-client',
-  templateUrl: './withdrawn-by-client.component.html',
-  changeDetection: ChangeDetectionStrategy.Eager,
-  styleUrls: ['./withdrawn-by-client.component.scss']
+    selector: 'mifosx-withdrawn-by-client',
+    templateUrl: './withdrawn-by-client.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    styleUrls: ['./withdrawn-by-client.component.scss'],
+    imports: [MatCard, ReactiveFormsModule, MatCardContent, LayoutDirective, MatFormField, MatLabel, MatInput, MatDatepickerInput, MatDatepickerToggle, MatSuffix, MatDatepicker, NgIf, MatError, MatCardActions, LayoutAlignDirective, LayoutGapDirective, MatButton, RouterLink, HasPermissionDirective]
 })
 export class WithdrawnByClientComponent implements OnInit {
 
@@ -44,7 +51,7 @@ export class WithdrawnByClientComponent implements OnInit {
     private router: Router,
     private datePipe: DatePipe,
     private settingsService: SettingsService) {
-    this.loanId = this.route.parent.snapshot.params['loanId'];
+    this.loanId = this.route.parent!.snapshot.params['loanId']!;
   }
 
   /**
@@ -71,7 +78,7 @@ export class WithdrawnByClientComponent implements OnInit {
     // TODO: Update once language and date settings are setup
     const dateFormat = this.settingsService.dateFormat;
     this.withdrawnByClientLoanForm.patchValue({
-      withdrawnOnDate: this.datePipe.transform(prevTransactionDate, dateFormat)
+      withdrawnOnDate: this.datePipe.transform(prevTransactionDate as Date, dateFormat)
     });
     const WithdrawnByClientLoanData = this.withdrawnByClientLoanForm.value;
     WithdrawnByClientLoanData.locale = this.settingsService.language.code;

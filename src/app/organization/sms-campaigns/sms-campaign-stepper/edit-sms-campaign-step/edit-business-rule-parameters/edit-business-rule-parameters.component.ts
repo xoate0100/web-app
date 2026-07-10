@@ -1,7 +1,7 @@
 /** Angular Imports */
 import { Component, OnChanges, Input, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
-import { Validators, FormGroup, FormControl } from '@angular/forms';
-import { DatePipe } from '@angular/common';
+import { Validators, FormGroup, FormControl, ReactiveFormsModule } from '@angular/forms';
+import { DatePipe, NgFor, NgSwitch, NgIf, NgSwitchCase } from '@angular/common';
 
 /** Rxjs Imports */
 import { distinctUntilChanged } from 'rxjs/operators';
@@ -13,16 +13,26 @@ import { SettingsService } from 'app/settings/settings.service';
 /** Custom Models */
 import { ReportParameter } from 'app/reports/common-models/report-parameter.model';
 import { SelectOption } from 'app/reports/common-models/select-option.model';
+import { LayoutDirective, FlexDirective, LayoutGapDirective, LayoutAlignDirective } from '@ngbracket/ngx-layout/flex';
+import { MatDivider } from '@angular/material/divider';
+import { MatFormField, MatLabel, MatError, MatSuffix } from '@angular/material/form-field';
+import { MatInput } from '@angular/material/input';
+import { MatDatepickerInput, MatDatepickerToggle, MatDatepicker } from '@angular/material/datepicker';
+import { MatSelect } from '@angular/material/select';
+import { MatOption } from '@angular/material/autocomplete';
+import { MatButton } from '@angular/material/button';
+import { MatStepperPrevious, MatStepperNext } from '@angular/material/stepper';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 
 /**
  * Edit Business Rule Parameters.
  */
 @Component({
-  standalone: false,
-  selector: 'mifosx-edit-business-rule-parameters',
-  templateUrl: './edit-business-rule-parameters.component.html',
-  changeDetection: ChangeDetectionStrategy.Eager,
-  styleUrls: ['./edit-business-rule-parameters.component.scss']
+    selector: 'mifosx-edit-business-rule-parameters',
+    templateUrl: './edit-business-rule-parameters.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    styleUrls: ['./edit-business-rule-parameters.component.scss'],
+    imports: [LayoutDirective, MatDivider, FlexDirective, ReactiveFormsModule, LayoutGapDirective, NgFor, NgSwitch, NgIf, NgSwitchCase, MatFormField, MatLabel, MatInput, MatError, MatDatepickerInput, MatDatepickerToggle, MatSuffix, MatDatepicker, MatSelect, MatOption, LayoutAlignDirective, MatButton, MatStepperPrevious, FaIconComponent, MatStepperNext]
 })
 export class EditBusinessRuleParametersComponent implements OnChanges {
 
@@ -73,15 +83,15 @@ export class EditBusinessRuleParametersComponent implements OnChanges {
           const controlValue = this.paramValue[param.variable].toString();
           switch (param.displayType) {
             case 'text':
-              this.ReportForm.get(param.name).patchValue(controlValue);
+              this.ReportForm.get(param.name)!.patchValue(controlValue);
               break;
             case 'select':
               this.fetchSelectOptions(param, param.name);
               break;
             case 'date':
               const dateFormat = this.settingsService.dateFormat;
-              const newControlValue = this.datePipe.transform(controlValue, dateFormat);
-              this.ReportForm.get(param.name).patchValue(newControlValue);
+              const newControlValue = this.datePipe.transform(controlValue as Date, dateFormat);
+              this.ReportForm.get(param.name)!.patchValue(newControlValue);
               break;
           }
         } else { // Child Parameter
@@ -113,7 +123,7 @@ export class EditBusinessRuleParametersComponent implements OnChanges {
    */
   setChildControls() {
     this.parentParameters.forEach((param: ReportParameter) => {
-      this.ReportForm.get(param.name).valueChanges.subscribe((option: any) => {
+      this.ReportForm.get(param.name)!.valueChanges.subscribe((option: any) => {
         param.childParameters.forEach((child: ReportParameter) => {
           if (child.displayType === 'none') {
             this.ReportForm.addControl(child.name, new FormControl(child.defaultVal));
@@ -142,7 +152,7 @@ export class EditBusinessRuleParametersComponent implements OnChanges {
       }
       const optionId = this.paramValue[param.variable].toString();
       const option = options.find(entry => entry.id === optionId);
-      this.ReportForm.controls[param.name].patchValue({ id: optionId, name: option.name });
+      (this.ReportForm.controls as Record<string, FormControl>)[param.name]!.patchValue({ id: optionId, name: option?.name ?? '' });
     });
   }
 
@@ -190,7 +200,7 @@ export class EditBusinessRuleParametersComponent implements OnChanges {
    */
   getResponseHeaders() {
     const reportName = this.paramValue.reportName;
-    delete this.paramValue.reportName;
+    delete (this.paramValue as any).reportName;
     const formattedResponse = this.formatUserResponse(this.paramValue, true);
     this.reportsService.getRunReportData(reportName, formattedResponse).subscribe(
       (response: any) => {

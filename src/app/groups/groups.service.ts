@@ -28,8 +28,8 @@ export class GroupsService {
    */
   getGroups(filterBy: any, orderBy: string, sortOrder: string, offset?: number, limit?: number): Observable<any> {
     let httpParams = new HttpParams()
-      .set('offset', offset.toString())
-      .set('limit', limit.toString())
+      .set('offset', String(offset ?? 0))
+      .set('limit', String(limit ?? -1))
       .set('sortOrder', sortOrder)
       .set('orderBy', orderBy)
       .set('paged', 'true');

@@ -89,7 +89,7 @@ export class HttpService extends HttpClient {
   }
 
   cache(forceUpdate?: boolean): HttpClient {
-    const cacheInterceptor = this.injector.get(CacheInterceptor).configure({ update: forceUpdate });
+    const cacheInterceptor = this.injector.get(CacheInterceptor)!.configure({ update: forceUpdate });
     return this.addInterceptor(cacheInterceptor);
   }
 

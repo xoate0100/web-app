@@ -1,20 +1,30 @@
 /** Angular Imports */
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { FormGroup, FormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
 
 /** Custom Services */
 import { AccountingService } from '../../accounting.service';
+import { MatCard, MatCardContent, MatCardActions } from '@angular/material/card';
+import { LayoutDirective, LayoutGapDirective, FlexDirective, LayoutAlignDirective } from '@ngbracket/ngx-layout/flex';
+import { MatFormField, MatLabel, MatError } from '@angular/material/form-field';
+import { MatSelect } from '@angular/material/select';
+import { NgFor, NgIf } from '@angular/common';
+import { MatOption } from '@angular/material/autocomplete';
+import { MatInput } from '@angular/material/input';
+import { MatCheckbox } from '@angular/material/checkbox';
+import { MatButton } from '@angular/material/button';
+import { HasPermissionDirective } from '../../../directives/has-permission/has-permission.directive';
 
 /**
  * Edit gl account component.
  */
 @Component({
-  standalone: false,
-  selector: 'mifosx-edit-gl-account',
-  templateUrl: './edit-gl-account.component.html',
-  changeDetection: ChangeDetectionStrategy.Eager,
-  styleUrls: ['./edit-gl-account.component.scss']
+    selector: 'mifosx-edit-gl-account',
+    templateUrl: './edit-gl-account.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    styleUrls: ['./edit-gl-account.component.scss'],
+    imports: [MatCard, ReactiveFormsModule, MatCardContent, LayoutDirective, LayoutGapDirective, MatFormField, FlexDirective, MatLabel, MatSelect, NgFor, MatOption, NgIf, MatError, MatInput, MatCheckbox, MatCardActions, LayoutAlignDirective, MatButton, RouterLink, HasPermissionDirective]
 })
 export class EditGlAccountComponent implements OnInit {
 
@@ -42,7 +52,7 @@ export class EditGlAccountComponent implements OnInit {
               private accountingService: AccountingService,
               private route: ActivatedRoute,
               private router: Router) {
-    this.route.data.subscribe((data: { glAccountAndChartOfAccountsTemplate: any }) => {
+    this.route.data.subscribe((data: any) => {
       this.glAccount = data.glAccountAndChartOfAccountsTemplate;
     });
   }
@@ -77,7 +87,7 @@ export class EditGlAccountComponent implements OnInit {
   setGLAccountForm() {
     this.accountTypeData = this.glAccount.accountTypeOptions;
     this.accountUsageData = this.glAccount.usageOptions;
-    this.glAccountForm.get('type').valueChanges.subscribe(accountTypeId => {
+    this.glAccountForm.get('type')!.valueChanges.subscribe(accountTypeId => {
       switch (accountTypeId) {
         case 1: this.parentData = this.glAccount.assetHeaderAccountOptions;
                 this.tagData = this.glAccount.allowedAssetsTagOptions;
@@ -97,7 +107,7 @@ export class EditGlAccountComponent implements OnInit {
       }
     });
 
-    this.glAccountForm.get('type').setValue(this.glAccount.type.id);
+    this.glAccountForm.get('type')!.setValue(this.glAccount.type.id);
   }
 
   /**

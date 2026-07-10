@@ -46,7 +46,7 @@
 //     spyOn(ErrorHandlerInterceptor.prototype as any, 'errorHandler').and.callThrough();
 
 //     // Act
-//     http.get('/toto').subscribe(() => fail('should error'), () => {
+//     http.get('/toto')!.subscribe(() => fail('should error'), () => {
 //       // Assert
 //       expect(ErrorHandlerInterceptor.prototype['errorHandler']).toHaveBeenCalled();
 //     });

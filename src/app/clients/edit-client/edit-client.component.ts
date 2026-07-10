@@ -1,22 +1,31 @@
 /** Angular Imports */
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
-import { DatePipe } from '@angular/common';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { FormBuilder, FormGroup, Validators, FormControl, ReactiveFormsModule } from '@angular/forms';
+import { DatePipe, NgFor, NgIf } from '@angular/common';
 
 /** Custom Services */
 import { ClientsService } from '../clients.service';
 import { SettingsService } from 'app/settings/settings.service';
+import { MatCard, MatCardContent, MatCardActions } from '@angular/material/card';
+import { LayoutDirective, LayoutGapDirective, FlexDirective, LayoutAlignDirective } from '@ngbracket/ngx-layout/flex';
+import { MatFormField, MatLabel, MatError, MatSuffix } from '@angular/material/form-field';
+import { MatSelect } from '@angular/material/select';
+import { MatOption } from '@angular/material/autocomplete';
+import { MatInput } from '@angular/material/input';
+import { MatDatepickerInput, MatDatepickerToggle, MatDatepicker } from '@angular/material/datepicker';
+import { MatCheckbox } from '@angular/material/checkbox';
+import { MatButton } from '@angular/material/button';
 
 /**
  * Edit Client Component
  */
 @Component({
-  standalone: false,
-  selector: 'mifosx-edit-client',
-  templateUrl: './edit-client.component.html',
-  changeDetection: ChangeDetectionStrategy.Eager,
-  styleUrls: ['./edit-client.component.scss']
+    selector: 'mifosx-edit-client',
+    templateUrl: './edit-client.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    styleUrls: ['./edit-client.component.scss'],
+    imports: [MatCard, ReactiveFormsModule, MatCardContent, LayoutDirective, LayoutGapDirective, MatFormField, FlexDirective, MatLabel, MatSelect, NgFor, MatOption, NgIf, MatError, MatInput, MatDatepickerInput, MatDatepickerToggle, MatSuffix, MatDatepicker, MatCheckbox, MatCardActions, LayoutAlignDirective, MatButton, RouterLink]
 })
 export class EditClientComponent implements OnInit {
 
@@ -62,7 +71,7 @@ export class EditClientComponent implements OnInit {
               private clientsService: ClientsService,
               private datePipe: DatePipe,
               private settingsService: SettingsService) {
-    this.route.data.subscribe((data: { clientDataAndTemplate: any }) => {
+    this.route.data.subscribe((data: any) => {
       this.clientDataAndTemplate = data.clientDataAndTemplate;
     });
   }
@@ -129,7 +138,7 @@ export class EditClientComponent implements OnInit {
    * Adds controls conditionally.
    */
   buildDependencies() {
-    this.editClientForm.get('legalFormId').valueChanges.subscribe((legalFormId: any) => {
+    this.editClientForm.get('legalFormId')!.valueChanges.subscribe((legalFormId: any) => {
       if (legalFormId === 1) {
         this.editClientForm.removeControl('fullname');
         this.editClientForm.removeControl('clientNonPersonDetails');
@@ -162,17 +171,17 @@ export class EditClientComponent implements OnInit {
     const editClientFormValue: any = this.editClientForm.getRawValue();
     const clientData = {
       ...editClientFormValue,
-      dateOfBirth: editClientFormValue.dateOfBirth && this.datePipe.transform(editClientFormValue.dateOfBirth, dateFormat),
-      submittedOnDate: editClientFormValue.submittedOnDate && this.datePipe.transform(editClientFormValue.submittedOnDate, dateFormat),
-      activationDate: this.datePipe.transform(editClientFormValue.activationDate, dateFormat),
+      dateOfBirth: editClientFormValue.dateOfBirth && this.datePipe.transform(editClientFormValue.dateOfBirth as Date, dateFormat),
+      submittedOnDate: editClientFormValue.submittedOnDate && this.datePipe.transform(editClientFormValue.submittedOnDate as Date, dateFormat),
+      activationDate: this.datePipe.transform(editClientFormValue.activationDate as Date, dateFormat),
       dateFormat,
       locale
     };
-    delete clientData.officeId;
+    delete (clientData as any).officeId;
     if (editClientFormValue.clientNonPersonDetails) {
       clientData.clientNonPersonDetails = {
         ...editClientFormValue.clientNonPersonDetails,
-        incorpValidityTillDate: editClientFormValue.clientNonPersonDetails.incorpValidityTillDate && this.datePipe.transform(editClientFormValue.clientNonPersonDetails.incorpValidityTillDate, dateFormat),
+        incorpValidityTillDate: editClientFormValue.clientNonPersonDetails.incorpValidityTillDate && this.datePipe.transform(editClientFormValue.clientNonPersonDetails.incorpValidityTillDate as Date, dateFormat),
         dateFormat,
         locale
       };

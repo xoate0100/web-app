@@ -1,23 +1,30 @@
 /** Angular Imports. */
 import { Component, OnInit, Input, ChangeDetectionStrategy } from '@angular/core';
-import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { FormGroup, FormBuilder, Validators, FormControl, ReactiveFormsModule } from '@angular/forms';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { distinctUntilChanged } from 'rxjs/operators';
-import { DatePipe } from '@angular/common';
+import { DatePipe, NgIf } from '@angular/common';
 
 /** Custom Services. */
 import { LoansService } from 'app/loans/loans.service';
 import { SettingsService } from 'app/settings/settings.service';
+import { MatCard, MatCardContent, MatCardActions } from '@angular/material/card';
+import { LayoutDirective, LayoutAlignDirective, LayoutGapDirective } from '@ngbracket/ngx-layout/flex';
+import { MatFormField, MatLabel, MatSuffix, MatError } from '@angular/material/form-field';
+import { MatInput } from '@angular/material/input';
+import { MatDatepickerInput, MatDatepickerToggle, MatDatepicker } from '@angular/material/datepicker';
+import { MatButton } from '@angular/material/button';
+import { HasPermissionDirective } from '../../../../directives/has-permission/has-permission.directive';
 
 /**
  * Approve Loan component.
  */
 @Component({
-  standalone: false,
-  selector: 'mifosx-approve-loan',
-  templateUrl: './approve-loan.component.html',
-  changeDetection: ChangeDetectionStrategy.Eager,
-  styleUrls: ['./approve-loan.component.scss']
+    selector: 'mifosx-approve-loan',
+    templateUrl: './approve-loan.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    styleUrls: ['./approve-loan.component.scss'],
+    imports: [MatCard, ReactiveFormsModule, MatCardContent, LayoutDirective, MatFormField, MatLabel, MatInput, MatDatepickerInput, MatDatepickerToggle, MatSuffix, MatDatepicker, NgIf, MatError, MatCardActions, LayoutAlignDirective, LayoutGapDirective, MatButton, RouterLink, HasPermissionDirective]
 })
 export class ApproveLoanComponent implements OnInit {
 
@@ -47,10 +54,10 @@ export class ApproveLoanComponent implements OnInit {
     private loanService: LoansService,
     private router: Router,
     private settingsService: SettingsService) {
-    this.route.data.subscribe((data: { actionButtonData: any }) => {
+    this.route.data.subscribe((data: any) => {
       this.loanData = data.actionButtonData;
     });
-    this.loanId = this.route.parent.snapshot.params['loanId'];
+    this.loanId = this.route.parent!.snapshot.params['loanId']!;
   }
 
   ngOnInit() {
@@ -84,8 +91,8 @@ export class ApproveLoanComponent implements OnInit {
     const approvedOnDate = this.approveLoanForm.value.approvedOnDate;
     const expectedDisbursementDate = this.approveLoanForm.value.expectedDisbursementDate;
     this.approveLoanForm.patchValue({
-      approvedOnDate: this.datePipe.transform(approvedOnDate, dateFormat),
-      expectedDisbursementDate: this.datePipe.transform(expectedDisbursementDate, dateFormat)
+      approvedOnDate: this.datePipe.transform(approvedOnDate as Date, dateFormat),
+      expectedDisbursementDate: this.datePipe.transform(expectedDisbursementDate as Date, dateFormat)
     });
     const approveLoanFormData = {
       ... this.approveLoanForm.value,

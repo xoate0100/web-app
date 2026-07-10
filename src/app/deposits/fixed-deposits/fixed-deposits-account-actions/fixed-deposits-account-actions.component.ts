@@ -1,16 +1,25 @@
 /** Angular Imports */
 import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { NgIf } from '@angular/common';
+import { ApproveFixedDepositsAccountComponent } from './approve-fixed-deposits-account/approve-fixed-deposits-account.component';
+import { RejectFixedDepositsAccountComponent } from './reject-fixed-deposits-account/reject-fixed-deposits-account.component';
+import { ActivateFixedDepositsAccountComponent } from './activate-fixed-deposits-account/activate-fixed-deposits-account.component';
+import { UndoApprovalFixedDepositsAccountComponent } from './undo-approval-fixed-deposits-account/undo-approval-fixed-deposits-account.component';
+import { WithdrawByClientFixedDepositsAccountComponent } from './withdraw-by-client-fixed-deposits-account/withdraw-by-client-fixed-deposits-account.component';
+import { AddChargeFixedDepositsAccountComponent } from './add-charge-fixed-deposits-account/add-charge-fixed-deposits-account.component';
+import { PrematureCloseFixedDepositsAccountComponent } from './premature-close-fixed-deposits-account/premature-close-fixed-deposits-account.component';
+import { CloseFixedDepositsAccountComponent } from './close-fixed-deposits-account/close-fixed-deposits-account.component';
 
 /**
  * Fixed deposits account actions component.
  */
 @Component({
-  standalone: false,
-  selector: 'mifosx-fixed-deposits-account-actions',
-  templateUrl: './fixed-deposits-account-actions.component.html',
-  changeDetection: ChangeDetectionStrategy.Eager,
-  styleUrls: ['./fixed-deposits-account-actions.component.scss']
+    selector: 'mifosx-fixed-deposits-account-actions',
+    templateUrl: './fixed-deposits-account-actions.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    styleUrls: ['./fixed-deposits-account-actions.component.scss'],
+    imports: [NgIf, ApproveFixedDepositsAccountComponent, RejectFixedDepositsAccountComponent, ActivateFixedDepositsAccountComponent, UndoApprovalFixedDepositsAccountComponent, WithdrawByClientFixedDepositsAccountComponent, AddChargeFixedDepositsAccountComponent, PrematureCloseFixedDepositsAccountComponent, CloseFixedDepositsAccountComponent]
 })
 export class FixedDepositsAccountActionsComponent {
 
@@ -39,8 +48,8 @@ export class FixedDepositsAccountActionsComponent {
    * @param {ActivatedRoute} route Activated Route
    */
   constructor(private route: ActivatedRoute) {
-    const name = this.route.snapshot.params['name'];
-    this.actions[name] = true;
+    const name = this.route.snapshot.params['name']!;
+    (this.actions as Record<string, boolean>)[name] = true;
   }
 
 }

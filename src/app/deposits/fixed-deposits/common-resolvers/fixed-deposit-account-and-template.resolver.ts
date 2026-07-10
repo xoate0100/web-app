@@ -25,7 +25,7 @@ export class FixedDepositsAccountAndTemplateResolver implements Resolve<Object> 
    * @returns {Observable<any>}
    */
   resolve(route: ActivatedRouteSnapshot): Observable<any> {
-    const fixedDepositAccountId = route.paramMap.get('fixedDepositAccountId');
+    const fixedDepositAccountId = route.paramMap.get('fixedDepositAccountId')!;
     return this.fixedDepositsService.getFixedDepositsAccountAndTemplate(fixedDepositAccountId);
   }
 

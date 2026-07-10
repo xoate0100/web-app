@@ -2,8 +2,8 @@
 import { Component, OnInit, ViewChild, ChangeDetectionStrategy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
-import { MatTableDataSource, MatTable } from '@angular/material/table';
-import { DatePipe } from '@angular/common';
+import { MatTableDataSource, MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow } from '@angular/material/table';
+import { DatePipe, NgIf } from '@angular/common';
 
 /** Custom Services */
 import { SavingsService } from 'app/savings/savings.service';
@@ -18,17 +18,22 @@ import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.co
 import { FormfieldBase } from 'app/shared/form-dialog/formfield/model/formfield-base';
 import { InputBase } from 'app/shared/form-dialog/formfield/model/input-base';
 import { DatepickerBase } from 'app/shared/form-dialog/formfield/model/datepicker-base';
+import { LayoutDirective, LayoutAlignDirective } from '@ngbracket/ngx-layout/flex';
+import { MatButton } from '@angular/material/button';
+import { HasPermissionDirective } from '../../../../directives/has-permission/has-permission.directive';
+import { MatTooltip } from '@angular/material/tooltip';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 
 /**
  * Charges Tab Component
  * Note: Fixed deposits endpoints are not supported so using Savings endpoints.
  */
 @Component({
-  standalone: false,
-  selector: 'mifosx-charges-tab',
-  templateUrl: './charges-tab.component.html',
-  changeDetection: ChangeDetectionStrategy.Eager,
-  styleUrls: ['./charges-tab.component.scss']
+    selector: 'mifosx-charges-tab',
+    templateUrl: './charges-tab.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    styleUrls: ['./charges-tab.component.scss'],
+    imports: [FaIconComponent, LayoutDirective, LayoutAlignDirective, NgIf, MatButton, MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, HasPermissionDirective, MatTooltip, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow, DatePipe]
 })
 export class ChargesTabComponent implements OnInit {
 
@@ -71,7 +76,7 @@ export class ChargesTabComponent implements OnInit {
               private datePipe: DatePipe,
               private router: Router,
               public dialog: MatDialog) {
-    this.route.parent.data.subscribe((data: { fixedDepositsAccountData: any }) => {
+    this.route.parent!.data.subscribe((data: any) => {
       this.fixedDepositsAccountData = data.fixedDepositsAccountData;
       this.chargesData = this.fixedDepositsAccountData.charges;
     });
@@ -130,7 +135,7 @@ export class ChargesTabComponent implements OnInit {
         const dateFormat = 'dd MMMM yyyy';
         const dataObject = {
           ...response.data.value,
-          dueDate: this.datePipe.transform(response.data.value.dueDate, dateFormat),
+          dueDate: this.datePipe.transform(response.data.value.dueDate as Date, dateFormat),
           dateFormat,
           locale
         };

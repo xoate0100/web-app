@@ -24,7 +24,7 @@ export class AdhocQueryResolver implements Resolve<Object> {
    * @returns {Observable<any>}
    */
   resolve(route: ActivatedRouteSnapshot): Observable<any> {
-    const adhocQueryId = route.paramMap.get('id');
+    const adhocQueryId = route.paramMap.get('id')!;
     return this.organizationService.getAdhocQuery(adhocQueryId);
   }
 

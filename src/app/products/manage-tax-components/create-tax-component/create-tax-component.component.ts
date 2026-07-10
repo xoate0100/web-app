@@ -1,21 +1,30 @@
 /** Angular Imports */
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
-import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
-import { Router, ActivatedRoute } from '@angular/router';
-import { DatePipe } from '@angular/common';
+import { FormGroup, FormBuilder, Validators, FormControl, ReactiveFormsModule } from '@angular/forms';
+import { Router, ActivatedRoute, RouterLink } from '@angular/router';
+import { DatePipe, NgIf, NgFor } from '@angular/common';
 
 /** Custom Services */
 import { ProductsService } from '../../products.service';
+import { MatCard, MatCardContent, MatCardActions } from '@angular/material/card';
+import { LayoutDirective, LayoutAlignDirective, LayoutGapDirective } from '@ngbracket/ngx-layout/flex';
+import { MatFormField, MatLabel, MatError, MatSuffix } from '@angular/material/form-field';
+import { MatInput } from '@angular/material/input';
+import { MatSelect } from '@angular/material/select';
+import { MatOption } from '@angular/material/autocomplete';
+import { MatDatepickerInput, MatDatepickerToggle, MatDatepicker } from '@angular/material/datepicker';
+import { MatButton } from '@angular/material/button';
+import { HasPermissionDirective } from '../../../directives/has-permission/has-permission.directive';
 
 /**
  * Create Tax Component component.
  */
 @Component({
-  standalone: false,
-  selector: 'mifosx-create-tax-component',
-  templateUrl: './create-tax-component.component.html',
-  changeDetection: ChangeDetectionStrategy.Eager,
-  styleUrls: ['./create-tax-component.component.scss']
+    selector: 'mifosx-create-tax-component',
+    templateUrl: './create-tax-component.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    styleUrls: ['./create-tax-component.component.scss'],
+    imports: [MatCard, ReactiveFormsModule, MatCardContent, LayoutDirective, MatFormField, MatLabel, MatInput, NgIf, MatError, MatSelect, NgFor, MatOption, MatDatepickerInput, MatDatepickerToggle, MatSuffix, MatDatepicker, MatCardActions, LayoutAlignDirective, LayoutGapDirective, MatButton, RouterLink, HasPermissionDirective]
 })
 export class CreateTaxComponentComponent implements OnInit {
 
@@ -49,7 +58,7 @@ export class CreateTaxComponentComponent implements OnInit {
               private route: ActivatedRoute,
               private router: Router,
               private datePipe: DatePipe) {
-    this.route.data.subscribe(( data: { taxComponentTemplate: any }) => {
+    this.route.data.subscribe((data: any) => {
       this.taxComponentTemplateData = data.taxComponentTemplate;
     });
   }
@@ -80,11 +89,11 @@ export class CreateTaxComponentComponent implements OnInit {
    * Sets the conditional controls of the tax Component form
    */
   setConditionalControls() {
-    this.taxComponentForm.get('debitAccountType').valueChanges.subscribe(debitAccountTypeId => {
+    this.taxComponentForm.get('debitAccountType')!.valueChanges.subscribe(debitAccountTypeId => {
       this.debitAccountData = this.getAccountsData(debitAccountTypeId);
       this.taxComponentForm.addControl('debitAcountId', new FormControl('', Validators.required));
     });
-    this.taxComponentForm.get('creditAccountType').valueChanges.subscribe(creditAccountTypeId => {
+    this.taxComponentForm.get('creditAccountType')!.valueChanges.subscribe(creditAccountTypeId => {
       this.creditAccountData = this.getAccountsData(creditAccountTypeId);
       this.taxComponentForm.addControl('creditAcountId', new FormControl('', Validators.required));
     });
@@ -118,7 +127,7 @@ export class CreateTaxComponentComponent implements OnInit {
     // TODO: Update once language and date settings are setup
     const dateFormat = 'yyyy-MM-dd';
     this.taxComponentForm.patchValue({
-      startDate: this.datePipe.transform(prevStartDate, dateFormat)
+      startDate: this.datePipe.transform(prevStartDate as Date, dateFormat)
     });
     const taxComponent = this.taxComponentForm.value;
     taxComponent.locale = 'en';

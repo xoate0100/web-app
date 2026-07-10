@@ -1,7 +1,7 @@
 /** Angular Imports */
 import { NgModule } from '@angular/core';
 import { DatePipe } from '@angular/common';
-import { DirectivesModule } from '../directives/directives.module';
+
 
 /** Custom Modules */
 import { LoansRoutingModule } from './loans-routing.module';
@@ -72,9 +72,7 @@ import { LoanAccountLoadDocumentsDialogComponent } from './custom-dialog/loan-ac
  * All components related to loan functions should be declared here.
  */
 @NgModule({
-  imports: [SharedModule, LoansRoutingModule, DirectivesModule, PipesModule],
-  declarations: [
-    AddLoanChargeComponent,
+    imports: [SharedModule, LoansRoutingModule, PipesModule, AddLoanChargeComponent,
     LoansViewComponent,
     GeneralTabComponent,
     AccountDetailsComponent,
@@ -127,8 +125,7 @@ import { LoanAccountLoadDocumentsDialogComponent } from './custom-dialog/loan-ac
     ViewTransactionComponent,
     EditTransactionComponent,
     ViewRecieptComponent,
-    ExportTransactionsComponent
-  ],
-  providers: [DatePipe],
+    ExportTransactionsComponent],
+    providers: [DatePipe],
 })
 export class LoansModule {}

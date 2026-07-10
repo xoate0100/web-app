@@ -2,7 +2,7 @@
 import { Component, OnInit, ViewChild, ChangeDetectionStrategy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
-import { FormBuilder, Validators } from '@angular/forms';
+import { FormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
 
 /** Custom Dialogs */
 import { FormDialogComponent } from 'app/shared/form-dialog/form-dialog.component';
@@ -13,16 +13,25 @@ import { InputBase } from 'app/shared/form-dialog/formfield/model/input-base';
 
 /** Custom Services */
 import { OrganizationService } from '../organization.service';
+import { MatCard } from '@angular/material/card';
+import { HasPermissionDirective } from '../../directives/has-permission/has-permission.directive';
+import { LayoutDirective, LayoutAlignDirective, LayoutGapDirective, FlexDirective } from '@ngbracket/ngx-layout/flex';
+import { MatFormField, MatError } from '@angular/material/form-field';
+import { MatInput } from '@angular/material/input';
+import { NgIf, NgFor } from '@angular/common';
+import { MatButton } from '@angular/material/button';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import { MatGridList, MatGridTile } from '@angular/material/grid-list';
 
 /**
  * Manage Funds component.
  */
 @Component({
-  standalone: false,
-  selector: 'mifosx-manage-funds',
-  templateUrl: './manage-funds.component.html',
-  changeDetection: ChangeDetectionStrategy.Eager,
-  styleUrls: ['./manage-funds.component.scss']
+    selector: 'mifosx-manage-funds',
+    templateUrl: './manage-funds.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    styleUrls: ['./manage-funds.component.scss'],
+    imports: [MatCard, HasPermissionDirective, ReactiveFormsModule, LayoutDirective, LayoutAlignDirective, LayoutGapDirective, MatFormField, FlexDirective, MatInput, NgIf, MatError, MatButton, FaIconComponent, MatGridList, NgFor, MatGridTile]
 })
 export class ManageFundsComponent implements OnInit {
 
@@ -44,7 +53,7 @@ export class ManageFundsComponent implements OnInit {
               private formBuilder: FormBuilder,
               private organizationservice: OrganizationService,
               public dialog: MatDialog) {
-    this.route.data.subscribe(( data: { funds: any }) => {
+    this.route.data.subscribe((data: any) => {
       this.fundsData = data.funds;
     });
   }

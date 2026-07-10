@@ -1,16 +1,18 @@
 /** Angular Imports */
 import { Component, Inject, ChangeDetectionStrategy } from '@angular/core';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatDialogRef, MAT_DIALOG_DATA, MatDialogTitle, MatDialogContent, MatDialogActions, MatDialogClose } from '@angular/material/dialog';
+import { CdkScrollable } from '@angular/cdk/scrolling';
+import { MatButton } from '@angular/material/button';
 
 /**
  * Approve share dialog component.
  */
 @Component({
-  standalone: false,
-  selector: 'mifosx-approve-share-dialog',
-  templateUrl: './approve-share-dialog.component.html',
-  changeDetection: ChangeDetectionStrategy.Eager,
-  styleUrls: ['./approve-share-dialog.component.scss']
+    selector: 'mifosx-approve-share-dialog',
+    templateUrl: './approve-share-dialog.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    styleUrls: ['./approve-share-dialog.component.scss'],
+    imports: [MatDialogTitle, CdkScrollable, MatDialogContent, MatDialogActions, MatButton, MatDialogClose]
 })
 export class ApproveShareDialogComponent {
 

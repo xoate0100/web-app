@@ -1,13 +1,21 @@
 import { Component, OnInit, Inject, ChangeDetectionStrategy } from '@angular/core';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MatDialogRef, MAT_DIALOG_DATA, MatDialogTitle, MatDialogContent, MatDialogActions, MatDialogClose } from '@angular/material/dialog';
+import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
+import { CdkScrollable } from '@angular/cdk/scrolling';
+import { LayoutDirective, LayoutAlignDirective, LayoutGapDirective } from '@ngbracket/ngx-layout/flex';
+import { MatFormField, MatLabel, MatError } from '@angular/material/form-field';
+import { MatSelect } from '@angular/material/select';
+import { NgFor, NgIf } from '@angular/common';
+import { MatOption } from '@angular/material/autocomplete';
+import { MatInput } from '@angular/material/input';
+import { MatButton } from '@angular/material/button';
 
 @Component({
-  standalone: false,
-  selector: 'mifosx-deposit-product-incentive-form-dialog',
-  templateUrl: './deposit-product-incentive-form-dialog.component.html',
-  changeDetection: ChangeDetectionStrategy.Eager,
-  styleUrls: ['./deposit-product-incentive-form-dialog.component.scss']
+    selector: 'mifosx-deposit-product-incentive-form-dialog',
+    templateUrl: './deposit-product-incentive-form-dialog.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    styleUrls: ['./deposit-product-incentive-form-dialog.component.scss'],
+    imports: [MatDialogTitle, CdkScrollable, MatDialogContent, LayoutDirective, ReactiveFormsModule, MatFormField, MatLabel, MatSelect, NgFor, MatOption, MatError, NgIf, MatInput, MatDialogActions, LayoutAlignDirective, LayoutGapDirective, MatButton, MatDialogClose]
 })
 export class DepositProductIncentiveFormDialogComponent implements OnInit {
 
@@ -59,11 +67,11 @@ export class DepositProductIncentiveFormDialogComponent implements OnInit {
       });
     }
 
-    this.title = `Incentives: ${this.entityTypeData.find((entityType: any) => this.depositProductIncentiveForm.get('entityType').value === entityType.id).value} Attributes`;
+    this.title = `Incentives: ${this.entityTypeData.find((entityType: any) => this.depositProductIncentiveForm.get('entityType')!.value === entityType.id).value} Attributes`;
   }
 
   setConditionalControls() {
-    this.depositProductIncentiveForm.get('attributeName').valueChanges
+    this.depositProductIncentiveForm.get('attributeName')!.valueChanges
       .subscribe((attributeName: any) => {
         this.depositProductIncentiveForm.patchValue({ 'attributeValue': '' });
         this.attributeValueData = this.data.chartTemplate[`${this.attributeNameData.find((option: any) => option.id === attributeName).code.split('.')[1]}Options`];

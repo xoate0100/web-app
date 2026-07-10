@@ -4,7 +4,7 @@ import { NgModule } from '@angular/core';
 /** Custom Modules */
 import { SharedModule } from '../shared/shared.module';
 import { AccountingRoutingModule } from './accounting-routing.module';
-import { DirectivesModule } from '../directives/directives.module';
+
 
 /** Custom Components */
 import { AccountingComponent } from './accounting.component';
@@ -43,12 +43,9 @@ import { ViewProvisioningJournalEntriesComponent } from './provisioning-entries/
  * All components related to accounting functions should be declared here.
  */
 @NgModule({
-  imports: [
+    imports: [
     SharedModule,
-    DirectivesModule,
-    AccountingRoutingModule
-  ],
-  declarations: [
+    AccountingRoutingModule,
     AccountingComponent,
     FrequentPostingsComponent,
     CreateJournalEntryComponent,
@@ -78,6 +75,6 @@ import { ViewProvisioningJournalEntriesComponent } from './provisioning-entries/
     CreateProvisioningEntryComponent,
     ViewProvisioningEntryComponent,
     ViewProvisioningJournalEntriesComponent
-  ]
+]
 })
 export class AccountingModule { }

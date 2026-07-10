@@ -32,45 +32,43 @@ import { MaterialModule } from './material.module';
  * Modules and components that are shared throughout the application should be here.
  */
 @NgModule({
-  imports: [
-    CommonModule,
-    IconsModule,
-    MaterialModule,
-    ReactiveFormsModule
-  ],
-  declarations: [
-    FormfieldComponent,
-    FormDialogComponent,
-    DeleteDialogComponent,
-    CancelDialogComponent,
-    FileUploadComponent,
-    FooterComponent,
-    LanguageSelectorComponent,
-    ThemePickerComponent,
-    ChangePasswordDialogComponent,
-    EnableDialogComponent,
-    DisableDialogComponent,
-    ConfirmationDialogComponent,
-    KeyboardShortcutsDialogComponent,
-    ErrorDialogComponent,
-    NotificationsTrayComponent,
-    SearchToolComponent,
-    ServerSelectorComponent
-  ],
-  exports: [
-    FileUploadComponent,
-    FooterComponent,
-    LanguageSelectorComponent,
-    ServerSelectorComponent,
-    ThemePickerComponent,
-    NotificationsTrayComponent,
-    SearchToolComponent,
-    ErrorDialogComponent,
-    CommonModule,
-    IconsModule,
-    MaterialModule,
-    FormsModule,
-    ReactiveFormsModule,
-  ]
+    imports: [
+        CommonModule,
+        IconsModule,
+        MaterialModule,
+        ReactiveFormsModule,
+        FormfieldComponent,
+        FormDialogComponent,
+        DeleteDialogComponent,
+        CancelDialogComponent,
+        FileUploadComponent,
+        FooterComponent,
+        LanguageSelectorComponent,
+        ThemePickerComponent,
+        ChangePasswordDialogComponent,
+        EnableDialogComponent,
+        DisableDialogComponent,
+        ConfirmationDialogComponent,
+        KeyboardShortcutsDialogComponent,
+        ErrorDialogComponent,
+        NotificationsTrayComponent,
+        SearchToolComponent,
+        ServerSelectorComponent
+    ],
+    exports: [
+        FileUploadComponent,
+        FooterComponent,
+        LanguageSelectorComponent,
+        ServerSelectorComponent,
+        ThemePickerComponent,
+        NotificationsTrayComponent,
+        SearchToolComponent,
+        ErrorDialogComponent,
+        CommonModule,
+        IconsModule,
+        MaterialModule,
+        FormsModule,
+        ReactiveFormsModule,
+    ]
 })
 export class SharedModule { }

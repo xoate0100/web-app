@@ -18,7 +18,7 @@ export class ChargesTemplateAndResolver implements Resolve<Object> {
      * @returns {Observable<any>}
      */
     resolve(route: ActivatedRouteSnapshot): Observable<any> {
-        const savingProductId = route.paramMap.get('id');
+        const savingProductId = route.paramMap.get('id')!;
         return this.productsService.getCharge(savingProductId, true);
     }
 

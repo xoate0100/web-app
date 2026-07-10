@@ -1,23 +1,32 @@
 /** Angular Imports. */
 import { Component, OnInit, ViewChild, ChangeDetectionStrategy } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
-import { DatePipe } from '@angular/common';
+import { FormBuilder, FormGroup, Validators, FormControl, ReactiveFormsModule } from '@angular/forms';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { DatePipe, NgIf, NgFor } from '@angular/common';
 
 /** Custom Services. */
 import { OrganizationService } from 'app/organization/organization.service';
 import { SettingsService } from 'app/settings/settings.service';
+import { MatCard, MatCardContent, MatCardActions } from '@angular/material/card';
+import { LayoutDirective, LayoutAlignDirective, LayoutGapDirective } from '@ngbracket/ngx-layout/flex';
+import { MatFormField, MatLabel, MatError, MatSuffix } from '@angular/material/form-field';
+import { MatInput } from '@angular/material/input';
+import { MatDatepickerInput, MatDatepickerToggle, MatDatepicker } from '@angular/material/datepicker';
+import { MatSelect } from '@angular/material/select';
+import { MatOption } from '@angular/material/autocomplete';
+import { MatButton } from '@angular/material/button';
+import { HasPermissionDirective } from '../../../directives/has-permission/has-permission.directive';
 
 /**
  * Create Holiday component.
  * TODO: Develop a custom angular checkbox tree and replace offices select.
  */
 @Component({
-  standalone: false,
-  selector: 'mifosx-create-holiday',
-  templateUrl: './create-holiday.component.html',
-  changeDetection: ChangeDetectionStrategy.Eager,
-  styleUrls: ['./create-holiday.component.scss']
+    selector: 'mifosx-create-holiday',
+    templateUrl: './create-holiday.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    styleUrls: ['./create-holiday.component.scss'],
+    imports: [MatCard, ReactiveFormsModule, MatCardContent, LayoutDirective, MatFormField, MatLabel, MatInput, NgIf, MatError, MatDatepickerInput, MatDatepickerToggle, MatSuffix, MatDatepicker, MatSelect, NgFor, MatOption, MatCardActions, LayoutAlignDirective, LayoutGapDirective, MatButton, RouterLink, HasPermissionDirective]
 })
 export class CreateHolidayComponent implements OnInit {
 
@@ -46,7 +55,7 @@ export class CreateHolidayComponent implements OnInit {
               private organizationService: OrganizationService,
               private settings: SettingsService,
               private router: Router ) {
-    this.route.data.subscribe((data: { offices: any, holidayTemplate: any }) => {
+    this.route.data.subscribe((data: any) => {
       this.officesData = data.offices;
       this.repaymentSchedulingTypes = data.holidayTemplate;
     });
@@ -75,7 +84,7 @@ export class CreateHolidayComponent implements OnInit {
    * Sets the conditional controls.
    */
   buildDependencies() {
-    this.holidayForm.get('reschedulingType').valueChanges.subscribe((option: any) => {
+    this.holidayForm.get('reschedulingType')!.valueChanges.subscribe((option: any) => {
       if (option === 2) {
         this.holidayForm.addControl('repaymentsRescheduledTo', new FormControl('', Validators.required));
       } else {
@@ -91,12 +100,12 @@ export class CreateHolidayComponent implements OnInit {
     const dateFormat = this.settings.dateFormat;
     const locale = this.settings.language.code;
     this.holidayForm.patchValue({
-      'fromDate': this.datePipe.transform(this.holidayForm.value.fromDate, dateFormat),
-      'toDate': this.datePipe.transform(this.holidayForm.value.toDate, dateFormat),
+      'fromDate': this.datePipe.transform(this.holidayForm.value.fromDate as Date, dateFormat),
+      'toDate': this.datePipe.transform(this.holidayForm.value.toDate as Date, dateFormat),
     });
     if (this.holidayForm.contains('repaymentsRescheduledTo')) {
       this.holidayForm.patchValue({
-        'repaymentsRescheduledTo': this.datePipe.transform(this.holidayForm.value.repaymentsRescheduledTo, dateFormat)
+        'repaymentsRescheduledTo': this.datePipe.transform(this.holidayForm.value.repaymentsRescheduledTo as Date, dateFormat)
       });
     }
     const holiday = {

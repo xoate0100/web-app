@@ -25,8 +25,8 @@ export class LoansAccountChargeResolver implements Resolve<Object> {
      * @returns {Observable<any>}
      */
     resolve(route: ActivatedRouteSnapshot): Observable<any> {
-        const loanAccountId = route.parent.parent.paramMap.get('loanId');
-        const chargeId = route.paramMap.get('id');
+        const loanAccountId = route.parent!.parent!.paramMap.get('loanId')!;
+        const chargeId = route.paramMap.get('id')!;
         return this.loansService.getLoansAccountCharge(loanAccountId, chargeId);
     }
 

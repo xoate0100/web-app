@@ -1,7 +1,7 @@
 /** Angular Imports */
 import { Component, OnInit, ViewChild, ChangeDetectionStrategy } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { FormControl } from '@angular/forms';
+import { FormControl, ReactiveFormsModule } from '@angular/forms';
 
 /** Custom Services */
 import { NavigationService } from './navigation.service';
@@ -12,16 +12,22 @@ import { StaffNavigationComponent } from './staff-navigation/staff-navigation.co
 import { CenterNavigationComponent } from './center-navigation/center-navigation.component';
 import { GroupNavigationComponent } from './group-navigation/group-navigation.component';
 import { ClientNavigationComponent } from './client-navigation/client-navigation.component';
+import { LayoutDirective, LayoutGapDirective, FlexDirective } from '@ngbracket/ngx-layout/flex';
+import { MatCard, MatCardContent } from '@angular/material/card';
+import { NgIf, NgFor } from '@angular/common';
+import { MatFormField, MatLabel } from '@angular/material/form-field';
+import { MatSelect } from '@angular/material/select';
+import { MatOption } from '@angular/material/autocomplete';
 
 /**
  * Navigation component.
  */
 @Component({
-  standalone: false,
-  selector: 'mifosx-navigation',
-  templateUrl: './navigation.component.html',
-  changeDetection: ChangeDetectionStrategy.Eager,
-  styleUrls: ['./navigation.component.scss']
+    selector: 'mifosx-navigation',
+    templateUrl: './navigation.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    styleUrls: ['./navigation.component.scss'],
+    imports: [LayoutDirective, LayoutGapDirective, FlexDirective, MatCard, MatCardContent, NgIf, MatFormField, MatLabel, MatSelect, ReactiveFormsModule, NgFor, MatOption, OfficeNavigationComponent, StaffNavigationComponent, CenterNavigationComponent, GroupNavigationComponent, ClientNavigationComponent]
 })
 export class NavigationComponent implements OnInit {
 
@@ -71,7 +77,7 @@ export class NavigationComponent implements OnInit {
   constructor(private navigationService: NavigationService,
               private route: ActivatedRoute,
               private router: Router) {
-    this.route.data.subscribe((data: { offices: any }) => {
+    this.route.data.subscribe((data: any) => {
       this.officeData = data.offices;
     });
   }

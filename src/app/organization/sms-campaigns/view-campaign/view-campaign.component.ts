@@ -1,10 +1,10 @@
 /** Angular Imports */
 import { Component, OnInit, ViewChild, ChangeDetectionStrategy } from '@angular/core';
-import { FormGroup, FormBuilder } from '@angular/forms';
+import { FormGroup, FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
-import { MatTableDataSource, MatTable } from '@angular/material/table';
-import { ActivatedRoute, Router } from '@angular/router';
-import { DatePipe } from '@angular/common';
+import { MatTableDataSource, MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow } from '@angular/material/table';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { DatePipe, NgIf, NgFor } from '@angular/common';
 
 /** Custom Dialogs */
 import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.component';
@@ -17,16 +17,26 @@ import { DatepickerBase } from 'app/shared/form-dialog/formfield/model/datepicke
 /** Custom Services */
 import { OrganizationService } from '../../organization.service';
 import { SettingsService } from 'app/settings/settings.service';
+import { LayoutDirective, LayoutGapDirective, LayoutAlignDirective } from '@ngbracket/ngx-layout/flex';
+import { HasPermissionDirective } from '../../../directives/has-permission/has-permission.directive';
+import { MatButton } from '@angular/material/button';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import { MatCard, MatCardContent } from '@angular/material/card';
+import { MatTabGroup, MatTab } from '@angular/material/tabs';
+import { MatList, MatListItem } from '@angular/material/list';
+import { MatInput } from '@angular/material/input';
+import { MatFormField, MatLabel, MatSuffix } from '@angular/material/form-field';
+import { MatDatepickerInput, MatDatepickerToggle, MatDatepicker } from '@angular/material/datepicker';
 
 /**
  * View SMS Campaign Component
  */
 @Component({
-  standalone: false,
-  selector: 'mifosx-view-campaign',
-  templateUrl: './view-campaign.component.html',
-  changeDetection: ChangeDetectionStrategy.Eager,
-  styleUrls: ['./view-campaign.component.scss']
+    selector: 'mifosx-view-campaign',
+    templateUrl: './view-campaign.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    styleUrls: ['./view-campaign.component.scss'],
+    imports: [LayoutDirective, LayoutGapDirective, LayoutAlignDirective, NgIf, HasPermissionDirective, MatButton, RouterLink, FaIconComponent, MatCard, MatCardContent, MatTabGroup, MatTab, MatList, MatListItem, MatInput, NgFor, ReactiveFormsModule, MatFormField, MatLabel, MatDatepickerInput, MatDatepickerToggle, MatSuffix, MatDatepicker, MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow, DatePipe]
 })
 export class ViewCampaignComponent implements OnInit {
 
@@ -89,7 +99,7 @@ export class ViewCampaignComponent implements OnInit {
               private datePipe: DatePipe,
               private organizationService: OrganizationService,
               private settingsService: SettingsService) {
-    this.route.data.subscribe((data: { smsCampaign: any }) => {
+    this.route.data.subscribe((data: any) => {
       this.smsCampaignData = data.smsCampaign;
     });
   }
@@ -148,7 +158,7 @@ export class ViewCampaignComponent implements OnInit {
         const locale = this.settingsService.language.code;
         const dateFormat = this.settingsService.dateFormat;
         const dataObject = {
-          closureDate: this.datePipe.transform(response.data.value.closureDate, dateFormat),
+          closureDate: this.datePipe.transform(response.data.value.closureDate as Date, dateFormat),
           dateFormat,
           locale
         };
@@ -183,7 +193,7 @@ export class ViewCampaignComponent implements OnInit {
         const locale = this.settingsService.language.code;
         const dateFormat = this.settingsService.dateFormat;
         const dataObject = {
-          activationDate: this.datePipe.transform(response.data.value.activationDate, dateFormat),
+          activationDate: this.datePipe.transform(response.data.value.activationDate as Date, dateFormat),
           dateFormat,
           locale
         };
@@ -218,7 +228,7 @@ export class ViewCampaignComponent implements OnInit {
         const locale = this.settingsService.language.code;
         const dateFormat = this.settingsService.dateFormat;
         const dataObject = {
-          activationDate: this.datePipe.transform(response.data.value.activationDate, dateFormat),
+          activationDate: this.datePipe.transform(response.data.value.activationDate as Date, dateFormat),
           dateFormat,
           locale
         };
@@ -264,8 +274,8 @@ export class ViewCampaignComponent implements OnInit {
     // TODO: Update once language and date settings are setup
     const dateFormat = this.settingsService.dateFormat;
     this.smsForm.patchValue({
-      fromDate: this.datePipe.transform(prevFromDate, dateFormat),
-      toDate: this.datePipe.transform(prevToDate, dateFormat)
+      fromDate: this.datePipe.transform(prevFromDate as Date, dateFormat),
+      toDate: this.datePipe.transform(prevToDate as Date, dateFormat)
     });
     const SMS = this.smsForm.value;
     SMS.id = this.smsCampaignData.id;

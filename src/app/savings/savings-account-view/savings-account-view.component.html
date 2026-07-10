@@ -15,7 +15,7 @@
       <div class="mat-typography account-card-title">
         <mat-card-title>
           <h3>
-            <i class="fa fa-stop" [ngClass]="savingsAccountData.status.code | statusLookup" [matTooltip]="savingsAccountData.status.value"></i>
+            <fa-icon icon="stop" [ngClass]="savingsAccountData.status.code | statusLookup" [matTooltip]="savingsAccountData.status.value"></fa-icon>
               Account Name : {{savingsAccountData.savingsProductName}}
           </h3>
         </mat-card-title>
@@ -36,7 +36,7 @@
 
       <ng-container *ngFor="let button of buttonConfig.singleButtons">
         <button mat-raised-button *mifosxHasPermission="button.taskPermissionName" (click)="doAction(button.name)">
-          <i class="{{button.icon}}"></i> {{button.name}}</button>
+          <fa-icon [icon]="button.icon"></fa-icon> {{button.name}}</button>
       </ng-container>
 
       <ng-container *ngIf="buttonConfig.options">

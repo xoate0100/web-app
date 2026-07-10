@@ -1,25 +1,34 @@
 /** Angular Imports */
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
-import { FormGroup, FormBuilder, FormArray, Validators } from '@angular/forms';
-import { Router, ActivatedRoute } from '@angular/router';
+import { FormGroup, FormBuilder, FormArray, Validators, ReactiveFormsModule } from '@angular/forms';
+import { Router, ActivatedRoute, RouterLink } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
-import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
+import { CdkDragDrop, moveItemInArray, CdkDropList, CdkDrag } from '@angular/cdk/drag-drop';
 
 /** Custom Services */
 import { SystemService } from '../../system.service';
 
 /** Custom Components */
 import { CancelDialogComponent } from '../../../shared/cancel-dialog/cancel-dialog.component';
+import { LayoutDirective, LayoutGapDirective, FlexDirective, FlexFillDirective, LayoutAlignDirective } from '@ngbracket/ngx-layout/flex';
+import { MatCard, MatCardContent, MatCardActions } from '@angular/material/card';
+import { MatFormField, MatLabel, MatError } from '@angular/material/form-field';
+import { MatInput } from '@angular/material/input';
+import { NgIf, NgFor } from '@angular/common';
+import { MatButton, MatIconButton } from '@angular/material/button';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import { MatDivider } from '@angular/material/divider';
+import { MatTooltip } from '@angular/material/tooltip';
 
 /**
  * Create survey component.
  */
 @Component({
-  standalone: false,
-  selector: 'mifosx-create-survey',
-  templateUrl: './create-survey.component.html',
-  changeDetection: ChangeDetectionStrategy.Eager,
-  styleUrls: ['./create-survey.component.scss']
+    selector: 'mifosx-create-survey',
+    templateUrl: './create-survey.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    styleUrls: ['./create-survey.component.scss'],
+    imports: [ReactiveFormsModule, LayoutDirective, LayoutGapDirective, MatCard, MatCardContent, MatFormField, FlexDirective, MatLabel, MatInput, NgIf, MatError, FlexFillDirective, LayoutAlignDirective, MatButton, RouterLink, CdkDropList, NgFor, CdkDrag, FaIconComponent, MatDivider, MatIconButton, MatTooltip, MatCardActions]
 })
 export class CreateSurveyComponent implements OnInit {
 
@@ -143,9 +152,9 @@ export class CreateSurveyComponent implements OnInit {
    */
   updateSequenceNumber() {
     for (let questionIndex = 0; questionIndex < this.questionDatas.length; questionIndex++) {
-      this.questionDatas.at(questionIndex).get('sequenceNo').setValue(questionIndex + 1);
+      this.questionDatas.at(questionIndex)!.get('sequenceNo')!.setValue(questionIndex + 1);
       for (let responseIndex = 0; responseIndex < this.getResponseDatas(questionIndex).length; responseIndex++) {
-        this.getResponseDatas(questionIndex).at(responseIndex).get('sequenceNo').setValue(responseIndex + 1);
+        this.getResponseDatas(questionIndex).at(responseIndex)!.get('sequenceNo')!.setValue(responseIndex + 1);
       }
     }
   }

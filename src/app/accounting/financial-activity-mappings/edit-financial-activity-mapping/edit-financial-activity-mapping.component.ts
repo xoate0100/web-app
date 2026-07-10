@@ -1,20 +1,28 @@
 /** Angular Imports */
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router, ActivatedRoute } from '@angular/router';
+import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
+import { Router, ActivatedRoute, RouterLink } from '@angular/router';
 
 /** Custom Services */
 import { AccountingService } from '../../accounting.service';
+import { MatCard, MatCardContent, MatCardActions } from '@angular/material/card';
+import { LayoutDirective, LayoutAlignDirective, LayoutGapDirective } from '@ngbracket/ngx-layout/flex';
+import { MatFormField, MatLabel } from '@angular/material/form-field';
+import { MatSelect } from '@angular/material/select';
+import { NgFor } from '@angular/common';
+import { MatOption } from '@angular/material/autocomplete';
+import { MatButton } from '@angular/material/button';
+import { HasPermissionDirective } from '../../../directives/has-permission/has-permission.directive';
 
 /**
  * Edit financial activity mapping component.
  */
 @Component({
-  standalone: false,
-  selector: 'mifosx-edit-financial-activity-mapping',
-  templateUrl: './edit-financial-activity-mapping.component.html',
-  changeDetection: ChangeDetectionStrategy.Eager,
-  styleUrls: ['./edit-financial-activity-mapping.component.scss']
+    selector: 'mifosx-edit-financial-activity-mapping',
+    templateUrl: './edit-financial-activity-mapping.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    styleUrls: ['./edit-financial-activity-mapping.component.scss'],
+    imports: [MatCard, ReactiveFormsModule, MatCardContent, LayoutDirective, MatFormField, MatLabel, MatSelect, NgFor, MatOption, MatCardActions, LayoutAlignDirective, LayoutGapDirective, MatButton, RouterLink, HasPermissionDirective]
 })
 export class EditFinancialActivityMappingComponent implements OnInit {
 
@@ -44,7 +52,7 @@ export class EditFinancialActivityMappingComponent implements OnInit {
               private accountingService: AccountingService,
               private route: ActivatedRoute,
               private router: Router) {
-    this.route.data.subscribe((data: { financialActivityAccountAndTemplate: any }) => {
+    this.route.data.subscribe((data: any) => {
       this.financialActivityAccountId = data.financialActivityAccountAndTemplate.id;
       this.financialActivityId = data.financialActivityAccountAndTemplate.financialActivityData.id;
       this.glAccountId = data.financialActivityAccountAndTemplate.glAccountData.id;
@@ -59,8 +67,8 @@ export class EditFinancialActivityMappingComponent implements OnInit {
   ngOnInit() {
     this.createFinancialActivityMappingForm();
     this.setGLAccountData();
-    this.financialActivityMappingForm.get('financialActivityId').setValue(this.financialActivityId);
-    this.financialActivityMappingForm.get('glAccountId').setValue(this.glAccountId);
+    this.financialActivityMappingForm.get('financialActivityId')!.setValue(this.financialActivityId);
+    this.financialActivityMappingForm.get('glAccountId')!.setValue(this.glAccountId);
   }
 
   /**
@@ -77,7 +85,7 @@ export class EditFinancialActivityMappingComponent implements OnInit {
    * Sets the gl account data on the basis of selected financial activity.
    */
   setGLAccountData() {
-    this.financialActivityMappingForm.get('financialActivityId').valueChanges
+    this.financialActivityMappingForm.get('financialActivityId')!.valueChanges
       .subscribe(financialActivityId => {
         switch (financialActivityId) {
           case 100:

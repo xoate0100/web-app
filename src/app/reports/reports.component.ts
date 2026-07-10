@@ -1,19 +1,22 @@
 /** Angular Imports */
 import { Component, OnInit, ViewChild, ChangeDetectionStrategy } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
-import { MatSort } from '@angular/material/sort';
-import { MatTableDataSource } from '@angular/material/table';
-import { ActivatedRoute, Router } from '@angular/router';
+import { MatSort, MatSortHeader } from '@angular/material/sort';
+import { MatTableDataSource, MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow } from '@angular/material/table';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { LayoutDirective, LayoutGapDirective, FlexDirective } from '@ngbracket/ngx-layout/flex';
+import { MatFormField, MatLabel } from '@angular/material/form-field';
+import { MatInput } from '@angular/material/input';
 
 /**
  * Reports component.
  */
 @Component({
-  standalone: false,
-  selector: 'mifosx-reports',
-  templateUrl: './reports.component.html',
-  changeDetection: ChangeDetectionStrategy.Eager,
-  styleUrls: ['./reports.component.scss']
+    selector: 'mifosx-reports',
+    templateUrl: './reports.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    styleUrls: ['./reports.component.scss'],
+    imports: [LayoutDirective, LayoutGapDirective, MatFormField, FlexDirective, MatLabel, MatInput, MatTable, MatSort, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatSortHeader, MatCellDef, MatCell, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow, RouterLink, MatPaginator]
 })
 export class ReportsComponent implements OnInit {
 
@@ -40,10 +43,10 @@ export class ReportsComponent implements OnInit {
   constructor(private route: ActivatedRoute,
               private router: Router) {
     this.router.routeReuseStrategy.shouldReuseRoute = () => false;
-    this.route.data.subscribe(( data: { reports: any }) => {
+    this.route.data.subscribe((data: any) => {
       this.reportsData = data.reports;
     });
-    this.filter = this.route.snapshot.params['filter'];
+    this.filter = this.route.snapshot.params['filter']!;
   }
 
   /*

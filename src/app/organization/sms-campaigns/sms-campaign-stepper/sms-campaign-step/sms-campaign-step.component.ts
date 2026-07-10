@@ -1,6 +1,6 @@
 /** Angular Imports */
 import { Component, OnInit, Input, ViewChild, EventEmitter, Output, ChangeDetectionStrategy } from '@angular/core';
-import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, FormControl, ReactiveFormsModule } from '@angular/forms';
 
 /** Custom Services */
 import { ReportsService } from 'app/reports/reports.service';
@@ -10,16 +10,27 @@ import { ReportParameter } from 'app/reports/common-models/report-parameter.mode
 
 /** Custom Components */
 import { BusinessRuleParametersComponent } from './business-rule-parameters/business-rule-parameters.component';
+import { LayoutDirective, LayoutGapDirective, LayoutAlignDirective, FlexDirective } from '@ngbracket/ngx-layout/flex';
+import { MatFormField, MatLabel, MatError, MatSuffix } from '@angular/material/form-field';
+import { MatInput } from '@angular/material/input';
+import { NgIf, NgFor } from '@angular/common';
+import { MatSelect } from '@angular/material/select';
+import { MatOption } from '@angular/material/autocomplete';
+import { MatCheckbox } from '@angular/material/checkbox';
+import { MatDatepickerInput, MatDatepickerToggle, MatDatepicker } from '@angular/material/datepicker';
+import { MatButton } from '@angular/material/button';
+import { MatStepperPrevious, MatStepperNext } from '@angular/material/stepper';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 
 /**
  * SMS Campaign Step Component
  */
 @Component({
-  standalone: false,
-  selector: 'mifosx-sms-campaign-step',
-  templateUrl: './sms-campaign-step.component.html',
-  changeDetection: ChangeDetectionStrategy.Eager,
-  styleUrls: ['./sms-campaign-step.component.scss']
+    selector: 'mifosx-sms-campaign-step',
+    templateUrl: './sms-campaign-step.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    styleUrls: ['./sms-campaign-step.component.scss'],
+    imports: [ReactiveFormsModule, LayoutDirective, LayoutGapDirective, LayoutAlignDirective, MatFormField, FlexDirective, MatLabel, MatInput, MatError, NgIf, MatSelect, NgFor, MatOption, MatCheckbox, MatDatepickerInput, MatDatepickerToggle, MatSuffix, MatDatepicker, MatButton, MatStepperPrevious, FaIconComponent, MatStepperNext, BusinessRuleParametersComponent]
 })
 export class SmsCampaignStepComponent implements OnInit {
 
@@ -127,14 +138,14 @@ export class SmsCampaignStepComponent implements OnInit {
    * Gets reports parameters and passes it to subcomponent on business rule value changes.
    */
   buildDependencies() {
-    this.smsCampaignDetailsForm.get('isNotification').valueChanges.subscribe((value: boolean) => {
+    this.smsCampaignDetailsForm.get('isNotification')!.valueChanges.subscribe((value: boolean) => {
       if (!value) {
         this.smsCampaignDetailsForm.addControl('providerId', new FormControl(null));
       } else {
         this.smsCampaignDetailsForm.removeControl('providerId');
       }
     });
-    this.smsCampaignDetailsForm.get('runReportId').valueChanges.subscribe((value: number) => {
+    this.smsCampaignDetailsForm.get('runReportId')!.valueChanges.subscribe((value: number) => {
       if (value) {
         const report = this.businessRules.find((rule: any) => rule.reportId === value);
         this.reportService.getReportParams(report.reportName).subscribe((response: ReportParameter[]) => {
@@ -142,11 +153,11 @@ export class SmsCampaignStepComponent implements OnInit {
         });
       }
     });
-    this.smsCampaignDetailsForm.get('triggerType').valueChanges.subscribe((value: number) => {
+    this.smsCampaignDetailsForm.get('triggerType')!.valueChanges.subscribe((value: number) => {
       this.templateParameters.emit(null);
       this.businessRules = this.smsCampaignTemplate.businessRulesOptions;
       if (this.smsCampaignDetailsForm.controls.runReportId.value) {
-        this.smsCampaignDetailsForm.get('runReportId').patchValue('');
+        this.smsCampaignDetailsForm.get('runReportId')!.patchValue('');
       }
       if (value === 3) {
         this.businessRules = this.businessRules.filter((rule: any) => rule.reportSubType === 'Triggered');
@@ -157,7 +168,7 @@ export class SmsCampaignStepComponent implements OnInit {
         this.smsCampaignDetailsForm.addControl('recurrenceStartDate', new FormControl('', Validators.required));
         this.smsCampaignDetailsForm.addControl('frequency', new FormControl('', Validators.required));
         this.smsCampaignDetailsForm.addControl('interval', new FormControl('', Validators.required));
-        this.smsCampaignDetailsForm.get('frequency').valueChanges.subscribe((frequency: number) => {
+        this.smsCampaignDetailsForm.get('frequency')!.valueChanges.subscribe((frequency: number) => {
           this.smsCampaignDetailsForm.removeControl('repeatsOnDay');
           switch (frequency) {
             case 1: // Daily

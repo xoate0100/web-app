@@ -10,8 +10,8 @@
       <div class="mat-typography center-card-title">
         <mat-card-title>
           <h3>
-            <i class="fa fa-stop" matTooltip= "{{ centerViewData.status.value }}"
-          [ngClass]="centerViewData.status.code |statusLookup"></i>
+            <fa-icon icon="stop" matTooltip= "{{ centerViewData.status.value }}"
+          [ngClass]="centerViewData.status.code |statusLookup"></fa-icon>
           Center Name : {{centerViewData.name}}
           </h3>
         </mat-card-title>
@@ -40,7 +40,7 @@
           <p>
              Next Meeting on: {{$safeNavigationMigration(centerViewData.collectionMeetingCalendar?.nextTenRecurringDates[0]) | date}}
              <span *ngIf="editMeeting">
-              <i class="fa fa-edit" (click)="doAction('Edit Meeting')" *mifosxHasPermission="'UPDATE_MEETING'"></i><br />
+              <fa-icon icon="edit" (click)="doAction('Edit Meeting')" *mifosxHasPermission="'UPDATE_MEETING'"></fa-icon><br />
              </span>
              Meeting Frequency: {{$safeNavigationMigration(centerViewData.collectionMeetingCalendar?.frequency.value) | lowercase}}
           </p>
@@ -49,7 +49,7 @@
           <div>
             <p>
               Next Meeting on: Unassigned
-              <i class="fa fa-calendar"></i><br/>
+              <fa-icon icon="calendar"></fa-icon><br/>
               Meeting Frequency: N/A
           </p>
         </div>
@@ -59,14 +59,14 @@
     </mat-card-title-group>
     <mat-card-actions class="center-actions" *ngIf="!(centerViewData.status.value==='Closed')">
       <span *ngIf="!(centerViewData.status.value=='Active')">
-        <button mat-raised-button *mifosxHasPermission="'ACTIVATE_CENTER'" (click)="doAction('Activate')"><i class="fa fa-check-sign"></i> Activate </button>
+        <button mat-raised-button *mifosxHasPermission="'ACTIVATE_CENTER'" (click)="doAction('Activate')"><fa-icon icon="check"></fa-icon> Activate </button>
       </span>
-      <button mat-raised-button *mifosxHasPermission="'UPDATE_CENTER'" (click)="doAction('Edit')"><i class="fa fa-edit"></i> Edit </button>
-      <button mat-raised-button *mifosxHasPermission="'CREATE_GROUP'"><i class="fa fa-plus"></i> Add Group </button>
-      <button mat-raised-button *mifosxHasPermission="'ASSOCIATEGROUPS_CENTER'" (click)="doAction('Manage Groups')"> <i class="fa fa-edit"></i> Manage Groups </button>
+      <button mat-raised-button *mifosxHasPermission="'UPDATE_CENTER'" (click)="doAction('Edit')"><fa-icon icon="edit"></fa-icon> Edit </button>
+      <button mat-raised-button *mifosxHasPermission="'CREATE_GROUP'"><fa-icon icon="plus"></fa-icon> Add Group </button>
+      <button mat-raised-button *mifosxHasPermission="'ASSOCIATEGROUPS_CENTER'" (click)="doAction('Manage Groups')"> <fa-icon icon="edit"></fa-icon> Manage Groups </button>
       <span  *ngIf="centerViewData.active">
       <button mat-raised-button *mifosxHasPermission="'CREATE_SAVINGSACCOUNT'" [routerLink]="['savings-accounts', 'create']">
-        <i class="fa fa-file"></i> Centers Saving Application
+        <fa-icon icon="file"></fa-icon> Centers Saving Application
       </button>
       </span>
       <button mat-raised-button [matMenuTriggerFor]="More"> More </button>

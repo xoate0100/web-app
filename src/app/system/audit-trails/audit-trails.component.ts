@@ -1,10 +1,10 @@
 /** Angular Imports */
 import { Component, OnInit, ViewChild, AfterViewInit, ChangeDetectionStrategy } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
-import { MatSort } from '@angular/material/sort';
-import { ActivatedRoute } from '@angular/router';
-import { FormControl } from '@angular/forms';
-import { DatePipe } from '@angular/common';
+import { MatSort, MatSortHeader } from '@angular/material/sort';
+import { ActivatedRoute, RouterLink } from '@angular/router';
+import { FormControl, ReactiveFormsModule } from '@angular/forms';
+import { DatePipe, NgFor, AsyncPipe } from '@angular/common';
 
 /** Custom Data Source */
 import { AuditTrailsDataSource } from './audit-trail.datasource';
@@ -15,16 +15,25 @@ import { SystemService } from '../system.service';
 /** rxjs Imports */
 import { merge } from 'rxjs';
 import { tap, debounceTime, distinctUntilChanged, startWith, map } from 'rxjs/operators';
+import { LayoutDirective, LayoutAlignDirective, LayoutGapDirective, FlexDirective } from '@ngbracket/ngx-layout/flex';
+import { MatButton } from '@angular/material/button';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import { MatFormField, MatLabel, MatSuffix } from '@angular/material/form-field';
+import { MatInput } from '@angular/material/input';
+import { MatSelect } from '@angular/material/select';
+import { MatOption, MatAutocompleteTrigger, MatAutocomplete } from '@angular/material/autocomplete';
+import { MatDatepickerInput, MatDatepickerToggle, MatDatepicker } from '@angular/material/datepicker';
+import { MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow } from '@angular/material/table';
 
 /**
  * Audit Trails Component.
  */
 @Component({
-  standalone: false,
-  selector: 'mifosx-audit-trails',
-  templateUrl: './audit-trails.component.html',
-  changeDetection: ChangeDetectionStrategy.Eager,
-  styleUrls: ['./audit-trails.component.scss']
+    selector: 'mifosx-audit-trails',
+    templateUrl: './audit-trails.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    styleUrls: ['./audit-trails.component.scss'],
+    imports: [LayoutDirective, LayoutAlignDirective, LayoutGapDirective, MatButton, FaIconComponent, MatFormField, FlexDirective, MatLabel, MatInput, ReactiveFormsModule, MatSelect, NgFor, MatOption, MatAutocompleteTrigger, MatDatepickerInput, MatDatepickerToggle, MatSuffix, MatDatepicker, MatAutocomplete, MatTable, MatSort, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatSortHeader, MatCellDef, MatCell, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow, RouterLink, MatPaginator, AsyncPipe, DatePipe]
 })
 export class AuditTrailsComponent implements OnInit, AfterViewInit {
 
@@ -133,7 +142,7 @@ export class AuditTrailsComponent implements OnInit, AfterViewInit {
   constructor(private route: ActivatedRoute,
               private systemService: SystemService,
               private datePipe: DatePipe) {
-    this.route.data.subscribe((data: { auditTrailSearchTemplate: any }) => {
+    this.route.data.subscribe((data: any) => {
       this.auditTrailSearchTemplateData = data.auditTrailSearchTemplate;
     });
   }
@@ -206,7 +215,7 @@ export class AuditTrailsComponent implements OnInit, AfterViewInit {
         debounceTime(500),
         distinctUntilChanged(),
         tap((filterValue) => {
-          this.applyFilter(filterValue, 'resourceId');
+          this.applyFilter(filterValue ?? '', 'resourceId');
         })
       ).subscribe();
 
@@ -261,7 +270,7 @@ export class AuditTrailsComponent implements OnInit, AfterViewInit {
    */
   loadAuditTrailsPage() {
     if (!this.sort.direction) {
-      delete this.sort.active;
+      this.sort.active = '';
     }
     this.dataSource.getAuditTrails(this.filterAuditTrailsBy, this.sort.active, this.sort.direction, this.paginator.pageIndex, this.paginator.pageSize);
   }
@@ -283,8 +292,8 @@ export class AuditTrailsComponent implements OnInit, AfterViewInit {
    * @param {any} user User data.
    * @returns {string} User name if valid otherwise undefined.
    */
-  displayUserName(user?: any): string | undefined {
-    return user ? user.name : undefined;
+  displayUserName(user?: any): string {
+    return user ? user.name : '';
   }
 
   /**
@@ -292,8 +301,8 @@ export class AuditTrailsComponent implements OnInit, AfterViewInit {
    * @param {any} action Action data.
    * @returns {string} Action name if valid otherwise undefined.
    */
-  displayActionName(action?: any): string | undefined {
-    return action ? action : undefined;
+  displayActionName(action?: any): string {
+    return action ? action : '';
   }
 
   /**
@@ -301,8 +310,8 @@ export class AuditTrailsComponent implements OnInit, AfterViewInit {
    * @param {any} entity Entity data.
    * @returns {string} Entity name if valid otherwise undefined.
    */
-  displayEntityName(entity?: any): string | undefined {
-    return entity ? entity : undefined;
+  displayEntityName(entity?: any): string {
+    return entity ? entity : '';
   }
 
   /**
@@ -414,7 +423,7 @@ export class AuditTrailsComponent implements OnInit, AfterViewInit {
    */
   private getDate(timestamp: any) {
     const dateFormat = 'yyyy-MM-dd';
-    return this.datePipe.transform(timestamp, dateFormat);
+    return this.datePipe.transform(timestamp as Date, dateFormat) ?? '';
   }
 
 }

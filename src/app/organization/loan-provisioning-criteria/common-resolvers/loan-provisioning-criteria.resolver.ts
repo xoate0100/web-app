@@ -24,7 +24,7 @@ export class LoanProvisioningCriteriaResolver implements Resolve<Object> {
    * @returns {Observable<any>}
    */
   resolve(route: ActivatedRouteSnapshot): Observable<any> {
-    const provisioningId = route.paramMap.get('id');
+    const provisioningId = route.paramMap.get('id')!;
     return this.organizationService.getProvisioningCriteria(provisioningId);
   }
 

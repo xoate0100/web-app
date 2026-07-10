@@ -5,16 +5,17 @@ import { DomSanitizer } from '@angular/platform-browser';
 /** Custom Services */
 import { ReportsService } from '../../reports.service';
 import { SettingsService } from 'app/settings/settings.service';
+import { NgIf } from '@angular/common';
 
 /**
  * Pentaho Component
  */
 @Component({
-  standalone: false,
-  selector: 'mifosx-pentaho',
-  templateUrl: './pentaho.component.html',
-  changeDetection: ChangeDetectionStrategy.Eager,
-  styleUrls: ['./pentaho.component.scss']
+    selector: 'mifosx-pentaho',
+    templateUrl: './pentaho.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    styleUrls: ['./pentaho.component.scss'],
+    imports: [NgIf]
 })
 export class PentahoComponent implements OnChanges {
 

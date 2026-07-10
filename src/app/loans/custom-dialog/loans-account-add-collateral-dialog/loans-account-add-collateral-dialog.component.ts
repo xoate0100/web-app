@@ -1,13 +1,21 @@
 import { Component, OnInit, Inject, ChangeDetectionStrategy } from '@angular/core';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { MatDialogRef, MAT_DIALOG_DATA, MatDialogTitle, MatDialogContent, MatDialogActions, MatDialogClose } from '@angular/material/dialog';
+import { FormGroup, FormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
+import { CdkScrollable } from '@angular/cdk/scrolling';
+import { LayoutDirective, LayoutAlignDirective, LayoutGapDirective } from '@ngbracket/ngx-layout/flex';
+import { MatFormField, MatLabel, MatError } from '@angular/material/form-field';
+import { MatSelect } from '@angular/material/select';
+import { NgFor } from '@angular/common';
+import { MatOption } from '@angular/material/autocomplete';
+import { MatInput } from '@angular/material/input';
+import { MatButton } from '@angular/material/button';
 
 @Component({
-  standalone: false,
-  selector: 'mifosx-loans-account-add-collateral-dialog',
-  templateUrl: './loans-account-add-collateral-dialog.component.html',
-  changeDetection: ChangeDetectionStrategy.Eager,
-  styleUrls: ['./loans-account-add-collateral-dialog.component.scss']
+    selector: 'mifosx-loans-account-add-collateral-dialog',
+    templateUrl: './loans-account-add-collateral-dialog.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    styleUrls: ['./loans-account-add-collateral-dialog.component.scss'],
+    imports: [MatDialogTitle, CdkScrollable, MatDialogContent, LayoutDirective, ReactiveFormsModule, MatFormField, MatLabel, MatSelect, NgFor, MatOption, MatError, MatInput, MatDialogActions, LayoutAlignDirective, LayoutGapDirective, MatButton, MatDialogClose]
 })
 export class LoansAccountAddCollateralDialogComponent implements OnInit {
 

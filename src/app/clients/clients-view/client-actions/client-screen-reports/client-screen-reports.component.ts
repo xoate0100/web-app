@@ -1,21 +1,29 @@
 /** Angular Imports */
 import { Component, OnInit, Renderer2, ViewChild, ElementRef, SecurityContext, ChangeDetectionStrategy } from '@angular/core';
-import { FormGroup, FormBuilder } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { FormGroup, FormBuilder, ReactiveFormsModule } from '@angular/forms';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 
 /** Custom Services */
 import { ClientsService } from 'app/clients/clients.service';
 import { DomSanitizer } from '@angular/platform-browser';
+import { MatCard, MatCardContent, MatCardActions } from '@angular/material/card';
+import { MatFormField, MatLabel, MatError } from '@angular/material/form-field';
+import { FlexDirective, LayoutDirective, LayoutAlignDirective, LayoutGapDirective } from '@ngbracket/ngx-layout/flex';
+import { MatSelect } from '@angular/material/select';
+import { NgFor, NgIf } from '@angular/common';
+import { MatOption } from '@angular/material/autocomplete';
+import { MatButton } from '@angular/material/button';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 
 /**
  * Client Screen Reports Component.
  */
 @Component({
-  standalone: false,
-  selector: 'mifosx-client-screen-reports',
-  templateUrl: './client-screen-reports.component.html',
-  changeDetection: ChangeDetectionStrategy.Eager,
-  styleUrls: ['./client-screen-reports.component.scss']
+    selector: 'mifosx-client-screen-reports',
+    templateUrl: './client-screen-reports.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    styleUrls: ['./client-screen-reports.component.scss'],
+    imports: [MatCard, ReactiveFormsModule, MatCardContent, MatFormField, FlexDirective, MatLabel, MatSelect, NgFor, MatOption, NgIf, MatError, MatCardActions, LayoutDirective, LayoutAlignDirective, LayoutGapDirective, MatButton, RouterLink, FaIconComponent]
 })
 export class ClientScreenReportsComponent implements OnInit {
 
@@ -44,10 +52,10 @@ export class ClientScreenReportsComponent implements OnInit {
               private route: ActivatedRoute,
               private sanitizer: DomSanitizer,
               private renderer: Renderer2) {
-    this.route.data.subscribe((data: { clientActionData: any }) => {
+    this.route.data.subscribe((data: any) => {
       this.templatesData = data.clientActionData;
     });
-    this.clientId = this.route.parent.snapshot.params['clientId'];
+    this.clientId = this.route.parent!.snapshot.params['clientId']!;
   }
 
   /**
@@ -71,19 +79,19 @@ export class ClientScreenReportsComponent implements OnInit {
    */
   print() {
     const templateWindow = window.open('', 'Screen Report', 'height=400,width=600');
-    templateWindow.document.write('<html><head>');
-    templateWindow.document.write('</head><body>');
-    templateWindow.document.write(this.template);
-    templateWindow.document.write('</body></html>');
-    templateWindow.print();
-    templateWindow.close();
+    templateWindow!.document.write('<html><head>');
+    templateWindow!.document.write('</head><body>');
+    templateWindow!.document.write(this.template);
+    templateWindow!.document.write('</body></html>');
+    templateWindow!.print();
+    templateWindow!.close();
   }
 
   /**
    * Submits the form and generates screen report for the client.
    */
   generate() {
-    const templateId = this.clientScreenReportForm.get('templateId').value;
+    const templateId = this.clientScreenReportForm.get('templateId')!.value;
     this.clientsService.retrieveClientReportTemplate(templateId, this.clientId).subscribe((response: any) => {
       this.template = this.sanitizer.sanitize(SecurityContext.HTML, response);
       this.renderer.setProperty(this.screenReportRef.nativeElement, 'innerHTML', this.template);

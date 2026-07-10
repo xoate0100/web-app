@@ -6,7 +6,7 @@ export class DatepickerBase extends FormfieldBase {
   minDate: Date;
   maxDate: Date;
 
-  constructor(options: {} = {}) {
+  constructor(options: Record<string, any> = {}) {
     super(options);
     this.minDate = options['minDate'] || new Date(2000, 0, 1);
     this.maxDate = options['maxDate'] || new Date();

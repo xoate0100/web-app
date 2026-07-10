@@ -1,20 +1,26 @@
 /** Angular Imports */
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
-import { FormGroup, FormBuilder } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { FormGroup, FormBuilder, ReactiveFormsModule } from '@angular/forms';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 
 /** Custom Services */
 import { ClientsService } from 'app/clients/clients.service';
+import { MatCard, MatCardContent, MatCardActions } from '@angular/material/card';
+import { LayoutDirective, FlexDirective, LayoutAlignDirective, LayoutGapDirective } from '@ngbracket/ngx-layout/flex';
+import { MatFormField, MatLabel, MatSuffix } from '@angular/material/form-field';
+import { MatInput } from '@angular/material/input';
+import { MatDatepickerInput, MatDatepickerToggle, MatDatepicker } from '@angular/material/datepicker';
+import { MatButton } from '@angular/material/button';
 
 /**
  * Accept Client Transfer Component
  */
 @Component({
-  standalone: false,
-  selector: 'mifosx-accept-client-transfer',
-  templateUrl: './accept-client-transfer.component.html',
-  changeDetection: ChangeDetectionStrategy.Eager,
-  styleUrls: ['./accept-client-transfer.component.scss']
+    selector: 'mifosx-accept-client-transfer',
+    templateUrl: './accept-client-transfer.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    styleUrls: ['./accept-client-transfer.component.scss'],
+    imports: [MatCard, ReactiveFormsModule, MatCardContent, LayoutDirective, MatFormField, MatLabel, MatInput, MatDatepickerInput, MatDatepickerToggle, MatSuffix, MatDatepicker, FlexDirective, MatCardActions, LayoutAlignDirective, LayoutGapDirective, MatButton, RouterLink]
 })
 export class AcceptClientTransferComponent implements OnInit {
 
@@ -35,10 +41,10 @@ export class AcceptClientTransferComponent implements OnInit {
               private clientsService: ClientsService,
               private route: ActivatedRoute,
               private router: Router) {
-    this.route.data.subscribe((data: { clientActionData: any }) => {
+    this.route.data.subscribe((data: any) => {
       this.transferDate = data.clientActionData;
     });
-    this.clientId = this.route.parent.snapshot.params['clientId'];
+    this.clientId = this.route.parent!.snapshot.params['clientId']!;
   }
 
   /**

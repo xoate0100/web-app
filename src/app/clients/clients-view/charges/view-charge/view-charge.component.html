@@ -4,7 +4,7 @@
     Pay
   </button>
   <button mat-raised-button color="primary" (click)="waiveCharge()" *mifosxHasPermission="'WAIVE_CLIENTCHARGE'">
-    <i class="fa fa-flag"></i>
+    <fa-icon icon="flag"></fa-icon>
     Waive Charge
   </button>
   <button mat-raised-button color="primary" (click)="deleteCharge()">
@@ -17,7 +17,7 @@
 
   <mat-card>
 
-    <mat-card-title> <i class="fa fa-stop" [ngClass]="(!(chargeData.isWaived || chargeData.isPaid))|statusLookup"></i>
+    <mat-card-title> <fa-icon icon="stop" [ngClass]="(!(chargeData.isWaived || chargeData.isPaid))|statusLookup"></fa-icon>
       {{ chargeData.name }}
     </mat-card-title>
 

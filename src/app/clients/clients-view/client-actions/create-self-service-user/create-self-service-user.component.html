@@ -53,7 +53,7 @@
                             Override Password Expire Policy ?
                         </mat-checkbox>
 
-                        <i class="fa fa-question-circle fa fa-align-left" title="Determines if passwords do not expire for this user even if global configuration for password expiry is enabled"></i>
+                        <fa-icon icon="circle-question" title="Determines if passwords do not expire for this user even if global configuration for password expiry is enabled"></fa-icon>
 
                     </div>
 
@@ -86,7 +86,7 @@
                 <mat-card-actions fxLayoutGap="5px" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center">
                   <button type="button" mat-raised-button [routerLink]="['../../']">Cancel</button>
                   <button mat-raised-button color="primary" [disabled]="!createSelfServiceForm.valid">Activate Self Service User</button>
-                  <i class="fa fa-question-circle fa-2x" title="Activate Self Service User Help"></i>
+                  <fa-icon icon="circle-question" size="2x" title="Activate Self Service User Help"></fa-icon>
                 </mat-card-actions>
 
             </mat-card-content>

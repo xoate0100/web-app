@@ -1,22 +1,32 @@
 /** Angular Imports */
 import { Component, OnInit, Input, ChangeDetectionStrategy } from '@angular/core';
-import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { FormGroup, FormBuilder, Validators, FormControl, ReactiveFormsModule } from '@angular/forms';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 
 /** Custom Services */
 import { LoansService } from 'app/loans/loans.service';
-import { DatePipe } from '@angular/common';
+import { DatePipe, NgIf, NgFor } from '@angular/common';
 import { SettingsService } from 'app/settings/settings.service';
+import { MatCard, MatCardContent, MatCardActions } from '@angular/material/card';
+import { LayoutDirective, FlexFillDirective, FlexDirective, LayoutAlignDirective, LayoutGapDirective } from '@ngbracket/ngx-layout/flex';
+import { MatFormField, MatLabel, MatSuffix, MatError } from '@angular/material/form-field';
+import { MatInput } from '@angular/material/input';
+import { MatDatepickerInput, MatDatepickerToggle, MatDatepicker } from '@angular/material/datepicker';
+import { MatSelect } from '@angular/material/select';
+import { MatOption } from '@angular/material/autocomplete';
+import { MatButton } from '@angular/material/button';
+import { HasPermissionDirective } from '../../../../directives/has-permission/has-permission.directive';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 
 /**
  * Loan Recovery Repayment Action
  */
 @Component({
-  standalone: false,
-  selector: 'mifosx-recovery-repayment',
-  templateUrl: './recovery-repayment.component.html',
-  changeDetection: ChangeDetectionStrategy.Eager,
-  styleUrls: ['./recovery-repayment.component.scss']
+    selector: 'mifosx-recovery-repayment',
+    templateUrl: './recovery-repayment.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    styleUrls: ['./recovery-repayment.component.scss'],
+    imports: [FaIconComponent, MatCard, ReactiveFormsModule, MatCardContent, LayoutDirective, MatFormField, MatLabel, MatInput, MatDatepickerInput, MatDatepickerToggle, MatSuffix, MatDatepicker, NgIf, MatError, MatSelect, NgFor, MatOption, FlexFillDirective, FlexDirective, MatButton, MatCardActions, LayoutAlignDirective, LayoutGapDirective, RouterLink, HasPermissionDirective]
 })
 export class RecoveryRepaymentComponent implements OnInit {
 
@@ -48,7 +58,7 @@ export class RecoveryRepaymentComponent implements OnInit {
     private router: Router,
     private datePipe: DatePipe,
     private settingsService: SettingsService) {
-    this.loanId = this.route.parent.snapshot.params['loanId'];
+    this.loanId = this.route.parent!.snapshot.params['loanId']!;
   }
 
   /**
@@ -107,7 +117,7 @@ export class RecoveryRepaymentComponent implements OnInit {
     // TODO: Update once language and date settings are setup
     const dateFormat = this.settingsService.dateFormat;
     this.recoveryRepaymentLoanForm.patchValue({
-      transactionDate: this.datePipe.transform(prevTransactionDate, dateFormat)
+      transactionDate: this.datePipe.transform(prevTransactionDate as Date, dateFormat)
     });
     const recoveryRepaymentLoanData = this.recoveryRepaymentLoanForm.value;
     recoveryRepaymentLoanData.locale = this.settingsService.language.code;

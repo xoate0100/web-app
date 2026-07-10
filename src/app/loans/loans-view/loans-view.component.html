@@ -17,7 +17,7 @@
 
 			<div fxFlex="50%">
 				<h3>
-				  <i class="fa fa-stop" matTooltip="{{ loanDetailsData.status.value }}" [ngClass]="loanDetailsData.inArrears?'status-active-overdue':(loanDetailsData.status.code|statusLookup)"></i>
+				  <fa-icon icon="stop" matTooltip="{{ loanDetailsData.status.value }}" [ngClass]="loanDetailsData.inArrears?'status-active-overdue':(loanDetailsData.status.code|statusLookup)"></fa-icon>
 				  Loan Product: {{loanDetailsData.loanProductName}}(#{{loanDetailsData.accountNo}})
 				  <br/>
 				  <span *ngIf="loanDetailsData.clientName" > Client Name: {{loanDetailsData.clientName}} </span> <br/>
@@ -42,7 +42,7 @@
 
 	  <ng-container *ngFor="let item of buttonConfig.singleButtons" class="loan-span">
 		<button mat-raised-button *mifosxHasPermission="item.taskPermissionName" (click)="loanAction(item.name)">
-		  <i class="{{item.icon}}"></i> {{item.name}} </button>
+		  <fa-icon [icon]="item.icon"></fa-icon> {{item.name}} </button>
 	  </ng-container>
 
 	  <ng-container *ngIf="buttonConfig.options.length" class="loan-span">

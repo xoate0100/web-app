@@ -24,8 +24,8 @@ export class LoanDatatableResolver implements Resolve<Object> {
      * @returns {Observable<any>}
      */
     resolve(route: ActivatedRouteSnapshot): Observable<any> {
-        const loanId = route.parent.parent.paramMap.get('loanId');
-        const datatableName = route.paramMap.get('datatableName');
+        const loanId = route.parent!.parent!.paramMap.get('loanId')!;
+        const datatableName = route.paramMap.get('datatableName')!;
         return this.loansService.getLoanDatatable(loanId, datatableName);
     }
 

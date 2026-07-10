@@ -1,7 +1,7 @@
 /** Angular Imports */
 import { Component, ViewChild, ChangeDetectionStrategy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { MatTable } from '@angular/material/table';
+import { MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow } from '@angular/material/table';
 import { MatDialog } from '@angular/material/dialog';
 
 /** Custom Models */
@@ -16,16 +16,20 @@ import { FormDialogComponent } from 'app/shared/form-dialog/form-dialog.componen
 
 /** Custom Services */
 import { ClientsService } from '../../clients.service';
+import { HasPermissionDirective } from '../../../directives/has-permission/has-permission.directive';
+import { MatButton } from '@angular/material/button';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import { NgFor } from '@angular/common';
 
 /**
  * Identities Tab Component
  */
 @Component({
-  standalone: false,
-  selector: 'mifosx-identities-tab',
-  templateUrl: './identities-tab.component.html',
-  changeDetection: ChangeDetectionStrategy.Eager,
-  styleUrls: ['./identities-tab.component.scss']
+    selector: 'mifosx-identities-tab',
+    templateUrl: './identities-tab.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    styleUrls: ['./identities-tab.component.scss'],
+    imports: [HasPermissionDirective, MatButton, FaIconComponent, MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, NgFor, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow]
 })
 export class IdentitiesTabComponent {
 
@@ -49,8 +53,8 @@ export class IdentitiesTabComponent {
   constructor(private route: ActivatedRoute,
               public dialog: MatDialog,
               private clientService: ClientsService) {
-    this.clientId = this.route.parent.snapshot.paramMap.get('clientId');
-    this.route.data.subscribe((data: { clientIdentities: any, clientIdentifierTemplate: any }) => {
+    this.clientId = this.route.parent!.snapshot.paramMap.get('clientId')!;
+    this.route.data.subscribe((data: any) => {
       this.clientIdentities = data.clientIdentities;
       this.clientIdentifierTemplate = data.clientIdentifierTemplate;
     });

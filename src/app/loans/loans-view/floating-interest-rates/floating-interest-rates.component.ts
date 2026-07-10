@@ -1,12 +1,14 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow } from '@angular/material/table';
+import { DatePipe } from '@angular/common';
 
 @Component({
-  standalone: false,
-  selector: 'mifosx-floating-interest-rates',
-  templateUrl: './floating-interest-rates.component.html',
-  changeDetection: ChangeDetectionStrategy.Eager,
-  styleUrls: ['./floating-interest-rates.component.scss']
+    selector: 'mifosx-floating-interest-rates',
+    templateUrl: './floating-interest-rates.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    styleUrls: ['./floating-interest-rates.component.scss'],
+    imports: [MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow, DatePipe]
 })
 export class FloatingInterestRatesComponent implements OnInit {
 
@@ -22,7 +24,7 @@ export class FloatingInterestRatesComponent implements OnInit {
    * @param {ActivatedRoute} route Activated Route.
    */
   constructor(private route: ActivatedRoute) {
-    this.route.parent.data.subscribe(( data: { loanDetailsData: any }) => {
+    this.route.parent!.data.subscribe((data: any) => {
       this.loanDetails = data.loanDetailsData;
     });
   }

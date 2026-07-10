@@ -24,7 +24,7 @@ export class ClientDataAndTemplateResolver implements Resolve<Object> {
    * @returns {Observable<any>}
    */
   resolve(route: ActivatedRouteSnapshot): Observable<any> {
-    const clientId = route.paramMap.get('clientId');
+    const clientId = route.paramMap.get('clientId')!;
     return this.clientsService.getClientDataAndTemplate(clientId);
   }
 

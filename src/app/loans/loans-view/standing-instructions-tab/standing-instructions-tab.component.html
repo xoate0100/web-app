@@ -51,18 +51,18 @@
           <span *ngIf="instruction.status.value!=='Deleted'">
             <button class="account-action-button" mat-raised-button color="primary"
               matTooltip="Edit Standing Instruction" *mifosxHasPermission="'UPDATE_STANDINGINSTRUCTION'">
-              <i class="fa fa-edit"></i>
+              <fa-icon icon="edit"></fa-icon>
             </button>
           </span>
           <span *ngIf="instruction.status.value!=='Deleted'">
             <button class="account-action-button" mat-raised-button color="warn"
               matTooltip="Delete Standing Instruction" *mifosxHasPermission="'DELETE_STANDINGINSTRUCTION'" (click)="deleteStandingInstruction(instruction.id)">
-              <i class="fa fa-times"></i>
+              <fa-icon icon="times"></fa-icon>
             </button>
           </span>
           <button class="account-action-button" mat-raised-button color="primary" matTooltip="View Standing Instruction"
             *mifosxHasPermission="'READ_STANDINGINSTRUCTION'">
-            <i class="fa fa-eye"></i>
+            <fa-icon icon="eye"></fa-icon>
           </button>
         </td>
       </ng-container>

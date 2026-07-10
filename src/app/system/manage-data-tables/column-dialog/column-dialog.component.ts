@@ -1,20 +1,29 @@
 /** Angular Imports */
 import { Component, OnInit, Inject, ChangeDetectionStrategy } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { MAT_DIALOG_DATA, MatDialogRef, MatDialogTitle, MatDialogContent, MatDialogActions, MatDialogClose } from '@angular/material/dialog';
+import { FormGroup, FormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
 
 /** Data Imports */
 import { columnTypeData } from '../column-type-data';
+import { CdkScrollable } from '@angular/cdk/scrolling';
+import { LayoutDirective } from '@ngbracket/ngx-layout/flex';
+import { MatFormField, MatLabel, MatError } from '@angular/material/form-field';
+import { MatInput } from '@angular/material/input';
+import { NgIf, NgFor } from '@angular/common';
+import { MatSelect } from '@angular/material/select';
+import { MatOption } from '@angular/material/autocomplete';
+import { MatCheckbox } from '@angular/material/checkbox';
+import { MatButton } from '@angular/material/button';
 
 /**
  * Column Dialog Component.
  */
 @Component({
-  standalone: false,
-  selector: 'mifosx-column-dialog',
-  templateUrl: './column-dialog.component.html',
-  changeDetection: ChangeDetectionStrategy.Eager,
-  styleUrls: ['./column-dialog.component.scss']
+    selector: 'mifosx-column-dialog',
+    templateUrl: './column-dialog.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    styleUrls: ['./column-dialog.component.scss'],
+    imports: [MatDialogTitle, CdkScrollable, MatDialogContent, ReactiveFormsModule, LayoutDirective, MatFormField, MatLabel, MatInput, NgIf, MatError, MatSelect, NgFor, MatOption, MatCheckbox, MatDialogActions, MatButton, MatDialogClose]
 })
 export class ColumnDialogComponent implements OnInit {
 
@@ -72,22 +81,22 @@ export class ColumnDialogComponent implements OnInit {
    * Watches on Column Type field to enable/diable certain fields.
    */
   onColumnTypeChanges() {
-    this.columnForm.get('type').valueChanges
+    this.columnForm.get('type')!.valueChanges
       .subscribe(type => {
         switch (type) {
           case 'String': {
-            this.columnForm.get('length').enable();
-            this.columnForm.get('code').disable();
+            this.columnForm.get('length')!.enable();
+            this.columnForm.get('code')!.disable();
             break;
           }
           case 'Dropdown': {
-            this.columnForm.get('code').enable();
-            this.columnForm.get('length').disable();
+            this.columnForm.get('code')!.enable();
+            this.columnForm.get('length')!.disable();
             break;
           }
           default: {
-            this.columnForm.get('code').disable();
-            this.columnForm.get('length').disable();
+            this.columnForm.get('code')!.disable();
+            this.columnForm.get('length')!.disable();
           }
         }
       });

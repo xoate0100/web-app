@@ -1,22 +1,28 @@
 /** Angular Imports */
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { DatePipe } from '@angular/common';
-import { ActivatedRoute, Router } from '@angular/router';
+import { FormGroup, FormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
+import { DatePipe, NgIf } from '@angular/common';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 
 /** Custom Services */
 import { SavingsService } from 'app/savings/savings.service';
 import { SettingsService } from 'app/settings/settings.service';
+import { MatCard, MatCardContent, MatCardActions } from '@angular/material/card';
+import { LayoutDirective, LayoutAlignDirective, LayoutGapDirective } from '@ngbracket/ngx-layout/flex';
+import { MatFormField, MatLabel, MatSuffix, MatError } from '@angular/material/form-field';
+import { MatInput } from '@angular/material/input';
+import { MatDatepickerInput, MatDatepickerToggle, MatDatepicker } from '@angular/material/datepicker';
+import { MatButton } from '@angular/material/button';
 
 /**
  * Withdraw By Client Savings Account Component
  */
 @Component({
-  standalone: false,
-  selector: 'mifosx-withdraw-by-client-savings-account',
-  templateUrl: './withdraw-by-client-savings-account.component.html',
-  changeDetection: ChangeDetectionStrategy.Eager,
-  styleUrls: ['./withdraw-by-client-savings-account.component.scss']
+    selector: 'mifosx-withdraw-by-client-savings-account',
+    templateUrl: './withdraw-by-client-savings-account.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    styleUrls: ['./withdraw-by-client-savings-account.component.scss'],
+    imports: [MatCard, ReactiveFormsModule, MatCardContent, LayoutDirective, MatFormField, MatLabel, MatInput, MatDatepickerInput, MatDatepickerToggle, MatSuffix, MatDatepicker, NgIf, MatError, MatCardActions, LayoutAlignDirective, LayoutGapDirective, MatButton, RouterLink]
 })
 export class WithdrawByClientSavingsAccountComponent implements OnInit {
 
@@ -43,7 +49,7 @@ export class WithdrawByClientSavingsAccountComponent implements OnInit {
               private route: ActivatedRoute,
               private router: Router,
               private settingsService: SettingsService) {
-    this.accountId = this.route.parent.snapshot.params['savingAccountId'];
+    this.accountId = this.route.parent!.snapshot.params['savingAccountId']!;
   }
 
   /**
@@ -73,7 +79,7 @@ export class WithdrawByClientSavingsAccountComponent implements OnInit {
     const dateFormat = this.settingsService.dateFormat;
     const prevWithdrawnOnDate: Date = this.withdrawSavingsAccountForm.value.withdrawnOnDate;
     this.withdrawSavingsAccountForm.patchValue({
-      withdrawnOnDate: this.datePipe.transform(prevWithdrawnOnDate, dateFormat),
+      withdrawnOnDate: this.datePipe.transform(prevWithdrawnOnDate as Date, dateFormat),
     });
     const data = {
       ...this.withdrawSavingsAccountForm.value,

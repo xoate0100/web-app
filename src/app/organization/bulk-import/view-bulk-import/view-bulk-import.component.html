@@ -48,7 +48,7 @@
 
       <div fxFlex="13%">
         <button mat-raised-button color="primary" (click)="downloadTemplate()" *mifosxHasPermission="bulkImport.permission">
-          <i class="fa fa-download"></i>&nbsp;&nbsp;Download
+          <fa-icon icon="download"></fa-icon>&nbsp;&nbsp;Download
         </button>
       </div>
 
@@ -66,7 +66,7 @@
 
       <div fxFlex="13%">
         <button mat-raised-button color="primary" [disabled]="!template" (click)="uploadTemplate()">
-          <i class="fa fa-upload"></i>&nbsp;&nbsp;Upload
+          <fa-icon icon="upload"></fa-icon>&nbsp;&nbsp;Upload
         </button>
       </div>
 
@@ -84,7 +84,7 @@
 
     <div class="m-b-10" fxLayoutAlign="end">
       <button  mat-raised-button color="primary" (click)="refreshDocuments()">
-        <i class="fa fa-repeat"></i>&nbsp;&nbsp;Refresh
+        <fa-icon icon="sync"></fa-icon>&nbsp;&nbsp;Refresh
       </button>
     </div>
 

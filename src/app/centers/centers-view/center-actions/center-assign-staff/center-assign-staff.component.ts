@@ -1,20 +1,27 @@
 /** Angular Imports */
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
-import { FormGroup, FormBuilder } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { FormGroup, FormBuilder, ReactiveFormsModule } from '@angular/forms';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 
 /** Custom Services */
 import { CentersService } from 'app/centers/centers.service';
+import { MatCard, MatCardContent, MatCardActions } from '@angular/material/card';
+import { LayoutDirective, FlexDirective, LayoutAlignDirective, LayoutGapDirective } from '@ngbracket/ngx-layout/flex';
+import { MatFormField, MatLabel, MatError } from '@angular/material/form-field';
+import { MatSelect } from '@angular/material/select';
+import { NgFor, NgIf } from '@angular/common';
+import { MatOption } from '@angular/material/autocomplete';
+import { MatButton } from '@angular/material/button';
 
 /**
  * Centers Assign Staff Component
  */
 @Component({
-  standalone: false,
-  selector: 'mifosx-center-assign-staff',
-  templateUrl: './center-assign-staff.component.html',
-  changeDetection: ChangeDetectionStrategy.Eager,
-  styleUrls: ['./center-assign-staff.component.scss']
+    selector: 'mifosx-center-assign-staff',
+    templateUrl: './center-assign-staff.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    styleUrls: ['./center-assign-staff.component.scss'],
+    imports: [MatCard, ReactiveFormsModule, MatCardContent, LayoutDirective, MatFormField, FlexDirective, MatLabel, MatSelect, NgFor, MatOption, NgIf, MatError, MatCardActions, LayoutAlignDirective, LayoutGapDirective, MatButton, RouterLink]
 })
 export class CenterAssignStaffComponent implements OnInit {
 
@@ -36,7 +43,7 @@ export class CenterAssignStaffComponent implements OnInit {
               private centersService: CentersService,
               private route: ActivatedRoute,
               private router: Router) {
-    this.route.data.subscribe((data: { centersActionData: any }) => {
+    this.route.data.subscribe((data: any) => {
       this.centerData = data.centersActionData;
     });
   }

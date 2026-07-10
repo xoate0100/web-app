@@ -6,7 +6,7 @@ import { DatePipe } from '@angular/common';
 import { GroupsRoutingModule } from './groups-routing.module';
 import { SharedModule } from 'app/shared/shared.module';
 import { PipesModule } from '../pipes/pipes.module';
-import { DirectivesModule } from '../directives/directives.module';
+
 
 /** Custom Components */
 import { GroupsComponent } from './groups.component';
@@ -39,13 +39,10 @@ import { GroupTransferClientsComponent } from './groups-view/group-actions/group
  * All components related to Groups should be declared here.
  */
 @NgModule({
-  imports: [
+    imports: [
     SharedModule,
     PipesModule,
-    DirectivesModule,
-    GroupsRoutingModule
-  ],
-  declarations: [
+    GroupsRoutingModule,
     GroupsComponent,
     GroupsViewComponent,
     GeneralTabComponent,
@@ -69,7 +66,7 @@ import { GroupTransferClientsComponent } from './groups-view/group-actions/group
     EditGroupMeetingComponent,
     EditGroupMeetingScheduleComponent,
     GroupTransferClientsComponent
-  ],
-  providers: [DatePipe]
+],
+    providers: [DatePipe]
 })
 export class GroupsModule { }

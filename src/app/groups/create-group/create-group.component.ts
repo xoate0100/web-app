@@ -1,23 +1,35 @@
 /** Angular Imports */
 import { Component, OnInit, AfterViewInit, ChangeDetectionStrategy } from '@angular/core';
-import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
-import { Router, ActivatedRoute } from '@angular/router';
-import { DatePipe } from '@angular/common';
+import { FormGroup, FormBuilder, FormControl, Validators, ReactiveFormsModule } from '@angular/forms';
+import { Router, ActivatedRoute, RouterLink } from '@angular/router';
+import { DatePipe, NgIf, NgFor } from '@angular/common';
 
 /** Custom Services */
 import { GroupsService } from '../groups.service';
 import { ClientsService } from '../../clients/clients.service';
 import { SettingsService } from 'app/settings/settings.service';
+import { MatCard, MatCardContent, MatCardActions } from '@angular/material/card';
+import { LayoutDirective, LayoutAlignDirective, LayoutGapDirective } from '@ngbracket/ngx-layout/flex';
+import { MatFormField, MatLabel, MatError, MatSuffix } from '@angular/material/form-field';
+import { MatInput } from '@angular/material/input';
+import { MatSelect } from '@angular/material/select';
+import { MatOption, MatAutocompleteTrigger, MatAutocomplete } from '@angular/material/autocomplete';
+import { MatCheckbox } from '@angular/material/checkbox';
+import { MatDatepickerInput, MatDatepickerToggle, MatDatepicker } from '@angular/material/datepicker';
+import { MatIconButton, MatButton } from '@angular/material/button';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import { MatNavList, MatListSubheaderCssMatStyler } from '@angular/material/list';
+import { MatLine } from '@angular/material/grid-list';
 
 /**
  * Create Group component.
  */
 @Component({
-  standalone: false,
-  selector: 'mifosx-create-group',
-  templateUrl: './create-group.component.html',
-  changeDetection: ChangeDetectionStrategy.Eager,
-  styleUrls: ['./create-group.component.scss']
+    selector: 'mifosx-create-group',
+    templateUrl: './create-group.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    styleUrls: ['./create-group.component.scss'],
+    imports: [MatCard, ReactiveFormsModule, MatCardContent, LayoutDirective, MatFormField, MatLabel, MatInput, NgIf, MatError, MatSelect, NgFor, MatOption, MatCheckbox, MatDatepickerInput, MatDatepickerToggle, MatSuffix, MatDatepicker, MatAutocompleteTrigger, MatAutocomplete, MatIconButton, FaIconComponent, MatNavList, MatListSubheaderCssMatStyler, MatLine, MatCardActions, LayoutAlignDirective, LayoutGapDirective, MatButton, RouterLink]
 })
 export class CreateGroupComponent implements OnInit, AfterViewInit {
 
@@ -55,7 +67,7 @@ export class CreateGroupComponent implements OnInit, AfterViewInit {
               private groupService: GroupsService,
               private datePipe: DatePipe,
               private settingsService: SettingsService) {
-    this.route.data.subscribe( (data: {offices: any} ) => {
+    this.route.data.subscribe((data: any) => {
       this.officeData = data.offices;
     });
   }
@@ -71,9 +83,9 @@ export class CreateGroupComponent implements OnInit, AfterViewInit {
    * Subscribes to Clients search filter:
    */
   ngAfterViewInit() {
-    this.clientChoice.valueChanges.subscribe( (value: string) => {
-      if (value.length >= 2) {
-        this.clientsService.getFilteredClients('displayName', 'ASC', true, value, this.groupForm.get('officeId').value)
+    this.clientChoice.valueChanges.subscribe((value: string | null) => {
+      if (value && value.length >= 2) {
+        this.clientsService.getFilteredClients('displayName', 'ASC', true, value, this.groupForm.get('officeId')!.value)
         .subscribe( (data: any) => {
           this.clientsData = data.pageItems;
         });
@@ -101,17 +113,17 @@ export class CreateGroupComponent implements OnInit, AfterViewInit {
    * Adds form control Activation Date if active.
    */
   buildDependencies() {
-    this.groupForm.get('officeId').valueChanges.subscribe((option: any) => {
+    this.groupForm.get('officeId')!.valueChanges.subscribe((option: any) => {
       this.groupService.getStaff(option).subscribe(data => {
         this.staffData = data['staffOptions'];
         if (this.staffData === undefined) {
-          this.groupForm.controls['staffId'].disable();
+          this.groupForm.controls['staffId']!.disable();
         } else {
-          this.groupForm.controls['staffId'].enable();
+          this.groupForm.controls['staffId']!.enable();
         }
       });
     });
-    this.groupForm.get('active').valueChanges.subscribe((bool: boolean) => {
+    this.groupForm.get('active')!.valueChanges.subscribe((bool: boolean) => {
       if (bool) {
         this.groupForm.addControl('activationDate', new FormControl('', Validators.required));
       } else {
@@ -142,8 +154,8 @@ export class CreateGroupComponent implements OnInit, AfterViewInit {
    * @param {any} client Client data.
    * @returns {string} Client name if valid otherwise undefined.
    */
-  displayClient(client: any): string | undefined {
-    return client ? client.displayName : undefined;
+  displayClient(client: any): string {
+    return client ? client.displayName : '';
   }
 
   /**
@@ -156,8 +168,8 @@ export class CreateGroupComponent implements OnInit, AfterViewInit {
     // TODO: Update once language and date settings are setup
     const dateFormat = this.settingsService.dateFormat;
     this.groupForm.patchValue({
-      submittedOnDate: this.datePipe.transform(submittedOnDate, dateFormat),
-      activationDate: this.datePipe.transform(activationDate, dateFormat)
+      submittedOnDate: this.datePipe.transform(submittedOnDate as Date, dateFormat),
+      activationDate: this.datePipe.transform(activationDate as Date, dateFormat)
     });
     const group = this.groupForm.value;
     group.locale = this.settingsService.language.code;

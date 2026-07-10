@@ -1,16 +1,27 @@
 /** Angular Imports */
 import { Component, OnInit, Input, OnChanges, ChangeDetectionStrategy } from '@angular/core';
-import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, FormControl, Validators, ReactiveFormsModule } from '@angular/forms';
+import { LayoutDirective, LayoutGapDirective, FlexDirective, LayoutAlignDirective } from '@ngbracket/ngx-layout/flex';
+import { MatFormField, MatLabel, MatError } from '@angular/material/form-field';
+import { MatInput } from '@angular/material/input';
+import { MatSelect } from '@angular/material/select';
+import { NgFor, NgIf } from '@angular/common';
+import { MatOption } from '@angular/material/autocomplete';
+import { MatDivider } from '@angular/material/divider';
+import { MatCheckbox } from '@angular/material/checkbox';
+import { MatButton } from '@angular/material/button';
+import { MatStepperPrevious, MatStepperNext } from '@angular/material/stepper';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 
 /**
  * Fixed Deposits Account Settings Step
  */
 @Component({
-  standalone: false,
-  selector: 'mifosx-fixed-deposit-account-settings-step',
-  templateUrl: './fixed-deposit-account-settings-step.component.html',
-  changeDetection: ChangeDetectionStrategy.Eager,
-  styleUrls: ['./fixed-deposit-account-settings-step.component.scss']
+    selector: 'mifosx-fixed-deposit-account-settings-step',
+    templateUrl: './fixed-deposit-account-settings-step.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    styleUrls: ['./fixed-deposit-account-settings-step.component.scss'],
+    imports: [ReactiveFormsModule, LayoutDirective, LayoutGapDirective, FlexDirective, MatFormField, MatLabel, MatInput, MatSelect, NgFor, MatOption, MatError, MatDivider, MatCheckbox, NgIf, LayoutAlignDirective, MatButton, MatStepperPrevious, FaIconComponent, MatStepperNext]
 })
 export class FixedDepositAccountSettingsStepComponent implements OnInit, OnChanges {
 
@@ -57,15 +68,15 @@ export class FixedDepositAccountSettingsStepComponent implements OnInit, OnChang
       });
       if (this.fixedDepositsAccountProductTemplate.withHoldTax) {
         this.fixedDepositAccountSettingsForm.addControl('withHoldTax', new FormControl(false));
-        this.fixedDepositAccountSettingsForm.get('withHoldTax').valueChanges.subscribe((value: boolean) => {
+        this.fixedDepositAccountSettingsForm.get('withHoldTax')!.valueChanges.subscribe((value: boolean) => {
           if (value) {
             this.fixedDepositAccountSettingsForm.addControl('taxGroupId', new FormControl({ value: '', disabled: true }));
-            this.fixedDepositAccountSettingsForm.get('taxGroupId').patchValue(this.fixedDepositsAccountProductTemplate.taxGroup && this.fixedDepositsAccountProductTemplate.taxGroup.name);
+            this.fixedDepositAccountSettingsForm.get('taxGroupId')!.patchValue(this.fixedDepositsAccountProductTemplate.taxGroup && this.fixedDepositsAccountProductTemplate.taxGroup.name);
           } else {
             this.fixedDepositAccountSettingsForm.removeControl('taxGroupId');
           }
         });
-        this.fixedDepositAccountSettingsForm.get('withHoldTax').patchValue(this.fixedDepositsAccountTemplate.withHoldTax);
+        this.fixedDepositAccountSettingsForm.get('withHoldTax')!.patchValue(this.fixedDepositsAccountTemplate.withHoldTax);
       } else {
         this.fixedDepositAccountSettingsForm.removeControl('withHoldTax');
       }
@@ -107,10 +118,10 @@ export class FixedDepositAccountSettingsStepComponent implements OnInit, OnChang
    * Subscribes to value changes and sets new form controls accordingly.
    */
   buildDependencies() {
-    this.fixedDepositAccountSettingsForm.get('transferInterestToSavings').valueChanges.subscribe((value: boolean) => {
+    this.fixedDepositAccountSettingsForm.get('transferInterestToSavings')!.valueChanges.subscribe((value: boolean) => {
       if (value) {
         this.fixedDepositAccountSettingsForm.addControl('linkAccountId', new FormControl('', Validators.required));
-        this.fixedDepositAccountSettingsForm.get('linkAccountId').patchValue(this.fixedDepositsAccountTemplate.linkedAccount && this.fixedDepositsAccountTemplate.linkedAccount.id);
+        this.fixedDepositAccountSettingsForm.get('linkAccountId')!.patchValue(this.fixedDepositsAccountTemplate.linkedAccount && this.fixedDepositsAccountTemplate.linkedAccount.id);
       } else {
         this.fixedDepositAccountSettingsForm.removeControl('linkAccountId');
       }
@@ -134,7 +145,7 @@ export class FixedDepositAccountSettingsStepComponent implements OnInit, OnChang
     const fixedDepositAccountSettings = this.fixedDepositAccountSettingsForm.getRawValue();
     for (const key in fixedDepositAccountSettings) {
       if (fixedDepositAccountSettings[key] === '' || key === 'taxGroupId') {
-        delete fixedDepositAccountSettings[key];
+        fixedDepositAccountSettings[key] = undefined;
       }
     }
     return fixedDepositAccountSettings;

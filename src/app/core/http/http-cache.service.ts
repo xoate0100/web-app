@@ -78,7 +78,7 @@ export class HttpCacheService {
    * @param {!string} url The request URL.
    */
   clearCache(url: string): void {
-    delete this.cachedData[url];
+    delete (this.cachedData as any)[url];
     log.debug(`Cache cleared for key: "${url}"`);
     this.saveCacheData();
   }
@@ -91,7 +91,7 @@ export class HttpCacheService {
     if (expirationDate) {
       each(this.cachedData, (value: HttpCacheEntry, key: string) => {
         if (expirationDate >= value.lastUpdated) {
-          delete this.cachedData[key];
+          delete (this.cachedData as any)[key];
         }
       });
     } else {
@@ -108,7 +108,9 @@ export class HttpCacheService {
    */
   setPersistence(persistence?: 'local' | 'session') {
     this.cleanCache();
-    this.storage = persistence === 'local' || persistence === 'session' ? window[persistence + 'Storage'] : null;
+    this.storage = persistence === 'local' ? window.localStorage
+      : persistence === 'session' ? window.sessionStorage
+      : null;
     this.loadCacheData();
   }
 

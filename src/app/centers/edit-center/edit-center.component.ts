@@ -1,22 +1,30 @@
 /** Angular Imports */
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
-import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
-import { Router, ActivatedRoute } from '@angular/router';
-import { DatePipe } from '@angular/common';
+import { FormGroup, FormBuilder, FormControl, Validators, ReactiveFormsModule } from '@angular/forms';
+import { Router, ActivatedRoute, RouterLink } from '@angular/router';
+import { DatePipe, NgIf, NgFor } from '@angular/common';
 
 /** Custom Services */
 import { CentersService } from '../centers.service';
 import { SettingsService } from 'app/settings/settings.service';
+import { MatCard, MatCardContent, MatCardActions } from '@angular/material/card';
+import { LayoutDirective, LayoutAlignDirective, LayoutGapDirective } from '@ngbracket/ngx-layout/flex';
+import { MatFormField, MatLabel, MatError, MatSuffix } from '@angular/material/form-field';
+import { MatInput } from '@angular/material/input';
+import { MatSelect } from '@angular/material/select';
+import { MatOption } from '@angular/material/autocomplete';
+import { MatDatepickerInput, MatDatepickerToggle, MatDatepicker } from '@angular/material/datepicker';
+import { MatButton } from '@angular/material/button';
 
 /**
  * Edit Center component.
  */
 @Component({
-  standalone: false,
-  selector: 'mifosx-edit-center',
-  templateUrl: './edit-center.component.html',
-  changeDetection: ChangeDetectionStrategy.Eager,
-  styleUrls: ['./edit-center.component.scss']
+    selector: 'mifosx-edit-center',
+    templateUrl: './edit-center.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    styleUrls: ['./edit-center.component.scss'],
+    imports: [MatCard, ReactiveFormsModule, MatCardContent, LayoutDirective, MatFormField, MatLabel, MatInput, NgIf, MatError, MatSelect, NgFor, MatOption, MatDatepickerInput, MatDatepickerToggle, MatSuffix, MatDatepicker, MatCardActions, LayoutAlignDirective, LayoutGapDirective, MatButton, RouterLink]
 })
 export class EditCenterComponent implements OnInit {
 
@@ -46,7 +54,7 @@ export class EditCenterComponent implements OnInit {
     private centersService: CentersService,
     private settingsService: SettingsService,
     private datePipe: DatePipe) {
-    this.route.data.subscribe((data: { centerData: any }) => {
+    this.route.data.subscribe((data: any) => {
       this.centerData = data.centerData;
       this.staffs = this.centerData.staffOptions;
     });
@@ -84,7 +92,7 @@ export class EditCenterComponent implements OnInit {
     if (this.centerData.status.value === 'Pending') {
       const prevactivationDate: Date = this.editCenterForm.value.activationDate;
       this.editCenterForm.patchValue({
-        activationDate: this.datePipe.transform(prevactivationDate, dateFormat),
+        activationDate: this.datePipe.transform(prevactivationDate as Date, dateFormat),
       });
     }
     const data = {

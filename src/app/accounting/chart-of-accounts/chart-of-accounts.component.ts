@@ -1,12 +1,12 @@
 /** Angular Imports */
 import { Component, ViewChild, OnInit, AfterViewInit, ChangeDetectionStrategy } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
-import { MatSort } from '@angular/material/sort';
-import { MatTableDataSource } from '@angular/material/table';
-import { MatTreeNestedDataSource } from '@angular/material/tree';
+import { MatSort, MatSortHeader } from '@angular/material/sort';
+import { MatTableDataSource, MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow } from '@angular/material/table';
+import { MatTreeNestedDataSource, MatTree, MatTreeNodeDef, MatTreeNode, MatTreeNodeToggle, MatNestedTreeNode, MatTreeNodeOutlet } from '@angular/material/tree';
 import { NestedTreeControl } from '@angular/cdk/tree';
-import { FormControl } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { FormControl, ReactiveFormsModule } from '@angular/forms';
+import { ActivatedRoute, RouterLink } from '@angular/router';
 
 /** rxjs Imports */
 import { of } from 'rxjs';
@@ -16,16 +16,26 @@ import { GLAccountNode } from './gl-account-node.model';
 
 /** Custom Services */
 import { GlAccountTreeService } from './gl-account-tree.service';
+import { LayoutDirective, LayoutAlignDirective, LayoutGapDirective, FlexDirective } from '@ngbracket/ngx-layout/flex';
+import { MatButtonToggleGroup, MatButtonToggle } from '@angular/material/button-toggle';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import { HasPermissionDirective } from '../../directives/has-permission/has-permission.directive';
+import { MatButton, MatIconButton } from '@angular/material/button';
+import { MatFormField, MatLabel } from '@angular/material/form-field';
+import { MatInput } from '@angular/material/input';
+import { MatTooltip } from '@angular/material/tooltip';
+import { NgIf } from '@angular/common';
+import { MatCard, MatCardContent } from '@angular/material/card';
 
 /**
  * Chart of accounts component.
  */
 @Component({
-  standalone: false,
-  selector: 'mifosx-chart-of-accounts',
-  templateUrl: './chart-of-accounts.component.html',
-  changeDetection: ChangeDetectionStrategy.Eager,
-  styleUrls: ['./chart-of-accounts.component.scss']
+    selector: 'mifosx-chart-of-accounts',
+    templateUrl: './chart-of-accounts.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    styleUrls: ['./chart-of-accounts.component.scss'],
+    imports: [LayoutDirective, LayoutAlignDirective, LayoutGapDirective, MatButtonToggleGroup, ReactiveFormsModule, MatButtonToggle, FaIconComponent, HasPermissionDirective, MatButton, RouterLink, MatFormField, FlexDirective, MatLabel, MatInput, MatTable, MatSort, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatSortHeader, MatCellDef, MatCell, MatTooltip, NgIf, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow, MatPaginator, MatCard, MatCardContent, MatTree, MatTreeNodeDef, MatTreeNode, MatTreeNodeToggle, MatIconButton, MatNestedTreeNode, MatTreeNodeOutlet]
 })
 export class ChartOfAccountsComponent implements AfterViewInit, OnInit {
 
@@ -56,7 +66,7 @@ export class ChartOfAccountsComponent implements AfterViewInit, OnInit {
    */
   constructor(private glAccountTreeService: GlAccountTreeService,
               private route: ActivatedRoute) {
-    this.route.data.subscribe((data: { chartOfAccounts: any }) => {
+    this.route.data.subscribe((data: any) => {
       this.glAccountData = data.chartOfAccounts;
       glAccountTreeService.initialize(this.glAccountData);
     });
@@ -107,7 +117,7 @@ export class ChartOfAccountsComponent implements AfterViewInit, OnInit {
     if (glAccount.glCode) {
       this.glAccount = glAccount;
     } else {
-      delete this.glAccount;
+      delete (this as any).glAccount;
     }
   }
 

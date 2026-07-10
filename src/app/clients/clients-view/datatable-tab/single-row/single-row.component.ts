@@ -5,7 +5,7 @@ import { FormfieldBase } from 'app/shared/form-dialog/formfield/model/formfield-
 import { InputBase } from 'app/shared/form-dialog/formfield/model/input-base';
 import { SelectBase } from 'app/shared/form-dialog/formfield/model/select-base';
 import { CheckboxBase } from 'app/shared/form-dialog/formfield/model/checkbox-base';
-import { DatePipe } from '@angular/common';
+import { DatePipe, NgIf, NgFor } from '@angular/common';
 
 /** Custom Components */
 import { FormDialogComponent } from 'app/shared/form-dialog/form-dialog.component';
@@ -14,14 +14,18 @@ import { DeleteDialogComponent } from '../../../../shared/delete-dialog/delete-d
 /** Custom Services */
 import { ClientsService } from '../../../clients.service';
 import { SettingsService } from 'app/settings/settings.service';
+import { LayoutDirective, LayoutAlignDirective } from '@ngbracket/ngx-layout/flex';
+import { MatButton } from '@angular/material/button';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import { MatList, MatListItem } from '@angular/material/list';
 
 
 @Component({
-  standalone: false,
-  selector: 'mifosx-single-row',
-  templateUrl: './single-row.component.html',
-  changeDetection: ChangeDetectionStrategy.Eager,
-  styleUrls: ['./single-row.component.scss']
+    selector: 'mifosx-single-row',
+    templateUrl: './single-row.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    styleUrls: ['./single-row.component.scss'],
+    imports: [LayoutDirective, LayoutAlignDirective, NgIf, MatButton, FaIconComponent, MatList, NgFor, MatListItem]
 })
 export class SingleRowComponent implements OnInit {
 
@@ -34,7 +38,7 @@ export class SingleRowComponent implements OnInit {
     private dialog: MatDialog,
     private clientsService: ClientsService,
     private settingsService: SettingsService) {
-    this.clientId = this.route.parent.parent.snapshot.paramMap.get('clientId');
+    this.clientId = this.route.parent!.parent!.snapshot.paramMap.get('clientId')!;
   }
 
   ngOnInit() {

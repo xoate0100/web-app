@@ -26,6 +26,7 @@
     "e2e:ci": "playwright test --reporter=list",
     "e2e:install": "playwright install chromium --with-deps",
     "validate": "npm run lint:all && npm run test:ci && npm run build:prod",
+    "validate:all": "npm run validate && npm run e2e:ci",
     "translations:extract": "ngx-translate-extract --input ./src --output ./src/translations/template.json --format=json --clean -sort --marker extract",
     "docs": "hads ./docs -o",
     "env": "ngx-scripts env npm_package_version"
@@ -40,7 +41,6 @@
     "@angular/localize": "^22.0.6",
     "@angular/material": "^22.0.4",
     "@angular/platform-browser": "^22.0.6",
-    "@angular/platform-browser-dynamic": "^22.0.6",
     "@angular/router": "^22.0.6",
     "@angular/service-worker": "^22.0.6",
     "@ckeditor/ckeditor5-angular": "^11.2.0",

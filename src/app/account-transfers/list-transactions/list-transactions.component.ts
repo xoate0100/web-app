@@ -2,7 +2,7 @@
 import { Component, OnInit, ViewChild, ChangeDetectionStrategy } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
-import { MatTableDataSource, MatTable } from '@angular/material/table';
+import { MatTableDataSource, MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow } from '@angular/material/table';
 import { ActivatedRoute } from '@angular/router';
 import { FormControl } from '@angular/forms';
 
@@ -11,16 +11,19 @@ import { AccountTransfersService } from '../account-transfers.service';
 
 /** Dialog Components */
 import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.component';
+import { MatCard, MatCardContent } from '@angular/material/card';
+import { LayoutDirective, FlexDirective } from '@ngbracket/ngx-layout/flex';
+import { DatePipe } from '@angular/common';
 
 /**
  * Recurring Deposits Standing Instructions Tab
  */
 @Component({
-  standalone: false,
-  selector: 'mifosx-list-transactions',
-  templateUrl: './list-transactions.component.html',
-  changeDetection: ChangeDetectionStrategy.Eager,
-  styleUrls: ['./list-transactions.component.scss']
+    selector: 'mifosx-list-transactions',
+    templateUrl: './list-transactions.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    styleUrls: ['./list-transactions.component.scss'],
+    imports: [MatCard, MatCardContent, LayoutDirective, FlexDirective, MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow, MatPaginator, DatePipe]
 })
 export class ListTransactionsComponent {
 
@@ -40,7 +43,7 @@ export class ListTransactionsComponent {
    * @param {ActivatedRoute} route Activated Route.
    */
   constructor(private route: ActivatedRoute) {
-    this.route.data.subscribe((data: { listTransactionData: any }) => {
+    this.route.data.subscribe((data: any) => {
       this.listTransactionData = data.listTransactionData;
       this.dataSource = new MatTableDataSource(this.listTransactionData.transactions.pageItems);
       this.dataSource.paginator = this.paginator;

@@ -25,7 +25,7 @@ export class SharesAccountAndTemplateResolver implements Resolve<Object> {
    * @returns {Observable<any>}
    */
   resolve(route: ActivatedRouteSnapshot): Observable<any> {
-    const shareAccountId = route.paramMap.get('shareAccountId');
+    const shareAccountId = route.paramMap.get('shareAccountId')!;
     return this.sharesService.getSharesAccountData(shareAccountId, true);
   }
 

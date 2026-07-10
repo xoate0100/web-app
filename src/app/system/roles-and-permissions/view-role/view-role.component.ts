@@ -1,7 +1,7 @@
 /** Angular Imports  */
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, ReactiveFormsModule, FormArray } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { SystemService } from '../../system.service';
 import * as _ from 'lodash';
@@ -10,16 +10,25 @@ import * as _ from 'lodash';
 import { DeleteDialogComponent } from '../../../shared/delete-dialog/delete-dialog.component';
 import { DisableDialogComponent } from '../../../shared/disable-dialog/disable-dialog.component';
 import { EnableDialogComponent } from '../../../shared/enable-dialog/enable-dialog.component';
+import { LayoutDirective, LayoutAlignDirective, LayoutGapDirective, FlexDirective } from '@ngbracket/ngx-layout/flex';
+import { MatButton } from '@angular/material/button';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import { NgIf, NgFor, NgClass } from '@angular/common';
+import { MatCard, MatCardContent, MatCardActions } from '@angular/material/card';
+import { MatList, MatListItem } from '@angular/material/list';
+import { ClassDirective } from '@ngbracket/ngx-layout/extended';
+import { MatDivider } from '@angular/material/divider';
+import { MatCheckbox } from '@angular/material/checkbox';
 
 /**
  * View Role and Permissions Component
  */
 @Component({
-  standalone: false,
-  selector: 'mifosx-view-role',
-  templateUrl: './view-role.component.html',
-  changeDetection: ChangeDetectionStrategy.Eager,
-  styleUrls: ['./view-role.component.scss']
+    selector: 'mifosx-view-role',
+    templateUrl: './view-role.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    styleUrls: ['./view-role.component.scss'],
+    imports: [LayoutDirective, LayoutAlignDirective, LayoutGapDirective, MatButton, FaIconComponent, NgIf, MatCard, MatCardContent, FlexDirective, MatList, NgFor, MatListItem, NgClass, ClassDirective, MatDivider, ReactiveFormsModule, MatCheckbox, MatCardActions]
 })
 export class ViewRoleComponent implements OnInit {
 
@@ -46,12 +55,10 @@ export class ViewRoleComponent implements OnInit {
   /** Creates Backup form */
   backupform: FormGroup;
   /** Temporarily stores Permission data */
-  tempPermissionUIData: {
-    permissions: { code: string }[]
-  }[];
+  tempPermissionUIData: Record<string, { permissions: { code: string; id: string; selected?: boolean }[] }> = {};
   /** Stores permissions */
   permissions: {
-    permissions: { code: string, id: number }[]
+    permissions: { code: string, id: string, selected?: boolean }[]
   };
 
   /**
@@ -67,7 +74,7 @@ export class ViewRoleComponent implements OnInit {
     private router: Router,
     private formBuilder: FormBuilder,
     public dialog: MatDialog) {
-    this.route.data.subscribe((data: { roledetails: any }) => {
+    this.route.data.subscribe((data: any) => {
       this.rolePermissionService = data.roledetails;
     });
   }
@@ -112,9 +119,7 @@ export class ViewRoleComponent implements OnInit {
    * Groups the permissions based on rules
    */
   groupRules() {
-    this.tempPermissionUIData = [{
-      permissions: []
-    }];
+    this.tempPermissionUIData = {};
     for (const i in this.rolePermissionService.permissionUsageData) {
       if (this.rolePermissionService.permissionUsageData[i]) {
         if (this.rolePermissionService.permissionUsageData[i].grouping !== this.currentGrouping) {
@@ -204,8 +209,8 @@ export class ViewRoleComponent implements OnInit {
    * Submits the modified permissions
    */
   submit() {
-    const value = this.formGroup.get('roster').value;
-    const data = {};
+    const value = this.formGroup.get('roster')!.value;
+    const data: Record<string, any> = {};
     const permissionData = {
       permissions: {}
     };
@@ -226,7 +231,7 @@ export class ViewRoleComponent implements OnInit {
    */
   selectAll() {
     for (let i = 0; i < this.permissions.permissions.length; i++) {
-      this.formGroup.controls.roster['controls'][this.permissions.permissions[i].id].patchValue({
+      (this.formGroup.controls.roster as FormArray).controls[(this.permissions.permissions[i].id as any)].patchValue({
         selected: true
       });
     }
@@ -237,7 +242,7 @@ export class ViewRoleComponent implements OnInit {
    */
   deselectAll() {
     for (let i = 0; i < this.permissions.permissions.length; i++) {
-      this.formGroup.controls.roster['controls'][this.permissions.permissions[i].id].patchValue({
+      (this.formGroup.controls.roster as FormArray).controls[(this.permissions.permissions[i].id as any)].patchValue({
         selected: false
       });
     }

@@ -2,23 +2,34 @@
 import { Component, OnInit, ViewChild, ChangeDetectionStrategy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
-import { FormBuilder, Validators } from '@angular/forms';
+import { FormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
 
 /** Custom Dialogs */
 import { DeleteDialogComponent } from '../../../shared/delete-dialog/delete-dialog.component';
 
 /** Custom Services */
 import { OrganizationService } from '../../organization.service';
+import { MatCard } from '@angular/material/card';
+import { LayoutDirective, LayoutAlignDirective, LayoutGapDirective, FlexDirective } from '@ngbracket/ngx-layout/flex';
+import { MatFormField, MatLabel, MatError } from '@angular/material/form-field';
+import { MatSelect } from '@angular/material/select';
+import { NgFor, NgIf } from '@angular/common';
+import { MatOption } from '@angular/material/autocomplete';
+import { HasPermissionDirective } from '../../../directives/has-permission/has-permission.directive';
+import { MatButton } from '@angular/material/button';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import { MatGridList, MatGridTile } from '@angular/material/grid-list';
+import { MatInput } from '@angular/material/input';
 
 /**
  * Manage Currencies component.
  */
 @Component({
-  standalone: false,
-  selector: 'mifosx-manage-currencies',
-  templateUrl: './manage-currencies.component.html',
-  changeDetection: ChangeDetectionStrategy.Eager,
-  styleUrls: ['./manage-currencies.component.scss']
+    selector: 'mifosx-manage-currencies',
+    templateUrl: './manage-currencies.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    styleUrls: ['./manage-currencies.component.scss'],
+    imports: [MatCard, ReactiveFormsModule, LayoutDirective, LayoutAlignDirective, LayoutGapDirective, FlexDirective, MatFormField, MatLabel, MatSelect, NgFor, MatOption, NgIf, MatError, HasPermissionDirective, MatButton, FaIconComponent, MatGridList, MatGridTile, MatInput]
 })
 export class ManageCurrenciesComponent implements OnInit {
 
@@ -43,7 +54,7 @@ export class ManageCurrenciesComponent implements OnInit {
               private formBuilder: FormBuilder,
               private organizationservice: OrganizationService,
               public dialog: MatDialog) {
-    this.route.parent.data.subscribe(( data: { currencies: any }) => {
+    this.route.parent!.data.subscribe((data: any) => {
       this.selectedCurrencies = data.currencies.selectedCurrencyOptions;
       this.currencyData = data.currencies.currencyOptions;
     });

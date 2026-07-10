@@ -1,19 +1,19 @@
 /** Angular Imports */
 import { Component, OnInit, ViewChild, ChangeDetectionStrategy } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
-import { MatSort } from '@angular/material/sort';
-import { MatTableDataSource } from '@angular/material/table';
-import { ActivatedRoute } from '@angular/router';
+import { MatSort, MatSortHeader } from '@angular/material/sort';
+import { MatTableDataSource, MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow } from '@angular/material/table';
+import { ActivatedRoute, RouterLink } from '@angular/router';
 
 /**
  * Notifications Page Component
  */
 @Component({
-  standalone: false,
-  selector: 'mifosx-notifications-page',
-  templateUrl: './notifications-page.component.html',
-  changeDetection: ChangeDetectionStrategy.Eager,
-  styleUrls: ['./notifications-page.component.scss']
+    selector: 'mifosx-notifications-page',
+    templateUrl: './notifications-page.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    styleUrls: ['./notifications-page.component.scss'],
+    imports: [MatTable, MatSort, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatSortHeader, MatCellDef, MatCell, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow, RouterLink, MatPaginator]
 })
 export class NotificationsPageComponent implements OnInit {
 
@@ -51,7 +51,7 @@ export class NotificationsPageComponent implements OnInit {
    * @param {ActivatedRoute} route Activated Route.
    */
   constructor(private route: ActivatedRoute) {
-    this.route.data.subscribe(( data: { notifications: any }) => {
+    this.route.data.subscribe((data: any) => {
       this.notificationsData = data.notifications.pageItems;
     });
   }

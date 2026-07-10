@@ -13,16 +13,28 @@ import { AlertService } from '../core/alert/alert.service';
 
 /** Environment Imports */
 import { environment } from '../../environments/environment';
+import { LayoutDirective, FlexDirective, LayoutAlignDirective, FlexAlignDirective } from '@ngbracket/ngx-layout/flex';
+import { ShowHideDirective } from '@ngbracket/ngx-layout/extended';
+import { LanguageSelectorComponent } from '../shared/language-selector/language-selector.component';
+import { NgIf } from '@angular/common';
+import { ServerSelectorComponent } from '../shared/server-selector/server-selector.component';
+import { LoginFormComponent } from './login-form/login-form.component';
+import { ResetPasswordComponent } from './reset-password/reset-password.component';
+import { TwoFactorAuthenticationComponent } from './two-factor-authentication/two-factor-authentication.component';
+import { MatList, MatListItem } from '@angular/material/list';
+import { MatButton } from '@angular/material/button';
+import { MatMenuTrigger, MatMenu, MatMenuItem } from '@angular/material/menu';
+import { FooterComponent } from '../shared/footer/footer.component';
 
 /**
  * Login component.
  */
 @Component({
-  standalone: false,
-  selector: 'mifosx-login',
-  templateUrl: './login.component.html',
-  changeDetection: ChangeDetectionStrategy.Eager,
-  styleUrls: ['./login.component.scss']
+    selector: 'mifosx-login',
+    templateUrl: './login.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    styleUrls: ['./login.component.scss'],
+    imports: [LayoutDirective, FlexDirective, LayoutAlignDirective, ShowHideDirective, LanguageSelectorComponent, NgIf, ServerSelectorComponent, LoginFormComponent, ResetPasswordComponent, TwoFactorAuthenticationComponent, MatList, FlexAlignDirective, MatListItem, MatButton, MatMenuTrigger, FooterComponent, MatMenu, MatMenuItem]
 })
 export class LoginComponent implements OnInit, OnDestroy {
 
@@ -46,7 +58,7 @@ export class LoginComponent implements OnInit, OnDestroy {
    * Subscribes to alert event of alert service.
    */
   ngOnInit() {
-    this.alert$ = this.alertService.alertEvent.subscribe((alertEvent: Alert) => {
+    this.alert$ = this.alertService.alertEvent.subscribe((alertEvent: any) => {
       const alertType = alertEvent.type;
       if (alertType === 'Password Expired') {
         this.twoFactorAuthenticationRequired = false;

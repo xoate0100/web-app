@@ -1,17 +1,23 @@
 /** Angular Imports */
 import { Component, OnInit, Inject, ChangeDetectionStrategy } from '@angular/core';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { FormControl } from '@angular/forms';
+import { MatDialogRef, MAT_DIALOG_DATA, MatDialogTitle, MatDialogContent, MatDialogActions, MatDialogClose } from '@angular/material/dialog';
+import { FormControl, ReactiveFormsModule } from '@angular/forms';
+import { NgIf } from '@angular/common';
+import { CdkScrollable } from '@angular/cdk/scrolling';
+import { MatFormField, MatLabel } from '@angular/material/form-field';
+import { FlexFillDirective } from '@ngbracket/ngx-layout/flex';
+import { MatInput } from '@angular/material/input';
+import { MatButton } from '@angular/material/button';
 
 /**
  * Revert transaction dialog component.
  */
 @Component({
-  standalone: false,
-  selector: 'mifosx-revert-transaction',
-  templateUrl: './revert-transaction.component.html',
-  changeDetection: ChangeDetectionStrategy.Eager,
-  styleUrls: ['./revert-transaction.component.scss']
+    selector: 'mifosx-revert-transaction',
+    templateUrl: './revert-transaction.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    styleUrls: ['./revert-transaction.component.scss'],
+    imports: [NgIf, MatDialogTitle, CdkScrollable, MatDialogContent, MatFormField, FlexFillDirective, MatLabel, MatInput, ReactiveFormsModule, MatDialogActions, MatButton, MatDialogClose]
 })
 export class RevertTransactionComponent implements OnInit {
 

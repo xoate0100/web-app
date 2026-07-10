@@ -1,6 +1,6 @@
 /** Angular Imports */
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterLinkActive, RouterLink, RouterOutlet } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 
 /** Custom Dialogs */
@@ -15,16 +15,27 @@ import { FixedDepositsButtonsConfiguration } from './fixed-deposits-buttons.conf
 /** Custom Services */
 import { FixedDepositsService } from '../fixed-deposits.service';
 import { SavingsService } from 'app/savings/savings.service';
+import { MatCard, MatCardHeader, MatCardTitleGroup, MatCardMdImage, MatCardTitle, MatCardSubtitle, MatCardActions, MatCardContent } from '@angular/material/card';
+import { LayoutDirective, LayoutGapDirective, FlexDirective } from '@ngbracket/ngx-layout/flex';
+import { MatTooltip } from '@angular/material/tooltip';
+import { NgClass, NgIf, NgFor, DatePipe } from '@angular/common';
+import { ClassDirective } from '@ngbracket/ngx-layout/extended';
+import { MatButton } from '@angular/material/button';
+import { MatMenuTrigger, MatMenu, MatMenuItem } from '@angular/material/menu';
+import { MatTabNav, MatTabLink } from '@angular/material/tabs';
+import { HasPermissionDirective } from '../../../directives/has-permission/has-permission.directive';
+import { StatusLookupPipe } from '../../../pipes/status-lookup.pipe';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 
 /**
  * Fixed Deposits Account View Component
  */
 @Component({
-  standalone: false,
-  selector: 'mifosx-fixed-deposit-account-view',
-  templateUrl: './fixed-deposit-account-view.component.html',
-  changeDetection: ChangeDetectionStrategy.Eager,
-  styleUrls: ['./fixed-deposit-account-view.component.scss']
+    selector: 'mifosx-fixed-deposit-account-view',
+    templateUrl: './fixed-deposit-account-view.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    styleUrls: ['./fixed-deposit-account-view.component.scss'],
+    imports: [FaIconComponent, MatCard, MatCardHeader, LayoutDirective, MatCardTitleGroup, MatCardMdImage, MatTooltip, MatCardTitle, NgClass, ClassDirective, MatCardSubtitle, NgIf, MatCardActions, NgFor, MatButton, MatMenuTrigger, MatMenu, MatMenuItem, MatCardContent, LayoutGapDirective, FlexDirective, MatTabNav, MatTabLink, RouterLinkActive, RouterLink, HasPermissionDirective, RouterOutlet, DatePipe, StatusLookupPipe]
 })
 export class FixedDepositAccountViewComponent implements OnInit {
 
@@ -48,7 +59,7 @@ export class FixedDepositAccountViewComponent implements OnInit {
               private fixedDepositsService: FixedDepositsService,
               private savingsService: SavingsService,
               public dialog: MatDialog) {
-    this.route.data.subscribe((data: { fixedDepositsAccountData: any, savingsDatatables: any  }) => {
+    this.route.data.subscribe((data: any) => {
       this.fixedDepositsAccountData = data.fixedDepositsAccountData;
       this.savingsDatatables = data.savingsDatatables;
     });

@@ -1,23 +1,33 @@
 /** Angular Imports */
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
-import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { FormGroup, FormBuilder, Validators, FormArray, ReactiveFormsModule } from '@angular/forms';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 
 /** Custom Services */
 import { AccountingService } from '../accounting.service';
 
 /** Custom Validators */
 import { onlyOneOfTheFieldsIsRequiredValidator } from './only-one-of-the-fields-is-required.validator';
+import { MatCard, MatCardContent, MatCardActions } from '@angular/material/card';
+import { LayoutDirective, LayoutGapDirective, FlexDirective, FlexFillDirective, LayoutAlignDirective } from '@ngbracket/ngx-layout/flex';
+import { MatFormField, MatLabel, MatError, MatSuffix } from '@angular/material/form-field';
+import { MatSelect } from '@angular/material/select';
+import { NgFor, NgIf } from '@angular/common';
+import { MatOption } from '@angular/material/autocomplete';
+import { MatButton } from '@angular/material/button';
+import { MatInput } from '@angular/material/input';
+import { MatDatepickerInput, MatDatepickerToggle, MatDatepicker } from '@angular/material/datepicker';
+import { HasPermissionDirective } from '../../directives/has-permission/has-permission.directive';
 
 /**
  * Migrate opening balances component.
  */
 @Component({
-  standalone: false,
-  selector: 'mifosx-migrate-opening-balances',
-  templateUrl: './migrate-opening-balances.component.html',
-  changeDetection: ChangeDetectionStrategy.Eager,
-  styleUrls: ['./migrate-opening-balances.component.scss']
+    selector: 'mifosx-migrate-opening-balances',
+    templateUrl: './migrate-opening-balances.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    styleUrls: ['./migrate-opening-balances.component.scss'],
+    imports: [MatCard, ReactiveFormsModule, MatCardContent, LayoutDirective, LayoutGapDirective, MatFormField, FlexDirective, MatLabel, MatSelect, NgFor, MatOption, NgIf, MatError, MatButton, MatInput, MatDatepickerInput, MatDatepickerToggle, MatSuffix, MatDatepicker, FlexFillDirective, MatCardActions, LayoutAlignDirective, RouterLink, HasPermissionDirective]
 })
 export class MigrateOpeningBalancesComponent implements OnInit {
 
@@ -49,10 +59,7 @@ export class MigrateOpeningBalancesComponent implements OnInit {
               private accountingService: AccountingService,
               private route: ActivatedRoute,
               private router: Router) {
-    this.route.data.subscribe((data: {
-        offices: any,
-        currencies: any
-      }) => {
+    this.route.data.subscribe((data: any) => {
         this.officeData = data.offices;
         this.currencyData = data.currencies.selectedCurrencyOptions;
       });
@@ -160,7 +167,7 @@ export class MigrateOpeningBalancesComponent implements OnInit {
         openingBalances.credits.push({ glAccountId: entry.glAccountId, amount: entry.credit });
       }
     });
-    delete openingBalances.glAccountEntries;
+    delete (openingBalances as any).glAccountEntries;
     this.accountingService.defineOpeningBalances(openingBalances).subscribe((response: any) => {
       this.router.navigate(['/accounting/journal-entries/transactions/view', response.transactionId]);
     });

@@ -11,16 +11,23 @@ import { FormDialogComponent } from 'app/shared/form-dialog/form-dialog.componen
 
 /** Custom Services */
 import { ClientsService } from '../../clients.service';
+import { LayoutDirective, LayoutAlignDirective } from '@ngbracket/ngx-layout/flex';
+import { MatButton } from '@angular/material/button';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import { MatAccordion, MatExpansionPanel, MatExpansionPanelHeader, MatExpansionPanelTitle, MatExpansionPanelDescription } from '@angular/material/expansion';
+import { NgFor, NgIf } from '@angular/common';
+import { MatDivider } from '@angular/material/divider';
+import { MatSlideToggle } from '@angular/material/slide-toggle';
 
 /**
  * Clients Address Tab Component
  */
 @Component({
-  standalone: false,
-  selector: 'mifosx-address-tab',
-  templateUrl: './address-tab.component.html',
-  changeDetection: ChangeDetectionStrategy.Eager,
-  styleUrls: ['./address-tab.component.scss']
+    selector: 'mifosx-address-tab',
+    templateUrl: './address-tab.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    styleUrls: ['./address-tab.component.scss'],
+    imports: [LayoutDirective, LayoutAlignDirective, MatButton, FaIconComponent, MatAccordion, NgFor, MatExpansionPanel, MatExpansionPanelHeader, MatExpansionPanelTitle, MatExpansionPanelDescription, MatDivider, MatSlideToggle, NgIf]
 })
 export class AddressTabComponent {
 
@@ -41,15 +48,11 @@ export class AddressTabComponent {
   constructor(private route: ActivatedRoute,
               private clientService: ClientsService,
               private dialog: MatDialog) {
-    this.route.data.subscribe((data: {
-      clientAddressData: any,
-      clientAddressFieldConfig: any,
-      clientAddressTemplateData: any
-    }) => {
+    this.route.data.subscribe((data: any) => {
       this.clientAddressData = data.clientAddressData;
       this.clientAddressFieldConfig = data.clientAddressFieldConfig;
       this.clientAddressTemplate = data.clientAddressTemplateData;
-      this.clientId = this.route.parent.snapshot.paramMap.get('clientId');
+      this.clientId = this.route.parent!.snapshot.paramMap.get('clientId')!;
     });
   }
 
@@ -141,7 +144,7 @@ export class AddressTabComponent {
    * @param {any} address Address
    */
   getAddressFormFields(formType?: string, address?: any) {
-    let formfields: FormfieldBase[] = [];
+    let formfields: (FormfieldBase | null)[] = [];
     if (formType === 'add') {
       formfields.push(this.isFieldEnabled('addressType') ? new SelectBase({
         controlName: 'addressType',
@@ -222,7 +225,7 @@ export class AddressTabComponent {
       type: 'text',
       order: 11
     }) : null);
-    formfields = formfields.filter(field => field !== null);
+    formfields = formfields.filter((f): f is FormfieldBase => f !== null);
     return formfields;
   }
 

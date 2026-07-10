@@ -1,22 +1,30 @@
 /** Angular Imports */
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { DatePipe } from '@angular/common';
-import { ActivatedRoute, Router } from '@angular/router';
+import { FormGroup, FormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
+import { DatePipe, NgIf, NgFor } from '@angular/common';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 
 /** Custom Services */
 import { ClientsService } from 'app/clients/clients.service';
 import { SettingsService } from 'app/settings/settings.service';
+import { MatCard, MatCardContent, MatCardActions } from '@angular/material/card';
+import { LayoutDirective, FlexDirective, LayoutAlignDirective, LayoutGapDirective } from '@ngbracket/ngx-layout/flex';
+import { MatFormField, MatLabel, MatSuffix, MatError } from '@angular/material/form-field';
+import { MatInput } from '@angular/material/input';
+import { MatDatepickerInput, MatDatepickerToggle, MatDatepicker } from '@angular/material/datepicker';
+import { MatSelect } from '@angular/material/select';
+import { MatOption } from '@angular/material/autocomplete';
+import { MatButton } from '@angular/material/button';
 
 /**
  * Reject Client Component
  */
 @Component({
-  standalone: false,
-  selector: 'mifosx-reject-client',
-  templateUrl: './reject-client.component.html',
-  changeDetection: ChangeDetectionStrategy.Eager,
-  styleUrls: ['./reject-client.component.scss']
+    selector: 'mifosx-reject-client',
+    templateUrl: './reject-client.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    styleUrls: ['./reject-client.component.scss'],
+    imports: [MatCard, ReactiveFormsModule, MatCardContent, LayoutDirective, MatFormField, MatLabel, MatInput, MatDatepickerInput, MatDatepickerToggle, MatSuffix, MatDatepicker, NgIf, MatError, FlexDirective, MatSelect, NgFor, MatOption, MatCardActions, LayoutAlignDirective, LayoutGapDirective, MatButton, RouterLink]
 })
 export class RejectClientComponent implements OnInit {
 
@@ -45,10 +53,10 @@ export class RejectClientComponent implements OnInit {
               private route: ActivatedRoute,
               private router: Router,
               private settingsService: SettingsService) {
-    this.route.data.subscribe((data: { clientActionData: any }) => {
+    this.route.data.subscribe((data: any) => {
       this.rejectionData = data.clientActionData.narrations;
     });
-    this.clientId = this.route.parent.snapshot.params['clientId'];
+    this.clientId = this.route.parent!.snapshot.params['clientId']!;
   }
 
   ngOnInit() {
@@ -74,7 +82,7 @@ export class RejectClientComponent implements OnInit {
     const dateFormat = this.settingsService.dateFormat;
     const prevRejectedDate: Date = this.rejectClientForm.value.rejectionDate;
     this.rejectClientForm.patchValue({
-      rejectionDate: this.datePipe.transform(prevRejectedDate, dateFormat),
+      rejectionDate: this.datePipe.transform(prevRejectedDate as Date, dateFormat),
     });
     const data = {
       ...this.rejectClientForm.value,

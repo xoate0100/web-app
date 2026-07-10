@@ -1,12 +1,13 @@
 /** Angular Imports */
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
-import { ActivatedRoute, Router, NavigationEnd } from '@angular/router';
+import { ActivatedRoute, Router, NavigationEnd, RouterLink } from '@angular/router';
 
 /** rxjs Imports */
 import { filter } from 'rxjs/operators';
 
 /** Custom Model */
 import { Breadcrumb } from './breadcrumb.model';
+import { NgIf, NgFor } from '@angular/common';
 
 /**
  * Route data property to generate breadcrumb using a static string.
@@ -41,11 +42,11 @@ const routeAddBreadcrumbLink = 'addBreadcrumbLink';
  * Generate breadcrumbs dynamically via route configuration.
  */
 @Component({
-  standalone: false,
-  selector: 'mifosx-breadcrumb',
-  templateUrl: './breadcrumb.component.html',
-  changeDetection: ChangeDetectionStrategy.Eager,
-  styleUrls: ['./breadcrumb.component.scss']
+    selector: 'mifosx-breadcrumb',
+    templateUrl: './breadcrumb.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    styleUrls: ['./breadcrumb.component.scss'],
+    imports: [NgIf, NgFor, RouterLink]
 })
 export class BreadcrumbComponent implements OnInit {
 
@@ -99,19 +100,19 @@ export class BreadcrumbComponent implements OnInit {
           const hasData = (route.routeConfig && route.routeConfig.data);
 
           if (hasData) {
-            if (route.snapshot.data.hasOwnProperty(routeResolveBreadcrumb) && route.snapshot.data[routeResolveBreadcrumb]) {
+            if (route.snapshot.data.hasOwnProperty(routeResolveBreadcrumb) && route.snapshot.data[routeResolveBreadcrumb]!) {
               breadcrumbLabel = route.snapshot.data;
               route.snapshot.data[routeResolveBreadcrumb].forEach((property: any) => {
                 breadcrumbLabel = breadcrumbLabel[property];
               });
-            } else if (route.snapshot.data.hasOwnProperty(routeParamBreadcrumb) && route.snapshot.paramMap.get(route.snapshot.data[routeParamBreadcrumb])) {
-              breadcrumbLabel = route.snapshot.paramMap.get(route.snapshot.data[routeParamBreadcrumb]);
+            } else if (route.snapshot.data.hasOwnProperty(routeParamBreadcrumb) && route.snapshot.paramMap.get(route.snapshot.data[routeParamBreadcrumb]!)!) {
+              breadcrumbLabel = route.snapshot.paramMap.get(route.snapshot.data[routeParamBreadcrumb]!)!;
             } else if (route.snapshot.data.hasOwnProperty(routeDataBreadcrumb)) {
-              breadcrumbLabel = route.snapshot.data[routeDataBreadcrumb];
+              breadcrumbLabel = route.snapshot.data[routeDataBreadcrumb]!;
             }
 
             if (route.snapshot.data.hasOwnProperty(routeAddBreadcrumbLink)) {
-              url = route.snapshot.data[routeAddBreadcrumbLink];
+              url = route.snapshot.data[routeAddBreadcrumbLink]!;
             } else {
               url = currentUrl;
             }

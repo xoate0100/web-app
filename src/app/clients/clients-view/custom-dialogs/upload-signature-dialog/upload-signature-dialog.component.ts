@@ -1,16 +1,18 @@
 /** Angular Imports */
 import { Component, ChangeDetectionStrategy } from '@angular/core';
-import { MatDialogRef } from '@angular/material/dialog';
+import { MatDialogRef, MatDialogTitle, MatDialogActions, MatDialogClose } from '@angular/material/dialog';
+import { FileUploadComponent } from '../../../../shared/file-upload/file-upload.component';
+import { MatButton } from '@angular/material/button';
 
 /**
  * Upload signature dialog component.
  */
 @Component({
-  standalone: false,
-  selector: 'mifosx-upload-signature-dialog',
-  templateUrl: './upload-signature-dialog.component.html',
-  changeDetection: ChangeDetectionStrategy.Eager,
-  styleUrls: ['./upload-signature-dialog.component.scss']
+    selector: 'mifosx-upload-signature-dialog',
+    templateUrl: './upload-signature-dialog.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    styleUrls: ['./upload-signature-dialog.component.scss'],
+    imports: [MatDialogTitle, FileUploadComponent, MatDialogActions, MatButton, MatDialogClose]
 })
 export class UploadSignatureDialogComponent {
 

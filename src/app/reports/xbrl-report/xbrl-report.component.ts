@@ -1,23 +1,31 @@
 /** Angular Imports */
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
-import { FormGroup, FormBuilder, Validators, FormControl} from '@angular/forms';
-import { MatTableDataSource } from '@angular/material/table';
-import { DatePipe } from '@angular/common';
+import { FormGroup, FormBuilder, Validators, FormControl, ReactiveFormsModule } from '@angular/forms';
+import { MatTableDataSource, MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow } from '@angular/material/table';
+import { DatePipe, NgIf } from '@angular/common';
 import { DomSanitizer } from '@angular/platform-browser';
 
 /** Custom Services */
 import { ReportsService } from '../reports.service';
 import { SettingsService } from 'app/settings/settings.service';
+import { MatCard, MatCardContent, MatCardActions } from '@angular/material/card';
+import { LayoutDirective, FlexDirective, LayoutAlignDirective, LayoutGapDirective } from '@ngbracket/ngx-layout/flex';
+import { MatFormField, MatLabel, MatSuffix } from '@angular/material/form-field';
+import { MatInput } from '@angular/material/input';
+import { MatDatepickerInput, MatDatepickerToggle, MatDatepicker } from '@angular/material/datepicker';
+import { MatButton } from '@angular/material/button';
+import { RouterLink } from '@angular/router';
+import { MatSort, MatSortHeader } from '@angular/material/sort';
 
 /**
  * XBRL Report Component
  */
 @Component({
-  standalone: false,
-  selector: 'mifosx-xbrl-report',
-  templateUrl: './xbrl-report.component.html',
-  changeDetection: ChangeDetectionStrategy.Eager,
-  styleUrls: ['./xbrl-report.component.scss']
+    selector: 'mifosx-xbrl-report',
+    templateUrl: './xbrl-report.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    styleUrls: ['./xbrl-report.component.scss'],
+    imports: [NgIf, MatCard, ReactiveFormsModule, MatCardContent, LayoutDirective, MatFormField, FlexDirective, MatLabel, MatInput, MatDatepickerInput, MatDatepickerToggle, MatSuffix, MatDatepicker, MatCardActions, LayoutAlignDirective, LayoutGapDirective, MatButton, RouterLink, MatTable, MatSort, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatSortHeader, MatCellDef, MatCell, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow]
 })
 export class XBRLReportComponent implements OnInit {
 
@@ -73,9 +81,9 @@ export class XBRLReportComponent implements OnInit {
   buildXMLTable(response: any) {
     const parser = new DOMParser();
     const xml = parser.parseFromString(response, 'text/xml');
-    xml.querySelectorAll('[contextRef]').forEach( (element: HTMLElement) => {
+    xml.querySelectorAll('[contextRef]').forEach((element: Element) => {
       const contextId = element.getAttribute('contextRef');
-      const scenario = xml.querySelector(`#${contextId}`).querySelector('scenario');
+      const scenario = xml.querySelector(`#${contextId}`)?.querySelector('scenario');
       const context = scenario ? scenario.textContent : undefined;
       const entry = {
         name: element.tagName,
@@ -95,8 +103,8 @@ export class XBRLReportComponent implements OnInit {
     // TODO: Update once language and date settings are setup
     const dateFormat = this.settingsService.dateFormat;
     this.xbrlForm.patchValue({
-      startDate: this.datePipe.transform(startDate, dateFormat),
-      endDate: this.datePipe.transform(endDate, dateFormat)
+      startDate: this.datePipe.transform(startDate as Date, dateFormat),
+      endDate: this.datePipe.transform(endDate as Date, dateFormat)
     });
     const dates = this.xbrlForm.value;
     this.reportService.getMixReport(dates).subscribe((response: any) => {
@@ -113,7 +121,7 @@ export class XBRLReportComponent implements OnInit {
   submit() {
     const parser = new DOMParser();
     const xmlDOM = parser.parseFromString(this.rawXml, 'text/xml');
-    xmlDOM.querySelectorAll('[contextRef]').forEach( (element: HTMLElement) => {
+    xmlDOM.querySelectorAll('[contextRef]').forEach((element: Element) => {
       this.xmlData.forEach( (entry: any) => {
         if (entry.name === element.tagName) {
           element.textContent = entry.value.value;

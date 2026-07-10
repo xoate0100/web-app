@@ -1,20 +1,27 @@
 /** Angular Imports */
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
-import { FormGroup, FormBuilder } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { FormGroup, FormBuilder, ReactiveFormsModule } from '@angular/forms';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 
 /** Custom Services */
 import { GroupsService } from 'app/groups/groups.service';
+import { MatCard, MatCardContent, MatCardActions } from '@angular/material/card';
+import { LayoutDirective, FlexDirective, LayoutAlignDirective, LayoutGapDirective } from '@ngbracket/ngx-layout/flex';
+import { MatFormField, MatLabel, MatError } from '@angular/material/form-field';
+import { MatSelect } from '@angular/material/select';
+import { NgFor, NgIf } from '@angular/common';
+import { MatOption } from '@angular/material/autocomplete';
+import { MatButton } from '@angular/material/button';
 
 /**
  * Groups Assign Staff Component
  */
 @Component({
-  standalone: false,
-  selector: 'mifosx-group-assign-staff',
-  templateUrl: './group-assign-staff.component.html',
-  changeDetection: ChangeDetectionStrategy.Eager,
-  styleUrls: ['./group-assign-staff.component.scss']
+    selector: 'mifosx-group-assign-staff',
+    templateUrl: './group-assign-staff.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    styleUrls: ['./group-assign-staff.component.scss'],
+    imports: [MatCard, ReactiveFormsModule, MatCardContent, LayoutDirective, MatFormField, FlexDirective, MatLabel, MatSelect, NgFor, MatOption, NgIf, MatError, MatCardActions, LayoutAlignDirective, LayoutGapDirective, MatButton, RouterLink]
 })
 export class GroupAssignStaffComponent implements OnInit {
 
@@ -36,7 +43,7 @@ export class GroupAssignStaffComponent implements OnInit {
               private groupsService: GroupsService,
               private route: ActivatedRoute,
               private router: Router) {
-    this.route.data.subscribe((data: { groupActionData: any }) => {
+    this.route.data.subscribe((data: any) => {
       this.groupData = data.groupActionData;
     });
   }

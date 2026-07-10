@@ -1,20 +1,28 @@
 /** Angular Imports */
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { FormBuilder, Validators } from '@angular/forms';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { FormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
 
 /** Custom Services */
 import { SystemService } from 'app/system/system.service';
+import { MatCard, MatCardContent, MatCardActions } from '@angular/material/card';
+import { LayoutDirective, LayoutAlignDirective, LayoutGapDirective } from '@ngbracket/ngx-layout/flex';
+import { MatFormField, MatLabel, MatError } from '@angular/material/form-field';
+import { MatInput } from '@angular/material/input';
+import { NgIf } from '@angular/common';
+import { MatCheckbox } from '@angular/material/checkbox';
+import { MatButton } from '@angular/material/button';
+import { HasPermissionDirective } from '../../../directives/has-permission/has-permission.directive';
 
 /**
  * Edit scheduler job component.
  */
 @Component({
-  standalone: false,
-  selector: 'mifosx-edit-scheduler-job',
-  templateUrl: './edit-scheduler-job.component.html',
-  changeDetection: ChangeDetectionStrategy.Eager,
-  styleUrls: ['./edit-scheduler-job.component.scss']
+    selector: 'mifosx-edit-scheduler-job',
+    templateUrl: './edit-scheduler-job.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    styleUrls: ['./edit-scheduler-job.component.scss'],
+    imports: [MatCard, ReactiveFormsModule, MatCardContent, LayoutDirective, MatFormField, MatLabel, MatInput, NgIf, MatError, MatCheckbox, MatCardActions, LayoutAlignDirective, LayoutGapDirective, MatButton, RouterLink, HasPermissionDirective]
 })
 export class EditSchedulerJobComponent implements OnInit {
 
@@ -34,7 +42,7 @@ export class EditSchedulerJobComponent implements OnInit {
               private systemService: SystemService,
               private router: Router,
               private formBuilder: FormBuilder ) {
-    this.route.data.subscribe((data: { jobSelected: any }) => {
+    this.route.data.subscribe((data: any) => {
       this.jobData = data.jobSelected;
     });
   }

@@ -1,22 +1,31 @@
 /** Angular Imports */
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
-import { DatePipe } from '@angular/common';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { FormBuilder, FormGroup, Validators, FormControl, ReactiveFormsModule } from '@angular/forms';
+import { DatePipe, NgFor, NgIf } from '@angular/common';
 
 /** Custom Services */
 import { AccountTransfersService } from '../account-transfers.service';
 import { SettingsService } from 'app/settings/settings.service';
+import { MatCard, MatCardContent, MatCardActions } from '@angular/material/card';
+import { LayoutDirective, LayoutGapDirective, FlexDirective, LayoutAlignDirective } from '@ngbracket/ngx-layout/flex';
+import { MatFormField, MatLabel, MatError, MatSuffix } from '@angular/material/form-field';
+import { MatInput } from '@angular/material/input';
+import { MatSelect } from '@angular/material/select';
+import { MatOption } from '@angular/material/autocomplete';
+import { MatDatepickerInput, MatDatepickerToggle, MatDatepicker } from '@angular/material/datepicker';
+import { MatButton } from '@angular/material/button';
+import { HasPermissionDirective } from '../../directives/has-permission/has-permission.directive';
 
 /**
  * Edit Standing Instructions
  */
 @Component({
-  standalone: false,
-  selector: 'mifosx-edit-standing-instructions',
-  templateUrl: './edit-standing-instructions.component.html',
-  changeDetection: ChangeDetectionStrategy.Eager,
-  styleUrls: ['./edit-standing-instructions.component.scss']
+    selector: 'mifosx-edit-standing-instructions',
+    templateUrl: './edit-standing-instructions.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    styleUrls: ['./edit-standing-instructions.component.scss'],
+    imports: [MatCard, ReactiveFormsModule, MatCardContent, LayoutDirective, LayoutGapDirective, MatFormField, FlexDirective, MatLabel, MatInput, MatSelect, NgFor, MatOption, NgIf, MatError, MatDatepickerInput, MatDatepickerToggle, MatSuffix, MatDatepicker, MatCardActions, LayoutAlignDirective, MatButton, RouterLink, HasPermissionDirective]
 })
 export class EditStandingInstructionsComponent implements OnInit {
 
@@ -58,7 +67,7 @@ export class EditStandingInstructionsComponent implements OnInit {
     private accountTransfersService: AccountTransfersService,
     private settingsService: SettingsService,
     private datePipe: DatePipe) {
-    this.route.data.subscribe((data: { standingInstructionsDataAndTemplate: any }) => {
+    this.route.data.subscribe((data: any) => {
       this.standingInstructionsData = data.standingInstructionsDataAndTemplate;
       this.standingInstructionsId = data.standingInstructionsDataAndTemplate.id;
       if (this.standingInstructionsData.fromClient.id === this.standingInstructionsData.toClient.id) {
@@ -156,8 +165,8 @@ export class EditStandingInstructionsComponent implements OnInit {
       recurrenceOnMonthDay: this.datePipe.transform(this.editStandingInstructionsForm.value.recurrenceOnMonthDay, 'dd MMMM'),
       recurrenceType:	this.editStandingInstructionsForm.value.recurrenceType,
       status:	this.editStandingInstructionsForm.value.status,
-      validFrom: this.datePipe.transform(this.editStandingInstructionsForm.value.validFrom, dateFormat),
-      validTill: this.datePipe.transform(this.editStandingInstructionsForm.value.validTill, dateFormat)
+      validFrom: this.datePipe.transform(this.editStandingInstructionsForm.value.validFrom as Date, dateFormat),
+      validTill: this.datePipe.transform(this.editStandingInstructionsForm.value.validTill as Date, dateFormat)
     };
     this.accountTransfersService.updateStandingInstructionsData(this.standingInstructionsId, standingInstructionData).subscribe((response: any) => {
       this.router.navigate(['../view'], { relativeTo: this.route });

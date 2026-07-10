@@ -25,12 +25,12 @@
 
   <div fxFlexFill>
     <span fxFlex="40%">Currency</span>
-    <span fxFlex="60%">{{ sharesAccountTermsForm.get('currencyCode').value | find:[sharesAccountProductTemplate.currency]:'code':'displayLabel' }}</span>
+    <span fxFlex="60%">{{ $any(sharesAccountTermsForm.get('currencyCode')).value | find:[sharesAccountProductTemplate.currency]:'code':'displayLabel' }}</span>
   </div>
 
   <div fxFlexFill>
     <span fxFlex="40%">Decimal Places</span>
-    <span fxFlex="60%">{{ sharesAccountTermsForm.get('decimal').value }}</span>
+    <span fxFlex="60%">{{ $any(sharesAccountTermsForm.get('decimal')).value }}</span>
   </div>
 
   <div fxFlexFill>
@@ -40,12 +40,12 @@
 
   <div fxFlexFill>
     <span fxFlex="40%">Today's Price</span>
-    <span fxFlex="60%">{{ sharesAccountTermsForm.get('unitPrice').value }}</span>
+    <span fxFlex="60%">{{ $any(sharesAccountTermsForm.get('unitPrice')).value }}</span>
   </div>
 
   <div fxFlexFill>
     <span fxFlex="40%">Currency in multiples of</span>
-    <span fxFlex="60%">{{ sharesAccountTermsForm.get('currencyMultiple').value }}</span>
+    <span fxFlex="60%">{{ $any(sharesAccountTermsForm.get('currencyMultiple')).value }}</span>
   </div>
 
   <div fxFlexFill>

@@ -1,9 +1,13 @@
 /** Angular Imports */
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { FormControl, ReactiveFormsModule } from '@angular/forms';
 
 /** Custom Services */
 import { I18nService } from '../../core/i18n/i18n.service';
+import { MatFormField, MatLabel } from '@angular/material/form-field';
+import { MatSelect } from '@angular/material/select';
+import { NgFor } from '@angular/common';
+import { MatOption } from '@angular/material/autocomplete';
 
 /**
  * Language selector component.
@@ -12,11 +16,11 @@ import { I18nService } from '../../core/i18n/i18n.service';
  *       to provide language support in the application.
  */
 @Component({
-  standalone: false,
-  selector: 'mifosx-language-selector',
-  templateUrl: './language-selector.component.html',
-  changeDetection: ChangeDetectionStrategy.Eager,
-  styleUrls: ['./language-selector.component.scss']
+    selector: 'mifosx-language-selector',
+    templateUrl: './language-selector.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    styleUrls: ['./language-selector.component.scss'],
+    imports: [MatFormField, MatLabel, MatSelect, ReactiveFormsModule, NgFor, MatOption]
 })
 export class LanguageSelectorComponent implements OnInit {
 

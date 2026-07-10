@@ -1,8 +1,8 @@
 /** Angular Imports */
 import { Component, OnInit, ViewChild, Input, ChangeDetectionStrategy } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
-import { MatSort } from '@angular/material/sort';
-import { MatTableDataSource } from '@angular/material/table';
+import { MatSort, MatSortHeader } from '@angular/material/sort';
+import { MatTableDataSource, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow } from '@angular/material/table';
 import { ActivatedRoute } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { MatTable } from '@angular/material/table';
@@ -12,16 +12,22 @@ import { ApproveShareDialogComponent } from './approve-share-dialog/approve-shar
 
 /** Custom Serices */
 import { SharesService } from 'app/shares/shares.service';
+import { NgClass, DatePipe } from '@angular/common';
+import { ClassDirective } from '@ngbracket/ngx-layout/extended';
+import { MatTooltip } from '@angular/material/tooltip';
+import { MatButton } from '@angular/material/button';
+import { StatusLookupPipe } from '../../../pipes/status-lookup.pipe';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 
 /**
  * Approve shares component.
  */
 @Component({
-  standalone: false,
-  selector: 'mifosx-approve-shares',
-  templateUrl: './approve-shares.component.html',
-  changeDetection: ChangeDetectionStrategy.Eager,
-  styleUrls: ['./approve-shares.component.scss']
+    selector: 'mifosx-approve-shares',
+    templateUrl: './approve-shares.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    styleUrls: ['./approve-shares.component.scss'],
+    imports: [FaIconComponent, MatTable, MatSort, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatSortHeader, MatCellDef, MatCell, NgClass, ClassDirective, MatTooltip, MatButton, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow, MatPaginator, DatePipe, StatusLookupPipe]
 })
 export class ApproveSharesComponent implements OnInit {
 
@@ -50,8 +56,8 @@ export class ApproveSharesComponent implements OnInit {
   constructor(private sharesService: SharesService,
               private route: ActivatedRoute,
               public dialog: MatDialog) {
-    this.accountId = this.route.parent.snapshot.params['shareAccountId'];
-    this.route.data.subscribe((data: { shareAccountActionData: any }) => {
+    this.accountId = this.route.parent!.snapshot.params['shareAccountId']!;
+    this.route.data.subscribe((data: any) => {
       this.sharesAccountData = data.shareAccountActionData;
     });
   }

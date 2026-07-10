@@ -10,13 +10,11 @@ import { CollectionsRoutingModule } from './collections-routing.module';
 import { IndividualCollectionSheetComponent } from './individual-collection-sheet/individual-collection-sheet.component';
 
 @NgModule({
-  imports: [
-    SharedModule,
-    PipesModule,
-    CollectionsRoutingModule
-  ],
-  declarations: [
-    IndividualCollectionSheetComponent
-  ]
+    imports: [
+        SharedModule,
+        PipesModule,
+        CollectionsRoutingModule,
+        IndividualCollectionSheetComponent
+    ]
 })
 export class CollectionsModule { }

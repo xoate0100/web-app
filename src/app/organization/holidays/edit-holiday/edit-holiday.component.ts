@@ -1,22 +1,31 @@
 /** Angular Imports. */
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
-import { DatePipe } from '@angular/common';
+import { FormBuilder, FormGroup, Validators, FormControl, ReactiveFormsModule } from '@angular/forms';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { DatePipe, NgIf, NgFor } from '@angular/common';
 
 /** Custom Services. */
 import { OrganizationService } from 'app/organization/organization.service';
 import { SettingsService } from 'app/settings/settings.service';
+import { MatCard, MatCardContent, MatCardActions } from '@angular/material/card';
+import { LayoutDirective, LayoutAlignDirective, LayoutGapDirective } from '@ngbracket/ngx-layout/flex';
+import { MatFormField, MatLabel, MatError, MatSuffix } from '@angular/material/form-field';
+import { MatInput } from '@angular/material/input';
+import { MatDatepickerInput, MatDatepickerToggle, MatDatepicker } from '@angular/material/datepicker';
+import { MatSelect } from '@angular/material/select';
+import { MatOption } from '@angular/material/autocomplete';
+import { MatButton } from '@angular/material/button';
+import { HasPermissionDirective } from '../../../directives/has-permission/has-permission.directive';
 
 /**
  * Edit Holiday component.
  */
 @Component({
-  standalone: false,
-  selector: 'mifosx-edit-holiday',
-  templateUrl: './edit-holiday.component.html',
-  changeDetection: ChangeDetectionStrategy.Eager,
-  styleUrls: ['./edit-holiday.component.scss']
+    selector: 'mifosx-edit-holiday',
+    templateUrl: './edit-holiday.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    styleUrls: ['./edit-holiday.component.scss'],
+    imports: [MatCard, ReactiveFormsModule, MatCardContent, LayoutDirective, MatFormField, MatLabel, MatInput, NgIf, MatError, MatDatepickerInput, MatDatepickerToggle, MatSuffix, MatDatepicker, MatSelect, NgFor, MatOption, MatCardActions, LayoutAlignDirective, LayoutGapDirective, MatButton, RouterLink, HasPermissionDirective]
 })
 export class EditHolidayComponent implements OnInit {
 
@@ -47,7 +56,7 @@ export class EditHolidayComponent implements OnInit {
               private organizatioService: OrganizationService,
               private settings: SettingsService,
               private router: Router ) {
-    this.route.data.subscribe((data: { holiday: any, holidayTemplate: any }) => {
+    this.route.data.subscribe((data: any) => {
       this.holidayData = data.holiday;
       this.holidayData.repaymentSchedulingTypes = data.holidayTemplate;
       this.reSchedulingType = this.holidayData.reschedulingType;
@@ -88,7 +97,7 @@ export class EditHolidayComponent implements OnInit {
    * Get Rescheduling Type.
    */
   getReschedulingType() {
-    this.holidayForm.get('reschedulingType').valueChanges.subscribe( (option: any) => {
+    this.holidayForm.get('reschedulingType')!.valueChanges.subscribe( (option: any) => {
       this.reSchedulingType = option;
       if (option === 2) {
         this.holidayForm.addControl('repaymentsRescheduledTo', new FormControl(new Date(), Validators.required));
@@ -109,12 +118,12 @@ export class EditHolidayComponent implements OnInit {
       if (this.reSchedulingType === 2 ) {
         const repaymentScheduledTo: Date = this.holidayForm.value.repaymentsRescheduledTo;
         this.holidayForm.patchValue({
-          repaymentsRescheduledTo: this.datePipe.transform(repaymentScheduledTo, dateFormat)
+          repaymentsRescheduledTo: this.datePipe.transform(repaymentScheduledTo as Date, dateFormat)
         });
       }
       this.holidayForm.patchValue({
-        fromDate: this.datePipe.transform(fromDate, dateFormat),
-        toDate: this.datePipe.transform(toDate, dateFormat)
+        fromDate: this.datePipe.transform(fromDate as Date, dateFormat),
+        toDate: this.datePipe.transform(toDate as Date, dateFormat)
       });
     }
     const holidayForm = this.holidayForm.value;

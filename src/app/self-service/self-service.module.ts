@@ -20,18 +20,16 @@ import { TaskManagementComponent } from './task-management/task-management.compo
  * All components related to self service admin portal functions should be declared here.
  */
 @NgModule({
-  imports: [
-    SharedModule,
-    SelfServiceRoutingModule
-  ],
-  declarations: [
-    SelfServiceComponent,
-    UsersComponent,
-    CreateUserComponent,
-    ViewUserComponent,
-    EditUserComponent,
-    AppConfigurationComponent,
-    TaskManagementComponent
-  ]
+    imports: [
+        SharedModule,
+        SelfServiceRoutingModule,
+        SelfServiceComponent,
+        UsersComponent,
+        CreateUserComponent,
+        ViewUserComponent,
+        EditUserComponent,
+        AppConfigurationComponent,
+        TaskManagementComponent
+    ]
 })
 export class SelfServiceModule { }

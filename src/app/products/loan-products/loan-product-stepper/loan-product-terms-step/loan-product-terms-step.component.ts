@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, ChangeDetectionStrategy } from '@angular/core';
-import { FormGroup, FormBuilder, Validators, FormArray, FormControl } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, FormArray, FormControl, ReactiveFormsModule } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 
 import { FormDialogComponent } from 'app/shared/form-dialog/form-dialog.component';
@@ -8,13 +8,26 @@ import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.co
 import { FormfieldBase } from 'app/shared/form-dialog/formfield/model/formfield-base';
 import { InputBase } from 'app/shared/form-dialog/formfield/model/input-base';
 import { SelectBase } from 'app/shared/form-dialog/formfield/model/select-base';
+import { LayoutDirective, LayoutGapDirective, FlexDirective, FlexFillDirective, LayoutAlignDirective } from '@ngbracket/ngx-layout/flex';
+import { MatFormField, MatLabel, MatError } from '@angular/material/form-field';
+import { MatInput } from '@angular/material/input';
+import { MatDivider } from '@angular/material/divider';
+import { MatCheckbox } from '@angular/material/checkbox';
+import { NgIf, NgFor } from '@angular/common';
+import { MatSelect } from '@angular/material/select';
+import { MatOption } from '@angular/material/autocomplete';
+import { MatButton, MatIconButton } from '@angular/material/button';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import { MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow } from '@angular/material/table';
+import { MatStepperPrevious, MatStepperNext } from '@angular/material/stepper';
+import { FindPipe } from '../../../../pipes/find.pipe';
 
 @Component({
-  standalone: false,
-  selector: 'mifosx-loan-product-terms-step',
-  templateUrl: './loan-product-terms-step.component.html',
-  changeDetection: ChangeDetectionStrategy.Eager,
-  styleUrls: ['./loan-product-terms-step.component.scss']
+    selector: 'mifosx-loan-product-terms-step',
+    templateUrl: './loan-product-terms-step.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    styleUrls: ['./loan-product-terms-step.component.scss'],
+    imports: [ReactiveFormsModule, LayoutDirective, LayoutGapDirective, FlexDirective, MatFormField, MatLabel, MatInput, MatError, MatDivider, MatCheckbox, NgIf, FlexFillDirective, MatSelect, NgFor, MatOption, LayoutAlignDirective, MatButton, FaIconComponent, MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatIconButton, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow, MatStepperPrevious, MatStepperNext, FindPipe]
 })
 export class LoanProductTermsStepComponent implements OnInit {
 
@@ -94,7 +107,7 @@ export class LoanProductTermsStepComponent implements OnInit {
   }
 
   setConditionalControls() {
-    this.loanProductTermsForm.get('isLinkedToFloatingInterestRates').valueChanges
+    this.loanProductTermsForm.get('isLinkedToFloatingInterestRates')!.valueChanges
       .subscribe(isLinkedToFloatingInterestRates => {
         if (isLinkedToFloatingInterestRates) {
           this.loanProductTermsForm.removeControl('minInterestRatePerPeriod');
@@ -121,7 +134,7 @@ export class LoanProductTermsStepComponent implements OnInit {
         }
       });
 
-      this.loanProductTermsForm.get('useBorrowerCycle').valueChanges
+      this.loanProductTermsForm.get('useBorrowerCycle')!.valueChanges
         .subscribe(useBorrowerCycle => {
           if (useBorrowerCycle) {
             this.loanProductTermsForm.addControl('principalVariationsForBorrowerCycle', this.formBuilder.array([]));
@@ -165,11 +178,11 @@ export class LoanProductTermsStepComponent implements OnInit {
   }
 
   editVariationsForBorrowerCycle(formType: string, variationsForBorrowerCycleFormArray: FormArray, index: number) {
-    const data = { ...this.getData(formType, variationsForBorrowerCycleFormArray.at(index).value), layout: { addButtonText: 'Edit' } };
+    const data = { ...this.getData(formType, variationsForBorrowerCycleFormArray.at(index)!.value), layout: { addButtonText: 'Edit' } };
     const addVariationsForBorrowerCycleDialogRef = this.dialog.open(FormDialogComponent, { data });
     addVariationsForBorrowerCycleDialogRef.afterClosed().subscribe((response: any) => {
       if (response.data) {
-        variationsForBorrowerCycleFormArray.at(index).patchValue(response.data.value);
+        variationsForBorrowerCycleFormArray.at(index)!.patchValue(response.data.value);
         this.setLoanProductTermsFormDirty();
       }
     });

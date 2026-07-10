@@ -1,18 +1,26 @@
 /** Angular Imports. */
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
-import { FormBuilder, FormGroup, FormControl, Validators, AbstractControl, ValidationErrors, ValidatorFn } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { FormBuilder, FormGroup, FormControl, Validators, AbstractControl, ValidationErrors, ValidatorFn, ReactiveFormsModule } from '@angular/forms';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { Subscription } from 'rxjs';
 
 /** Client Services. */
 import { ClientsService } from 'app/clients/clients.service';
+import { MatCard, MatCardContent, MatCardActions } from '@angular/material/card';
+import { LayoutDirective, LayoutGapDirective, FlexDirective, LayoutAlignDirective } from '@ngbracket/ngx-layout/flex';
+import { MatFormField, MatLabel, MatError } from '@angular/material/form-field';
+import { MatInput } from '@angular/material/input';
+import { NgIf } from '@angular/common';
+import { MatCheckbox } from '@angular/material/checkbox';
+import { MatButton } from '@angular/material/button';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 
 @Component({
-  standalone: false,
-  selector: 'mifosx-create-self-service-user',
-  templateUrl: './create-self-service-user.component.html',
-  changeDetection: ChangeDetectionStrategy.Eager,
-  styleUrls: ['./create-self-service-user.component.scss']
+    selector: 'mifosx-create-self-service-user',
+    templateUrl: './create-self-service-user.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    styleUrls: ['./create-self-service-user.component.scss'],
+    imports: [FaIconComponent, MatCard, ReactiveFormsModule, MatCardContent, LayoutDirective, LayoutGapDirective, MatFormField, FlexDirective, MatLabel, MatInput, NgIf, MatError, MatCheckbox, MatCardActions, LayoutAlignDirective, MatButton, RouterLink]
 })
 export class CreateSelfServiceUserComponent implements OnInit {
 
@@ -24,7 +32,7 @@ export class CreateSelfServiceUserComponent implements OnInit {
               private route: ActivatedRoute,
               private clientService: ClientsService,
               private router: Router) {
-    this.route.data.subscribe((data: { clientActionData: any}) => {
+    this.route.data.subscribe((data: any) => {
       this.clientData = data.clientActionData;
     });
   }
@@ -70,7 +78,7 @@ export class CreateSelfServiceUserComponent implements OnInit {
    * Submit form.
    */
   submit() {
-    if (!this.createSelfServiceForm.get('passwordNeverExpires').value) {
+    if (!this.createSelfServiceForm.get('passwordNeverExpires')!.value) {
       this.createSelfServiceForm.removeControl('passwordNeverExpires');
     }
     const clientId = this.clientData.id.toString();

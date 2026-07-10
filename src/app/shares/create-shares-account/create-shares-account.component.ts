@@ -1,7 +1,7 @@
 /** Angular Imports */
 import { Component, ViewChild, ChangeDetectionStrategy } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { DatePipe } from '@angular/common';
+import { DatePipe, NgIf } from '@angular/common';
 
 /** Custom Components */
 import { SharesAccountDetailsStepComponent } from '../shares-account-stepper/shares-account-details-step/shares-account-details-step.component';
@@ -10,16 +10,19 @@ import { SharesAccountChargesStepComponent } from '../shares-account-stepper/sha
 
 /** Custom Services */
 import { SharesService } from '../shares.service';
+import { MatStepper, MatStepperIcon, MatStep, MatStepLabel } from '@angular/material/stepper';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import { SharesAccountPreviewStepComponent } from '../shares-account-stepper/shares-account-preview-step/shares-account-preview-step.component';
 
 /**
  * Create Shares Account Component
  */
 @Component({
-  standalone: false,
-  selector: 'mifosx-create-shares-account',
-  templateUrl: './create-shares-account.component.html',
-  changeDetection: ChangeDetectionStrategy.Eager,
-  styleUrls: ['./create-shares-account.component.scss']
+    selector: 'mifosx-create-shares-account',
+    templateUrl: './create-shares-account.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    styleUrls: ['./create-shares-account.component.scss'],
+    imports: [MatStepper, MatStepperIcon, FaIconComponent, MatStep, MatStepLabel, SharesAccountDetailsStepComponent, SharesAccountTermsStepComponent, SharesAccountChargesStepComponent, NgIf, SharesAccountPreviewStepComponent]
 })
 export class CreateSharesAccountComponent {
 
@@ -46,7 +49,7 @@ export class CreateSharesAccountComponent {
               private router: Router,
               private datePipe: DatePipe,
               private sharesService: SharesService) {
-    this.route.data.subscribe((data: { sharesAccountTemplate: any }) => {
+    this.route.data.subscribe((data: any) => {
       this.sharesAccountTemplate = data.sharesAccountTemplate;
     });
   }
@@ -105,9 +108,9 @@ export class CreateSharesAccountComponent {
       ...this.sharesAccount,
       clientId: this.sharesAccountTemplate.clientId,
       charges: this.sharesAccount.charges.map((charge: any) => ({ chargeId: charge.chargeId, amount: charge.amount })),
-      applicationDate: this.datePipe.transform(this.sharesAccount.applicationDate, dateFormat),
-      submittedDate: this.datePipe.transform(this.sharesAccount.submittedDate, dateFormat),
-      unitPrice: this.sharesAccountTermsForm.get('unitPrice').value,
+      applicationDate: this.datePipe.transform(this.sharesAccount.applicationDate as Date, dateFormat),
+      submittedDate: this.datePipe.transform(this.sharesAccount.submittedDate as Date, dateFormat),
+      unitPrice: this.sharesAccountTermsForm.get('unitPrice')!.value,
       dateFormat,
       locale
     };

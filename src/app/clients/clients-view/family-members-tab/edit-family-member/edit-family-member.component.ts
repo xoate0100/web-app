@@ -1,22 +1,30 @@
 /** Angular Imports */
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { Router, ActivatedRoute } from '@angular/router';
-import { DatePipe } from '@angular/common';
+import { FormGroup, FormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
+import { Router, ActivatedRoute, RouterLink } from '@angular/router';
+import { DatePipe, NgIf, NgFor } from '@angular/common';
 
 /** Custom Services */
 import { ClientsService } from '../../../clients.service';
 import { SettingsService } from 'app/settings/settings.service';
+import { LayoutDirective, LayoutAlignDirective, FlexDirective, LayoutGapDirective } from '@ngbracket/ngx-layout/flex';
+import { MatFormField, MatLabel, MatError, MatSuffix } from '@angular/material/form-field';
+import { MatInput } from '@angular/material/input';
+import { MatCheckbox } from '@angular/material/checkbox';
+import { MatSelect } from '@angular/material/select';
+import { MatOption } from '@angular/material/autocomplete';
+import { MatDatepickerInput, MatDatepickerToggle, MatDatepicker } from '@angular/material/datepicker';
+import { MatButton } from '@angular/material/button';
 
 /**
  * Edit Family Member Component
  */
 @Component({
-  standalone: false,
-  selector: 'mifosx-edit-family-member',
-  templateUrl: './edit-family-member.component.html',
-  changeDetection: ChangeDetectionStrategy.Eager,
-  styleUrls: ['./edit-family-member.component.scss']
+    selector: 'mifosx-edit-family-member',
+    templateUrl: './edit-family-member.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    styleUrls: ['./edit-family-member.component.scss'],
+    imports: [ReactiveFormsModule, LayoutDirective, LayoutAlignDirective, MatFormField, FlexDirective, MatLabel, MatInput, NgIf, MatError, MatCheckbox, MatSelect, NgFor, MatOption, MatDatepickerInput, MatDatepickerToggle, MatSuffix, MatDatepicker, LayoutGapDirective, MatButton, RouterLink]
 })
 export class EditFamilyMemberComponent implements OnInit {
 
@@ -45,7 +53,7 @@ export class EditFamilyMemberComponent implements OnInit {
               private route: ActivatedRoute,
               private clientsService: ClientsService,
               private settingsService: SettingsService) {
-    this.route.data.subscribe((data: { clientTemplate: any, editFamilyMember: any }) => {
+    this.route.data.subscribe((data: any) => {
       this.addFamilyMemberTemplate = data.clientTemplate.familyMemberOptions;
       this.familyMemberDetails = data.editFamilyMember;
     });
@@ -83,7 +91,7 @@ export class EditFamilyMemberComponent implements OnInit {
     // TODO: Update once language and date settings are setup
     const dateFormat = this.settingsService.dateFormat;
     this.editFamilyMemberForm.patchValue({
-      dateOfBirth: this.datePipe.transform(prevDateOfBirth, dateFormat)
+      dateOfBirth: this.datePipe.transform(prevDateOfBirth as Date, dateFormat)
     });
     const familyMemberData = this.editFamilyMemberForm.value;
     familyMemberData.locale = this.settingsService.language.code;

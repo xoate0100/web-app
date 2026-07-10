@@ -1,22 +1,29 @@
 /** Angular Imports. */
 import { Component, OnInit, Input, ChangeDetectionStrategy } from '@angular/core';
-import { FormBuilder, Validators, FormGroup, FormControl } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
-import { DatePipe } from '@angular/common';
+import { FormBuilder, Validators, FormGroup, FormControl, ReactiveFormsModule } from '@angular/forms';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { DatePipe, NgIf } from '@angular/common';
 
 /** Custom Service. */
 import { LoansService } from 'app/loans/loans.service';
 import { SettingsService } from 'app/settings/settings.service';
+import { MatCard, MatCardContent, MatCardActions } from '@angular/material/card';
+import { LayoutDirective, LayoutAlignDirective, LayoutGapDirective } from '@ngbracket/ngx-layout/flex';
+import { MatFormField, MatLabel, MatSuffix, MatError } from '@angular/material/form-field';
+import { MatInput } from '@angular/material/input';
+import { MatDatepickerInput, MatDatepickerToggle, MatDatepicker } from '@angular/material/datepicker';
+import { MatButton } from '@angular/material/button';
+import { HasPermissionDirective } from '../../../../directives/has-permission/has-permission.directive';
 
 /**
  * Disburse To Savings component.
  */
 @Component({
-  standalone: false,
-  selector: 'mifosx-disburse-loan-account',
-  templateUrl: './disburse-loan-account.component.html',
-  changeDetection: ChangeDetectionStrategy.Eager,
-  styleUrls: ['./disburse-loan-account.component.scss']
+    selector: 'mifosx-disburse-loan-account',
+    templateUrl: './disburse-loan-account.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    styleUrls: ['./disburse-loan-account.component.scss'],
+    imports: [MatCard, ReactiveFormsModule, MatCardContent, LayoutDirective, MatFormField, MatLabel, MatInput, MatDatepickerInput, MatDatepickerToggle, MatSuffix, MatDatepicker, NgIf, MatError, MatCardActions, LayoutAlignDirective, LayoutGapDirective, MatButton, RouterLink, HasPermissionDirective]
 })
 export class DisburseLoanAccountComponent implements OnInit {
 
@@ -70,9 +77,9 @@ export class DisburseLoanAccountComponent implements OnInit {
     const actualDisbursementDate = this.disbursementForm.value.actualDisbursementDate;
     const dateFormat = this.settingsService.dateFormat;
     this.disbursementForm.patchValue({
-      actualDisbursementDate: this.datePipe.transform(actualDisbursementDate, dateFormat)
+      actualDisbursementDate: this.datePipe.transform(actualDisbursementDate as Date, dateFormat)
     });
-    const loanId = this.route.parent.snapshot.params['loanId'];
+    const loanId = this.route.parent!.snapshot.params['loanId']!;
     const disbursementForm = this.disbursementForm.value;
     disbursementForm.locale = this.settingsService.language.code;
     disbursementForm.dateFormat = dateFormat;

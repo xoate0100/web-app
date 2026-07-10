@@ -1,24 +1,34 @@
 /** Angular Imports */
 import { Component, OnInit, AfterViewInit, ChangeDetectionStrategy } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { DatePipe } from '@angular/common';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
+import { DatePipe, NgFor, NgIf } from '@angular/common';
 
 /** Custom Services */
 import { AccountTransfersService } from '../account-transfers.service';
 import { SettingsService } from 'app/settings/settings.service';
 import { ClientsService } from 'app/clients/clients.service';
+import { MatCard, MatCardContent, MatCardActions } from '@angular/material/card';
+import { LayoutDirective, FlexFillDirective, FlexDirective, LayoutGapDirective, LayoutAlignDirective } from '@ngbracket/ngx-layout/flex';
+import { MatDivider } from '@angular/material/divider';
+import { MatFormField, MatLabel, MatError, MatSuffix } from '@angular/material/form-field';
+import { MatSelect } from '@angular/material/select';
+import { MatOption, MatAutocompleteTrigger, MatAutocomplete } from '@angular/material/autocomplete';
+import { MatInput } from '@angular/material/input';
+import { MatDatepickerInput, MatDatepickerToggle, MatDatepicker } from '@angular/material/datepicker';
+import { MatButton } from '@angular/material/button';
+import { HasPermissionDirective } from '../../directives/has-permission/has-permission.directive';
 
 
 /**
  * Create account transfers
  */
 @Component({
-  standalone: false,
-  selector: 'mifosx-make-account-transfers',
-  templateUrl: './make-account-transfers.component.html',
-  changeDetection: ChangeDetectionStrategy.Eager,
-  styleUrls: ['./make-account-transfers.component.scss']
+    selector: 'mifosx-make-account-transfers',
+    templateUrl: './make-account-transfers.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    styleUrls: ['./make-account-transfers.component.scss'],
+    imports: [MatCard, MatCardContent, LayoutDirective, FlexFillDirective, MatDivider, FlexDirective, ReactiveFormsModule, LayoutGapDirective, MatFormField, MatLabel, MatSelect, NgFor, MatOption, NgIf, MatError, MatInput, MatAutocompleteTrigger, MatAutocomplete, MatDatepickerInput, MatDatepickerToggle, MatSuffix, MatDatepicker, MatCardActions, LayoutAlignDirective, MatButton, RouterLink, HasPermissionDirective]
 })
 export class MakeAccountTransfersComponent implements OnInit, AfterViewInit {
 
@@ -64,7 +74,7 @@ export class MakeAccountTransfersComponent implements OnInit, AfterViewInit {
     private datePipe: DatePipe,
     private settingsService: SettingsService,
     private clientsService: ClientsService) {
-    this.route.data.subscribe((data: { accountTransferTemplate: any }) => {
+    this.route.data.subscribe((data: any) => {
       this.accountTransferTemplateData = data.accountTransferTemplate;
       this.setParams();
       this.setOptions();
@@ -72,15 +82,15 @@ export class MakeAccountTransfersComponent implements OnInit, AfterViewInit {
   }
   /** Sets the value from the URL */
   setParams() {
-    this.accountType = this.route.snapshot.queryParams['accountType'];
+    this.accountType = this.route.snapshot.queryParams['accountType']!;
     switch (this.accountType) {
       case 'fromloans':
         this.accountTypeId = '1';
-        this.id = this.route.snapshot.queryParams['loanId'];
+        this.id = this.route.snapshot.queryParams['loanId']!;
         break;
       case 'fromsavings':
         this.accountTypeId = '2';
-        this.id = this.route.snapshot.queryParams['savingsId'];
+        this.id = this.route.snapshot.queryParams['savingsId']!;
         break;
       default:
         this.accountTypeId = '0';
@@ -130,9 +140,9 @@ export class MakeAccountTransfersComponent implements OnInit, AfterViewInit {
    * Removes the object param with null or '' values
    */
   refineObject(dataObj: { [x: string]: any; transferAmount: any; transferDate: any; transferDescription: any; }) {
-    delete dataObj.transferAmount;
-    delete dataObj.transferDate;
-    delete dataObj.transferDescription;
+    delete (dataObj as any).transferAmount;
+    delete (dataObj as any).transferDate;
+    delete (dataObj as any).transferDescription;
     if (dataObj.toClientId) {
       dataObj.toClientId = dataObj.toClientId.id;
     }
@@ -140,7 +150,7 @@ export class MakeAccountTransfersComponent implements OnInit, AfterViewInit {
     for (let i = 0; i < propNames.length; i++) {
       const propName = propNames[i];
       if (dataObj[propName] === null || dataObj[propName] === undefined || dataObj[propName] === '') {
-        delete dataObj[propName];
+        dataObj[propName] = undefined;
       }
     }
     return dataObj;
@@ -150,7 +160,7 @@ export class MakeAccountTransfersComponent implements OnInit, AfterViewInit {
    * Subscribes to Clients search filter:
    */
   ngAfterViewInit() {
-    this.makeAccountTransferForm.controls.toClientId.valueChanges.subscribe((value: string) => {
+    this.makeAccountTransferForm.controls.toClientId.valueChanges.subscribe((value: any) => {
       if (value.length >= 2) {
         this.clientsService.getFilteredClients('displayName', 'ASC', true, value)
           .subscribe((data: any) => {
@@ -166,8 +176,8 @@ export class MakeAccountTransfersComponent implements OnInit, AfterViewInit {
    * @param {any} client Client data.
    * @returns {string} Client name if valid otherwise undefined.
    */
-  displayClient(client: any): string | undefined {
-    return client ? client.displayName : undefined;
+  displayClient(client: any): string {
+    return client ? client.displayName : '';
   }
 
   /**
@@ -178,7 +188,7 @@ export class MakeAccountTransfersComponent implements OnInit, AfterViewInit {
     const locale = this.settingsService.language.code;
     const makeAccountTransferData = {
       ... this.makeAccountTransferForm.value,
-      transferDate: this.datePipe.transform(this.makeAccountTransferForm.value.transferDate, dateFormat),
+      transferDate: this.datePipe.transform(this.makeAccountTransferForm.value.transferDate as Date, dateFormat),
       dateFormat,
       locale,
       toClientId: this.makeAccountTransferForm.controls.toClientId.value.id,

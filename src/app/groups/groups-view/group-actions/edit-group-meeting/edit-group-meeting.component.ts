@@ -1,22 +1,32 @@
 /** Angular Imports */
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
-import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
-import { DatePipe } from '@angular/common';
-import { ActivatedRoute, Router } from '@angular/router';
+import { FormGroup, FormBuilder, Validators, FormControl, ReactiveFormsModule } from '@angular/forms';
+import { DatePipe, NgFor, NgIf } from '@angular/common';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 
 /** Custom Services */
 import { GroupsService } from 'app/groups/groups.service';
 import { SettingsService } from 'app/settings/settings.service';
+import { LayoutDirective, LayoutAlignDirective, LayoutGapDirective } from '@ngbracket/ngx-layout/flex';
+import { MatButton } from '@angular/material/button';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import { MatCard, MatCardContent, MatCardActions } from '@angular/material/card';
+import { MatFormField, MatLabel, MatError, MatSuffix, MatHint } from '@angular/material/form-field';
+import { MatSelect } from '@angular/material/select';
+import { MatOption } from '@angular/material/autocomplete';
+import { MatInput } from '@angular/material/input';
+import { MatDatepickerInput, MatDatepickerToggle, MatDatepicker } from '@angular/material/datepicker';
+import { HasPermissionDirective } from '../../../../directives/has-permission/has-permission.directive';
 
 /**
  * Edit Group Meetings Component
  */
 @Component({
-  standalone: false,
-  selector: 'mifosx-edit-group-meeting',
-  templateUrl: './edit-group-meeting.component.html',
-  changeDetection: ChangeDetectionStrategy.Eager,
-  styleUrls: ['./edit-group-meeting.component.scss']
+    selector: 'mifosx-edit-group-meeting',
+    templateUrl: './edit-group-meeting.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    styleUrls: ['./edit-group-meeting.component.scss'],
+    imports: [LayoutDirective, LayoutAlignDirective, MatButton, FaIconComponent, MatCard, ReactiveFormsModule, MatCardContent, MatFormField, MatLabel, MatSelect, NgFor, MatOption, NgIf, MatError, MatInput, MatDatepickerInput, MatDatepickerToggle, MatSuffix, MatDatepicker, MatHint, MatCardActions, LayoutGapDirective, RouterLink, HasPermissionDirective]
 })
 export class EditGroupMeetingComponent implements OnInit {
 
@@ -54,13 +64,13 @@ export class EditGroupMeetingComponent implements OnInit {
               private route: ActivatedRoute,
               private router: Router,
               private settingsService: SettingsService) {
-    this.route.data.subscribe((data: { groupActionData: any }) => {
+    this.route.data.subscribe((data: any) => {
       this.calendarTemplate = data.groupActionData;
       this.frequencyOptions = this.calendarTemplate.frequencyOptions;
       this.repeatsOnDays = this.calendarTemplate.repeatsOnDayOptions;
     });
-    this.calendarId = this.route.snapshot.queryParams['calendarId'];
-    this.groupId = this.route.parent.snapshot.params['groupId'];
+    this.calendarId = this.route.snapshot.queryParams['calendarId']!;
+    this.groupId = this.route.parent!.snapshot.params['groupId']!;
   }
 
   ngOnInit() {
@@ -83,7 +93,7 @@ export class EditGroupMeetingComponent implements OnInit {
    * Subscribes to value changes of controls.
    */
   buildDependencies() {
-    this.groupEditMeetingForm.get('frequency').valueChanges.subscribe((frequency: any) => {
+    this.groupEditMeetingForm.get('frequency')!.valueChanges.subscribe((frequency: any) => {
       this.groupEditMeetingForm.removeControl('repeatsOnDay');
       switch (frequency) {
         case 1: // Daily
@@ -92,7 +102,7 @@ export class EditGroupMeetingComponent implements OnInit {
         case 2: // Weekly
           this.repetitionIntervals = ['1', '2', '3'];
           this.groupEditMeetingForm.addControl('repeatsOnDay', new FormControl('', Validators.required));
-          this.groupEditMeetingForm.get('repeatsOnDay').patchValue(this.calendarTemplate.repeatsOnDay.id);
+          this.groupEditMeetingForm.get('repeatsOnDay')!.patchValue(this.calendarTemplate.repeatsOnDay.id);
         break;
         case 3: // Monthly
           this.repetitionIntervals = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11'];
@@ -128,7 +138,7 @@ export class EditGroupMeetingComponent implements OnInit {
     const typeId = '1';
     const prevStartDate: Date = this.groupEditMeetingForm.value.startDate;
     this.groupEditMeetingForm.patchValue({
-      startDate: this.datePipe.transform(prevStartDate, dateFormat),
+      startDate: this.datePipe.transform(prevStartDate as Date, dateFormat),
     });
     const data = {
       ...this.groupEditMeetingForm.value,

@@ -2,18 +2,21 @@
 import { Component, OnInit, ViewChild, ChangeDetectionStrategy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { MatPaginator } from '@angular/material/paginator';
-import { MatSort } from '@angular/material/sort';
-import { MatTableDataSource } from '@angular/material/table';
+import { MatSort, MatSortHeader } from '@angular/material/sort';
+import { MatTableDataSource, MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow } from '@angular/material/table';
+import { LayoutDirective, LayoutAlignDirective, LayoutGapDirective, FlexDirective } from '@ngbracket/ngx-layout/flex';
+import { MatCard, MatCardContent } from '@angular/material/card';
+import { NgIf, DatePipe } from '@angular/common';
 
 /**
  * View Audit Component.
  */
 @Component({
-  standalone: false,
-  selector: 'mifosx-view-audit',
-  templateUrl: './view-audit.component.html',
-  changeDetection: ChangeDetectionStrategy.Eager,
-  styleUrls: ['./view-audit.component.scss']
+    selector: 'mifosx-view-audit',
+    templateUrl: './view-audit.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    styleUrls: ['./view-audit.component.scss'],
+    imports: [LayoutDirective, LayoutAlignDirective, LayoutGapDirective, FlexDirective, MatCard, MatCardContent, NgIf, MatTable, MatSort, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatSortHeader, MatCellDef, MatCell, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow, DatePipe]
 })
 export class ViewAuditComponent implements OnInit {
 
@@ -34,7 +37,7 @@ export class ViewAuditComponent implements OnInit {
    * @param {ActivatedRoute} route Activated Route.
    */
   constructor(private route: ActivatedRoute) {
-    this.route.data.subscribe((data: { auditTrail: any }) => {
+    this.route.data.subscribe((data: any) => {
       this.auditTrailData = data.auditTrail;
     });
   }

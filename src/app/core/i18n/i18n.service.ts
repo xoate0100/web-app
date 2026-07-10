@@ -52,7 +52,7 @@ export class I18nService {
     this.language = '';
 
     this.translateService.onLangChange
-      .subscribe((event: LangChangeEvent) => { localStorage.setItem(this.languageStorageKey, event.lang); });
+      .subscribe((event: any) => { localStorage.setItem(this.languageStorageKey, event.lang); });
   }
 
   /**
@@ -62,7 +62,7 @@ export class I18nService {
    * @param {string} language The IETF language code to set.
    */
   set language(language: string) {
-    language = language || localStorage.getItem(this.languageStorageKey) || this.translateService.getBrowserCultureLang();
+    language = language || localStorage.getItem(this.languageStorageKey) || this.translateService.getBrowserCultureLang() || this.defaultLanguage;
     let isSupportedLanguage = includes(this.supportedLanguages, language);
 
     // If no exact match is found, search without the region

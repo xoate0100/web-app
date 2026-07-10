@@ -1,19 +1,26 @@
 /** Angular Imports */
 import { Component, OnInit, Input, ChangeDetectionStrategy } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router, ActivatedRoute } from '@angular/router';
+import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
+import { Router, ActivatedRoute, RouterLink } from '@angular/router';
 import { LoansService } from 'app/loans/loans.service';
-import { DatePipe } from '@angular/common';
+import { DatePipe, NgIf } from '@angular/common';
 
 /** Custom Services */
 import { SettingsService } from 'app/settings/settings.service';
+import { MatCard, MatCardContent, MatCardActions } from '@angular/material/card';
+import { LayoutDirective, LayoutAlignDirective, LayoutGapDirective } from '@ngbracket/ngx-layout/flex';
+import { MatFormField, MatLabel, MatSuffix, MatError } from '@angular/material/form-field';
+import { MatInput } from '@angular/material/input';
+import { MatDatepickerInput, MatDatepickerToggle, MatDatepicker } from '@angular/material/datepicker';
+import { MatButton } from '@angular/material/button';
+import { HasPermissionDirective } from '../../../../directives/has-permission/has-permission.directive';
 
 @Component({
-  standalone: false,
-  selector: 'mifosx-loans-account-close',
-  templateUrl: './loans-account-close.component.html',
-  changeDetection: ChangeDetectionStrategy.Eager,
-  styleUrls: ['./loans-account-close.component.scss']
+    selector: 'mifosx-loans-account-close',
+    templateUrl: './loans-account-close.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    styleUrls: ['./loans-account-close.component.scss'],
+    imports: [MatCard, ReactiveFormsModule, MatCardContent, LayoutDirective, MatFormField, MatLabel, MatInput, MatDatepickerInput, MatDatepickerToggle, MatSuffix, MatDatepicker, NgIf, MatError, MatCardActions, LayoutAlignDirective, LayoutGapDirective, MatButton, RouterLink, HasPermissionDirective]
 })
 export class LoansAccountCloseComponent implements OnInit {
 
@@ -41,7 +48,7 @@ export class LoansAccountCloseComponent implements OnInit {
     private router: Router,
     private datePipe: DatePipe,
     private settingsService: SettingsService) {
-      this.loanId = this.route.parent.snapshot.params['loanId'];
+      this.loanId = this.route.parent!.snapshot.params['loanId']!;
     }
 
   /**
@@ -69,7 +76,7 @@ export class LoansAccountCloseComponent implements OnInit {
     const transactionDate = this.closeLoanForm.value.transactionDate;
     const dateFormat = this.settingsService.dateFormat;
     this.closeLoanForm.patchValue({
-      transactionDate: this.datePipe.transform(transactionDate, dateFormat)
+      transactionDate: this.datePipe.transform(transactionDate as Date, dateFormat)
     });
     const closeForm = this.closeLoanForm.value;
     closeForm.locale = this.settingsService.language.code;

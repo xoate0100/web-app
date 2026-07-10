@@ -17,15 +17,13 @@ import { EditUserComponent } from './edit-user/edit-user.component';
  * Users components should be declared here.
  */
 @NgModule({
-  imports: [
-    SharedModule,
-    UsersRoutingModule
-  ],
-  declarations: [
-    UsersComponent,
-    CreateUserComponent,
-    ViewUserComponent,
-    EditUserComponent
-  ]
+    imports: [
+        SharedModule,
+        UsersRoutingModule,
+        UsersComponent,
+        CreateUserComponent,
+        ViewUserComponent,
+        EditUserComponent
+    ]
 })
 export class UsersModule { }

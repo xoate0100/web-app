@@ -7,7 +7,7 @@
     <div class="action-button m-b-10" fxLayoutGap="25px" *ngIf="groupStatus !== 'Closed'">
       <button mat-raised-button class="f-right" color="primary"
       *mifosxHasPermission="'ASSIGNROLE_GROUP'" [routerLink]="['add-role']">
-        <i class="fa fa-plus"></i>&nbsp; Add</button>
+        <fa-icon icon="plus"></fa-icon>&nbsp; Add</button>
     </div>
   </div>
 
@@ -36,7 +36,7 @@
           <span *ngIf="groupStatus !== 'Closed'">
             <button class="account-action-button" mat-raised-button color="warn"
             *mifosxHasPermission="'UNASSIGNROLE_GROUP'" (click)="unassignRole(element.clientId, element.id)">
-            <i class="fa fa-ban" matTooltip="Unassign"></i>
+            <fa-icon icon="ban" matTooltip="Unassign"></fa-icon>
             </button>
           </span>
         </td>

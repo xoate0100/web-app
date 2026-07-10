@@ -11,7 +11,7 @@
     "moduleResolution": "bundler",
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
-    "noImplicitAny": false,
+    "noImplicitAny": true,
     "noFallthroughCasesInSwitch": true,
     "noImplicitReturns": true,
     "forceConsistentCasingInFileNames": true,
@@ -19,8 +19,8 @@
     "skipLibCheck": true,
     "allowArbitraryExtensions": true,
     "ignoreDeprecations": "6.0",
-    "strict": false,
-    "strictNullChecks": false,
+    "strict": true,
+    "strictNullChecks": true,
     "strictPropertyInitialization": false,
     "lib": [
       "ES2022",
@@ -32,8 +32,8 @@
     ]
   },
   "angularCompilerOptions": {
-    "strictTemplates": false,
-    "strictInjectionParameters": false,
-    "strictInputAccessModifiers": false
+    "strictTemplates": true,
+    "strictInjectionParameters": true,
+    "strictInputAccessModifiers": true
   }
 }

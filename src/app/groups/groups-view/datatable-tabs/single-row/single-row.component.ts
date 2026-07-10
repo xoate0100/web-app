@@ -2,7 +2,7 @@
 import { Component, Input, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
-import { DatePipe } from '@angular/common';
+import { DatePipe, NgIf, NgFor } from '@angular/common';
 
 /** Custom Components */
 import { FormDialogComponent } from 'app/shared/form-dialog/form-dialog.component';
@@ -18,16 +18,21 @@ import { CheckboxBase } from 'app/shared/form-dialog/formfield/model/checkbox-ba
 /** Custom Services */
 import { GroupsService } from '../../../groups.service';
 import { SettingsService } from 'app/settings/settings.service';
+import { LayoutDirective, LayoutAlignDirective } from '@ngbracket/ngx-layout/flex';
+import { HasPermissionDirective } from '../../../../directives/has-permission/has-permission.directive';
+import { MatButton } from '@angular/material/button';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import { MatList, MatListItem } from '@angular/material/list';
 
 /**
  * Groups Single Row Data Tables
  */
 @Component({
-  standalone: false,
-  selector: 'mifosx-single-row',
-  templateUrl: './single-row.component.html',
-  changeDetection: ChangeDetectionStrategy.Eager,
-  styleUrls: ['./single-row.component.scss']
+    selector: 'mifosx-single-row',
+    templateUrl: './single-row.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    styleUrls: ['./single-row.component.scss'],
+    imports: [LayoutDirective, LayoutAlignDirective, HasPermissionDirective, NgIf, MatButton, FaIconComponent, MatList, NgFor, MatListItem]
 })
 export class SingleRowComponent implements OnInit {
 
@@ -52,7 +57,7 @@ export class SingleRowComponent implements OnInit {
               private dialog: MatDialog,
               private groupsService: GroupsService,
               private settingsService: SettingsService) {
-    this.groupId = this.route.parent.parent.snapshot.paramMap.get('groupId');
+    this.groupId = this.route.parent!.parent!.snapshot.paramMap.get('groupId')!;
   }
 
   /**

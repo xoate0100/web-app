@@ -1,7 +1,7 @@
 /** Angular Imports */
 import { Component, ViewChild, ChangeDetectionStrategy } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { DatePipe } from '@angular/common';
+import { DatePipe, NgIf } from '@angular/common';
 
 /** Custom Components */
 import { SavingsAccountDetailsStepComponent } from '../savings-account-stepper/savings-account-details-step/savings-account-details-step.component';
@@ -11,16 +11,19 @@ import { SavingsAccountChargesStepComponent } from '../savings-account-stepper/s
 /** Custom Services */
 import { SavingsService } from '../savings.service';
 import { SettingsService } from 'app/settings/settings.service';
+import { MatStepper, MatStepperIcon, MatStep, MatStepLabel } from '@angular/material/stepper';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import { SavingsAccountPreviewStepComponent } from '../savings-account-stepper/savings-account-preview-step/savings-account-preview-step.component';
 
 /**
  * Create Savings Account Component
  */
 @Component({
-  standalone: false,
-  selector: 'mifosx-create-savings-account',
-  templateUrl: './create-savings-account.component.html',
-  changeDetection: ChangeDetectionStrategy.Eager,
-  styleUrls: ['./create-savings-account.component.scss']
+    selector: 'mifosx-create-savings-account',
+    templateUrl: './create-savings-account.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    styleUrls: ['./create-savings-account.component.scss'],
+    imports: [MatStepper, MatStepperIcon, FaIconComponent, MatStep, MatStepLabel, SavingsAccountDetailsStepComponent, SavingsAccountTermsStepComponent, SavingsAccountChargesStepComponent, NgIf, SavingsAccountPreviewStepComponent]
 })
 export class CreateSavingsAccountComponent {
 
@@ -50,7 +53,7 @@ export class CreateSavingsAccountComponent {
               private savingsService: SavingsService,
               private settingsService: SettingsService
               ) {
-    this.route.data.subscribe((data: { savingsAccountTemplate: any }) => {
+    this.route.data.subscribe((data: any) => {
       this.savingsAccountTemplate = data.savingsAccountTemplate;
     });
   }
@@ -115,7 +118,7 @@ export class CreateSavingsAccountComponent {
         feeOnMonthDay: charge.feeOnMonthDay,
         feeInterval: charge.feeInterval
       })),
-      submittedOnDate: this.datePipe.transform(this.savingsAccount.submittedOnDate, dateFormat),
+      submittedOnDate: this.datePipe.transform(this.savingsAccount.submittedOnDate as Date, dateFormat),
       dateFormat,
       monthDayFormat,
       locale

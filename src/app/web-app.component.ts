@@ -1,6 +1,6 @@
 /** Angular Imports */
 import { Component, OnInit, HostListener, ChangeDetectionStrategy } from '@angular/core';
-import { Router, NavigationEnd, ActivatedRoute } from '@angular/router';
+import { Router, NavigationEnd, ActivatedRoute, RouterOutlet } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
@@ -33,11 +33,11 @@ const log = new Logger('MifosX');
  * Main web app component.
  */
 @Component({
-  standalone: false,
-  selector: 'mifosx-web-app',
-  templateUrl: './web-app.component.html',
-  changeDetection: ChangeDetectionStrategy.Eager,
-  styleUrls: ['./web-app.component.scss']
+    selector: 'mifosx-web-app',
+    templateUrl: './web-app.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    styleUrls: ['./web-app.component.scss'],
+    imports: [RouterOutlet]
 })
 export class WebAppComponent implements OnInit {
 
@@ -112,7 +112,7 @@ export class WebAppComponent implements OnInit {
     // Stores top 100 user activites as local storage object.
     let activities: string[] = [];
     if (localStorage.getItem('mifosXLocation')) {
-      const activitiesArray: string[] = JSON.parse(localStorage.getItem('mifosXLocation'));
+      const activitiesArray: string[] = JSON.parse(localStorage.getItem('mifosXLocation') ?? 'null');
       const length = activitiesArray.length;
       activities = length > 100 ? activitiesArray.slice(length - 100) : activitiesArray;
     }
@@ -129,7 +129,7 @@ export class WebAppComponent implements OnInit {
     }
 
     // Setup alerts
-    this.alertService.alertEvent.subscribe((alertEvent: Alert) => {
+    this.alertService.alertEvent.subscribe((alertEvent: any) => {
       this.snackBar.open(`${alertEvent.message}`, 'Close', {
         duration: 2000,
         horizontalPosition: 'right',
@@ -182,7 +182,7 @@ export class WebAppComponent implements OnInit {
           this.help();
           break;
         case 'runReport':
-          document.getElementById('runReport').click();
+          document.getElementById('runReport')?.click();
           break;
         case 'cancel':
           const cancelButtons = document.querySelectorAll('button');

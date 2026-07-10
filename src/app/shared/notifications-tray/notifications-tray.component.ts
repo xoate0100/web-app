@@ -6,17 +6,24 @@ import { forkJoin } from 'rxjs';
 
 /** Custom Services */
 import { NotificationsService } from 'app/notifications/notifications.service';
+import { MatIconButton } from '@angular/material/button';
+import { MatTooltip } from '@angular/material/tooltip';
+import { MatMenuTrigger, MatMenu, MatMenuItem } from '@angular/material/menu';
+import { MatBadge } from '@angular/material/badge';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import { NgFor } from '@angular/common';
+import { RouterLink } from '@angular/router';
 
 /**
  * Notifications Tray Component
  */
 @Component({
-  standalone: false,
-  selector: 'mifosx-notifications-tray',
-  templateUrl: './notifications-tray.component.html',
-  styleUrls: ['./notifications-tray.component.scss'],
-  changeDetection: ChangeDetectionStrategy.Eager,
-  encapsulation: ViewEncapsulation.None
+    selector: 'mifosx-notifications-tray',
+    templateUrl: './notifications-tray.component.html',
+    styleUrls: ['./notifications-tray.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
+    encapsulation: ViewEncapsulation.None,
+    imports: [MatIconButton, MatTooltip, MatMenuTrigger, MatBadge, FaIconComponent, MatMenu, NgFor, MatMenuItem, RouterLink]
 })
 export class NotificationsTrayComponent implements OnInit, OnDestroy {
 

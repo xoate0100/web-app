@@ -24,22 +24,20 @@ import { MemberGroupsComponent } from './member-groups/member-groups.component';
  * Navigation components should be declared here.
  */
 @NgModule({
-  imports: [
-    SharedModule,
-    PipesModule,
-    NavigationRoutingModule
-  ],
-  declarations: [
-    NavigationComponent,
-    OfficeNavigationComponent,
-    StaffNavigationComponent,
-    CenterNavigationComponent,
-    GroupNavigationComponent,
-    ClientNavigationComponent,
-    LoanAccountTableComponent,
-    ShareAccountTableComponent,
-    SavingsAccountTableComponent,
-    MemberGroupsComponent
-  ]
+    imports: [
+        SharedModule,
+        PipesModule,
+        NavigationRoutingModule,
+        NavigationComponent,
+        OfficeNavigationComponent,
+        StaffNavigationComponent,
+        CenterNavigationComponent,
+        GroupNavigationComponent,
+        ClientNavigationComponent,
+        LoanAccountTableComponent,
+        ShareAccountTableComponent,
+        SavingsAccountTableComponent,
+        MemberGroupsComponent
+    ]
 })
 export class NavigationModule { }

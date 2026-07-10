@@ -1,17 +1,24 @@
 /** Angular Imports */
 import { Component, OnInit, Inject, ChangeDetectionStrategy } from '@angular/core';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MatDialogRef, MAT_DIALOG_DATA, MatDialogTitle, MatDialogContent, MatDialogActions, MatDialogClose } from '@angular/material/dialog';
+import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
+import { CdkScrollable } from '@angular/cdk/scrolling';
+import { LayoutDirective } from '@ngbracket/ngx-layout/flex';
+import { MatFormField, MatLabel, MatError } from '@angular/material/form-field';
+import { MatSelect } from '@angular/material/select';
+import { NgFor, NgIf } from '@angular/common';
+import { MatOption } from '@angular/material/autocomplete';
+import { MatButton } from '@angular/material/button';
 
 /**
  * Add Event Dialog Component.
  */
 @Component({
-  standalone: false,
-  selector: 'mifosx-add-event-dialog',
-  templateUrl: './add-event-dialog.component.html',
-  changeDetection: ChangeDetectionStrategy.Eager,
-  styleUrls: ['./add-event-dialog.component.scss']
+    selector: 'mifosx-add-event-dialog',
+    templateUrl: './add-event-dialog.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    styleUrls: ['./add-event-dialog.component.scss'],
+    imports: [MatDialogTitle, CdkScrollable, MatDialogContent, ReactiveFormsModule, LayoutDirective, MatFormField, MatLabel, MatSelect, NgFor, MatOption, NgIf, MatError, MatDialogActions, MatButton, MatDialogClose]
 })
 export class AddEventDialogComponent implements OnInit {
 
@@ -49,7 +56,7 @@ export class AddEventDialogComponent implements OnInit {
    * Subscribes to the grouping dropdown to set entity data for that row accordingly.
    */
   setGroupingListener() {
-    this.eventForm.get('grouping').valueChanges
+    this.eventForm.get('grouping')!.valueChanges
       .subscribe(changedGrouping => {
         this.entityData = this.data.groupings.find((grouping: any) => grouping.name === changedGrouping).entities;
       });
@@ -59,7 +66,7 @@ export class AddEventDialogComponent implements OnInit {
    * Subscribes to the entity dropdown to set entity data for that row accordingly.
    */
   setEntityListener() {
-    this.eventForm.get('entity').valueChanges
+    this.eventForm.get('entity')!.valueChanges
       .subscribe(changedEntity => {
         this.actionData = this.entityData[0].actions;
       });

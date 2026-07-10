@@ -2,9 +2,9 @@
 import { Component, OnInit, ViewChild, ChangeDetectionStrategy } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
-import { MatTableDataSource, MatTable } from '@angular/material/table';
-import { ActivatedRoute } from '@angular/router';
-import { FormControl } from '@angular/forms';
+import { MatTableDataSource, MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow } from '@angular/material/table';
+import { ActivatedRoute, RouterLink } from '@angular/router';
+import { FormControl, ReactiveFormsModule } from '@angular/forms';
 
 /** Custom Services */
 import { AccountTransfersService } from '../account-transfers.service';
@@ -12,16 +12,28 @@ import { AccountTransfersService } from '../account-transfers.service';
 /** Dialog Components */
 import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.component';
 import { SettingsService } from 'app/settings/settings.service';
+import { MatCard } from '@angular/material/card';
+import { LayoutDirective, LayoutGapDirective, FlexFillDirective, FlexDirective } from '@ngbracket/ngx-layout/flex';
+import { NgIf, NgFor, DatePipe } from '@angular/common';
+import { MatFormField, MatLabel } from '@angular/material/form-field';
+import { MatInput } from '@angular/material/input';
+import { MatDivider } from '@angular/material/divider';
+import { MatSelect } from '@angular/material/select';
+import { MatOption } from '@angular/material/autocomplete';
+import { HasPermissionDirective } from '../../directives/has-permission/has-permission.directive';
+import { MatButton } from '@angular/material/button';
+import { MatTooltip } from '@angular/material/tooltip';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 
 /**
  * Lists all the standing intructions of particular ID
  */
 @Component({
-  standalone: false,
-  selector: 'mifosx-list-standing-instructions',
-  templateUrl: './list-standing-instructions.component.html',
-  changeDetection: ChangeDetectionStrategy.Eager,
-  styleUrls: ['./list-standing-instructions.component.scss']
+    selector: 'mifosx-list-standing-instructions',
+    templateUrl: './list-standing-instructions.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    styleUrls: ['./list-standing-instructions.component.scss'],
+    imports: [FaIconComponent, MatCard, LayoutDirective, LayoutGapDirective, NgIf, FlexFillDirective, FlexDirective, MatFormField, MatInput, ReactiveFormsModule, MatDivider, MatLabel, MatSelect, NgFor, MatOption, HasPermissionDirective, MatButton, MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatTooltip, RouterLink, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow, MatPaginator, DatePipe]
 })
 export class ListStandingInstructionsComponent implements OnInit {
 
@@ -71,7 +83,7 @@ export class ListStandingInstructionsComponent implements OnInit {
     private accountTransfersService: AccountTransfersService,
     private settingsService: SettingsService,
     private dialog: MatDialog) {
-    this.route.data.subscribe((data: { standingIntructionsTemplate: any }) => {
+    this.route.data.subscribe((data: any) => {
       this.standingIntructionsTemplateData = data.standingIntructionsTemplate;
       if (data.standingIntructionsTemplate.fromClient) {
         this.clientName = this.standingIntructionsTemplateData.fromClient.displayName;
@@ -86,7 +98,7 @@ export class ListStandingInstructionsComponent implements OnInit {
   }
 
   setParams() {
-    this.accountType = this.route.snapshot.queryParams['accountType'];
+    this.accountType = this.route.snapshot.queryParams['accountType']!;
     switch (this.accountType) {
       case 'fromloans':
         this.accountTypeId = '1';
@@ -97,7 +109,7 @@ export class ListStandingInstructionsComponent implements OnInit {
       default:
         this.accountTypeId = '0';
     }
-    this.isFromClient = this.route.parent.parent.snapshot.params['clientId'] ? true : false;
+    this.isFromClient = this.route.parent!.parent!.snapshot.params['clientId']! ? true : false;
   }
 
   filterStandingInstructions() {

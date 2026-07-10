@@ -9,13 +9,19 @@ import { TasksService } from '../tasks.service';
 
 /** Dialog Components */
 import { ConfirmationDialogComponent } from 'app/shared/confirmation-dialog/confirmation-dialog.component';
+import { LayoutDirective, LayoutAlignDirective, LayoutGapDirective, FlexFillDirective, FlexDirective } from '@ngbracket/ngx-layout/flex';
+import { MatButton } from '@angular/material/button';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import { MatCard, MatCardContent } from '@angular/material/card';
+import { MatDivider } from '@angular/material/divider';
+import { NgIf, NgFor, DatePipe, KeyValuePipe } from '@angular/common';
 
 @Component({
-  standalone: false,
-  selector: 'mifosx-view-checker-inbox',
-  templateUrl: './view-checker-inbox.component.html',
-  changeDetection: ChangeDetectionStrategy.Eager,
-  styleUrls: ['./view-checker-inbox.component.scss']
+    selector: 'mifosx-view-checker-inbox',
+    templateUrl: './view-checker-inbox.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    styleUrls: ['./view-checker-inbox.component.scss'],
+    imports: [LayoutDirective, LayoutAlignDirective, LayoutGapDirective, MatButton, FaIconComponent, MatCard, MatCardContent, FlexFillDirective, MatDivider, FlexDirective, NgIf, NgFor, DatePipe, KeyValuePipe]
 })
 export class ViewCheckerInboxComponent {
 
@@ -37,7 +43,7 @@ export class ViewCheckerInboxComponent {
     private dialog: MatDialog,
     private router: Router,
     private tasksService: TasksService) {
-    this.route.data.subscribe((data: { checkerInboxDetail: any }) => {
+    this.route.data.subscribe((data: any) => {
       this.checkerInboxDetail = data.checkerInboxDetail;
       this.jsondata = JSON.parse(this.checkerInboxDetail.commandAsJson);
       this.displayJSONData = !(_.isEmpty(this.jsondata));

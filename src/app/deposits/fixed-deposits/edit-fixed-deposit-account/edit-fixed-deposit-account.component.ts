@@ -1,7 +1,7 @@
 /** Angular Imports */
 import { Component, ViewChild, ChangeDetectionStrategy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { DatePipe } from '@angular/common';
+import { DatePipe, NgIf } from '@angular/common';
 
 /** Custom Services */
 import { FixedDepositsService } from '../fixed-deposits.service';
@@ -12,16 +12,20 @@ import { FixedDepositAccountCurrencyStepComponent } from '../fixed-deposit-accou
 import { FixedDepositAccountTermsStepComponent } from '../fixed-deposit-account-stepper/fixed-deposit-account-terms-step/fixed-deposit-account-terms-step.component';
 import { FixedDepositAccountSettingsStepComponent } from '../fixed-deposit-account-stepper/fixed-deposit-account-settings-step/fixed-deposit-account-settings-step.component';
 import { FixedDepositAccountChargesStepComponent } from '../fixed-deposit-account-stepper/fixed-deposit-account-charges-step/fixed-deposit-account-charges-step.component';
+import { MatStepper, MatStepperIcon, MatStep, MatStepLabel } from '@angular/material/stepper';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import { FixedDepositAccountInterestRateChartStepComponent } from '../fixed-deposit-account-stepper/fixed-deposit-account-interest-rate-chart-step/fixed-deposit-account-interest-rate-chart-step.component';
+import { FixedDepositAccountPreviewStepComponent } from '../fixed-deposit-account-stepper/fixed-deposit-account-preview-step/fixed-deposit-account-preview-step.component';
 
 /**
  * Edit Fixed Deposit Account Component
  */
 @Component({
-  standalone: false,
-  selector: 'mifosx-edit-fixed-deposit-account',
-  templateUrl: './edit-fixed-deposit-account.component.html',
-  changeDetection: ChangeDetectionStrategy.Eager,
-  styleUrls: ['./edit-fixed-deposit-account.component.scss']
+    selector: 'mifosx-edit-fixed-deposit-account',
+    templateUrl: './edit-fixed-deposit-account.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    styleUrls: ['./edit-fixed-deposit-account.component.scss'],
+    imports: [MatStepper, MatStepperIcon, FaIconComponent, MatStep, MatStepLabel, FixedDepositAccountDetailsStepComponent, FixedDepositAccountCurrencyStepComponent, FixedDepositAccountTermsStepComponent, FixedDepositAccountSettingsStepComponent, FixedDepositAccountInterestRateChartStepComponent, FixedDepositAccountChargesStepComponent, NgIf, FixedDepositAccountPreviewStepComponent]
 })
 export class EditFixedDepositAccountComponent {
 
@@ -52,7 +56,7 @@ export class EditFixedDepositAccountComponent {
               private router: Router,
               private datePipe: DatePipe,
               private fixedDepositsService: FixedDepositsService) {
-    this.route.data.subscribe((data: { fixedDepositsAccountAndTemplate: any }) => {
+    this.route.data.subscribe((data: any) => {
       this.fixedDepositsAccountAndTemplate = data.fixedDepositsAccountAndTemplate;
     });
   }
@@ -135,11 +139,11 @@ export class EditFixedDepositAccountComponent {
       charges: this.fixedDepositAccount.charges.map((charge: any) => ({
         chargeId: charge.id,
         amount: charge.amount,
-        dueDate: charge.dueDate && this.datePipe.transform(charge.dueDate, dateFormat),
+        dueDate: charge.dueDate && this.datePipe.transform(charge.dueDate as Date, dateFormat),
         feeOnMonthDay: charge.feeOnMonthDay && this.datePipe.transform(new Date(2000, charge.feeOnMonthDay[0] - 1, charge.feeOnMonthDay[1]), monthDayFormat),
         feeInterval: charge.feeInterval
       })),
-      submittedOnDate: this.datePipe.transform(this.fixedDepositAccount.submittedOnDate, dateFormat),
+      submittedOnDate: this.datePipe.transform(this.fixedDepositAccount.submittedOnDate as Date, dateFormat),
       charts: [{chartSlabs: this.fixedDepositsAccountProductTemplate.accountChart.chartSlabs}],
       dateFormat,
       monthDayFormat,

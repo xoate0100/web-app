@@ -1,21 +1,29 @@
 /** Angular Imports */
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
-import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
-import { DatePipe } from '@angular/common';
-import { ActivatedRoute, Router } from '@angular/router';
+import { FormGroup, FormBuilder, Validators, FormControl, ReactiveFormsModule } from '@angular/forms';
+import { DatePipe, NgIf, NgFor } from '@angular/common';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 
 /** Custom Services */
 import { FixedDepositsService } from '../../fixed-deposits.service';
+import { MatCard, MatCardContent, MatCardActions } from '@angular/material/card';
+import { LayoutDirective, LayoutAlignDirective, LayoutGapDirective } from '@ngbracket/ngx-layout/flex';
+import { MatFormField, MatLabel, MatSuffix, MatError } from '@angular/material/form-field';
+import { MatInput } from '@angular/material/input';
+import { MatDatepickerInput, MatDatepickerToggle, MatDatepicker } from '@angular/material/datepicker';
+import { MatSelect } from '@angular/material/select';
+import { MatOption } from '@angular/material/autocomplete';
+import { MatButton } from '@angular/material/button';
 
 /**
  * Premature Close Fixed Deposits Account Component
  */
 @Component({
-  standalone: false,
-  selector: 'mifosx-premature-close-fixed-deposits-account',
-  templateUrl: './premature-close-fixed-deposits-account.component.html',
-  changeDetection: ChangeDetectionStrategy.Eager,
-  styleUrls: ['./premature-close-fixed-deposits-account.component.scss']
+    selector: 'mifosx-premature-close-fixed-deposits-account',
+    templateUrl: './premature-close-fixed-deposits-account.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    styleUrls: ['./premature-close-fixed-deposits-account.component.scss'],
+    imports: [MatCard, ReactiveFormsModule, MatCardContent, LayoutDirective, MatFormField, MatLabel, MatInput, MatDatepickerInput, MatDatepickerToggle, MatSuffix, MatDatepicker, NgIf, MatError, MatSelect, NgFor, MatOption, MatCardActions, LayoutAlignDirective, LayoutGapDirective, MatButton, RouterLink]
 })
 export class PrematureCloseFixedDepositsAccountComponent implements OnInit {
 
@@ -47,7 +55,7 @@ export class PrematureCloseFixedDepositsAccountComponent implements OnInit {
               private datePipe: DatePipe,
               private route: ActivatedRoute,
               private router: Router) {
-    this.accountId = this.route.parent.snapshot.params['fixedDepositAccountId'];
+    this.accountId = this.route.parent!.snapshot.params['fixedDepositAccountId']!;
   }
 
   /**
@@ -71,7 +79,7 @@ export class PrematureCloseFixedDepositsAccountComponent implements OnInit {
    * Subscribes to value changes of parent control.
    */
   buildDependencies() {
-    this.prematureCloseAccountForm.get('closedOnDate').valueChanges.subscribe((value: Date) => {
+    this.prematureCloseAccountForm.get('closedOnDate')!.valueChanges.subscribe((value: any) => {
       if (!this.isSubmitted) {
         this.calculatePrematureAmount(value);
       }
@@ -87,7 +95,7 @@ export class PrematureCloseFixedDepositsAccountComponent implements OnInit {
     const locale = 'en';
     const dateFormat = 'dd MMMM yyyy';
     const data = {
-      closedOnDate: this.datePipe.transform(date, dateFormat),
+      closedOnDate: this.datePipe.transform(date as Date, dateFormat),
       dateFormat,
       locale
     };
@@ -98,7 +106,7 @@ export class PrematureCloseFixedDepositsAccountComponent implements OnInit {
         this.prematureCloseAccountForm.addControl('maturityAmount', new FormControl({value: '', disabled: true}));
         this.prematureCloseAccountForm.addControl('onAccountClosureId', new FormControl('', Validators.required));
         this.prematureCloseAccountForm.addControl('note', new FormControl(''));
-        this.prematureCloseAccountForm.get('maturityAmount').patchValue(response.maturityAmount);
+        this.prematureCloseAccountForm.get('maturityAmount')!.patchValue(response.maturityAmount);
         this.addTransferDetails();
       });
 
@@ -108,7 +116,7 @@ export class PrematureCloseFixedDepositsAccountComponent implements OnInit {
    * Subscribes to value changes of `onAccountClosureId` adds and removes transfer details accordingly.
    */
   addTransferDetails() {
-    this.prematureCloseAccountForm.get('onAccountClosureId').valueChanges.subscribe((id: any) => {
+    this.prematureCloseAccountForm.get('onAccountClosureId')!.valueChanges.subscribe((id: any) => {
       if (id === 200) {
         this.prematureCloseAccountForm.addControl('toSavingsAccountId', new FormControl('', Validators.required));
         this.prematureCloseAccountForm.addControl('transferDescription', new FormControl(''));
@@ -130,7 +138,7 @@ export class PrematureCloseFixedDepositsAccountComponent implements OnInit {
     const dateFormat = 'dd MMMM yyyy';
     const prevClosedDate: Date = this.prematureCloseAccountForm.value.closedOnDate;
     this.prematureCloseAccountForm.patchValue({
-      closedOnDate: this.datePipe.transform(prevClosedDate, dateFormat),
+      closedOnDate: this.datePipe.transform(prevClosedDate as Date, dateFormat),
     });
     const data = {
       ...this.prematureCloseAccountForm.value,

@@ -60,7 +60,7 @@
 
       <mifosx-saving-product-charges-step
         [savingProductsTemplate]="savingProductAndTemplate"
-        [currencyCode]="savingProductCurrencyForm.get('currencyCode')"
+        [currencyCode]="$any(savingProductCurrencyForm.get('currencyCode'))"
       >
       </mifosx-saving-product-charges-step>
 
@@ -73,7 +73,7 @@
       <mifosx-saving-product-accounting-step
         [savingProductsTemplate]="savingProductAndTemplate"
         [accountingRuleData]="accountingRuleData"
-        [isDormancyTrackingActive]="savingProductSettingsForm.get('isDormancyTrackingActive')"
+        [isDormancyTrackingActive]="$any(savingProductSettingsForm.get('isDormancyTrackingActive'))"
         [savingProductFormValid]="savingProductFormValidAndNotPristine"
       >
       </mifosx-saving-product-accounting-step>

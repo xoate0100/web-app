@@ -24,7 +24,7 @@ export class RecurringDepositProductResolver implements Resolve<Object> {
    * @returns {Observable<any>}
    */
   resolve(route: ActivatedRouteSnapshot): Observable<any> {
-    const id = route.paramMap.get('id');
+    const id = route.paramMap.get('id')!;
     return this.productsService.getRecurringDepositProduct(id);
   }
 
