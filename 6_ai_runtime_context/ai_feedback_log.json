@@ -6020,6 +6020,18 @@
         "scripts/agentic_smoke_check.py",
         "scripts/commit_checkpoint.py"
       ]
+    },
+    {
+      "timestamp": "2026-07-09T17:49:18.791406Z",
+      "category": "GUARDRAIL_VIOLATION",
+      "issue": "## Guardrail Violation\n\n**Guardrail**: forbid_folder_creation_outside_scope\n**Component**: shared\n**Files Affected**: 6_ai_runtime_context/ACTIVE_TASK_POINTER.yaml, 6_ai_runtime_context/AI_CONTEXT.md\n**Context**: Guardrail check failed during pre-commit\n\n**Details**:\nGuardrail 'forbid_folder_creation_outside_scope' failed validation\n\n**Requires Human Intervention**: Yes\n",
+      "context": "Guardrail check failed during pre-commit",
+      "requires_human_intervention": true,
+      "attempt_count": 1,
+      "files": [
+        "6_ai_runtime_context/ACTIVE_TASK_POINTER.yaml",
+        "6_ai_runtime_context/AI_CONTEXT.md"
+      ]
     }
   ]
 }
