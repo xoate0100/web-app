@@ -5,6 +5,7 @@
     <div fxLayout="row" fxLayoutGap="32px" class="performance-history-container">
       <p>
         # of Repayments :{{loanDetails?.numberOfRepayments}}
+      </p>
       <p>
         Maturity Date :{{$safeNavigationMigration(loanDetails?.timeline.expectedMaturityDate) | date}}
       </p>

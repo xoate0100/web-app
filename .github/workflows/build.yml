@@ -8,7 +8,7 @@ on:
 
 jobs:
   build:
-    name: Run Lint and Deploy
+    name: Run Lint, Test, and Deploy
     runs-on: ubuntu-latest
 
     steps:
@@ -24,7 +24,10 @@ jobs:
         run: npm ci
 
       - name: Run lint
-        run: npm run lint
+        run: npm run lint:all
+
+      - name: Run unit tests
+        run: npm run test:ci
 
       - name: Run build
         run: npm run build:prod

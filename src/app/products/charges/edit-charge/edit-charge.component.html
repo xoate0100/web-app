@@ -134,7 +134,7 @@
 
           <mat-form-field fxFlex="48%" *ngIf="addFeeFrequency && showFeeOptions">
             <mat-label>Frequency Interval</mat-label>
-            <input matInput required autofocus type="text" formControlName="feeInterval" required>
+            <input matInput required autofocus type="text" formControlName="feeInterval">
             <mat-error *ngIf="chargeForm.controls.feeInterval.hasError('required')">
               Amount <strong>is required</strong>
             </mat-error>

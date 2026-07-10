@@ -4,59 +4,13 @@
     "selector-type-no-unknown": [
       true,
       {
-        "ignoreTypes": [
-          "mat-spinner",
-          "mat-radio-button",
-          "mat-divider",
-          "mat-form-field",
-          "mat-label",
-          "mat-select",
-          "mat-option",
-          "mat-checkbox",
-          "mat-radio-button",
-          "mat-slide-toggle",
-          "mat-tab-group",
-          "mat-tab",
-          "mat-expansion-panel",
-          "mat-expansion-panel-header",
-          "mat-card",
-          "mat-card-header",
-          "mat-card-content",
-          "mat-card-actions",
-          "mat-toolbar",
-          "mat-sidenav",
-          "mat-list",
-          "mat-list-item",
-          "mat-icon",
-          "mat-button",
-          "mat-raised-button",
-          "mat-flat-button",
-          "mat-stroked-button",
-          "mat-menu",
-          "mat-menu-item",
-          "mat-table",
-          "mat-header-row",
-          "mat-row",
-          "mat-cell",
-          "mat-header-cell",
-          "mat-paginator",
-          "mat-sort",
-          "mat-dialog",
-          "mat-dialog-content",
-          "mat-dialog-actions",
-          "mat-stepper",
-          "mat-step",
-          "mat-step-label",
-          "mat-datepicker",
-          "mat-datepicker-toggle",
-          "mat-progress-bar",
-          "mat-progress-spinner",
-          "mat-chip",
-          "mat-chip-list",
-          "mat-tree",
-          "mat-tree-node",
-          "mifosx-web-app"
-        ]
+        "ignore": ["custom-elements"]
+      }
+    ],
+    "font-family-no-missing-generic-family-keyword": [
+      true,
+      {
+        "ignoreFontFamilies": ["FontAwesome"]
       }
     ],
     "selector-pseudo-element-no-unknown": [
@@ -74,6 +28,8 @@
     "selector-max-universal": null,
     "max-nesting-depth": null,
     "selector-max-compound-selectors": null,
-    "selector-max-specificity": null
+    "selector-max-specificity": null,
+    "no-descending-specificity": null,
+    "no-duplicate-selectors": null
   }
 }

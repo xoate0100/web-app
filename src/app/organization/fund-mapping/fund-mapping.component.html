@@ -47,7 +47,7 @@
       <mat-form-field fxFlex="31%">
         <mat-label>From Date</mat-label>
         <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="fromDatePicker"
-          required formControlName="loanFromDate" required>
+          required formControlName="loanFromDate">
         <mat-datepicker-toggle matSuffix [for]="fromDatePicker"></mat-datepicker-toggle>
         <mat-datepicker #fromDatePicker></mat-datepicker>
         <mat-error *ngIf="fundMappingForm.controls.loanFromDate.hasError('required')">
@@ -58,7 +58,7 @@
       <mat-form-field fxFlex="31%">
         <mat-label>To Date</mat-label>
         <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="toDatePicker"
-          required formControlName="loanToDate" required>
+          required formControlName="loanToDate">
         <mat-datepicker-toggle matSuffix [for]="toDatePicker"></mat-datepicker-toggle>
         <mat-datepicker #toDatePicker></mat-datepicker>
         <mat-error *ngIf="fundMappingForm.controls.loanToDate.hasError('required')">
@@ -76,10 +76,10 @@
           <mat-label>Comparison Condition</mat-label>
           <mat-select required formControlName="outStandingAmountPercentageCondition">
             <mat-option value="between">between</mat-option>
-            <mat-option value="<="><=</mat-option>
-            <mat-option value=">=">>=</mat-option>
-            <mat-option value="<"><</mat-option>
-            <mat-option value=">">></mat-option>
+            <mat-option value="<=">&lt;=</mat-option>
+            <mat-option value=">=">&gt;=</mat-option>
+            <mat-option value="<">&lt;</mat-option>
+            <mat-option value=">">&gt;</mat-option>
             <mat-option value="=">=</mat-option>
           </mat-select>
           <mat-error *ngIf="fundMappingForm.controls.outStandingAmountPercentageCondition.hasError('required')">
@@ -123,10 +123,10 @@
           <mat-label>Comparison Condition</mat-label>
           <mat-select required formControlName="outstandingAmountCondition">
             <mat-option value="between">between</mat-option>
-            <mat-option value="<="><=</mat-option>
-            <mat-option value=">=">>=</mat-option>
-            <mat-option value="<"><</mat-option>
-            <mat-option value=">">></mat-option>
+            <mat-option value="<=">&lt;=</mat-option>
+            <mat-option value=">=">&gt;=</mat-option>
+            <mat-option value="<">&lt;</mat-option>
+            <mat-option value=">">&gt;</mat-option>
             <mat-option value="=">=</mat-option>
           </mat-select>
           <mat-error *ngIf="fundMappingForm.controls.outstandingAmountCondition.hasError('required')">

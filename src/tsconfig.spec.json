@@ -4,26 +4,23 @@
     "outDir": "../out-tsc/spec",
     "baseUrl": "./",
     "types": [
-      "jasmine",
       "node"
+    ],
+    "typeRoots": [
+      "../node_modules/@types"
     ]
   },
-  "files": [
-    "test.ts",
-    "polyfills.ts"
-  ],
   "include": [
     "**/*.spec.ts",
     "**/*.mock.ts",
-    "**/*.d.ts"
+    "**/*.module.ts",
+    "**/*.d.ts",
+    "polyfills-test.ts",
+    "test-globals.ts",
+    "vitest-globals.d.ts"
   ],
   "angularCompilerOptions": {
-    "extendedDiagnostics": {
-      "checks": {
-        "nullishCoalescingNotNullable": "suppress",
-        "optionalChainNotNullable": "suppress"
-      }
-    },
+    "preserveWhitespaces": true,
     "strictTemplates": false
   }
 }

@@ -192,12 +192,12 @@
             </tr>
             <tr >
               <td> Actual Available Balance</td>
-              <td>{{ recurringDepositsAccountData.currency.displaySymbol }}&nbsp;{{ recurringDepositsAccountData.summary.accountBalance }}
+              <td>{{ recurringDepositsAccountData.currency.displaySymbol }}&nbsp;{{ recurringDepositsAccountData.summary.accountBalance }}</td>
             </tr>
             <tr>
               <td> Recurring Deposits Amount</td>
               <td>
-                {{ recurringDepositsAccountData.currency.displaySymbol }}&nbsp;{{ recurringDepositsAccountData.mandatoryRecommendedDepositAmount }}
+                {{ recurringDepositsAccountData.currency.displaySymbol }}&nbsp;{{ recurringDepositsAccountData.mandatoryRecommendedDepositAmount }}</td>
             </tr>
             <tr *ngIf="recurringDepositsAccountData.summary.totalInterestEarned">
               <td> Interests Earned </td>
@@ -255,12 +255,12 @@
             <tr *ngIf="recurringDepositsAccountData.timeline.closedOnDate">
               <td> Closed on Date </td>
               <td>
-                {{ recurringDepositsAccountData.timeline.closedOnDate | date }}
+                {{ recurringDepositsAccountData.timeline.closedOnDate | date }}</td>
             </tr>
             <tr>
               <td> Deposits Frequency </td>
               <td>
-                {{ recurringDepositsAccountData.recurringFrequency }}&nbsp;{{ recurringDepositsAccountData.recurringFrequencyType.value }}
+                {{ recurringDepositsAccountData.recurringFrequency }}&nbsp;{{ recurringDepositsAccountData.recurringFrequencyType.value }}</td>
             </tr>
             <tr *ngIf="recurringDepositsAccountData.summary.totalInterestEarned">
               <td> Interests Posted </td>
