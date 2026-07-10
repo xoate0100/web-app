@@ -18,7 +18,7 @@ get_cdk_version() {
     10) echo "10.2.7" ;; 11) echo "11.2.13" ;; 12) echo "12.2.13" ;;
     13) echo "13.3.9" ;; 14) echo "14.2.7" ;; 15) echo "15.2.9" ;;
     16) echo "16.2.14" ;; 17) echo "17.3.10" ;; 18) echo "18.2.13" ;;
-    19) echo "19.2.8" ;; 20) echo "20.3.1" ;; 21) echo "21.0.3" ;; 22) echo "22.0.3" ;;
+    19) echo "19.2.8" ;; 20) echo "20.3.1" ;; 21) echo "21.0.3" ;; 22) echo "22.0.4" ;;
   esac
 }
 
@@ -48,7 +48,7 @@ get_build_angular() {
     10) echo "0.1002.4" ;; 11) echo "0.1102.19" ;; 12) echo "12.2.18" ;;
     13) echo "13.3.11" ;; 14) echo "14.2.13" ;; 15) echo "15.2.11" ;;
     16) echo "16.2.16" ;; 17) echo "17.3.10" ;; 18) echo "18.2.13" ;;
-    19) echo "19.2.8" ;; 20) echo "20.3.1" ;; 21) echo "21.0.3" ;; 22) echo "22.0.3" ;;
+    19) echo "19.2.8" ;; 20) echo "20.3.1" ;; 21) echo "21.0.3" ;; 22) echo "22.0.4" ;;
   esac
 }
 
@@ -62,7 +62,7 @@ upgrade_to() {
   if [ "$v" -ge 19 ]; then patch="${v}.2.8"; fi
   if [ "$v" -ge 20 ]; then patch="${v}.3.1"; fi
   if [ "$v" -ge 21 ]; then patch="${v}.0.3"; fi
-  if [ "$v" -ge 22 ]; then patch="${v}.0.3"; fi
+  if [ "$v" -ge 22 ]; then patch="${v}.0.6"; fi
 
   local cdk=$(get_cdk_version $v)
   local ts=$(get_ts_version $v)
@@ -72,28 +72,53 @@ upgrade_to() {
 
   log "=== Upgrading Angular $prev → $v ==="
 
-  npm install \
-    @angular/animations@${patch} \
-    @angular/cdk@${cdk} \
-    @angular/common@${patch} \
-    @angular/compiler@${patch} \
-    @angular/core@${patch} \
-    @angular/forms@${patch} \
-    @angular/localize@${patch} \
-    @angular/platform-browser@${patch} \
-    @angular/platform-browser-dynamic@${patch} \
-    @angular/router@${patch} \
-    @angular/service-worker@${patch} \
-    @angular/material@${cdk} \
-    @angular-devkit/build-angular@${build} \
-    @angular/cli@${patch} \
-    @angular/compiler-cli@${patch} \
-    @angular/language-service@${patch} \
-    typescript@${ts} \
-    zone.js@${zone} \
-    rxjs@${rxjs} \
-    tslib@^2.8.1 \
-    --legacy-peer-deps --no-audit 2>&1 | tail -3
+  if [ "$v" -ge 22 ]; then
+    npm install \
+      @angular/animations@${patch} \
+      @angular/cdk@${cdk} \
+      @angular/common@${patch} \
+      @angular/compiler@${patch} \
+      @angular/core@${patch} \
+      @angular/forms@${patch} \
+      @angular/localize@${patch} \
+      @angular/platform-browser@${patch} \
+      @angular/platform-browser-dynamic@${patch} \
+      @angular/router@${patch} \
+      @angular/service-worker@${patch} \
+      @angular/material@${cdk} \
+      @angular/build@${build} \
+      @angular/cli@${patch} \
+      @angular/compiler-cli@${patch} \
+      @angular/language-service@${patch} \
+      typescript@${ts} \
+      zone.js@${zone} \
+      rxjs@${rxjs} \
+      tslib@^2.8.1 \
+      --legacy-peer-deps --no-audit 2>&1 | tail -3
+  else
+    npm install \
+      @angular/animations@${patch} \
+      @angular/cdk@${cdk} \
+      @angular/common@${patch} \
+      @angular/compiler@${patch} \
+      @angular/core@${patch} \
+      @angular/forms@${patch} \
+      @angular/localize@${patch} \
+      @angular/platform-browser@${patch} \
+      @angular/platform-browser-dynamic@${patch} \
+      @angular/router@${patch} \
+      @angular/service-worker@${patch} \
+      @angular/material@${cdk} \
+      @angular-devkit/build-angular@${build} \
+      @angular/cli@${patch} \
+      @angular/compiler-cli@${patch} \
+      @angular/language-service@${patch} \
+      typescript@${ts} \
+      zone.js@${zone} \
+      rxjs@${rxjs} \
+      tslib@^2.8.1 \
+      --legacy-peer-deps --no-audit 2>&1 | tail -3
+  fi
 
   # Run migration schematics
   npx -y @angular/cli@${patch} ng update @angular/core --migrate-only --from=${prev} --to=${v} --force --allow-dirty 2>&1 | tail -15 || true

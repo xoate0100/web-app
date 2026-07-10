@@ -63,6 +63,28 @@ Run `ng generate component component-name` to generate a new component. You can 
 
 Run `ng build --configuration=production` to build the project. The build artifacts will be stored in the `dist/` directory.
 
+### Test
+
+Run `npm run test:ci` for unit tests (Vitest via Angular's test builder).
+
+Run `npm run lint:all` for ESLint, stylelint, and htmlhint.
+
+Run `npm run validate` to run lint, tests, and production build in one command.
+
+### End-to-end tests
+
+Install Playwright browsers once:
+
+```
+npm run e2e:install
+```
+
+Run e2e tests (starts the dev server automatically):
+
+```
+npm run e2e
+```
+
 ### Further help
 
 To get more help on the Angular CLI use `ng help` or go check out the
