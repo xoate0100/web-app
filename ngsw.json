@@ -1,27 +1,35 @@
 {
   "configVersion": 1,
-  "timestamp": 1783661480323,
+  "timestamp": 1783665012789,
   "index": "/web-app/index.html",
   "assetGroups": [
     {
       "name": "app",
       "installMode": "prefetch",
       "updateMode": "prefetch",
+      "cacheQueryOptions": {
+        "ignoreVary": true
+      },
       "urls": [
-        "/web-app/15.js",
-        "/web-app/16.js",
-        "/web-app/17.js",
-        "/web-app/2.js",
-        "/web-app/3.js",
-        "/web-app/4.js",
-        "/web-app/common.js",
+        "/web-app/chunk-Be5XuSrd.js",
+        "/web-app/chunk-BsVxc90l.js",
+        "/web-app/chunk-CEBbllak.js",
+        "/web-app/chunk-CzGAymRo.js",
+        "/web-app/chunk-DPCJlLMd.js",
+        "/web-app/chunk-Dl-Nycle.js",
+        "/web-app/chunk-apsjxU_N.js",
+        "/web-app/chunk-pCtdymRv.js",
         "/web-app/favicon.ico",
         "/web-app/index.html",
         "/web-app/main.js",
-        "/web-app/polyfills-es5.js",
         "/web-app/polyfills.js",
-        "/web-app/runtime.js",
-        "/web-app/styles.css"
+        "/web-app/styles.css",
+        "/web-app/theme-deeppurple-amber.css",
+        "/web-app/theme-denim-yellowgreen.css",
+        "/web-app/theme-indigo-pink.css",
+        "/web-app/theme-pictonblue-yellowgreen.css",
+        "/web-app/theme-pink-bluegrey.css",
+        "/web-app/theme-purple-green.css"
       ],
       "patterns": []
     },
@@ -29,6 +37,9 @@
       "name": "assets",
       "installMode": "lazy",
       "updateMode": "prefetch",
+      "cacheQueryOptions": {
+        "ignoreVary": true
+      },
       "urls": [
         "/web-app/assets/images/MifosX_logo.png",
         "/web-app/assets/images/MifosX_logoSmall.png",
@@ -69,12 +80,6 @@
   ],
   "dataGroups": [],
   "hashTable": {
-    "/web-app/15.js": "ec2801ffd7e57742265aebaf7c4e4c8de7c2534c",
-    "/web-app/16.js": "ef5778a0233bead9fee21ce5da4914c333c816ca",
-    "/web-app/17.js": "dabc00da6fac79029ff4f044ec0d094b8deb7318",
-    "/web-app/2.js": "25809a09bde86a53b8c7d6d3f024976158e09b14",
-    "/web-app/3.js": "a5726f8dc0eab5a2f1aea2f4cebe2f292ffef3e7",
-    "/web-app/4.js": "bb0f4c037c7a5461cdee1f61a440d5b0be2f35d8",
     "/web-app/assets/images/MifosX_logo.png": "fc66de5965e6054007a0e0c9e68f24f1ee250c21",
     "/web-app/assets/images/MifosX_logoSmall.png": "ebd340185b4888fdbe26b364303d2c072412b46e",
     "/web-app/assets/images/center_placeholder.png": "95a8b8a2c3bccacfabe57fac31207267582e11d8",
@@ -108,14 +113,25 @@
     "/web-app/assets/styles/_text.scss": "20eb0f1b9b07dec0ccf78b70569cec7d7e023334",
     "/web-app/assets/styles/_width-height.scss": "690674e94ff9beeb1684545d90eb5921fc8e77d3",
     "/web-app/assets/styles/_z-index.scss": "9a37d216cb5d806887da931429725a28b3d731b8",
-    "/web-app/common.js": "a050732a86c7f6a22a00e7d36a730095d2b47710",
+    "/web-app/chunk-Be5XuSrd.js": "49b72905f3b6e21281dcbaa42a57441c268252f3",
+    "/web-app/chunk-BsVxc90l.js": "c2be8fb09f939531e324942720c18594c4847762",
+    "/web-app/chunk-CEBbllak.js": "ad491ec761f924dacba1e32bab37016aa52a0cb6",
+    "/web-app/chunk-CzGAymRo.js": "4cd31e87c8fa11432e2694ebfc381bb7c80541bd",
+    "/web-app/chunk-DPCJlLMd.js": "456307f1e2c0850080cf150dd996672a56960fe4",
+    "/web-app/chunk-Dl-Nycle.js": "70a16aca4dadaba3a2e622665e0c4813607685ab",
+    "/web-app/chunk-apsjxU_N.js": "59bda3515a881898101c1a677a1e80bb64fdc6af",
+    "/web-app/chunk-pCtdymRv.js": "07a27a96719b5ff29e20773d75bfa1af8b2e988b",
     "/web-app/favicon.ico": "31d1d887b9dec1f49614f289d6855f5ffa7c0902",
-    "/web-app/index.html": "455bd76aa005f9eb8bee88696b774844cc8fda2d",
-    "/web-app/main.js": "f8f7c019d905c6a8ae4b84dccaec8655e3bb5279",
-    "/web-app/polyfills-es5.js": "34d3bb02851d834ef1b39c6a4e888f868116c3bf",
-    "/web-app/polyfills.js": "3ac51116a418c3e4f1b94df8fa7e9f5903c7fcc1",
-    "/web-app/runtime.js": "63538fb89430e8954344b4a9feb642849a87ccec",
-    "/web-app/styles.css": "afc94a88ab8ec2227350d88114413ce8cbf41dfb"
+    "/web-app/index.html": "dc8df8fbf38625fddee611ded2c40e75700786e1",
+    "/web-app/main.js": "97193d4f8a67f63e9cca05b1b494bc04d11c8253",
+    "/web-app/polyfills.js": "29f0c951f4c5e043d670392875f6336b88be2280",
+    "/web-app/styles.css": "d0513ccc32196b91a676eefdd4cc287dd87afda6",
+    "/web-app/theme-deeppurple-amber.css": "1217c605b779dff642349274acaaa2dfd0364f3c",
+    "/web-app/theme-denim-yellowgreen.css": "b46a2a8616c70082637016e6bc04a66b31947b59",
+    "/web-app/theme-indigo-pink.css": "aeffc612d7cbb7fb8e77e35ab8b17123afd90e17",
+    "/web-app/theme-pictonblue-yellowgreen.css": "c5b3d56177fcc7c23b41fcd73df3a158923462ca",
+    "/web-app/theme-pink-bluegrey.css": "153782d966517894c16bd19f388cc654d28e6bb1",
+    "/web-app/theme-purple-green.css": "600c782464035cb53406d070eebddee13f60ac59"
   },
   "navigationUrls": [
     {
@@ -134,5 +150,6 @@
       "positive": false,
       "regex": "^\\/(?:.+\\/)?[^/]*__[^/]*\\/.*$"
     }
-  ]
+  ],
+  "navigationRequestStrategy": "performance"
 }
