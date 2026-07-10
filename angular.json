@@ -66,7 +66,11 @@
               }
             ],
             "scripts": [],
-            "browser": "src/main.ts"
+            "browser": "src/main.ts",
+            "allowedCommonJsDependencies": [
+              "@ckeditor/ckeditor5-build-classic",
+              "lodash"
+            ]
           },
           "configurations": {
             "production": {
@@ -159,7 +163,8 @@
             "lintFilePatterns": [
               "src/**/*.ts",
               "src/**/*.html"
-            ]
+            ],
+            "eslintConfig": "eslint.config.js"
           }
         }
       }

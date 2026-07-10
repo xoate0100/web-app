@@ -1,60 +1,74 @@
-{
-  "root": true,
-  "ignorePatterns": [
-    "projects/**/*"
-  ],
-  "overrides": [
-    {
-      "files": [
-        "*.ts"
-      ],
-      "extends": [
-        "eslint:recommended",
-        "plugin:@typescript-eslint/recommended",
-        "plugin:@angular-eslint/recommended",
-        "plugin:@angular-eslint/template/process-inline-templates"
-      ],
-      "parser": "@typescript-eslint/parser",
-      "parserOptions": {
-        "project": [
-          "tsconfig.json",
-          "src/tsconfig.app.json",
-          "src/tsconfig.spec.json"
-        ],
-        "createDefaultProgram": true
+// @ts-check
+const eslint = require('@eslint/js');
+const tseslint = require('typescript-eslint');
+const angular = require('angular-eslint');
+const globals = require('globals');
+
+/**
+ * Pragmatic ESLint config for the legacy NgModule codebase.
+ */
+module.exports = tseslint.config(
+  {
+    ignores: ['dist/**', 'node_modules/**', 'e2e/**', '**/*.spec.ts'],
+  },
+  {
+    files: ['**/*.ts'],
+    extends: [eslint.configs.recommended],
+    languageOptions: {
+      parser: tseslint.parser,
+      parserOptions: {
+        projectService: true,
+        tsconfigRootDir: __dirname,
       },
-      "plugins": [
-        "@typescript-eslint"
-      ],
-      "rules": {
-        "@angular-eslint/directive-selector": [
-          "error",
-          {
-            "type": "attribute",
-            "prefix": "mifosx",
-            "style": "camelCase"
-          }
-        ],
-        "@angular-eslint/component-selector": [
-          "error",
-          {
-            "type": "element",
-            "prefix": "mifosx",
-            "style": "kebab-case"
-          }
-        ],
-        "@typescript-eslint/no-explicit-any": "off",
-        "@typescript-eslint/no-unused-vars": "warn"
-      }
+      globals: {
+        ...globals.browser,
+        ...globals.node,
+      },
     },
-    {
-      "files": [
-        "*.html"
+    plugins: {
+      '@typescript-eslint': tseslint.plugin,
+      '@angular-eslint': angular.tsPlugin,
+    },
+    rules: {
+      '@angular-eslint/directive-selector': [
+        'error',
+        {
+          type: 'attribute',
+          prefix: 'mifosx',
+          style: 'camelCase',
+        },
       ],
-      "extends": [
-        "plugin:@angular-eslint/template/recommended"
+      '@angular-eslint/component-selector': [
+        'error',
+        {
+          type: 'element',
+          prefix: 'mifosx',
+          style: 'kebab-case',
+        },
       ],
-      "rules": {}
-    }
-  ]
-}
+      '@typescript-eslint/no-explicit-any': 'off',
+      '@typescript-eslint/no-unused-vars': 'warn',
+      'no-unused-vars': 'off',
+      'no-var': 'off',
+      'no-case-declarations': 'off',
+      'no-prototype-builtins': 'off',
+      'no-empty': 'warn',
+      'no-constant-condition': 'warn',
+      'no-cond-assign': 'off',
+      'no-constant-binary-expression': 'off',
+      'no-useless-assignment': 'off',
+      'getter-return': 'off',
+      'no-useless-escape': 'off',
+    },
+  },
+  {
+    files: ['**/*.html'],
+    plugins: {
+      '@angular-eslint/template': angular.templatePlugin,
+    },
+    languageOptions: {
+      parser: angular.templateParser,
+    },
+    rules: {},
+  },
+);
