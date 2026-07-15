@@ -1,0 +1,75 @@
+# Agentic CI checks template
+# Copy to .github/workflows/agentic-checks.yml to enable (requires human review).
+#
+# This workflow mirrors local agentic validators without modifying build-run deploy behavior.
+
+name: agentic-checks
+
+on:
+  pull_request:
+    branches: [master]
+  workflow_dispatch:
+
+jobs:
+  agentic-coordination:
+    name: Agentic Coordination Validate
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install Python dependencies
+        run: pip install -r requirements.txt
+
+      - name: Run agentic coordinate validate
+        run: python 3_bootstrap_scripts/agentic_coordinate_validate.py --skip-scan
+
+      - name: Governance drift validate
+        run: python 3_bootstrap_scripts/governance_drift_validate.py
+
+  governance-guardrails:
+    name: Governance Guardrails
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install Python dependencies
+        run: pip install -r requirements.txt
+
+      - name: Guardrail enforcement (CI mode)
+        run: python 3_bootstrap_scripts/guardrail_enforcement.py
+        env:
+          GUARDRAIL_CI: "1"
+          GUARDRAIL_BASE_REF: ${{ github.base_ref }}
+
+  pre-commit-agentic:
+    name: Pre-commit Agentic Hooks
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: |
+          pip install -r requirements.txt
+          pip install pre-commit
+
+      - name: Run agentic pre-commit hooks
+        run: |
+          pre-commit run decision-registry-validate --all-files
+          pre-commit run drift-vectors-validate --all-files
+          pre-commit run workspace-spine-validate --all-files
+          pre-commit run governance-drift-validate --all-files

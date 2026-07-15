@@ -1,0 +1,85 @@
+# Machine-checkable ADR registry — source of truth for settled architectural decisions.
+# Propose changes via 6_ai_runtime_context/proposals/DEC-*.yaml then validate with:
+#   python 3_bootstrap_scripts/decision_registry_validate.py --propose <file>
+version: 1
+updated: "2026-07-09"
+
+decisions:
+  - decision_id: DEC-0001-ANGULAR-STACK
+    status: accepted
+    decision_basis: >
+      Remain on Angular for the MifosX web application. Incremental modernization
+      (Angular 9→18+) rather than a framework rewrite. See docs/UPGRADE_PLAN.md
+      and 6_ai_runtime_context/ACTIVE_PLAN.yaml.
+    supersedes: null
+    forbidden_resurrection_in: ["any PR", "any agent session"]
+    resurrection_trigger_keywords:
+      - "rewrite in React"
+      - "migrate to Vue"
+      - "replace Angular with"
+      - "switch to Svelte"
+    reopen_requires: >
+      Documented stakeholder decision with cost/benefit analysis and migration plan
+      approved by a human — not inferred from a single conversation.
+
+  - decision_id: DEC-0002-INCREMENTAL-UPGRADE
+    status: accepted
+    decision_basis: >
+      Upgrade Angular incrementally (version-by-version) following ACTIVE_PLAN.yaml
+      tasks. Avoid big-bang rewrites that risk breaking Fineract API integration.
+    supersedes: null
+    forbidden_resurrection_in: ["any implementation PR"]
+    resurrection_trigger_keywords:
+      - "big bang rewrite"
+      - "rewrite entire codebase"
+      - "start from scratch"
+      - "greenfield replacement"
+    reopen_requires: >
+      Evidence that incremental path is blocked (e.g. unfixable dependency) with
+      human-written rationale.
+
+  - decision_id: DEC-0003-META-FRAMEWORK
+    status: accepted
+    decision_basis: >
+      Keep project_initializer meta-framework integrated (numbered dirs 0_–8_,
+      pre-commit guardrails, AI runtime context). Agentic upgrades extend — never
+      remove — this layer. See META_FRAMEWORK_INTEGRATION.md.
+    supersedes: null
+    forbidden_resurrection_in: ["any agent session", "any PR"]
+    resurrection_trigger_keywords:
+      - "remove meta-framework"
+      - "delete 0_phase0_bootstrap"
+      - "strip agentic guardrails"
+      - "remove pre-commit hooks"
+    reopen_requires: >
+      Human decision with documented replacement governance model.
+
+  - decision_id: DEC-0004-FINERACT-EXTERNAL-BACKEND
+    status: accepted
+    decision_basis: >
+      Backend is external Apache Fineract accessed via REST API (proxy.conf.js).
+      No in-repo backend service layer. Frontend-only repository.
+    supersedes: null
+    forbidden_resurrection_in: ["any PR adding backend/"]
+    resurrection_trigger_keywords:
+      - "add backend service"
+      - "in-repo API server"
+      - "NestJS backend in this repo"
+      - "Express API in src/"
+    reopen_requires: >
+      Architecture decision record with deployment and ops plan approved by human.
+
+  - decision_id: DEC-0005-AGENTIC-MIGRATION
+    status: accepted
+    decision_basis: >
+      Agentic architecture follows L2.5 single-agent sandbox with decision registry,
+      drift vectors, and Cursor rules/hooks adapted from Kiwi_Platform patterns.
+      Multi-agent graph deferred until L3 maturity.
+    supersedes: null
+    forbidden_resurrection_in: ["guardrail removal PRs"]
+    resurrection_trigger_keywords:
+      - "remove decision registry"
+      - "disable resurrection scan"
+      - "skip pre-commit-review"
+    reopen_requires: >
+      Documented regression in agent productivity with alternative governance proposed.

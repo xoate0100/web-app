@@ -1,0 +1,41 @@
+---
+description: L2.5 agentic session workflow — context loading and task discipline
+alwaysApply: true
+---
+
+# Agentic Session (required)
+
+At the **start** of every session:
+
+1. Run `python 3_bootstrap_scripts/agentic_session.py session-start` (or rely on the sessionStart hook).
+2. Read `6_ai_runtime_context/AI_CONTEXT.md` and `6_ai_runtime_context/ACTIVE_PLAN.yaml`.
+3. Check `6_ai_runtime_context/ACTIVE_TASK_POINTER.yaml` for the current task.
+
+## Single-agent L2.5 workflow
+
+| Phase | Action |
+|-------|--------|
+| Start | Refresh context, read plan + pointer |
+| Implement | Write only in allowed paths (`src/`, `docs/`, etc.) |
+| Review | Run pre-commit-review before commit |
+| Complete | Advance pointer when deliverables exist |
+
+## Before every commit
+
+```bash
+python 3_bootstrap_scripts/agentic_session.py pre-commit-review
+python 3_bootstrap_scripts/cli.py commit-checkpoint
+```
+
+## After completing a plan task
+
+```bash
+python 3_bootstrap_scripts/advance_task_pointer.py --complete
+```
+
+## Never
+
+- Re-introduce keywords from `DECISION_REGISTRY.yaml` `resurrection_trigger_keywords`.
+- Edit locked registries directly — propose via `6_ai_runtime_context/proposals/`.
+- Skip advancing `ACTIVE_TASK_POINTER.yaml` when a task is done.
+- Use `git commit --no-verify`.

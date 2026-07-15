@@ -1,0 +1,19 @@
+---
+description: Commit and checkpoint discipline for agentic task tracking
+globs: "**/*"
+alwaysApply: false
+---
+
+# Commits must complete the task loop
+
+When committing work for an ACTIVE_PLAN task:
+
+1. `python 3_bootstrap_scripts/agentic_session.py pre-commit-review`
+2. `python 3_bootstrap_scripts/cli.py commit-checkpoint "your message"`
+3. If the task is finished: `python 3_bootstrap_scripts/advance_task_pointer.py --complete`
+
+Commit messages must include: `plan:<plan_id> component:<component> task:<id>`.
+
+If pre-commit fails, fix and re-run — do not use `--no-verify`.
+
+See `docs/COMMIT_STRATEGY.md` for frequency and hook-block playbook.

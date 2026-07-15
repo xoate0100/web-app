@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 import argparse
+import pathlib
 import subprocess
 import sys
 
@@ -38,7 +39,14 @@ def main(argv: list[str]) -> int:
     sub.add_parser("validate", help="Run all pre-commit hooks")
     sub.add_parser("trace", help="Generate traceability graph")
     sub.add_parser("review", help="Run AI review")
-    sub.add_parser("commit-checkpoint", help="Commit with validation and proper message format")
+    checkpoint = sub.add_parser("commit-checkpoint", help="Commit with validation and proper message format")
+    checkpoint.add_argument("message", nargs="*", help="Optional commit message subject")
+
+    agentic = sub.add_parser("agentic", help="Agentic session commands (L2.5)")
+    agentic_sub = agentic.add_subparsers(dest="agentic_cmd")
+    agentic_sub.add_parser("session-start", help="Refresh AI context and validate governance")
+    agentic_sub.add_parser("pre-commit-review", help="Run resurrection + drift scans")
+    agentic_sub.add_parser("validate", help="Run agentic coordinate validators")
 
     args = ap.parse_args(argv)
 
@@ -100,7 +108,24 @@ def main(argv: list[str]) -> int:
     if args.cmd == "review":
         return _run(["python3", "3_bootstrap_scripts/ai_review.py"])
     if args.cmd == "commit-checkpoint":
-        return _run(["bash", "scripts/commit_checkpoint.sh"])
+        msg_args = list(getattr(args, "message", None) or [])
+        checkpoint_py = pathlib.Path("scripts/commit_checkpoint.py")
+        checkpoint_sh = pathlib.Path("scripts/commit_checkpoint.sh")
+        if checkpoint_py.exists():
+            return _run(["python3", str(checkpoint_py), *msg_args])
+        if checkpoint_sh.exists():
+            return _run(["bash", str(checkpoint_sh), *msg_args])
+        return _run(["python3", "3_bootstrap_scripts/commit_validator.py"])
+
+    if args.cmd == "agentic":
+        if args.agentic_cmd == "session-start":
+            return _run(["python3", "3_bootstrap_scripts/agentic_session.py", "session-start"])
+        if args.agentic_cmd == "pre-commit-review":
+            return _run(["python3", "3_bootstrap_scripts/agentic_session.py", "pre-commit-review"])
+        if args.agentic_cmd == "validate":
+            return _run(["python3", "3_bootstrap_scripts/agentic_coordinate_validate.py", "--skip-scan"])
+        agentic.print_help()
+        return 2
 
     ap.print_help()
     return 2

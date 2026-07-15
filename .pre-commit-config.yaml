@@ -77,6 +77,48 @@ repos:
         pass_filenames: false
         always_run: true
 
+      - id: decision-registry-validate
+        name: Decision Registry Validate
+        entry: python3 3_bootstrap_scripts/decision_registry_validate.py
+        language: system
+        pass_filenames: false
+        files: ^5_reference_architectures/DECISION_REGISTRY\.yaml$
+
+      - id: drift-vectors-validate
+        name: Drift Vectors Validate
+        entry: python3 3_bootstrap_scripts/drift_vectors_validate.py
+        language: system
+        pass_filenames: false
+        files: ^5_reference_architectures/DRIFT_VECTORS\.yaml$
+
+      - id: workspace-spine-validate
+        name: Workspace Spine Validate
+        entry: python3 3_bootstrap_scripts/workspace_spine_validate.py
+        language: system
+        pass_filenames: false
+        files: ^5_reference_architectures/WORKSPACE_SPINE_REGISTRY\.yaml$
+
+      - id: governance-drift-validate
+        name: Governance Drift Validate
+        entry: python3 3_bootstrap_scripts/governance_drift_validate.py
+        language: system
+        pass_filenames: false
+        always_run: true
+
+      - id: resurrection-scan
+        name: Resurrection Scan
+        entry: python3 3_bootstrap_scripts/resurrection_scan.py
+        language: system
+        pass_filenames: false
+        always_run: true
+
+      - id: drift-vector-check
+        name: Drift Vector Check
+        entry: python3 3_bootstrap_scripts/drift_vector_check.py
+        language: system
+        pass_filenames: false
+        always_run: true
+
       - id: guardrail-enforcement
         name: Guardrail Enforcement
         entry: python3 3_bootstrap_scripts/guardrail_enforcement.py

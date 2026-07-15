@@ -256,13 +256,38 @@ def parse_layer_rules(content: str) -> Dict[str, any]:
     return rules
 
 
+def parse_decision_registry(content: str) -> List[Dict[str, str]]:
+    """Parse accepted decisions from DECISION_REGISTRY.yaml for context summary."""
+    decisions: List[Dict[str, str]] = []
+    if not content:
+        return decisions
+    try:
+        data = yaml.safe_load(content)
+        if not isinstance(data, dict):
+            return decisions
+        for row in data.get("decisions") or []:
+            if not isinstance(row, dict):
+                continue
+            if row.get("status") not in ("accepted", "proposed"):
+                continue
+            decisions.append({
+                "id": row.get("decision_id", ""),
+                "status": row.get("status", ""),
+                "basis": (row.get("decision_basis") or "").strip().split("\n")[0][:120],
+            })
+    except Exception as e:
+        print(f"WARN: Error parsing decision registry: {e}")
+    return decisions
+
+
 def generate_context_document(
     sandbox_rules: Dict[str, List[str]],
     feature_flags: Dict[str, Dict[str, bool]],
     active_plan: Dict[str, any],
     task_pointer: Dict[str, any],
     enforcement_tools: List[Dict[str, str]],
-    layer_rules: Dict[str, any]
+    layer_rules: Dict[str, any],
+    decisions: List[Dict[str, str]]
 ) -> str:
     """Generate the AI context document"""
     timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
@@ -403,6 +428,14 @@ def generate_context_document(
         doc.append("**Reference:** `5_reference_architectures/LAYER_RULES.yaml`\n")
         doc.append("\n---\n")
 
+    if decisions:
+        doc.append("## Settled Decisions (summary)\n")
+        doc.append("Do not resurrect these without following `reopen_requires` in the registry.\n\n")
+        for dec in decisions:
+            doc.append(f"- **{dec['id']}** ({dec['status']}): {dec['basis']}\n")
+        doc.append("\n**Reference:** `5_reference_architectures/DECISION_REGISTRY.yaml`\n")
+        doc.append("\n---\n")
+
     # Reference Documents
     doc.append("## Reference Documents\n")
     doc.append("For complete details, see:\n\n")
@@ -411,7 +444,8 @@ def generate_context_document(
     doc.append("3. **`6_ai_runtime_context/ACTIVE_PLAN.yaml`** - Current plan and tasks\n")
     doc.append("4. **`6_ai_runtime_context/ACTIVE_TASK_POINTER.yaml`** - Current task pointer\n")
     doc.append("5. **`5_reference_architectures/LAYER_RULES.yaml`** - Architecture boundaries\n")
-    doc.append("6. **`1_global_standards/`** - Code standards (TDD, SOLID, etc.)\n")
+    doc.append("6. **`5_reference_architectures/DECISION_REGISTRY.yaml`** - Settled decisions\n")
+    doc.append("7. **`1_global_standards/`** - Code standards (TDD, SOLID, etc.)\n")
     doc.append("\n---\n")
 
     # Usage Instructions
@@ -443,6 +477,7 @@ def main() -> int:
     active_plan_path = root / "6_ai_runtime_context" / "ACTIVE_PLAN.yaml"
     task_pointer_path = root / "6_ai_runtime_context" / "ACTIVE_TASK_POINTER.yaml"
     layer_rules_path = root / "5_reference_architectures" / "LAYER_RULES.yaml"
+    decision_registry_path = root / "5_reference_architectures" / "DECISION_REGISTRY.yaml"
     scripts_dir = root / "3_bootstrap_scripts"
 
     # Output path
@@ -454,6 +489,7 @@ def main() -> int:
     active_plan_content = read_file(active_plan_path, "ACTIVE_PLAN.yaml")
     task_pointer_content = read_file(task_pointer_path, "ACTIVE_TASK_POINTER.yaml")
     layer_rules_content = read_file(layer_rules_path, "LAYER_RULES.yaml")
+    decision_registry_content = read_file(decision_registry_path, "DECISION_REGISTRY.yaml")
 
     # Extract/parse data
     sandbox_rules = extract_sandbox_rules(sandbox_rules_content)
@@ -462,6 +498,7 @@ def main() -> int:
     task_pointer = parse_task_pointer(task_pointer_content)
     enforcement_tools = discover_enforcement_tools(scripts_dir)
     layer_rules = parse_layer_rules(layer_rules_content)
+    decisions = parse_decision_registry(decision_registry_content)
 
     # Generate document
     document = generate_context_document(
@@ -470,7 +507,8 @@ def main() -> int:
         active_plan,
         task_pointer,
         enforcement_tools,
-        layer_rules
+        layer_rules,
+        decisions
     )
 
     # Write output
