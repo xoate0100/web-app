@@ -1,3 +1,12 @@
+---
+status: archived
+role: archive
+audience: mixed
+personas: [developers, ai-agent]
+last_reviewed: 2026-07-15
+title: Archive: Meta-Framework Integration
+superseded_by: 0_phase0_bootstrap/META_FRAMEWORK_OVERVIEW.md
+---
 # Meta-Framework Integration Summary
 
 ## Overview

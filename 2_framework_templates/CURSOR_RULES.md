@@ -1,3 +1,11 @@
+---
+title: Cursor Rules Template
+audience: ai-agent
+status: current
+role: reference
+personas: [ai-agent]
+last_reviewed: 2026-07-15
+---
 # Cursor Rules
 - Read AI_SANDBOX_RULES.md and ACTIVE_PLAN.yaml at start.
 - Never modify meta-framework paths.

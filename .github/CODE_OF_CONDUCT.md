@@ -1,3 +1,11 @@
+---
+title: Code of Conduct
+audience: mixed
+status: current
+role: standard
+personas: [developers, end-users]
+last_reviewed: 2026-07-15
+---
 # Code of Conduct
 
 ## Our Pledge

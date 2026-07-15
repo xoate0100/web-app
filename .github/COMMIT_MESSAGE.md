@@ -1,3 +1,12 @@
+---
+title: Commit Message Conventions
+audience: developer
+status: current
+role: standard
+personas: [developers]
+last_reviewed: 2026-07-15
+---
+
 # Commit Message Conventions
 
 Each commit message consists of a **header**, a **body** and a **footer**.  The header has a special format that includes a **type**, a **scope** and a **subject**:

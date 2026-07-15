@@ -1,3 +1,11 @@
+---
+title: AI Sandbox Rules
+audience: ai-agent
+status: current
+role: standard
+personas: [ai-agent]
+last_reviewed: 2026-07-15
+---
 # AI Sandbox Execution Rules (L2.5 Single-Agent)
 
 You are the single authorized agent (Cursor Code). You may execute multi-step plans end-to-end.

@@ -1,109 +1,82 @@
-# Mifos X Web App [![Build Status](https://travis-ci.com/openMF/web-app.svg?branch=master)](https://travis-ci.com/openMF/web-app) [![Gitter](https://badges.gitter.im/openMF/web-app.svg)](https://gitter.im/openMF/web-app?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
+---
+title: Mifos X Web App
+audience: mixed
+status: current
+role: guide
+personas: [installer-admin, managers-superusers, end-users, developers]
+last_reviewed: 2026-07-15
+---
 
-Mifos X Web App is the revamped version of the Mifos X Community App, an effective financial inclusion solution and the default web application built on top of the Mifos X platform for the Mifos User Community.
+# Mifos X Web App
 
-It is a Single-Page App (SPA) written in standard web technologies [HTML5](http://whatwg.org/html), [SCSS](http://sass-lang.com) and [TypeScript](http://www.typescriptlang.org). It leverages the popular [Angular](https://angular.io/) framework and [Angular Material](https://material.angular.io/) for material design components.
+[![Build Status](https://github.com/openMF/web-app/actions/workflows/build.yml/badge.svg)](https://github.com/openMF/web-app/actions/workflows/build.yml)
 
+Default web client for the Mifos / Apache Fineract platform — an Angular **22** single-page application (standalone bootstrap, Angular Material, Font Awesome 7).
 
-## Getting started using
+**Documentation map:** [Master Documentation Index](4_docs_index/DOCUMENTATION_INDEX.md) · [App docs hub](docs/INDEX.md)
 
-The latest code is continuously deployed at https://openmf.github.io/web-app/ whenever a PR is merged into the master branch.
+## Choose your path
 
+| I am… | Start here |
+|-------|------------|
+| **System installer / admin** | [Installer & Admin](docs/personas/installer-admin.md) → [Installation](docs/getting-started/installation.md) |
+| **Manager / superuser** | [Managers & Superusers](docs/personas/managers-superusers.md) → [First login](docs/getting-started/first-login.md) |
+| **Regular system user** | [End Users](docs/personas/end-users.md) → [First login](docs/getting-started/first-login.md) |
+| **Developer / contributor** | [Developers](docs/personas/developers.md) → [Local development](docs/getting-started/local-development.md) |
 
-## Getting started developing
+Live demo (master continuous deploy): https://openmf.github.io/web-app/
 
-1. Ensure you have the following installed in your system:
+## Quick start (developers)
 
-    [`git`](https://git-scm.com/downloads)
+1. Install **Node.js 22** (or ≥ 20.19) and git.
+2. Clone and install:
 
-    [`npm`](https://nodejs.org/en/download/)
-
-2. Install [Angular CLI](https://github.com/angular/angular-cli) globally (optional — the project-local CLI is used via `npx`/`npm run`).
-
-    Requires **Node.js >= 20.19** (Node 22 LTS recommended).
-
-```
-npm install -g @angular/cli@22
-```
-
-3. Clone the project locally into your system.
-```
+```bash
 git clone https://github.com/openMF/web-app.git
-```
-
-4. `cd` into project root directory and make sure you are on the master branch.
-
-5. Install the dependencies.
-```
+cd web-app
 npm ci
+npm start
 ```
 
-6. To preview the app, run the following command and navigate to `http://localhost:4200/`.
-```
-ng serve
-```
+3. Open http://localhost:4200/
 
-The application is using the development server with basic authentication by default. The credentials for the same are:
+Default credentials against shared demo backends: username `mifos` / password `password` (do not alter shared demos).
 
-    Username - mifos
-    Password - password
+Point at your own Fineract: [Connecting to Fineract](docs/getting-started/connecting-fineract.md).
 
-**Important Note:** Please do not make any alterations to these credentials.
+### Common commands
 
-### Development server
+| Command | Purpose |
+|---------|---------|
+| `npm start` | Dev server + `proxy.conf.js` |
+| `npm run test:ci` | Unit tests (Vitest) |
+| `npm run e2e:install` | Install Playwright Chromium |
+| `npm run e2e:ci` | E2E tests (mocked API) |
+| `npm run validate` | Lint + unit tests + production build |
+| `npm run validate:all` | `validate` + e2e |
+| `npm run build:prod` | Production build → `dist/web-app/` |
+| `npm run docs` | Browse `docs/` locally |
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+### Scaffolding & help
 
-### Code scaffolding
-
-Run `ng generate component component-name` to generate a new component. You can also use
-`ng generate directive|pipe|service|class|guard|interface|enum|module`.
-
-### Build
-
-Run `ng build --configuration=production` to build the project. The build artifacts will be stored in the `dist/` directory.
-
-### Test
-
-Run `npm run test:ci` for unit tests (Vitest via Angular's test builder).
-
-Run `npm run lint:all` for ESLint, stylelint, and htmlhint.
-
-Run `npm run validate` to run lint, tests, and production build in one command.
-
-### End-to-end tests
-
-Install Playwright browsers once:
-
-```
-npm run e2e:install
+```bash
+npx ng generate component component-name
+npx ng help
 ```
 
-Run e2e tests (starts the dev server automatically):
+## Setting up a local Fineract server
 
-```
-npm run e2e
-```
+- [Windows](https://cwiki.apache.org/confluence/display/FINERACT/Fineract-platform+Installation+on+Windows)
+- [Ubuntu](https://cwiki.apache.org/confluence/display/FINERACT/Fineract+Installation+on+Ubuntu+Server)
 
-### Further help
+Then update `baseApiUrl` / tenant / OAuth in `src/environments/environment*.ts`. See [Connecting to Fineract](docs/getting-started/connecting-fineract.md) and [Installation](docs/getting-started/installation.md).
 
-To get more help on the Angular CLI use `ng help` or go check out the
-[Angular-CLI README](https://github.com/angular/angular-cli).
+## Contributing
 
+Read [Contributing](.github/CONTRIBUTING.md), follow the [Code of Conduct](.github/CODE_OF_CONDUCT.md), and keep docs current ([Docs Standards](1_global_standards/DOCS_STANDARDS.md)).
 
-## Setting up a local server
+## Further documentation
 
-Follow the given instructions for your operating system to setup a local server for the Mifos X platform.
-
-[Windows](https://cwiki.apache.org/confluence/display/FINERACT/Fineract-platform+Installation+on+Windows)
-
-[Ubuntu](https://cwiki.apache.org/confluence/display/FINERACT/Fineract+Installation+on+Ubuntu+Server)
-
-For connecting to server running elsewhere update the base API URL and/or tenant identifier property in the `environments/environment.ts` file and `environments/environment.prod.ts` file for development and production use respectively.
-
-By default OAuth2 is disabled. To enable it, change the value of oauth.enabled property to true in the `environments/environment.ts` file and `environments/environment.prod.ts` file for development and production use respectively.
-
-
-## Want to help? [![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://github.com/openMF/web-app/issues)
-
-Want to file a bug, request a feature, contribute some code, or improve documentation? Excellent! Read up on our guidelines for [contributing](.github/CONTRIBUTING.md) and then check out one of our [issues](https://github.com/openMF/web-app/issues). Make sure you follow the guidelines before sending a contribution!
+- Coding guides: [docs/coding-guides/](docs/coding-guides/)
+- Migration record: [docs/MAJOR_MIGRATION_PLAN.md](docs/MAJOR_MIGRATION_PLAN.md)
+- Archived historical docs: [docs/archive/](docs/archive/README.md)

@@ -1,3 +1,12 @@
+---
+status: archived
+role: archive
+audience: mixed
+personas: [developers, ai-agent]
+last_reviewed: 2026-07-15
+title: Archive: Windows Compatibility Report
+superseded_by: .pre-commit-config.yaml
+---
 # Windows Compatibility Report
 **Generated:** 2026-01-05
 **Status:** ✅ WINDOWS COMPATIBLE

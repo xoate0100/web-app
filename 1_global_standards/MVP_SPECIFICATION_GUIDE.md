@@ -1,3 +1,11 @@
+---
+title: MVP Specification Guide
+audience: ai-agent
+status: current
+role: standard
+personas: [ai-agent]
+last_reviewed: 2026-07-15
+---
 Perfect — this is an essential piece of your meta-framework’s developer onboarding.
 Below is a **complete documentation file** that you can drop into your repo at:
 

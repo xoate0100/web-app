@@ -1,6 +1,18 @@
+---
+title: Contributing Guide
+audience: developer
+status: current
+role: guide
+personas: [developers]
+last_reviewed: 2026-07-15
+---
 # Getting Started
 
-- View the [README](../README.md) or [watch this video](https://youtu.be/OnxxC3K2oro) to get your development environment up and running.
+- Follow the [Local development tutorial](../docs/getting-started/local-development.md) (Node 22, Vitest, Playwright).
+- Browse docs from the [Master Documentation Index](../4_docs_index/DOCUMENTATION_INDEX.md) or [App docs hub](../docs/INDEX.md).
+- Persona guide for contributors: [Developers](../docs/personas/developers.md).
+- View the [README](../README.md) or [watch this video](https://youtu.be/OnxxC3K2oro) for a quick overview.
+
 - Learn how to [format pull requests](#submitting-a-pull-request).
 - Read how to [rebase/merge upstream branches](#configuring-remotes).
 - Understand our [commit message conventions](https://github.com/openMF/web-app/blob/master/.github/COMMIT_MESSAGE.md).

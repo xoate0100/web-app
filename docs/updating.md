@@ -1,42 +1,39 @@
-# Updating npm dependencies
+---
+title: Updating Dependencies
+audience: developer
+status: current
+role: guide
+personas: [developers]
+last_reviewed: 2026-07-15
+---
 
-- Check outdated packages
-```sh
+# Updating dependencies
+
+**Who this is for:** [developers](./personas/developers.md).
+
+## Routine bumps
+
+```bash
 npm outdated
+npm install <package>@<version>
+npm ci   # verify clean install from lockfile
+npm run validate:all
 ```
 
-- Update local packages according to `package.json`
-```sh
-npm update
+Always commit `package-lock.json` with dependency changes.
+
+## Angular major / CLI
+
+Prefer the Angular update guide and schematics:
+
+```bash
+npx ng update @angular/core@22 @angular/cli@22
 ```
 
-- Upgrade packages manually
-```sh
-npm install --save[-dev] <package_name>@latest
-```
+Record architectural migrations in docs (see [MAJOR_MIGRATION_PLAN.md](./MAJOR_MIGRATION_PLAN.md)). Do **not** follow archived Angular 9 plans under [archive/](./archive/).
 
-Alternatively, you can use [npm-check](https://github.com/dylang/npm-check) to perform an interactive upgrade:
-```sh
-npm-check -u --skip-unused
-```
+## After upgrading
 
-## Locking package versions
-
-Starting from `npm@5` a new `package-lock.json` file is
-[automatically generated](https://docs.npmjs.com/files/package-locks) when using `npm install` commands, to ensure a
-reproducible dependency tree and avoid unwanted package updates.
-
-If you use a previous npm version, it is recommended to use [npm shrinkwrap](https://docs.npmjs.com/cli/shrinkwrap) to
-lock down all your dependencies version:
-```sh
-npm shrinkwrap --dev
-```
-
-This will create a file `npm-shrinkwrap.json` alongside your `package.json` files.
-
-> Do not forget  to run shrinkwrap each time you manually update your dependencies!
-
-# Updating angular-cli
-
-The `angular-cli` package needs extra care with updating, see
-[this doc](https://github.com/angular/angular-cli#updating-angular-cli).
+1. `npm run validate:all`
+2. Update coding guides / README stack table if versions or commands change
+3. Touch [Master Documentation Index](../4_docs_index/DOCUMENTATION_INDEX.md) if paths change

@@ -1,3 +1,11 @@
+---
+title: Decision Registry Proposals
+audience: ai-agent
+status: current
+role: guide
+personas: [ai-agent]
+last_reviewed: 2026-07-15
+---
 # Decision Proposals
 
 Place proposed `DECISION_REGISTRY.yaml` rows here before merging into the canonical registry.

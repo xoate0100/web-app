@@ -1,3 +1,11 @@
+---
+title: Major Migration Completion Record
+audience: developer
+status: current
+role: plan
+personas: [developers]
+last_reviewed: 2026-07-15
+---
 # Major Migration Plan
 
 Validated phased plan for deferred migrations. Each phase has explicit **entry criteria**, **exit gates**, and **anti-stub rules** so no phase lands partial implementations.
