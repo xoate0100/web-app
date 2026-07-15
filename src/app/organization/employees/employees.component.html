@@ -34,8 +34,8 @@
         <th mat-header-cell *matHeaderCellDef mat-sort-header> Loan Officer </th>
         <td mat-cell *matCellDef="let employee">
           <div [className]="employee.isLoanOfficer === true ? 'true' : 'false'">
-            <fa-icon *ngIf="employee.isLoanOfficer" icon="check-circle" size="lg" matTooltip="Yes" matTooltipPosition="right"></fa-icon>
-            <fa-icon *ngIf="!employee.isLoanOfficer" icon="times-circle" size="lg" matTooltip="No" matTooltipPosition="right"></fa-icon>
+            <fa-icon *ngIf="employee.isLoanOfficer" icon="circle-check" size="lg" matTooltip="Yes" matTooltipPosition="right"></fa-icon>
+            <fa-icon *ngIf="!employee.isLoanOfficer" icon="circle-xmark" size="lg" matTooltip="No" matTooltipPosition="right"></fa-icon>
           </div>
         </td>
       </ng-container>

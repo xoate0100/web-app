@@ -19,7 +19,6 @@ import { MatButton } from '@angular/material/button';
  * Edit User Component.
  */
 @Component({
-  standalone: false,
     selector: 'mifosx-edit-user',
     templateUrl: './edit-user.component.html',
     changeDetection: ChangeDetectionStrategy.Eager,

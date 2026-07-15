@@ -14,6 +14,16 @@ export const mockCredentials = {
   isTwoFactorAuthenticationRequired: false,
 };
 
+const emptyPage = { pageItems: [], totalFilteredRecords: 0 };
+
+function jsonResponse(body: unknown) {
+  return {
+    status: 200,
+    contentType: 'application/json',
+    body: JSON.stringify(body),
+  };
+}
+
 /**
  * Intercepts Fineract API calls so e2e tests run without an external backend.
  */
@@ -32,11 +42,7 @@ export async function mockFineractApi(page: Page): Promise<void> {
     }
 
     if (body.username === 'mifos' && body.password === 'password') {
-      await route.fulfill({
-        status: 200,
-        contentType: 'application/json',
-        body: JSON.stringify(mockCredentials),
-      });
+      await route.fulfill(jsonResponse(mockCredentials));
       return;
     }
 
@@ -53,19 +59,37 @@ export async function mockFineractApi(page: Page): Promise<void> {
   });
 
   await page.route('**/notifications**', async (route) => {
-    await route.fulfill({
-      status: 200,
-      contentType: 'application/json',
-      body: JSON.stringify([]),
-    });
+    await route.fulfill(jsonResponse([]));
+  });
+
+  await page.route('**/fineract-provider/api/**', async (route) => {
+    if (route.request().method() !== 'GET') {
+      await route.continue();
+      return;
+    }
+
+    const url = route.request().url();
+    if (url.includes('/clients') || url.includes('/groups') || url.includes('/centers') || url.includes('/users')) {
+      await route.fulfill(jsonResponse(emptyPage));
+      return;
+    }
+
+    if (url.includes('/runreports') || url.includes('/reports')) {
+      await route.fulfill(jsonResponse([]));
+      return;
+    }
+
+    await route.fulfill(jsonResponse([]));
   });
 }
 
 /**
- * Clears persisted auth state between tests.
+ * Clears persisted auth state before a test scenario.
  */
 export async function clearClientStorage(page: Page): Promise<void> {
-  await page.addInitScript(() => {
+  await page.context().clearCookies();
+  await page.goto('/');
+  await page.evaluate(() => {
     localStorage.clear();
     sessionStorage.clear();
   });

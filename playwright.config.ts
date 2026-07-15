@@ -1,6 +1,6 @@
 import { defineConfig, devices } from '@playwright/test';
 
-const baseURL = process.env.PLAYWRIGHT_BASE_URL ?? 'http://127.0.0.1:4200';
+const baseURL = process.env.PLAYWRIGHT_BASE_URL ?? 'http://localhost:4200';
 
 export default defineConfig({
   testDir: './e2e',
@@ -21,10 +21,14 @@ export default defineConfig({
       use: { ...devices['Desktop Chrome'] },
     },
   ],
-  webServer: {
-    command: 'npm run env -s && npx ng serve --host 127.0.0.1 --port 4200 --configuration=development',
-    url: baseURL,
-    reuseExistingServer: !process.env.CI,
-    timeout: 180_000,
-  },
+  ...(process.env.PLAYWRIGHT_SKIP_WEBSERVER
+    ? {}
+    : {
+        webServer: {
+          command: 'npm run env -s && npx ng serve --host 127.0.0.1 --port 4200 --configuration=development',
+          url: baseURL,
+          reuseExistingServer: !process.env.CI,
+          timeout: 180_000,
+        },
+      }),
 });

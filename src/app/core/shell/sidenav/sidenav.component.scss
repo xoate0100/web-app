@@ -147,7 +147,18 @@
   }
 
   .app-user {
-    display: none;
+    padding: 0.25rem 0;
+
+    .app-user-photo,
+    .app-user-name {
+      display: none;
+    }
+
+    .app-user-controls {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
   }
 
   .app-sidenav {

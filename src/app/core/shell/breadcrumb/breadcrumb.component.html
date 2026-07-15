@@ -1,7 +1,7 @@
 <nav class="breadcrumb-wrapper">
   <ul class="breadcrumb">
-    <span class="breadcrumb-title">{{ breadcrumbs[breadcrumbs.length-1].label }}</span>
-    <span *ngIf="breadcrumbs.length-1 !== 0" class="separator">
+    <span class="breadcrumb-title" *ngIf="breadcrumbs.length">{{ breadcrumbs[breadcrumbs.length - 1].label }}</span>
+    <span *ngIf="breadcrumbs.length > 1" class="separator">
       <li *ngFor="let breadcrumb of breadcrumbs; let last = last" class="breadcrumb-label">
         <span *ngIf="!last" class="breadcrumb-link">
           <a *ngIf="breadcrumb.url" [routerLink]="breadcrumb.url">{{ breadcrumb.label }}</a>

@@ -41,9 +41,9 @@
             <ng-container matColumnDef="coreReport">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header> Core Report </th>
                 <td mat-cell *matCellDef="let report">
-                    <fa-icon *ngIf="report.coreReport" icon="check-circle" size="lg" class="true" matTooltip="Yes"
+                    <fa-icon *ngIf="report.coreReport" icon="circle-check" size="lg" class="true" matTooltip="Yes"
                         matTooltipPosition="right"></fa-icon>
-                    <fa-icon *ngIf="!report.coreReport" icon="times-circle" size="lg" class="false" matTooltip="No"
+                    <fa-icon *ngIf="!report.coreReport" icon="circle-xmark" size="lg" class="false" matTooltip="No"
                         matTooltipPosition="right"></fa-icon>
                 </td>
             </ng-container>
@@ -51,9 +51,9 @@
             <ng-container matColumnDef="userReport">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header> User Report </th>
                 <td mat-cell *matCellDef="let report">
-                    <fa-icon *ngIf="report.useReport" icon="check-circle" size="lg" class="true" matTooltip="Yes"
+                    <fa-icon *ngIf="report.useReport" icon="circle-check" size="lg" class="true" matTooltip="Yes"
                         matTooltipPosition="right"></fa-icon>
-                    <fa-icon *ngIf="!report.useReport" icon="times-circle" size="lg" class="false" matTooltip="No"
+                    <fa-icon *ngIf="!report.useReport" icon="circle-xmark" size="lg" class="false" matTooltip="No"
                         matTooltipPosition="right"></fa-icon>
                 </td>
             </ng-container>

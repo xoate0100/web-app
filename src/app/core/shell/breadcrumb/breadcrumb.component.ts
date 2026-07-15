@@ -51,7 +51,7 @@ const routeAddBreadcrumbLink = 'addBreadcrumbLink';
 export class BreadcrumbComponent implements OnInit {
 
   /** Array of breadcrumbs. */
-  breadcrumbs: Breadcrumb[];
+  breadcrumbs: Breadcrumb[] = [];
 
   /**
    * Generates the breadcrumbs.

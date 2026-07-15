@@ -253,7 +253,7 @@
           <button *ngIf="!element.status.submittedAndPendingApproval && !element.status.active"
             class="account-action-button" mat-raised-button color="primary"
             (click)="routeEdit($event)" [routerLink]="['../','savings-accounts', element.id, 'actions', 'Activate']">
-            <fa-icon icon="check-circle" matTooltip="Activate"></fa-icon>
+            <fa-icon icon="circle-check" matTooltip="Activate"></fa-icon>
           </button>
         </td>
       </ng-container>

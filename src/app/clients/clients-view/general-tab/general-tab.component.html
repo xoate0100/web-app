@@ -281,7 +281,7 @@
         <button *ngIf="!element.status.submittedAndPendingApproval && !element.status.active"
           class="account-action-button" mat-raised-button color="primary"
           [routerLink]="['../','savings-accounts', element.id, 'actions', 'Activate']">
-          <fa-icon icon="check-circle"></fa-icon>
+          <fa-icon icon="circle-check"></fa-icon>
         </button>
       </td>
     </ng-container>
@@ -371,7 +371,7 @@
         <button *ngIf="!element.status.submittedAndPendingApproval && !element.status.active"
           class="account-action-button" mat-raised-button color="primary"
           [routerLink]="['../','fixed-deposits-accounts', element.id, 'actions', 'Activate']">
-          <fa-icon icon="check-circle"></fa-icon>
+          <fa-icon icon="circle-check"></fa-icon>
         </button>
       </td>
     </ng-container>
@@ -467,7 +467,7 @@
           <button class="account-action-button" mat-raised-button color="primary" (click)="routeEdit($event)"
             *mifosxHasPermission="'ACTIVATE_SAVINGSACCOUNT'"
             [routerLink]="['../','recurringdeposits', element.id, 'actions', 'Activate']">
-            <fa-icon icon="check-circle"></fa-icon>
+            <fa-icon icon="circle-check"></fa-icon>
           </button>
         </ng-container>
       </td>
@@ -555,7 +555,7 @@
         </button>
         <button *ngIf="!element.status.submittedAndPendingApproval && !element.status.active"
           class="account-action-button" mat-raised-button color="primary" (click)="routeEdit($event)" [routerLink]="['../','shares-accounts', element.id, 'actions', 'Activate']">
-          <fa-icon icon="check-circle"></fa-icon>
+          <fa-icon icon="circle-check"></fa-icon>
         </button>
       </td>
     </ng-container>

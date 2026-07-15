@@ -13,18 +13,16 @@ import { map } from 'rxjs/operators';
 import { AuthenticationService } from '../../authentication/authentication.service';
 import { MatToolbar } from '@angular/material/toolbar';
 import { LayoutDirective, FlexDirective } from '@ngbracket/ngx-layout/flex';
-import { NgIf } from '@angular/common';
-import { MatIconButton } from '@angular/material/button';
+import { NgIf, AsyncPipe } from '@angular/common';
+import { MatIconButton, MatButton } from '@angular/material/button';
 import { MatTooltip } from '@angular/material/tooltip';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { ShowHideDirective } from '@ngbracket/ngx-layout/extended';
-import { MatTabNav, MatTabLink } from '@angular/material/tabs';
-import { MatMenuTrigger, MatMenu, MatMenuItem } from '@angular/material/menu';
+import { MatMenuTrigger, MatMenu, MatMenuItem, MatMenuContent } from '@angular/material/menu';
 import { SearchToolComponent } from '../../../shared/search-tool/search-tool.component';
 import { LanguageSelectorComponent } from '../../../shared/language-selector/language-selector.component';
 import { ThemePickerComponent } from '../../../shared/theme-picker/theme-picker.component';
 import { NotificationsTrayComponent } from '../../../shared/notifications-tray/notifications-tray.component';
-import { MatIcon } from '@angular/material/icon';
 
 /**
  * Toolbar component.
@@ -34,7 +32,7 @@ import { MatIcon } from '@angular/material/icon';
     templateUrl: './toolbar.component.html',
     changeDetection: ChangeDetectionStrategy.Eager,
     styleUrls: ['./toolbar.component.scss'],
-    imports: [MatToolbar, LayoutDirective, NgIf, MatIconButton, MatTooltip, FaIconComponent, ShowHideDirective, MatTabNav, MatTabLink, MatMenuTrigger, RouterLink, FlexDirective, SearchToolComponent, LanguageSelectorComponent, ThemePickerComponent, NotificationsTrayComponent, MatMenu, MatMenuItem, MatIcon]
+    imports: [MatToolbar, LayoutDirective, NgIf, AsyncPipe, MatIconButton, MatButton, MatTooltip, FaIconComponent, ShowHideDirective, MatMenuTrigger, MatMenuContent, RouterLink, FlexDirective, SearchToolComponent, LanguageSelectorComponent, ThemePickerComponent, NotificationsTrayComponent, MatMenu, MatMenuItem]
 })
 export class ToolbarComponent implements OnInit {
 

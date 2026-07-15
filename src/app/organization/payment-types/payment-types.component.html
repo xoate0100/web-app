@@ -34,8 +34,8 @@
         <th mat-header-cell *matHeaderCellDef mat-sort-header> Cash Payment </th>
         <td mat-cell *matCellDef="let paymentType">
           <div [className]="paymentType.isCashPayment === true ? 'true' : 'false'">
-            <fa-icon *ngIf="paymentType.isCashPayment" icon="check-circle" size="lg" matTooltip="Yes" matTooltipPosition="right"></fa-icon>
-            <fa-icon *ngIf="!paymentType.isCashPayment" icon="times-circle" size="lg" matTooltip="No" matTooltipPosition="right"></fa-icon>
+            <fa-icon *ngIf="paymentType.isCashPayment" icon="circle-check" size="lg" matTooltip="Yes" matTooltipPosition="right"></fa-icon>
+            <fa-icon *ngIf="!paymentType.isCashPayment" icon="circle-xmark" size="lg" matTooltip="No" matTooltipPosition="right"></fa-icon>
           </div>
         </td>
       </ng-container>

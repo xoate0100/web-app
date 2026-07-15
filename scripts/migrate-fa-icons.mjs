@@ -18,8 +18,10 @@ const iconMap = {
   'arrow-right': 'arrow-right',
   'flag': 'flag',
   'money': 'money-bill',
+  'money-bill-alt': 'money-bill',
   'exclamation-circle': 'circle-exclamation',
   'times': 'times',
+  'times-circle': 'circle-xmark',
   'download': 'download',
   'upload': 'upload',
   'repeat': 'sync',
@@ -27,17 +29,19 @@ const iconMap = {
   'trash': 'trash',
   'tasks': 'list-check',
   'file-text': 'file-alt',
+  'file-alt': 'file-lines',
   'arrow-circle-right': 'circle-arrow-right',
   'eye': 'eye',
   'pencil': 'pencil',
+  'pencil-alt': 'pencil',
   'minus': 'minus',
   'dollar': 'dollar-sign',
   'group': 'users',
   'check': 'check',
+  'check-circle': 'circle-check',
   'arrow-up': 'arrow-up',
   'arrow-down': 'arrow-down',
   'undo': 'undo',
-  'check-circle': 'check-circle',
   'power-off': 'power-off',
   'question-circle': 'circle-question',
   'briefcase': 'briefcase',
@@ -45,8 +49,16 @@ const iconMap = {
   'pincel-square-o': 'pen',
   'ban': 'ban',
   'exclamation': 'triangle-exclamation',
+  'exclamation-triangle': 'triangle-exclamation',
   'arrow-left': 'arrow-left',
   'table': 'table',
+  'shield-alt': 'shield',
+  'sign-out-alt': 'right-from-bracket',
+  'university': 'building-columns',
+  'tachometer-alt': 'gauge-high',
+  'location-arrow': 'location-arrow',
+  'cloud-download-alt': 'cloud-arrow-down',
+  'comment-alt': 'comment',
 };
 
 function mapIcon(legacyIcon) {
@@ -78,6 +90,25 @@ function migrateTsContent(content) {
     const mapped = mapIcon(iconValue);
     return `icon: '${mapped}'`;
   });
+}
+
+function migrateFaIconAttributes(content) {
+  let result = content;
+  for (const [legacyIcon, mappedIcon] of Object.entries(iconMap)) {
+    if (legacyIcon === mappedIcon) {
+      continue;
+    }
+    const patterns = [
+      new RegExp(`icon="${legacyIcon}"`, 'g'),
+      new RegExp(`icon='${legacyIcon}'`, 'g'),
+      new RegExp(`\\[icon\\]="${legacyIcon}"`, 'g'),
+      new RegExp(`\\[icon\\]='${legacyIcon}'`, 'g'),
+    ];
+    for (const pattern of patterns) {
+      result = result.replace(pattern, (match) => match.replace(legacyIcon, mappedIcon));
+    }
+  }
+  return result;
 }
 
 function migrateHtmlContent(content) {
@@ -128,6 +159,8 @@ function migrateHtmlContent(content) {
     const mapped = iconMap[iconName] || iconName;
     return `icon="${mapped}"`;
   });
+
+  result = migrateFaIconAttributes(result);
 
   return result;
 }

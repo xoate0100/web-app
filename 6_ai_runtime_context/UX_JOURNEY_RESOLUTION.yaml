@@ -1,0 +1,34 @@
+# Workspace completion record — UX journey stress-test resolutions
+# Not a DECISION_REGISTRY proposal; session deliverable tracking only.
+
+id: UX-JOURNEY-2026-07-15
+status: complete
+completed_at: "2026-07-15"
+summary: >
+  All outstanding UX notes from the Playwright UI stress-test session are resolved:
+  toolbar menus, nav overflow, mobile hamburger, breadcrumbs, FA6 icon migration,
+  compact sidenav user controls, and Playwright e2e documentation.
+
+verification:
+  command: npx playwright test e2e/ --workers=1 --timeout=120000
+  env:
+    PLAYWRIGHT_SKIP_WEBSERVER: "true"
+    PLAYWRIGHT_BASE_URL: "http://localhost:4200"
+  expected: "16/16 passed"
+
+deliverables:
+  - docs/UX_RESOLUTION_LOG.md
+  - docs/coding-guides/e2e-tests.md
+  - e2e/ui-journey.spec.ts
+  - scripts/migrate-fa-icons.mjs (extended)
+  - src/app/core/shell/sidenav/sidenav.component.scss (compact controls)
+
+resolutions:
+  - toolbar_mat_menu_ssrId_fix
+  - toolbar_nav_overflow_fix
+  - mobile_hamburger_visibility
+  - breadcrumb_null_guard
+  - fa5_to_fa6_icon_migration
+  - compact_sidenav_settings_signout
+  - playwright_e2e_docs
+  - live_api_env_documentation

@@ -25,8 +25,8 @@
       <ng-container matColumnDef="status">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> Status </th>
         <td mat-cell *matCellDef="let jobHistoryData">
-          <fa-icon *ngIf="jobHistoryData.status === 'success'" class="success" matTooltip="Successful" matTooltipPosition="right" icon="check-circle" size="lg"></fa-icon>
-          <fa-icon *ngIf="!(jobHistoryData.status == 'success')" class="fail" matTooltip="Failed" matTooltipPosition="right" icon="times-circle" size="lg"></fa-icon>
+          <fa-icon *ngIf="jobHistoryData.status === 'success'" class="success" matTooltip="Successful" matTooltipPosition="right" icon="circle-check" size="lg"></fa-icon>
+          <fa-icon *ngIf="!(jobHistoryData.status == 'success')" class="fail" matTooltip="Failed" matTooltipPosition="right" icon="circle-xmark" size="lg"></fa-icon>
         </td>
       </ng-container>
 
@@ -39,7 +39,7 @@
         <th mat-header-cell *matHeaderCellDef mat-sort-header> Error Log </th>
         <td mat-cell *matCellDef="let jobHistoryData">
           <button mat-icon-button class="errorlog" *ngIf="!(jobHistoryData.status == 'success')" matTooltip="Error Log" matTooltipPosition="right" (click)="openError(jobHistoryData.version)">
-            <fa-icon icon="exclamation-circle" size="lg"></fa-icon>
+            <fa-icon icon="circle-exclamation" size="lg"></fa-icon>
           </button>
         </td>
       </ng-container>

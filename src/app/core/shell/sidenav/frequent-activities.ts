@@ -16,7 +16,7 @@ export const frequentActivities: any[] = [
   },
   {
     path: '/accounting',
-    icon: 'money-bill-alt',
+    icon: 'money-bill',
     toolTip: 'Accounting'
   },
   {
