@@ -8,6 +8,7 @@ import { Router, RouterLink } from '@angular/router';
 import { AuthenticationService } from 'app/core/authentication/authentication.service';
 import { ChangePasswordDialogComponent } from 'app/shared/change-password-dialog/change-password-dialog.component';
 import { UserService } from 'app/self-service/users/user.service';
+import { SecuritySettingsComponent } from './security-settings/security-settings.component';
 import { LayoutDirective, LayoutAlignDirective, LayoutGapDirective, FlexDirective } from '@ngbracket/ngx-layout/flex';
 import { MatButton } from '@angular/material/button';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
@@ -21,7 +22,7 @@ import { MatCard } from '@angular/material/card';
     templateUrl: './profile.component.html',
     changeDetection: ChangeDetectionStrategy.Eager,
     styleUrls: ['./profile.component.scss'],
-    imports: [LayoutDirective, LayoutAlignDirective, LayoutGapDirective, MatButton, RouterLink, FaIconComponent, MatCard, FlexDirective, MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow]
+    imports: [LayoutDirective, LayoutAlignDirective, LayoutGapDirective, MatButton, RouterLink, FaIconComponent, MatCard, FlexDirective, MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow, SecuritySettingsComponent]
 })
 export class ProfileComponent implements OnInit {
 

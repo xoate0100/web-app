@@ -9,6 +9,18 @@
     margin-top: 1rem;
   }
 
+  .login-divider {
+    width: 14rem;
+    margin: 1rem 0 0;
+  }
+
+  .passkey-error {
+    color: #b71c1c;
+    max-width: 14rem;
+    text-align: center;
+    margin-top: 0.5rem;
+  }
+
   mat-spinner {
     float: right;
     margin: 0.5rem 0;

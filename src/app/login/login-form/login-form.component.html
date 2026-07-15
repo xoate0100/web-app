@@ -5,7 +5,7 @@
       <fa-icon icon="user-circle" size="lg"></fa-icon>&nbsp;&nbsp;
     </span>
     <mat-label>Username</mat-label>
-    <input matInput type="text" autocomplete="off" formControlName="username">
+    <input matInput type="text" autocomplete="username" formControlName="username">
     <mat-error *ngIf="loginForm.controls.username.hasError('required')">
       Username is <strong>required</strong>
     </mat-error>
@@ -16,8 +16,8 @@
       <fa-icon icon="lock" size="lg"></fa-icon>&nbsp;&nbsp;
     </span>
     <mat-label>Password</mat-label>
-    <input matInput type="{{ passwordInputType }}" formControlName="password">
-    <button *ngIf="loginForm.controls.password.value && !loading" matSuffix mat-icon-button
+    <input matInput type="{{ passwordInputType }}" autocomplete="current-password" formControlName="password">
+    <button *ngIf="loginForm.controls.password.value && !loading" matSuffix mat-icon-button type="button"
       (mousedown)="passwordInputType = 'text'" (mouseup)="passwordInputType = 'password'">
       <fa-icon *ngIf="passwordInputType === 'password'" icon="eye"></fa-icon>
       <fa-icon *ngIf="passwordInputType === 'text'" icon="eye-slash"></fa-icon>
@@ -37,5 +37,18 @@
   <button type="button" mat-button fxFlexAlign="center" class="login-button" (click)="forgotPassword()" [disabled]="loading">
     Forgot Password?
   </button>
+
+  <ng-container *ngIf="passkeysSupported">
+    <mat-divider fxFlexAlign="center" class="login-divider"></mat-divider>
+
+    <button type="button" mat-stroked-button color="primary" fxFlexAlign="center" class="login-button"
+      id="passkey-login-button"
+      (click)="loginWithPasskey()" [disabled]="loading || passkeyLoading">
+      <fa-icon icon="key"></fa-icon>&nbsp;&nbsp;Sign in with passkey
+      <mat-spinner [diameter]="20" *ngIf="passkeyLoading"></mat-spinner>
+    </button>
+
+    <p *ngIf="passkeyError" class="passkey-error" fxFlexAlign="center">{{ passkeyError }}</p>
+  </ng-container>
 
 </form>

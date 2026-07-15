@@ -4,10 +4,12 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 
 /** rxjs Imports */
 import { Observable, of } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { map, switchMap } from 'rxjs/operators';
 
 /** Custom Services */
 import { AlertService } from '../alert/alert.service';
+import { MfaService } from '../mfa/mfa.service';
+import { MfaStatus, MfaTokenResponse } from '../mfa/mfa.models';
 
 /** Custom Interceptors */
 import { AuthenticationInterceptor } from './authentication.interceptor';
@@ -39,6 +41,8 @@ export class AuthenticationService {
   /** User credentials. */
 
   private credentials?: Credentials;
+  /** Cached MFA status for the pending challenge (avoids a second vault round-trip). */
+  private pendingMfaStatus: MfaStatus | null = null;
   /** Key to store credentials in storage. */
   private credentialsStorageKey = 'mifosXCredentials';
   /** Key to store oauth token details in storage. */
@@ -52,10 +56,12 @@ export class AuthenticationService {
    * @param {HttpClient} http Http Client to send requests.
    * @param {AlertService} alertService Alert Service.
    * @param {AuthenticationInterceptor} authenticationInterceptor Authentication Interceptor.
+   * @param {MfaService} mfaService App-level MFA (TOTP / passkeys).
    */
   constructor(private http: HttpClient,
               private alertService: AlertService,
-              private authenticationInterceptor: AuthenticationInterceptor) {
+              private authenticationInterceptor: AuthenticationInterceptor,
+              private mfaService: MfaService) {
     this.rememberMe = false;
     this.storage = sessionStorage;
     const savedCredentials = JSON.parse(
@@ -103,12 +109,30 @@ export class AuthenticationService {
     } else {
       return this.http.post('/authentication', { username: loginContext.username, password: loginContext.password })
         .pipe(
-          map((credentials: any) => {
-            this.onLoginSuccess(credentials);
-            return true;
-          })
+          switchMap((credentials: any) => this.onLoginSuccess$(credentials)),
+          map(() => true)
         );
     }
+  }
+
+  /**
+   * Passwordless passkey login (WebAuthn).
+   */
+  loginWithPasskey(): Observable<boolean> {
+    this.alertService.alert({ type: 'Authentication Start', message: 'Waiting for passkey...' });
+    this.rememberMe = false;
+    this.storage = sessionStorage;
+    return this.mfaService.loginWithPasskey().pipe(
+      switchMap((result) => {
+        if (result.twoFactorToken) {
+          this.credentials = result.credentials;
+          this.applyFirstFactorAuthorization(result.credentials);
+          this.onOTPValidateSuccess(result.twoFactorToken);
+          return of(true);
+        }
+        return this.onLoginSuccess$(result.credentials).pipe(map(() => true));
+      })
+    );
   }
 
   /**
@@ -122,7 +146,7 @@ export class AuthenticationService {
     this.refreshTokenOnExpiry(tokenResponse.expires_in);
     this.http.get('/userdetails', { params: httpParams })
       .subscribe((credentials: any) => {
-        this.onLoginSuccess(credentials);
+        this.onLoginSuccess$(credentials).subscribe();
         if (!credentials.shouldRenewPassword) {
           this.storage.setItem(this.oAuthTokenDetailsStorageKey, JSON.stringify(tokenResponse));
         }
@@ -159,35 +183,50 @@ export class AuthenticationService {
       });
   }
 
-  /**
-   * Sets the authorization token followed by one of the following:
-   *
-   * Sends an alert if two factor authentication is required.
-   *
-   * Sends an alert if password has expired and requires a reset.
-   *
-   * Sends an alert on successful login.
-   * @param {Credentials} credentials Authenticated user credentials.
-   */
-  private onLoginSuccess(credentials: Credentials) {
+  private applyFirstFactorAuthorization(credentials: Credentials): void {
     if (environment.oauth.enabled) {
       this.authenticationInterceptor.setAuthorizationToken(credentials.accessToken!);
     } else {
       this.authenticationInterceptor.setAuthorizationToken(credentials.base64EncodedAuthenticationKey ?? '');
     }
+  }
+
+  /**
+   * First-factor success path with optional app-level MFA challenge.
+   */
+  private onLoginSuccess$(credentials: Credentials): Observable<Credentials> {
+    this.applyFirstFactorAuthorization(credentials);
+
     if (credentials.isTwoFactorAuthenticationRequired) {
       this.credentials = credentials;
       this.alertService.alert({ type: 'Two Factor Authentication Required', message: 'Two Factor Authentication Required' });
-    } else {
-      if (credentials.shouldRenewPassword) {
-        this.credentials = credentials;
-        this.alertService.alert({ type: 'Password Expired', message: 'Your password has expired, please reset your password!' });
-      } else {
-        this.setCredentials(credentials);
-        this.alertService.alert({ type: 'Authentication Success', message: `${credentials.username} successfully logged in!` });
-        delete (this as any).credentials;
-      }
+      return of(credentials);
     }
+
+    if (credentials.shouldRenewPassword) {
+      this.credentials = credentials;
+      this.alertService.alert({ type: 'Password Expired', message: 'Your password has expired, please reset your password!' });
+      return of(credentials);
+    }
+
+    return this.mfaService.getStatus(credentials.username).pipe(
+      switchMap((status) => {
+        if (!status.methods.length) {
+          this.setCredentials(credentials);
+          this.alertService.alert({ type: 'Authentication Success', message: `${credentials.username} successfully logged in!` });
+          delete (this as any).credentials;
+          this.pendingMfaStatus = null;
+          return of(credentials);
+        }
+        this.credentials = credentials;
+        this.pendingMfaStatus = status;
+        this.alertService.alert({
+          type: 'Two Factor Authentication Required',
+          message: 'Multi-factor authentication required'
+        });
+        return of(credentials);
+      })
+    );
   }
 
   /**
@@ -233,6 +272,20 @@ export class AuthenticationService {
    */
   getCredentials(): Credentials | null {
     return JSON.parse(this.storage.getItem(this.credentialsStorageKey) ?? 'null');
+  }
+
+  /**
+   * Pending first-factor credentials waiting on MFA (not yet persisted).
+   */
+  getPendingCredentials(): Credentials | null {
+    return this.credentials ?? null;
+  }
+
+  /**
+   * MFA enrollment status captured when the challenge was opened.
+   */
+  getPendingMfaStatus(): MfaStatus | null {
+    return this.pendingMfaStatus;
   }
 
   /**
@@ -289,6 +342,58 @@ export class AuthenticationService {
           this.onOTPValidateSuccess(response);
         })
       );
+  }
+
+  /**
+   * Completes MFA after a TOTP or passkey challenge.
+   * Issues a Fineract TFA token only when the first-factor response required one.
+   */
+  completeMfaChallenge(tokenResponse?: MfaTokenResponse | null): void {
+    if (this.credentials?.isTwoFactorAuthenticationRequired && tokenResponse) {
+      this.onOTPValidateSuccess(tokenResponse);
+      this.pendingMfaStatus = null;
+      return;
+    }
+    if (this.credentials?.shouldRenewPassword) {
+      this.alertService.alert({ type: 'Password Expired', message: 'Your password has expired, please reset your password!' });
+      return;
+    }
+    this.setCredentials(this.credentials);
+    this.alertService.alert({ type: 'Authentication Success', message: `${this.credentials?.username} successfully logged in!` });
+    delete (this as any).credentials;
+    this.pendingMfaStatus = null;
+  }
+
+  /**
+   * Validates a TOTP code for the pending login challenge.
+   */
+  validateTotpChallenge(code: string): Observable<void> {
+    const pending = this.credentials;
+    if (!pending) {
+      throw new Error('No pending authentication challenge.');
+    }
+    const issuePlatformToken = !!pending.isTwoFactorAuthenticationRequired;
+    return this.mfaService.validateTotpChallenge(pending.username, code, issuePlatformToken).pipe(
+      map((token) => {
+        this.completeMfaChallenge(token);
+      })
+    );
+  }
+
+  /**
+   * Validates a passkey assertion for the pending login challenge.
+   */
+  validatePasskeyChallenge(): Observable<void> {
+    const pending = this.credentials;
+    if (!pending) {
+      throw new Error('No pending authentication challenge.');
+    }
+    const issuePlatformToken = !!pending.isTwoFactorAuthenticationRequired;
+    return this.mfaService.validatePasskeyChallenge(pending.username, issuePlatformToken).pipe(
+      map((token) => {
+        this.completeMfaChallenge(token);
+      })
+    );
   }
 
   /**

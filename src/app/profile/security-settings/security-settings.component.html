@@ -1,0 +1,91 @@
+<mat-card class="security-settings" id="security-settings">
+
+  <h2>
+    <fa-icon icon="shield"></fa-icon>&nbsp;&nbsp;Security
+  </h2>
+  <p class="intro">
+    Protect your account with an authenticator app (TOTP) and optional passkeys.
+  </p>
+  <p class="demo-note" *ngIf="demoMode">
+    Demo MFA mode is on: secrets are stored in this browser only. Point
+    <code>environment.mfa</code> at a server and set <code>demoMode: false</code> for production.
+  </p>
+
+  <p class="feedback ok" *ngIf="message">{{ message }}</p>
+  <p class="feedback error" *ngIf="error">{{ error }}</p>
+
+  <mat-divider></mat-divider>
+
+  <section fxLayout="column" fxLayoutGap="0.75rem">
+    <h3>Authenticator app (TOTP)</h3>
+    <p *ngIf="status?.totpEnabled">Authenticator app is enabled for this account.</p>
+    <p *ngIf="!status?.totpEnabled && !setup">Add a TOTP authenticator as a second step after your password.</p>
+
+    <div *ngIf="setup" fxLayout="column" fxLayoutGap="0.5rem" class="totp-setup">
+      <img *ngIf="setup.qrDataUrl" [src]="setup.qrDataUrl" alt="TOTP QR code" class="totp-qr" width="220" height="220">
+      <p class="secret-line">
+        Manual key: <code id="totp-secret">{{ setup.secret }}</code>
+      </p>
+      <form [formGroup]="totpConfirmForm" (ngSubmit)="confirmTotpSetup()" fxLayout="row" fxLayoutGap="0.5rem" fxLayoutAlign="start center">
+        <mat-form-field>
+          <mat-label>Confirmation code</mat-label>
+          <input matInput formControlName="code" maxlength="6" inputmode="numeric" autocomplete="one-time-code" id="totp-confirm-code">
+          <mat-hint>Enter the current 6-digit code</mat-hint>
+          <mat-error *ngIf="totpConfirmForm.controls.code.invalid">Enter a 6-digit code</mat-error>
+        </mat-form-field>
+        <button mat-raised-button color="primary" type="submit" id="totp-confirm-button"
+          [disabled]="totpConfirmForm.invalid || loading">
+          Confirm
+          <mat-spinner diameter="18" *ngIf="loading"></mat-spinner>
+        </button>
+      </form>
+    </div>
+
+    <div fxLayout="row" fxLayoutGap="0.5rem">
+      <button mat-raised-button color="primary" type="button" id="totp-setup-button"
+        *ngIf="!status?.totpEnabled && !setup"
+        (click)="beginTotpSetup()" [disabled]="loading">
+        Set up authenticator
+      </button>
+      <button mat-stroked-button color="warn" type="button" id="totp-disable-button"
+        *ngIf="status?.totpEnabled"
+        (click)="disableTotp()" [disabled]="loading">
+        Disable authenticator
+      </button>
+    </div>
+  </section>
+
+  <mat-divider></mat-divider>
+
+  <section fxLayout="column" fxLayoutGap="0.75rem">
+    <h3>Passkeys</h3>
+    <p *ngIf="!passkeysSupported">This browser does not support passkeys (WebAuthn).</p>
+    <ng-container *ngIf="passkeysSupported">
+      <p>Register a device passkey for sign-in and MFA challenges.</p>
+
+      <ul class="passkey-list" *ngIf="status?.passkeys?.length">
+        <li *ngFor="let passkey of status?.passkeys" fxLayout="row" fxLayoutAlign="space-between center">
+          <div>
+            <strong>{{ passkey.name }}</strong>
+            <span class="meta"> · added {{ passkey.createdAt | date: 'mediumDate' }}</span>
+          </div>
+          <button mat-button color="warn" type="button" (click)="removePasskey(passkey)" [disabled]="loading">
+            <fa-icon icon="trash"></fa-icon>&nbsp;Remove
+          </button>
+        </li>
+      </ul>
+
+      <form [formGroup]="passkeyNameForm" (ngSubmit)="registerPasskey()" fxLayout="row" fxLayoutGap="0.5rem" fxLayoutAlign="start center">
+        <mat-form-field>
+          <mat-label>Passkey name</mat-label>
+          <input matInput formControlName="name" id="passkey-name">
+        </mat-form-field>
+        <button mat-raised-button color="primary" type="submit" id="passkey-register-button"
+          [disabled]="passkeyNameForm.invalid || loading">
+          <fa-icon icon="key"></fa-icon>&nbsp;Register passkey
+        </button>
+      </form>
+    </ng-container>
+  </section>
+
+</mat-card>

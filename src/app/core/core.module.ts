@@ -5,6 +5,7 @@ import { RouteReuseStrategy, RouterModule } from '@angular/router';
 
 /** Custom Services */
 import { AuthenticationService } from './authentication/authentication.service';
+import { MfaService } from './mfa/mfa.service';
 import { HttpService } from './http/http.service';
 import { HttpCacheService } from './http/http-cache.service';
 import { ProgressBarService } from './progress-bar/progress-bar.service';
@@ -56,6 +57,7 @@ import { ContentComponent } from './shell/content/content.component';
     ],
     providers: [
         AuthenticationService,
+        MfaService,
         AuthenticationGuard,
         AuthenticationInterceptor,
         {
