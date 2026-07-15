@@ -23,7 +23,18 @@ export const environment = {
   supportedLanguages: [
     'en-US',
     'fr-FR'
-  ]
+  ],
+  /**
+   * App-level MFA (TOTP + passkeys). Fineract SMS/email OTP remains separate.
+   * demoMode stores secrets in IndexedDB for local/e2e use; set false and point
+   * apiPath at an MFA sidecar for production.
+   */
+  mfa: {
+    demoMode: true,
+    rpId: '',
+    rpName: 'Mifos X',
+    apiPath: '/mfa'
+  }
 };
 
 // Server URL

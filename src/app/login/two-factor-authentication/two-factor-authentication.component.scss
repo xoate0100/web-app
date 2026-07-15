@@ -20,4 +20,14 @@
     float: right;
     margin: 0.5rem 0;
   }
+
+  .mfa-method-toggle {
+    margin-bottom: 1rem;
+  }
+}
+
+.mfa-error {
+  color: #b71c1c;
+  max-width: 16rem;
+  text-align: center;
 }

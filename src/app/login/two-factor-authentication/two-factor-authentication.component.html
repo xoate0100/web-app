@@ -1,11 +1,79 @@
-<p><strong>Two Factor Authentication</strong></p>
+<p><strong>Multi-Factor Authentication</strong></p>
 
 <mat-divider></mat-divider>
 
-<!-- Select delivery method to receive OTP -->
-<p *ngIf="!otpRequested">Please select a delivery method:</p>
+<p class="mfa-error" *ngIf="errorMessage">{{ errorMessage }}</p>
 
-<form fxLayout="column" *ngIf="!otpRequested" [formGroup]="twoFactorAuthenticationDeliveryMethodForm" class="two-factor-auth-form"
+<!-- Method chooser when more than one option is available -->
+<div fxLayout="column" *ngIf="view === 'choose'" class="two-factor-auth-form">
+  <p>Choose how to verify your identity:</p>
+
+  <mat-button-toggle-group fxFlexAlign="center" class="mfa-method-toggle">
+    <mat-button-toggle *ngIf="hasTotp" (click)="selectView('totp')" value="totp">
+      Authenticator app
+    </mat-button-toggle>
+    <mat-button-toggle *ngIf="hasPasskey" (click)="selectView('passkey')" value="passkey">
+      Passkey
+    </mat-button-toggle>
+    <mat-button-toggle *ngIf="hasLegacyDelivery" (click)="selectView('legacy-delivery')" value="legacy">
+      SMS / Email OTP
+    </mat-button-toggle>
+  </mat-button-toggle-group>
+</div>
+
+<!-- TOTP authenticator -->
+<form fxLayout="column" *ngIf="view === 'totp'" [formGroup]="totpForm" class="two-factor-auth-form"
+  (ngSubmit)="validateTotp()">
+  <p>Enter the 6-digit code from your authenticator app.</p>
+
+  <mat-form-field fxFlexAlign="center" class="two-factor-auth-input">
+    <span matPrefix>
+      <fa-icon icon="user-shield"></fa-icon>&nbsp;&nbsp;
+    </span>
+    <mat-label>Authenticator code</mat-label>
+    <input type="text" inputmode="numeric" autocomplete="one-time-code" matInput required formControlName="code"
+      maxlength="6">
+    <mat-error *ngIf="totpForm.controls.code.hasError('required')">
+      Code is <strong>required</strong>
+    </mat-error>
+    <mat-error *ngIf="totpForm.controls.code.hasError('pattern')">
+      Enter a <strong>6-digit</strong> code
+    </mat-error>
+  </mat-form-field>
+
+  <button mat-raised-button color="primary" fxFlexAlign="center" class="two-factor-auth-button"
+    [disabled]="!totpForm.valid || loading">
+    Verify
+    <mat-spinner [diameter]="20" *ngIf="loading"></mat-spinner>
+  </button>
+
+  <button type="button" mat-button fxFlexAlign="center" *ngIf="hasPasskey || hasLegacyDelivery"
+    (click)="selectView('choose')">
+    Use another method
+  </button>
+</form>
+
+<!-- Passkey challenge -->
+<div fxLayout="column" *ngIf="view === 'passkey'" class="two-factor-auth-form">
+  <p>Use your device passkey to continue.</p>
+
+  <button mat-raised-button color="primary" fxFlexAlign="center" class="two-factor-auth-button"
+    (click)="validatePasskey()" [disabled]="loading">
+    <fa-icon icon="key"></fa-icon>&nbsp;&nbsp;Continue with passkey
+    <mat-spinner [diameter]="20" *ngIf="loading"></mat-spinner>
+  </button>
+
+  <button type="button" mat-button fxFlexAlign="center" *ngIf="hasTotp || hasLegacyDelivery"
+    (click)="selectView('choose')">
+    Use another method
+  </button>
+</div>
+
+<!-- Select delivery method to receive OTP -->
+<p *ngIf="view === 'legacy-delivery' && !otpRequested">Please select a delivery method:</p>
+
+<form fxLayout="column" *ngIf="view === 'legacy-delivery' && !otpRequested"
+  [formGroup]="twoFactorAuthenticationDeliveryMethodForm" class="two-factor-auth-form"
   (ngSubmit)="requestOTP()">
 
   <mat-radio-group fxLayout="column" fxFlexAlign="center" formControlName="twoFactorAuthenticationDeliveryMethod">
@@ -15,17 +83,23 @@
     </mat-radio-button>
   </mat-radio-group>
 
-  <button mat-raised-button color="primary" fxFlexAlign="center" fxFlexFill [disabled]="!twoFactorAuthenticationDeliveryMethodForm.valid">
+  <button mat-raised-button color="primary" fxFlexAlign="center" fxFlexFill
+    [disabled]="!twoFactorAuthenticationDeliveryMethodForm.valid || loading">
     Request OTP
     <mat-spinner [diameter]="20" *ngIf="loading"></mat-spinner>
+  </button>
+
+  <button type="button" mat-button fxFlexAlign="center" *ngIf="hasTotp || hasPasskey"
+    (click)="selectView('choose')">
+    Use another method
   </button>
 
 </form>
 
 <!-- Show input for OTP -->
-<p *ngIf="otpRequested">Please enter the OTP:</p>
+<p *ngIf="view === 'legacy-otp'">Please enter the OTP:</p>
 
-<form fxLayout="column" *ngIf="otpRequested" [formGroup]="twoFactorAuthenticationForm" class="two-factor-auth-form"
+<form fxLayout="column" *ngIf="view === 'legacy-otp'" [formGroup]="twoFactorAuthenticationForm" class="two-factor-auth-form"
   (ngSubmit)="validateOTP()">
 
   <mat-form-field fxFlexAlign="center" class="two-factor-auth-input">

@@ -18,7 +18,17 @@ export const environment = {
   supportedLanguages: [
     'en-US',
     'fr-FR'
-  ]
+  ],
+  /**
+   * App-level MFA (TOTP + passkeys). Keep demoMode false in production and
+   * serve a backend that implements the /mfa HTTP contract.
+   */
+  mfa: {
+    demoMode: false,
+    rpId: '',
+    rpName: 'Mifos X',
+    apiPath: '/mfa'
+  }
 };
 
 // Server URL
