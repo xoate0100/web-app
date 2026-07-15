@@ -1,3 +1,12 @@
+---
+status: archived
+role: archive
+audience: mixed
+personas: [developers, ai-agent]
+last_reviewed: 2026-07-15
+title: Archive: Pre-Development Checklist
+superseded_by: docs/getting-started/local-development.md
+---
 # Pre-Development Checklist and Analysis
 
 **Generated:** 2026-01-06

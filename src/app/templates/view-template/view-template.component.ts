@@ -1,6 +1,7 @@
 /** Angular Imports */
-import { Component, ChangeDetectionStrategy } from '@angular/core';
+import { Component, ChangeDetectionStrategy, SecurityContext } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { DomSanitizer } from '@angular/platform-browser';
 import { MatDialog } from '@angular/material/dialog';
 
 /** Custom Services */
@@ -28,20 +29,20 @@ export class ViewTemplateComponent {
 
   /** Template Data */
   templateData: any;
+  /** Sanitized HTML body for display (SEC-04). */
+  safeTemplateHtml = '';
 
   /**
    * Retrieves the template data from `resolve`.
-   * @param {TemplateService} templateService Accounting Service.
-   * @param {ActivatedRoute} route Activated Route.
-   * @param {Router} router Router for navigation.
-   * @param {MatDialog} dialog Dialog reference.
    */
   constructor(private route: ActivatedRoute,
               private templatesService: TemplatesService,
               private router: Router,
-              private dialog: MatDialog) {
+              private dialog: MatDialog,
+              private sanitizer: DomSanitizer) {
     this.route.data.subscribe((data: any) => {
       this.templateData = data.template;
+      this.safeTemplateHtml = this.sanitizer.sanitize(SecurityContext.HTML, this.templateData?.text ?? '') ?? '';
     });
   }
 

@@ -1,49 +1,35 @@
-# Working behind a corporate proxy
+---
+title: Corporate Proxy Setup
+audience: admin
+status: current
+role: guide
+personas: [installer-admin, developers]
+last_reviewed: 2026-07-15
+---
 
-## Environment
+# Corporate proxy
 
-Most tools (including npm and git) use the `HTTP_PROXY` and `HTTPS_PROXY` environment variables to work with a
-corporate proxy.
+**Who this is for:** [installers](./personas/installer-admin.md) and [developers](./personas/developers.md) on networks that require an HTTP(S) proxy.
 
-### Windows
+Set environment variables before `npm ci` / git:
 
-In Windows environments, add the `HTTP_PROXY` and `HTTPS_PROXY` system environment variable, with these values:
-
-- HTTP_PROXY: `http://<username>:<password>@<proxy_server>:<proxy_port>`
-- HTTPS_PROXY: `%HTTP_PROXY%`
-
-### Unix
-
-Add these lines to your `~/.bash_profile` or `~/.profile`:
-```sh
-export HTTP_PROXY="http://<username>:<password>@<proxy_server>:<proxy_port>"
-export HTTPS_PROXY="$HTTP_PROXY"
+```bash
+export HTTP_PROXY=http://proxy.example.com:8080
+export HTTPS_PROXY=http://proxy.example.com:8080
+export NO_PROXY=localhost,127.0.0.1
 ```
 
-## Proxy with SSL custom certificate
+npm also honors:
 
-Some proxy like **zscaler** use a custom SSL certificate to inspect request, which may cause npm commands to fail.
-
-To solve this problem, you can disable the `strict-ssl` option in npm.
-
-## Proxy exceptions
-
-If you need to access repositories on your local network that should bypass proxy, set the `NO_PROXY` environment
-variable, in the same way as `HTTP_PROXY`:
-
-### Windows
-
-- NO_PROXY: `127.0.0.1, localhost, <your_local_server_ip_or_hostname>`
-
-### Unix
-
-```sh
-export NO_PROXY="127.0.0.1, localhost, <your_local_server_ip_or_hostname>"
+```bash
+npm config set proxy http://proxy.example.com:8080
+npm config set https-proxy http://proxy.example.com:8080
 ```
 
-### Npm
+Git:
 
-Run this command in your project directory:
-```sh
-npm set strict-ssl false
+```bash
+git config --global http.proxy http://proxy.example.com:8080
 ```
+
+Then continue with [Local development](./getting-started/local-development.md) or [Installation](./getting-started/installation.md).

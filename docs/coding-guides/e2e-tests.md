@@ -1,90 +1,41 @@
+---
+title: E2E Testing with Playwright
+audience: developer
+status: current
+role: guide
+personas: [developers]
+last_reviewed: 2026-07-15
+supersedes: docs/coding-guides/e2e-tests.md (Protractor)
+---
+
 # End-to-end tests coding guide
 
-End-to-end (E2E for short) tests are meant to test the behavior of your application, from start to finish.
+E2E tests use **Playwright** (`@playwright/test`). Specs live under `e2e/`. Config: `playwright.config.ts`.
 
-While unit tests are the first choice for catching bugs and regression on individual components, it is a good idea to
-complement them with test cases covering the integration between the individual components, hence the need for E2E
-tests.
+## Commands
 
-These tests use [Protractor](https://github.com/angular/protractor), which is a framework built for Angular on top of
-[Selenium](https://github.com/SeleniumHQ/selenium) to control browsers and simulate user inputs.
-[Jasmine](http://jasmine.github.io) is used as the base test framework.
-
-## Good practices
-
-- Avoid whenever possible inter-dependencies between your E2E tests
-- Run E2E tests on your continuous integration server against different browsers
-- If you use an Agile methodology, cover each user story acceptance factors with an E2E test
-
-## Page objects
-
-E2E tests should follow the *[Page Object](https://github.com/SeleniumHQ/selenium/wiki/PageObjects)* pattern.
-
-#### What is a page object?
-
-A page object:
-
-- Models the objects on a page under test:
-  * *Properties* wrap page elements
-  * *Methods* wrap code that interacts with the page elements
-- Simplifies the test scripts
-- Reduces the amount of duplicated code
-
-If the UI changes, the fix only needs to be applied in one place.
-
-#### How to define a page object
-
-```typescript
-// login.po.ts
-import { browser, element, by } from 'protractor';
-
-export class LoginPage {
-  emailInput = element(by.css('input[name=^"email"]'));
-  passwordInput = element(by.css('input[name=^"password"]'));
-  loginButton = element(by.css('button[(click)^="login"]'));
-  registerButton = element(by.css('button[(click)^="register"]'));
-
-  navigateTo() {
-    return browser.get('/');
-  }
-
-  getGreetingText() {
-    return element(by.css('.greeting')).getText();
-  }
-}
+```bash
+npm run e2e:install   # Chromium + OS deps (once)
+npm run e2e           # headed/report as configured
+npm run e2e:ci        # list reporter (CI)
 ```
 
-#### How to use a page object
+The Playwright config starts `ng serve` automatically against `http://127.0.0.1:4200`.
 
-```typescript
-// login.e2e-spec.ts
-import { LoginPage } from './login.po';
+## Practices
 
-describe('Login', () => {
-  let page: LoginPage ;
+- Prefer **API mocks** for CI (see `e2e/fixtures/api-mocks.ts`) so tests do not depend on a live Fineract.
+- Clear auth storage between tests (`clearClientStorage`).
+- Use login helpers in `e2e/fixtures/login-helpers.ts` — Angular Material forms need `pressSequentially`, not only `fill()`.
+- Keep tests independent; avoid shared mutable server state.
+- Cover critical paths: login success/failure, authenticated shell.
 
-  beforeEach(() => {
-    page = new LoginPage();
-    page.navigateTo();
-  });
+## Page object pattern
 
-  it('should navigate to the register page when the register button is clicked', () => {
-    page.registerButton.click();
+Page objects are still encouraged: wrap selectors and flows in helpers/fixtures rather than duplicating locators across specs.
 
-    expect(browser.getCurrentUrl()).toContain('/register');
-  });
+## Related
 
-  it('should allow a user to log in', () => {
-    page.emailInput.sendKeys('test@mail.com');
-    page.passwordInput.sendKeys('abc123');
-    page.loginButton.click();
-
-    expect(page.getGreetingText()).toContain('Welcome, Test User');
-  });
-});
-```
-
-## Credits
-
-Parts of this guide were freely inspired by this
-[presentation](https://docs.google.com/presentation/d/1B6manhG0zEXkC-H-tPo2vwU06JhL8w9-XCF9oehXzAQ).
+- CI runs `e2e:ci` after `validate` in `.github/workflows/build.yml`
+- [Unit tests](./unit-tests.md) · [Local development](../getting-started/local-development.md)
+- [Playwright docs](https://playwright.dev/docs/intro)

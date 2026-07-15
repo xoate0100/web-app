@@ -1,3 +1,11 @@
+---
+title: Commit Strategy
+audience: ai-agent
+status: current
+role: guide
+personas: [developers, ai-agent]
+last_reviewed: 2026-07-15
+---
 # Commit Strategy and Frequency
 
 Commit frequency and message format for the MifosX web application. See also `META_FRAMEWORK_INTEGRATION.md` and `0_phase0_bootstrap/AI_SANDBOX_RULES.md`.

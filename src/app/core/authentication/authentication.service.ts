@@ -89,10 +89,15 @@ export class AuthenticationService {
     this.storage = this.rememberMe ? localStorage : sessionStorage;
 
     if (environment.oauth.enabled) {
+      // Public SPAs must not use confidential client secrets (SEC-02). Prefer PKCE / BFF.
       let httpParams = new HttpParams();
-      httpParams = httpParams.set('client_id', 'community-app');
+      httpParams = httpParams.set('client_id', environment.oauth.clientId || 'community-app');
       httpParams = httpParams.set('grant_type', 'password');
-      httpParams = httpParams.set('client_secret', '123');
+      httpParams = httpParams.set('username', loginContext.username);
+      httpParams = httpParams.set('password', loginContext.password);
+      if (environment.oauth.clientSecret) {
+        httpParams = httpParams.set('client_secret', environment.oauth.clientSecret);
+      }
       return this.http.disableApiPrefix().post(`${environment.oauth.serverUrl}/oauth/token`, {}, { params: httpParams })
         .pipe(
           map((tokenResponse: any) => {
@@ -144,10 +149,12 @@ export class AuthenticationService {
     const oAuthRefreshToken = JSON.parse(this.storage.getItem(this.oAuthTokenDetailsStorageKey) ?? 'null').refresh_token;
     this.authenticationInterceptor.removeAuthorization();
     let httpParams = new HttpParams();
-    httpParams = httpParams.set('client_id', 'community-app');
+    httpParams = httpParams.set('client_id', environment.oauth.clientId || 'community-app');
     httpParams = httpParams.set('grant_type', 'refresh_token');
-    httpParams = httpParams.set('client_secret', '123');
     httpParams = httpParams.set('refresh_token', oAuthRefreshToken);
+    if (environment.oauth.clientSecret) {
+      httpParams = httpParams.set('client_secret', environment.oauth.clientSecret);
+    }
     this.http.disableApiPrefix().post(`${environment.oauth.serverUrl}/oauth/token`, {}, { params: httpParams })
       .subscribe((tokenResponse: any) => {
         this.storage.setItem(this.oAuthTokenDetailsStorageKey, JSON.stringify(tokenResponse));
@@ -251,6 +258,14 @@ export class AuthenticationService {
       this.storage.removeItem(this.credentialsStorageKey);
       this.storage.removeItem(this.oAuthTokenDetailsStorageKey);
       this.storage.removeItem(this.twoFactorAuthenticationTokenStorageKey);
+      // Clear mirrored copies and residual financial navigation history (SEC-07).
+      sessionStorage.removeItem(this.credentialsStorageKey);
+      localStorage.removeItem(this.credentialsStorageKey);
+      sessionStorage.removeItem(this.oAuthTokenDetailsStorageKey);
+      localStorage.removeItem(this.oAuthTokenDetailsStorageKey);
+      sessionStorage.removeItem(this.twoFactorAuthenticationTokenStorageKey);
+      localStorage.removeItem(this.twoFactorAuthenticationTokenStorageKey);
+      localStorage.removeItem('mifosXLocation');
     }
   }
 

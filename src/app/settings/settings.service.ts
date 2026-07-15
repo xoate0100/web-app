@@ -32,9 +32,16 @@ export class SettingsService {
 
   /**
    * Sets server URL setting throughout the app.
+   * No-op in production builds (SEC-03) — production API host is build-time locked.
    * @param {string} url URL
    */
   setServer(url: string) {
+    if (environment.production || !environment.allowServerSwitch) {
+      return;
+    }
+    if (typeof url !== 'string' || !/^https:\/\//i.test(url)) {
+      return;
+    }
     localStorage.setItem('mifosXServerURL', JSON.stringify(url));
   }
 

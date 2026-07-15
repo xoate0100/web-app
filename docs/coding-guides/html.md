@@ -1,3 +1,11 @@
+---
+title: HTML and Templates Guide
+audience: developer
+status: current
+role: guide
+personas: [developers]
+last_reviewed: 2026-07-15
+---
 # HTML coding guide
 
 ## Naming conventions

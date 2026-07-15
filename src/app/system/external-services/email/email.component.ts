@@ -6,6 +6,7 @@ import { MatTableDataSource, MatTable, MatColumnDef, MatHeaderCellDef, MatHeader
 import { LayoutDirective, LayoutAlignDirective, LayoutGapDirective } from '@ngbracket/ngx-layout/flex';
 import { MatButton } from '@angular/material/button';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import { maskConfigSecret } from 'app/shared/utils/mask-config-secret';
 
 /**
  * Email Configuration Component.
@@ -52,6 +53,10 @@ export class EmailComponent implements OnInit {
   setEmailConfiguration() {
     this.dataSource = new MatTableDataSource(this.emailConfigurationData);
     this.dataSource.sort = this.sort;
+  }
+
+  displayValue(name: string, value: string): string {
+    return maskConfigSecret(name, value);
   }
 
 }

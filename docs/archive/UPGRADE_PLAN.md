@@ -1,3 +1,12 @@
+---
+status: archived
+role: archive
+audience: mixed
+personas: [developers, ai-agent]
+last_reviewed: 2026-07-15
+title: Archive: Angular Upgrade Plan (9→18)
+superseded_by: docs/MAJOR_MIGRATION_PLAN.md
+---
 # Angular Modernization Upgrade Plan
 
 ## Executive Summary

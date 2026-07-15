@@ -34,7 +34,7 @@
 
             <mat-form-field>
                 <mat-label>Tenant App Key</mat-label>
-                <input matInput required formControlName="tenant_app_key">
+                <input matInput required type="password" autocomplete="new-password" formControlName="tenant_app_key">
                 <mat-error *ngIf="smsConfigurationForm.controls.tenant_app_key.hasError('required')">
                   Tenant App Key is <strong>required</strong>
                 </mat-error>
