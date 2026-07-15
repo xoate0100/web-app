@@ -1,3 +1,12 @@
+---
+status: archived
+role: archive
+audience: mixed
+personas: [developers, ai-agent]
+last_reviewed: 2026-07-15
+title: Archive: Analytics Stub
+superseded_by: docs/INDEX.md
+---
 # Analytics
 
 This project does not come with any analytics library.

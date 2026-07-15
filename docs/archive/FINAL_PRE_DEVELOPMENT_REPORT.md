@@ -1,3 +1,12 @@
+---
+status: archived
+role: archive
+audience: mixed
+personas: [developers, ai-agent]
+last_reviewed: 2026-07-15
+title: Archive: Final Pre-Development Report
+superseded_by: docs/getting-started/local-development.md
+---
 # Final Pre-Development Report
 
 **Generated:** 2026-01-06

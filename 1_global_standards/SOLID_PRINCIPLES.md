@@ -1,3 +1,11 @@
+---
+title: SOLID Principles
+audience: developer
+status: current
+role: standard
+personas: [developers]
+last_reviewed: 2026-07-15
+---
 # SOLID Principles Guide & Enforcement
 
 ## Overview

@@ -1,3 +1,12 @@
+---
+status: archived
+role: archive
+audience: mixed
+personas: [developers, ai-agent]
+last_reviewed: 2026-07-15
+title: Archive: Agentic Upgrade Plan
+superseded_by: 0_phase0_bootstrap/META_FRAMEWORK_OVERVIEW.md
+---
 # Agentic Architecture Upgrade Plan
 
 **Repository:** mifosx-web-app (Angular 9 Fineract SPA)  

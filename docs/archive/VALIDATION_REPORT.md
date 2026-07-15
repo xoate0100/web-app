@@ -1,3 +1,12 @@
+---
+status: archived
+role: archive
+audience: mixed
+personas: [developers, ai-agent]
+last_reviewed: 2026-07-15
+title: Archive: Validation Report (2026-01)
+superseded_by: README.md
+---
 # Meta-Framework Validation Report
 **Generated:** 2026-01-05
 **Status:** ✅ VALIDATED

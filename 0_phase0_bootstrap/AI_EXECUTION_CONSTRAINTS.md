@@ -1,3 +1,11 @@
+---
+title: AI Execution Constraints
+audience: ai-agent
+status: current
+role: standard
+personas: [ai-agent]
+last_reviewed: 2026-07-15
+---
 # AI Execution Constraints (L2.5)
 - Single agent (Cursor) may perform autonomous plan execution inside sandbox.
 - Pre-commit and CI jobs are immutable enforcement gates.

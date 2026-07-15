@@ -1,3 +1,11 @@
+---
+title: Sass / SCSS Guide
+audience: developer
+status: current
+role: guide
+personas: [developers]
+last_reviewed: 2026-07-15
+---
 # Sass coding guide
 
 [Sass](http://sass-lang.com) is a superset of CSS, which brings a lot of developer candy to help scaling CSS in large
