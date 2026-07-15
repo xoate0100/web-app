@@ -50,9 +50,10 @@ function resolveRpId(): string {
 }
 
 function demoToken(validSeconds = 3600): MfaTokenResponse {
+  const bytes = crypto.getRandomValues(new Uint8Array(16));
   const validTo = Date.now() + validSeconds * 1000;
   return {
-    token: `demo-mfa-${toBase64Url(crypto.getRandomValues(new Uint8Array(16)).buffer)}`,
+    token: `demo-mfa-${toBase64Url(bytes.buffer.slice(bytes.byteOffset, bytes.byteOffset + bytes.byteLength))}`,
     validTo,
     tokenLiveTimeInSec: validSeconds
   };
@@ -147,9 +148,11 @@ export class MfaService {
     if (this.isDemoMode()) {
       return from(vaultRemovePasskey(username, tenantId(), credentialId));
     }
-    return this.http.delete<void>(`${mfaConfig().apiPath}/webauthn/credentials/${encodeURIComponent(credentialId)}`, {
-      body: { username }
-    });
+    return this.http.request<void>(
+      'DELETE',
+      `${mfaConfig().apiPath}/webauthn/credentials/${encodeURIComponent(credentialId)}`,
+      { body: { username } }
+    );
   }
 
   validateTotpChallenge(username: string, code: string, issuePlatformToken: boolean): Observable<MfaTokenResponse | null> {

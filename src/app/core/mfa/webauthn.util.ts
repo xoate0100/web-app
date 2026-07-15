@@ -21,7 +21,7 @@ function base64UrlToBuffer(base64url: string): ArrayBuffer {
   return buffer;
 }
 
-export function randomChallenge(byteLength = 32): Uint8Array {
+export function randomChallenge(byteLength = 32): Uint8Array<ArrayBuffer> {
   const challenge = new Uint8Array(byteLength);
   crypto.getRandomValues(challenge);
   return challenge;
