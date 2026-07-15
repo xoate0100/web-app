@@ -60,7 +60,7 @@ export async function mockFineractApi(page: Page): Promise<void> {
     });
   });
 
-  await page.route('**/twofactor**', async (route) => {
+  await page.route(/\/twofactor(\?|$)/, async (route) => {
     if (route.request().method() === 'GET') {
       await route.fulfill({
         status: 200,
@@ -84,11 +84,20 @@ export async function clearClientStorage(page: Page): Promise<void> {
   await page.addInitScript(() => {
     localStorage.clear();
     sessionStorage.clear();
-    try {
-      indexedDB.deleteDatabase('mifosXMfaVault');
-    } catch {
-      // Ignore — not all browsers expose IndexedDB during init.
-    }
+  });
+}
+
+/**
+ * Clears the demo MFA IndexedDB vault (call after navigation so IndexedDB is available).
+ */
+export async function clearDemoMfaVault(page: Page): Promise<void> {
+  await page.evaluate(async () => {
+    await new Promise<void>((resolve) => {
+      const del = indexedDB.deleteDatabase('mifosXMfaVault');
+      del.onsuccess = () => resolve();
+      del.onerror = () => resolve();
+      del.onblocked = () => resolve();
+    });
   });
 }
 
@@ -100,15 +109,9 @@ export async function seedDemoTotp(
   options: { username: string; secret: string; tenantId?: string }
 ): Promise<void> {
   const tenantId = options.tenantId ?? 'default';
+  await clearDemoMfaVault(page);
   await page.evaluate(
     async ({ username, secret, tenantId: tenant }) => {
-      await new Promise<void>((resolve) => {
-        const del = indexedDB.deleteDatabase('mifosXMfaVault');
-        del.onsuccess = () => resolve();
-        del.onerror = () => resolve();
-        del.onblocked = () => resolve();
-      });
-
       await new Promise<void>((resolve, reject) => {
         const open = indexedDB.open('mifosXMfaVault', 1);
         open.onupgradeneeded = () => {

@@ -28,10 +28,11 @@ test.describe('MFA (TOTP)', () => {
 
     await submitLogin(page, 'mifos', 'password');
 
-    await expect(page.getByText('Multi-Factor Authentication')).toBeVisible();
-    await expect(page.getByLabel('Authenticator code')).toBeVisible();
+    await expect(page.locator('mifosx-two-factor-authentication')).toBeVisible();
+    const codeInput = page.locator('mifosx-two-factor-authentication input[formcontrolname="code"]');
+    await expect(codeInput).toBeVisible();
 
-    await page.getByLabel('Authenticator code').fill(currentTotpCode(DEMO_SECRET));
+    await codeInput.fill(currentTotpCode(DEMO_SECRET));
     await page.getByRole('button', { name: 'Verify' }).click();
 
     await expect(page).toHaveURL(/\/home/);
@@ -43,12 +44,15 @@ test.describe('MFA (TOTP)', () => {
     await seedDemoTotp(page, { username: 'mifos', secret: DEMO_SECRET });
 
     await submitLogin(page, 'mifos', 'password');
-    await expect(page.getByLabel('Authenticator code')).toBeVisible();
 
-    await page.getByLabel('Authenticator code').fill('000000');
+    await expect(page.locator('mifosx-two-factor-authentication')).toBeVisible();
+    const codeInput = page.locator('mifosx-two-factor-authentication input[formcontrolname="code"]');
+    await expect(codeInput).toBeVisible();
+
+    await codeInput.fill('000000');
     await page.getByRole('button', { name: 'Verify' }).click();
 
-    await expect(page.getByText(/Invalid authenticator code/i)).toBeVisible();
+    await expect(page.locator('mifosx-two-factor-authentication .mfa-error')).toBeVisible();
     await expect(page).toHaveURL(/\/login/);
   });
 });

@@ -3,7 +3,8 @@ import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
 
 /** rxjs Imports */
-import { finalize } from 'rxjs/operators';
+import { of } from 'rxjs';
+import { catchError, finalize, timeout } from 'rxjs/operators';
 
 /** Custom Services */
 import { AuthenticationService } from '../../core/authentication/authentication.service';
@@ -11,16 +12,15 @@ import { MfaService } from '../../core/mfa/mfa.service';
 import { MfaStatus } from '../../core/mfa/mfa.models';
 import { MatDivider } from '@angular/material/divider';
 import { NgIf, NgFor } from '@angular/common';
-import { LayoutDirective, FlexAlignDirective, FlexFillDirective } from '@ngbracket/ngx-layout/flex';
+import { LayoutDirective, FlexAlignDirective, FlexFillDirective, LayoutGapDirective } from '@ngbracket/ngx-layout/flex';
 import { MatRadioGroup, MatRadioButton } from '@angular/material/radio';
 import { MatButton } from '@angular/material/button';
 import { MatProgressSpinner } from '@angular/material/progress-spinner';
 import { MatFormField, MatPrefix, MatLabel, MatHint, MatError } from '@angular/material/form-field';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { MatInput } from '@angular/material/input';
-import { MatButtonToggleGroup, MatButtonToggle } from '@angular/material/button-toggle';
 
-type ChallengeView = 'choose' | 'legacy-delivery' | 'legacy-otp' | 'totp' | 'passkey';
+type ChallengeView = 'loading' | 'choose' | 'legacy-delivery' | 'legacy-otp' | 'totp' | 'passkey' | 'unavailable';
 
 /**
  * Two factor / MFA authentication component.
@@ -29,13 +29,12 @@ type ChallengeView = 'choose' | 'legacy-delivery' | 'legacy-otp' | 'totp' | 'pas
 @Component({
     selector: 'mifosx-two-factor-authentication',
     templateUrl: './two-factor-authentication.component.html',
-    changeDetection: ChangeDetectionStrategy.Eager,
+    changeDetection: ChangeDetectionStrategy.Default,
     styleUrls: ['./two-factor-authentication.component.scss'],
     imports: [
-      MatDivider, NgIf, ReactiveFormsModule, LayoutDirective, MatRadioGroup, FlexAlignDirective,
+      MatDivider, NgIf, ReactiveFormsModule, LayoutDirective, LayoutGapDirective, MatRadioGroup, FlexAlignDirective,
       NgFor, MatRadioButton, MatButton, FlexFillDirective, MatProgressSpinner, MatFormField,
-      MatPrefix, FaIconComponent, MatLabel, MatInput, MatHint, MatError,
-      MatButtonToggleGroup, MatButtonToggle
+      MatPrefix, FaIconComponent, MatLabel, MatInput, MatHint, MatError
     ]
 })
 export class TwoFactorAuthenticationComponent implements OnInit {
@@ -61,7 +60,7 @@ export class TwoFactorAuthenticationComponent implements OnInit {
   /** App MFA status for the pending user. */
   mfaStatus: MfaStatus | null = null;
   /** Active challenge view. */
-  view: ChallengeView = 'choose';
+  view: ChallengeView = 'loading';
   /** Error message for MFA failures. */
   errorMessage = '';
   /** Whether passkeys are usable in this browser. */
@@ -78,32 +77,43 @@ export class TwoFactorAuthenticationComponent implements OnInit {
     this.createTotpForm();
     this.passkeysSupported = this.mfaService.webAuthnAvailable();
 
-    const pending = this.authenticationService.getPendingCredentials();
-    if (pending?.username) {
-      this.mfaService.getStatus(pending.username).subscribe({
-        next: (status) => {
-          this.mfaStatus = status;
-          this.bootstrapView();
-        },
-        error: () => this.bootstrapView()
-      });
-    } else {
-      this.bootstrapView();
+    // Prefer status already resolved during login (demo vault / HTTP).
+    const cached = this.authenticationService.getPendingMfaStatus();
+    if (cached) {
+      this.mfaStatus = cached;
     }
 
     this.authenticationService.getDeliveryMethods()
-      .subscribe({
-        next: (deliveryMethods: any) => {
-          this.twoFactorAuthenticationDeliveryMethods = Array.isArray(deliveryMethods)
-            ? deliveryMethods
-            : (deliveryMethods ?? []);
-          this.bootstrapView();
-        },
-        error: () => {
-          this.twoFactorAuthenticationDeliveryMethods = [];
-          this.bootstrapView();
-        }
+      .pipe(
+        timeout({ first: 2000 }),
+        catchError(() => of([]))
+      )
+      .subscribe((deliveryMethods: any) => {
+        this.twoFactorAuthenticationDeliveryMethods = Array.isArray(deliveryMethods)
+          ? deliveryMethods
+          : [];
+        this.bootstrapView();
       });
+
+    if (!this.mfaStatus) {
+      const pending = this.authenticationService.getPendingCredentials();
+      if (pending?.username) {
+        this.mfaService.getStatus(pending.username)
+          .pipe(
+            timeout({ first: 2000 }),
+            catchError(() => of({ totpEnabled: false, passkeys: [], methods: [] } as MfaStatus))
+          )
+          .subscribe((status) => {
+            this.mfaStatus = status;
+            this.bootstrapView();
+          });
+      } else {
+        this.mfaStatus = { totpEnabled: false, passkeys: [], methods: [] };
+        this.bootstrapView();
+      }
+    } else {
+      this.bootstrapView();
+    }
   }
 
   get hasTotp(): boolean {
@@ -201,6 +211,12 @@ export class TwoFactorAuthenticationComponent implements OnInit {
   }
 
   private bootstrapView(): void {
+    // Wait until we have an MFA status snapshot (cached or loaded).
+    if (!this.mfaStatus) {
+      this.view = 'loading';
+      return;
+    }
+
     const options = [
       this.hasTotp ? 'totp' : null,
       this.hasPasskey ? 'passkey' : null,
@@ -208,15 +224,14 @@ export class TwoFactorAuthenticationComponent implements OnInit {
     ].filter(Boolean) as ChallengeView[];
 
     if (options.length === 1) {
-      this.view = options[0] === 'legacy-delivery' ? 'legacy-delivery' : options[0];
+      this.view = options[0];
       return;
     }
     if (options.length > 1) {
       this.view = 'choose';
       return;
     }
-    // Fineract required 2FA but no methods yet — keep legacy delivery form ready.
-    this.view = 'legacy-delivery';
+    this.view = 'unavailable';
   }
 
   private createTwoFactorAuthenticationDeliveryMethodForm() {

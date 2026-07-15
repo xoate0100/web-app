@@ -9,7 +9,7 @@ import { map, switchMap } from 'rxjs/operators';
 /** Custom Services */
 import { AlertService } from '../alert/alert.service';
 import { MfaService } from '../mfa/mfa.service';
-import { MfaTokenResponse } from '../mfa/mfa.models';
+import { MfaStatus, MfaTokenResponse } from '../mfa/mfa.models';
 
 /** Custom Interceptors */
 import { AuthenticationInterceptor } from './authentication.interceptor';
@@ -41,6 +41,8 @@ export class AuthenticationService {
   /** User credentials. */
 
   private credentials?: Credentials;
+  /** Cached MFA status for the pending challenge (avoids a second vault round-trip). */
+  private pendingMfaStatus: MfaStatus | null = null;
   /** Key to store credentials in storage. */
   private credentialsStorageKey = 'mifosXCredentials';
   /** Key to store oauth token details in storage. */
@@ -207,19 +209,21 @@ export class AuthenticationService {
       return of(credentials);
     }
 
-    return this.mfaService.requiresChallenge(credentials.username).pipe(
-      switchMap((required) => {
-        if (required) {
-          this.credentials = credentials;
-          this.alertService.alert({
-            type: 'Two Factor Authentication Required',
-            message: 'Multi-factor authentication required'
-          });
+    return this.mfaService.getStatus(credentials.username).pipe(
+      switchMap((status) => {
+        if (!status.methods.length) {
+          this.setCredentials(credentials);
+          this.alertService.alert({ type: 'Authentication Success', message: `${credentials.username} successfully logged in!` });
+          delete (this as any).credentials;
+          this.pendingMfaStatus = null;
           return of(credentials);
         }
-        this.setCredentials(credentials);
-        this.alertService.alert({ type: 'Authentication Success', message: `${credentials.username} successfully logged in!` });
-        delete (this as any).credentials;
+        this.credentials = credentials;
+        this.pendingMfaStatus = status;
+        this.alertService.alert({
+          type: 'Two Factor Authentication Required',
+          message: 'Multi-factor authentication required'
+        });
         return of(credentials);
       })
     );
@@ -275,6 +279,13 @@ export class AuthenticationService {
    */
   getPendingCredentials(): Credentials | null {
     return this.credentials ?? null;
+  }
+
+  /**
+   * MFA enrollment status captured when the challenge was opened.
+   */
+  getPendingMfaStatus(): MfaStatus | null {
+    return this.pendingMfaStatus;
   }
 
   /**
@@ -340,6 +351,7 @@ export class AuthenticationService {
   completeMfaChallenge(tokenResponse?: MfaTokenResponse | null): void {
     if (this.credentials?.isTwoFactorAuthenticationRequired && tokenResponse) {
       this.onOTPValidateSuccess(tokenResponse);
+      this.pendingMfaStatus = null;
       return;
     }
     if (this.credentials?.shouldRenewPassword) {
@@ -349,6 +361,7 @@ export class AuthenticationService {
     this.setCredentials(this.credentials);
     this.alertService.alert({ type: 'Authentication Success', message: `${this.credentials?.username} successfully logged in!` });
     delete (this as any).credentials;
+    this.pendingMfaStatus = null;
   }
 
   /**
