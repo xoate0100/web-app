@@ -10,7 +10,7 @@
 
           <mat-form-field>
             <mat-label>S3 Access Key</mat-label>
-            <input matInput required formControlName="s3_access_key">
+            <input matInput required type="password" autocomplete="new-password" formControlName="s3_access_key">
             <mat-error *ngIf="amazonS3ConfigurationForm.controls.s3_access_key.hasError('required')">
               S3 Access Key is <strong>required</strong>
             </mat-error>
@@ -26,7 +26,7 @@
 
           <mat-form-field>
             <mat-label>S3 Secret Key</mat-label>
-            <input matInput required formControlName="s3_secret_key">
+            <input matInput required type="password" autocomplete="new-password" formControlName="s3_secret_key">
             <mat-error *ngIf="amazonS3ConfigurationForm.controls.s3_secret_key.hasError('required')">
               S3 Secret Key is <strong>required</strong>
             </mat-error>

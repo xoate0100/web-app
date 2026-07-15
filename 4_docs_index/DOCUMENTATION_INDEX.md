@@ -42,6 +42,7 @@ Hub: **[docs/INDEX.md](../docs/INDEX.md)**
 | Corporate proxy | [docs/corporate-proxy.md](../docs/corporate-proxy.md) | current |
 | Backend / API proxy | [docs/backend-proxy.md](../docs/backend-proxy.md) | current |
 | Migration completion | [docs/MAJOR_MIGRATION_PLAN.md](../docs/MAJOR_MIGRATION_PLAN.md) | current |
+| Security review | [docs/SECURITY_REVIEW.md](../docs/SECURITY_REVIEW.md) | current |
 | Commit strategy | [docs/COMMIT_STRATEGY.md](../docs/COMMIT_STRATEGY.md) | current |
 | Coding guides | [docs/coding-guides/](../docs/coding-guides/) | current |
 | Ops notes | [docs/ops/](../docs/ops/) · [production-hosting](../docs/ops/production-hosting.md) | current |

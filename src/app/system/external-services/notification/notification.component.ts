@@ -6,6 +6,7 @@ import { MatTableDataSource, MatTable, MatColumnDef, MatHeaderCellDef, MatHeader
 import { LayoutDirective, LayoutAlignDirective, LayoutGapDirective } from '@ngbracket/ngx-layout/flex';
 import { MatButton } from '@angular/material/button';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import { maskConfigSecret } from 'app/shared/utils/mask-config-secret';
 
 /**
  * Notification Configuration Component.
@@ -52,6 +53,10 @@ export class NotificationComponent implements OnInit {
   setNotificationConfiguration() {
     this.dataSource = new MatTableDataSource(this.notificationConfigurationData);
     this.dataSource.sort = this.sort;
+  }
+
+  displayValue(name: string, value: string): string {
+    return maskConfigSecret(name, value);
   }
 
 }

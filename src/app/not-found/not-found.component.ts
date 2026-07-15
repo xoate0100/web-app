@@ -1,5 +1,7 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
-declare var particlesJS: any;
+
+/** Optional global from a same-origin particles script when present (SEC-09: no CDN). */
+declare const particlesJS: { load: (id: string, configPath: string) => void } | undefined;
 
 @Component({
     selector: 'mifosx-not-found',
@@ -12,7 +14,10 @@ export class NotFoundComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    particlesJS.load('particles-js', '/assets/particles.json');
+    // Decorative only — safe if the script is not bundled.
+    if (typeof particlesJS !== 'undefined' && typeof particlesJS?.load === 'function') {
+      particlesJS.load('particles-js', '/assets/particles.json');
+    }
   }
 
 }

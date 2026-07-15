@@ -39,6 +39,7 @@ Browse with `npm run docs`.
 | [Corporate proxy](./corporate-proxy.md) | npm/git behind HTTP(S)_PROXY |
 | [Backend proxy](./backend-proxy.md) | Dev API proxy to Fineract |
 | [Major migration plan](./MAJOR_MIGRATION_PLAN.md) | Completed Angular 22 modernization record |
+| [Security review](./SECURITY_REVIEW.md) | Financial-data threat model & remediations |
 | [Commit strategy](./COMMIT_STRATEGY.md) | Agentic commit cadence |
 
 ## Coding guides

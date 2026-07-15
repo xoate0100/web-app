@@ -24,12 +24,15 @@ Serve the contents of `dist/web-app/` (respect `base-href`, default `/web-app/`)
 
 - [ ] Fineract reachable over HTTPS from browser clients
 - [ ] `environment.prod.ts` `baseApiUrl` and tenant correct ([Connecting to Fineract](../getting-started/connecting-fineract.md))
+- [ ] Production build ignores `localStorage` API URL overrides (SEC-03)
 - [ ] SPA fallback to `index.html` ([Routing](../routing.md))
-- [ ] TLS certificates valid
+- [ ] TLS certificates valid; HSTS / CSP set on the reverse proxy ([Security review](../SECURITY_REVIEW.md))
 - [ ] Demo credentials disabled / rotated
 - [ ] Smoke login against production tenant
+- [ ] OAuth confidential secrets not present in the SPA bundle
 
 ## Related
 
 - [Installation](../getting-started/installation.md)
+- [Security review](../SECURITY_REVIEW.md)
 - [CI/CD](../../1_global_standards/CI_CD_GUIDE.md)

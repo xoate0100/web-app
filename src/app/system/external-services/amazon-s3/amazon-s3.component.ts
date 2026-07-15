@@ -6,6 +6,7 @@ import { ActivatedRoute, RouterLink } from '@angular/router';
 import { LayoutDirective, LayoutAlignDirective, LayoutGapDirective } from '@ngbracket/ngx-layout/flex';
 import { MatButton } from '@angular/material/button';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import { maskConfigSecret } from 'app/shared/utils/mask-config-secret';
 
 /**
  * Amazon S3 Component.
@@ -52,6 +53,11 @@ export class AmazonS3Component implements OnInit {
   setAmazonS3Configuration() {
     this.dataSource = new MatTableDataSource(this.amazonS3ConfigurationData);
     this.dataSource.sort = this.sort;
+  }
+
+  /** Mask secrets in the configuration table (SEC-08). */
+  displayValue(name: string, value: string): string {
+    return maskConfigSecret(name, value);
   }
 
 }

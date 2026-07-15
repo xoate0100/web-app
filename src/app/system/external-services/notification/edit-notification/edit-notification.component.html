@@ -10,7 +10,7 @@
 
           <mat-form-field>
             <mat-label>Server Key</mat-label>
-            <input matInput required formControlName="server_key">
+            <input matInput required type="password" autocomplete="new-password" formControlName="server_key">
             <mat-error *ngIf="notificationConfigurationForm.controls.server_key.hasError('required')">
               Server Key is <strong>required</strong>
             </mat-error>
